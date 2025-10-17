@@ -1,0 +1,72 @@
+{
+  "models": [
+    {
+      "id": "accounts/fireworks/models/deepseek-r1",
+      "name": "DeepSeek R1",
+      "provider": "Fireworks",
+      "providerId": "fireworks",
+      "enabled": true,
+      "toolCallType": "manual",
+      "toolCallModel": "accounts/fireworks/models/llama-v3p1-8b-instruct"
+    },
+    {
+      "id": "gemini-2.5-flash",
+      "name": "Gemini 2.5 Flash",
+      "provider": "Google Generative AI",
+      "providerId": "google",
+      "enabled": true,
+      "toolCallType": "native"
+    },
+    {
+      "id": "gemini-2.0-flash-thinking-exp-01-21",
+      "name": "Gemini 2.0 Flash Thinking (Exp)",
+      "provider": "Google Generative AI",
+      "providerId": "google",
+      "enabled": true,
+      "toolCallType": "native",
+      "toolCallModel": "gemini-2.0-flash"
+    },
+    {
+      "id": "accounts/fireworks/models/llama4-maverick-instruct-basic",
+      "name": "Llama 4 Maverick",
+      "provider": "Fireworks",
+      "providerId": "fireworks",
+      "enabled": true,
+      "toolCallType": "manual",
+      "toolCallModel": "accounts/fireworks/models/llama-v3p1-8b-instruct"
+    },
+    {
+      "id": "deepseek-r1-distill-llama-70b",
+      "name": "DeepSeek R1 Distill Llama 70B",
+      "provider": "Groq",
+      "providerId": "groq",
+      "enabled": true,
+      "toolCallType": "manual",
+      "toolCallModel": "llama-3.1-8b-instant"
+    },
+    {
+      "id": "meta-llama/llama-4-maverick-17b-128e-instruct",
+      "name": "Llama 4 Maverick 17B",
+      "provider": "Groq",
+      "providerId": "groq",
+      "enabled": true,
+      "toolCallType": "native"
+    },
+    {
+      "id": "openai/gpt-oss-20b",
+      "name": "Open AI GPT OSS 20B",
+      "provider": "Groq",
+      "providerId": "groq",
+      "enabled": true,
+      "toolCallType": "native"
+    },
+    {
+      "id": "meta-llama/llama-guard-4-12b",
+      "name": "Llama Guard 4 12B",
+      "provider": "Groq",
+      "providerId": "groq",
+      "enabled": true,
+      "toolCallType": "manual"
+    }
+  ]
+}
