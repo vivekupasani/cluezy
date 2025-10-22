@@ -7,10 +7,10 @@ import { Check, ChevronsUpDown, Lightbulb } from 'lucide-react'
 
 import { Model } from '@/lib/types/models'
 import { getCookie, setCookie } from '@/lib/utils/cookies'
-import { isReasoningModel } from '@/lib/utils/registry'
 
 import { createModelId } from '../lib/utils'
 
+import { isReasoningModel } from '@/lib/utils/registry'
 import { Button } from './ui/button'
 import {
   Command,
@@ -45,6 +45,14 @@ interface ModelSelectorProps {
 export function ModelSelector({ models }: ModelSelectorProps) {
   const [open, setOpen] = useState(false)
   const [value, setValue] = useState('')
+  const DEFAULT_SELECTED_MODEL = {
+    "id": "gemini-2.5-flash",
+    "name": "Gemini 2.5 Flash",
+    "provider": "Google Generative AI",
+    "providerId": "google",
+    "enabled": true,
+    "toolCallType": "native"
+  }
 
   useEffect(() => {
     const savedModel = getCookie('selectedModel')
@@ -55,6 +63,9 @@ export function ModelSelector({ models }: ModelSelectorProps) {
       } catch (e) {
         console.error('Failed to parse saved model:', e)
       }
+    }
+    else {
+      setCookie('selectedModel', JSON.stringify(DEFAULT_SELECTED_MODEL))
     }
   }, [])
 
@@ -84,7 +95,7 @@ export function ModelSelector({ models }: ModelSelectorProps) {
           variant="outline"
           role="combobox"
           aria-expanded={open}
-          className="text-sm rounded-full shadow-none focus:ring-0"
+          className="text-sm bg-transparent hover:bg-secondary/80 border-none rounded-full shadow-none focus:ring-0"
         >
           {selectedModel ? (
             <div className="flex items-center space-x-1">

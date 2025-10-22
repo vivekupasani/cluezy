@@ -35,7 +35,7 @@ export function EmptyScreen({
   className?: string
 }) {
   return (
-    <div className={`relative w-full mt-4 overflow-hidden ${className}`}>
+    <div className={`relative w-full mt-2 overflow-hidden ${className}`}>
       {/* Fade effect overlays */}
       <div className="pointer-events-none absolute top-0 left-0 z-10 h-full w-28 sm:w-44 bg-gradient-to-r from-background to-transparent" />
       <div className="pointer-events-none absolute top-0 right-0 z-10 h-full w-28 sm:w-44 bg-gradient-to-l from-background to-transparent" />
@@ -48,7 +48,7 @@ export function EmptyScreen({
             {latestTrendingQuestions.concat(latestTrendingQuestions).map((message, index) => (
               <Button
                 key={`row1-${index}`}
-                className="h-6 sm:h-7 text-xs sm:text-sm font-normal text-foreground whitespace-nowrap bg-card hover:bg-card px-3 py-1.5 rounded-xl flex-shrink-0"
+                className="h-6 sm:h-7 text-xs sm:text-sm font-normal text-foreground whitespace-nowrap bg-transparent hover:bg-card px-3 py-1.5 rounded-xl flex-shrink-0"
                 name={message.message}
                 onClick={async () => submitMessage(message.message)}
               >
@@ -62,17 +62,17 @@ export function EmptyScreen({
         </div>
 
         {/* Bottom Row → Left to Right */}
-        <div className="marquee-reverse mt-3 sm:mt-4">
+        <div className="marquee-reverse mt-3 sm:mt-3">
           <div className="marquee-content flex gap-2.5 sm:gap-4">
             {trendingQuestions.concat(trendingQuestions).map((message, index) => (
               <Button
                 key={`row2-${index}`}
-                className="h-6 sm:h-7 text-xs sm:text-sm font-normal text-foreground whitespace-nowrap bg-card hover:bg-card px-3 rounded-xl flex-shrink-0"
+                className="h-6 sm:h-7 text-xs sm:text-sm font-normal text-foreground whitespace-nowrap bg-transparent hover:bg-card px-3 rounded-xl flex-shrink-0"
                 name={message.message}
                 onClick={async () => submitMessage(message.message)}
               >
                 <div className="flex items-center gap-2">
-                  <message.icon size={16} className="text-muted-foreground" />
+                  {/* <message.icon size={16} className="text-muted-foreground" /> */}
                   {message.message}
                 </div>
               </Button>
@@ -88,7 +88,7 @@ export function EmptyScreen({
         }
 
         .marquee-content {
-          animation: marquee 100s linear infinite;
+          animation: marquee 130s linear infinite;
           display: flex;
           width: max-content;
         }
@@ -119,10 +119,10 @@ export function EmptyScreen({
 
         @media (max-width: 640px) {
           .marquee-content {
-            animation-duration: 60s;
+            animation-duration: 130s;
           }
           .marquee-reverse .marquee-content {
-            animation-duration: 70s;
+            animation-duration: 100s;
           }
         }
       `}</style>

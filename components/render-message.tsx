@@ -42,7 +42,7 @@ export function RenderMessage({
     [message.annotations]
   )
 
-  console.log("Message : - - - ", message)
+  // console.log("Message : - - - ", message)
 
   // Render for manual tool call
   const toolData = useMemo(() => {

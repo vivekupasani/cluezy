@@ -4,77 +4,42 @@ import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
 import { useState, useTransition } from 'react'
 
-import { MoreHorizontal, Trash2 } from 'lucide-react'
+import { Edit, Trash2, X } from 'lucide-react'
 import { toast } from 'sonner'
 
 import { Chat } from '@/lib/types'
 
 import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogTrigger
-} from '@/components/ui/alert-dialog'
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger
-} from '@/components/ui/dropdown-menu'
-import {
-  SidebarMenuAction,
   SidebarMenuButton,
-  SidebarMenuItem,
-  useSidebar
+  SidebarMenuItem
 } from '@/components/ui/sidebar'
 
+import { useHistoryDialog } from '../history-dialog'
 import { Spinner } from '../ui/spinner'
 
-interface ChatMenuItemProps {
-  chat: Chat
-}
-
+// 🕒 Format date as "time ago"
 const formatDateWithTime = (date: Date | string) => {
   const parsedDate = new Date(date)
   const now = new Date()
-  const yesterday = new Date()
-  yesterday.setDate(yesterday.getDate() - 1)
+  const seconds = Math.floor((now.getTime() - parsedDate.getTime()) / 1000)
 
-  const formatTime = (date: Date) => {
-    return date.toLocaleString('en-US', {
-      hour: '2-digit',
-      minute: '2-digit',
-      hour12: true
-    })
-  }
+  if (seconds < 60) return `${seconds}s ago`
+  const minutes = Math.floor(seconds / 60)
+  if (minutes < 60) return `${minutes}m ago`
+  const hours = Math.floor(minutes / 60)
+  if (hours < 24) return `${hours}h ago`
+  const days = Math.floor(hours / 24)
+  if (days < 7) return `${days}d ago`
+  const weeks = Math.floor(days / 7)
+  if (weeks < 4) return `${weeks}w ago`
+  const months = Math.floor(days / 30)
+  if (months < 12) return `${months}mo ago`
+  const years = Math.floor(days / 365)
+  return `${years}y ago`
+}
 
-  if (
-    parsedDate.getDate() === now.getDate() &&
-    parsedDate.getMonth() === now.getMonth() &&
-    parsedDate.getFullYear() === now.getFullYear()
-  ) {
-    return `Today, ${formatTime(parsedDate)}`
-  } else if (
-    parsedDate.getDate() === yesterday.getDate() &&
-    parsedDate.getMonth() === yesterday.getMonth() &&
-    parsedDate.getFullYear() === yesterday.getFullYear()
-  ) {
-    return `Yesterday, ${formatTime(parsedDate)}`
-  } else {
-    return parsedDate.toLocaleString('en-US', {
-      year: 'numeric',
-      month: '2-digit',
-      day: '2-digit',
-      hour: '2-digit',
-      minute: '2-digit',
-      hour12: true
-    })
-  }
+interface ChatMenuItemProps {
+  chat: Chat
 }
 
 export function ChatMenuItem({ chat }: ChatMenuItemProps) {
@@ -82,12 +47,14 @@ export function ChatMenuItem({ chat }: ChatMenuItemProps) {
   const isActive = pathname === chat.path
   const router = useRouter()
   const [isPending, startTransition] = useTransition()
-  const [isMenuOpen, setIsMenuOpen] = useState(false)
-  const [dialogOpen, setDialogOpen] = useState(false)
-  const { setOpen, setOpenMobile } = useSidebar()
+  const [showDeleteDialog, setShowDeleteDialog] = useState(false)
+  const [showRenameDialog, setShowRenameDialog] = useState(false)
+  const [newTitle, setNewTitle] = useState(chat.title)
+  const { setHistoryDialogIsOpen } = useHistoryDialog();
 
-
-  const onDelete = () => {
+  const onDelete = (e: React.MouseEvent) => {
+    e.preventDefault()
+    e.stopPropagation()
     startTransition(async () => {
       try {
         const res = await fetch(`/api/chat/${chat.id}`, { method: 'DELETE' })
@@ -98,102 +65,187 @@ export function ChatMenuItem({ chat }: ChatMenuItemProps) {
         }
 
         toast.success('Chat deleted')
-        setIsMenuOpen(false) // Close menu on success
-        setDialogOpen(false) // Close dialog on success
 
-        // If deleting the currently active chat, navigate home
-        if (isActive) {
-          router.push('/')
-        }
+        if (isActive) router.push('/')
         window.dispatchEvent(new CustomEvent('chat-history-updated'))
+        setShowDeleteDialog(false)
       } catch (error) {
         console.error('Failed to delete chat:', error)
         toast.error((error as Error).message || 'Failed to delete chat')
-        setIsMenuOpen(false) // Close menu on error
-        setDialogOpen(false) // Close dialog on error
+        setShowDeleteDialog(false)
       }
     })
   }
 
-  return (
-    <SidebarMenuItem>
-      <SidebarMenuButton
-        asChild
-        isActive={isActive}
-        className="h-auto flex-col gap-0.5 items-start p-2 pr-8"
-      >
-        <Link onClick={() => {
-          setOpen(false)
-          setOpenMobile(false)
-          toast.message(`Opening conversation "${chat.title}"`)
-        }} href={chat.path}>
-          <div className="text-xs font-medium truncate select-none w-full">
-            {chat.title}
-          </div>
-          <div className="text-xs text-muted-foreground w-full">
-            {formatDateWithTime(chat.createdAt)}
-          </div>
-        </Link>
-      </SidebarMenuButton>
+  const onRename = (e: React.MouseEvent) => {
+    e.preventDefault()
+    e.stopPropagation()
+    if (newTitle.trim() && newTitle !== chat.title) {
+      toast.message(`Renamed conversation to "${newTitle}"`)
+      // Add your rename API call here
+    }
+    setShowRenameDialog(false)
+  }
 
-      <DropdownMenu open={isMenuOpen} onOpenChange={setIsMenuOpen}>
-        <DropdownMenuTrigger asChild>
-          <SidebarMenuAction disabled={isPending} className="size-7 p-1 mr-1">
-            {isPending ? (
-              <div className="flex items-center justify-center size-full">
-                <Spinner />
+  const handleActionClick = (e: React.MouseEvent, action: () => void) => {
+    e.preventDefault()
+    e.stopPropagation()
+    action()
+  }
+
+  return (
+    <>
+      <SidebarMenuItem>
+        <SidebarMenuButton
+          isActive={isActive}
+          className="h-auto flex-row gap-0.5 items-center justify-center px-4 py-1 "
+        >
+          <Link
+            href={chat.path}
+            className="flex-1 "
+            onClick={() => {
+              setHistoryDialogIsOpen(false)
+              toast.message(`Opening conversation "${chat.title}"`)
+            }}
+          >
+            <div className="flex items-center justify-between pr-2 w-full">
+              <div className="flex items-center gap-2 flex-1 min-w-0">
+                {/* <Lock size={16} /> */}
+                <div className="text-sm w-48  font-medium truncate select-none flex-1">
+                  {chat.title}
+                </div>
               </div>
-            ) : (
-              <MoreHorizontal size={16} />
-            )}
-            <span className="sr-only">Chat Actions</span>
-          </SidebarMenuAction>
-        </DropdownMenuTrigger>
-        <DropdownMenuContent side="right" align="start">
-          <AlertDialog open={dialogOpen} onOpenChange={setDialogOpen}>
-            <AlertDialogTrigger asChild>
-              <DropdownMenuItem
-                disabled={isPending}
-                className="gap-2 text-destructive focus:text-destructive"
-                onSelect={e => {
-                  e.preventDefault()
-                  // Don't call onDelete directly, just open the dialog
-                }}
+              <div className="text-xs text-muted-foreground whitespace-nowrap ml-2 shrink-0">
+                {formatDateWithTime(chat.createdAt)}
+              </div>
+            </div>
+          </Link>
+
+          {/* Action buttons container */}
+          <div className="flex items-center gap-1 ">
+            {/* ✏️ Rename Button */}
+            <button
+              onClick={(e) => handleActionClick(e, () => setShowRenameDialog(true))}
+              className="size-7 p-1 text-foreground hover:bg-accent rounded-sm flex items-center justify-center"
+              title="Rename chat"
+            >
+              <Edit size={16} />
+              <span className="sr-only">Rename chat</span>
+            </button>
+
+            {/* 🗑️ Delete Button */}
+            <button
+              onClick={(e) => handleActionClick(e, () => setShowDeleteDialog(true))}
+              className="size-7 p-1 text-foreground hover:bg-accent rounded-sm flex items-center justify-center"
+              title="Delete chat"
+              disabled={isPending}
+            >
+              {isPending ? (
+                <Spinner />
+              ) : (
+                <Trash2 size={16} />
+              )}
+              <span className="sr-only">Delete chat</span>
+            </button>
+          </div>
+        </SidebarMenuButton>
+      </SidebarMenuItem>
+
+      {/* Rename Dialog */}
+      {showRenameDialog && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/50"
+          onClick={() => setShowRenameDialog(false)}
+        >
+          <div
+            className="bg-popover rounded-lg p-6 w-96 mx-4"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="text-lg font-semibold">Rename Chat</h3>
+              <button
+                onClick={() => setShowRenameDialog(false)}
+                className="p-1 hover:bg-accent rounded-sm"
               >
-                <Trash2 size={14} />
-                Delete Chat
-              </DropdownMenuItem>
-            </AlertDialogTrigger>
-            <AlertDialogContent>
-              <AlertDialogHeader>
-                <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
-                <AlertDialogDescription>
-                  This action cannot be undone. This will permanently delete
-                  this chat history.
-                </AlertDialogDescription>
-              </AlertDialogHeader>
-              <AlertDialogFooter>
-                <AlertDialogCancel disabled={isPending}>
-                  Cancel
-                </AlertDialogCancel>
-                <AlertDialogAction
-                  disabled={isPending}
-                  onClick={onDelete} // Call onDelete here
-                  className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
-                >
-                  {isPending ? (
-                    <div className="flex items-center justify-center">
-                      <Spinner />
-                    </div>
-                  ) : (
-                    'Delete'
-                  )}
-                </AlertDialogAction>
-              </AlertDialogFooter>
-            </AlertDialogContent>
-          </AlertDialog>
-        </DropdownMenuContent>
-      </DropdownMenu>
-    </SidebarMenuItem>
+                <X size={16} />
+              </button>
+            </div>
+            <p className="text-sm text-muted-foreground mb-4">
+              Enter a new name for this chat.
+            </p>
+            <input
+              type="text"
+              value={newTitle}
+              onChange={(e) => setNewTitle(e.target.value)}
+              className="w-full px-3 py-2 border border-border rounded-md bg-background mb-4"
+              placeholder="Enter new chat name"
+              autoFocus
+              onKeyDown={(e) => {
+                if (e.key === 'Enter') onRename(e as any)
+                if (e.key === 'Escape') setShowRenameDialog(false)
+              }}
+            />
+            <div className="flex justify-end gap-2">
+              <button
+                onClick={() => setShowRenameDialog(false)}
+                className="px-3 py-2 text-sm border border-border rounded-md hover:bg-accent"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={onRename}
+                className="px-3 py-2 text-sm bg-primary text-primary-foreground rounded-md hover:bg-primary/90"
+              >
+                Rename
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Delete Confirmation Dialog */}
+      {showDeleteDialog && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/50"
+          onClick={() => !isPending && setShowDeleteDialog(false)}
+        >
+          <div
+            className="bg-popover rounded-lg p-6 w-96 mx-4"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="text-lg font-semibold">Delete Chat</h3>
+              <button
+                onClick={() => setShowDeleteDialog(false)}
+                className="p-1 hover:bg-accent rounded-sm"
+                disabled={isPending}
+              >
+                <X size={16} />
+              </button>
+            </div>
+            <p className="text-sm text-muted-foreground mb-4">
+              Are you sure you want to delete this chat? This action cannot be undone.
+            </p>
+            <div className="flex justify-end gap-2">
+              <button
+                onClick={() => setShowDeleteDialog(false)}
+                disabled={isPending}
+                className="px-3 py-2 text-sm border border-border rounded-md hover:bg-accent disabled:opacity-50"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={onDelete}
+                disabled={isPending}
+                className="px-3 py-2 text-sm bg-destructive text-destructive-foreground rounded-md hover:bg-destructive/90 disabled:opacity-50 flex items-center gap-2"
+              >
+                {isPending && <Spinner />}
+                {!isPending && "Delete"}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+    </>
   )
 }

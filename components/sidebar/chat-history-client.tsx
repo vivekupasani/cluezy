@@ -1,22 +1,13 @@
 'use client'
 
+import { History, MessageCircle, Search, X } from 'lucide-react'
 import { useCallback, useEffect, useRef, useState, useTransition } from 'react'
-
 import { toast } from 'sonner'
 
 import { Chat } from '@/lib/types'
-
-import {
-  SidebarGroup,
-  SidebarGroupLabel,
-  SidebarMenu
-} from '@/components/ui/sidebar'
-
+import { useHistoryDialog } from '../history-dialog'
 import { ChatHistorySkeleton } from './chat-history-skeleton'
 import { ChatMenuItem } from './chat-menu-item'
-import { ClearHistoryAction } from './clear-history-action'
-
-// interface ChatHistoryClientProps {} // Removed empty interface
 
 interface ChatPageResponse {
   chats: Chat[]
@@ -24,12 +15,14 @@ interface ChatPageResponse {
 }
 
 export function ChatHistoryClient() {
-  // Removed props from function signature
   const [chats, setChats] = useState<Chat[]>([])
   const [nextOffset, setNextOffset] = useState<number | null>(null)
   const [isLoading, setIsLoading] = useState(true)
+  const [isLoadingMore, setIsLoadingMore] = useState(false)
+  const [searchQuery, setSearchQuery] = useState('')
   const loadMoreRef = useRef<HTMLDivElement>(null)
   const [isPending, startTransition] = useTransition()
+  const { setHistoryDialogIsOpen } = useHistoryDialog();
 
   const fetchInitialChats = useCallback(async () => {
     setIsLoading(true)
@@ -68,10 +61,24 @@ export function ChatHistoryClient() {
     }
   }, [fetchInitialChats])
 
-  const fetchMoreChats = useCallback(async () => {
-    if (isLoading || nextOffset === null) return
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        setHistoryDialogIsOpen(false)
+      }
+    }
 
-    setIsLoading(true)
+    window.addEventListener('keydown', handleKeyDown)
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown)
+    }
+  }, [setHistoryDialogIsOpen])
+
+
+  const fetchMoreChats = useCallback(async () => {
+    if (isLoadingMore || nextOffset === null) return
+
+    setIsLoadingMore(true)
     try {
       const response = await fetch(`/api/chats?offset=${nextOffset}&limit=20`)
       if (!response.ok) {
@@ -87,9 +94,9 @@ export function ChatHistoryClient() {
       toast.error('Failed to load more chat history.')
       setNextOffset(null)
     } finally {
-      setIsLoading(false)
+      setIsLoadingMore(false)
     }
-  }, [nextOffset, isLoading])
+  }, [nextOffset, isLoadingMore])
 
   useEffect(() => {
     const observerRefValue = loadMoreRef.current
@@ -97,7 +104,7 @@ export function ChatHistoryClient() {
 
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting && !isLoading && !isPending) {
+        if (entry.isIntersecting && !isLoadingMore && !isPending) {
           fetchMoreChats()
         }
       },
@@ -111,37 +118,207 @@ export function ChatHistoryClient() {
         observer.unobserve(observerRefValue)
       }
     }
-  }, [fetchMoreChats, nextOffset, isLoading, isPending])
+  }, [fetchMoreChats, nextOffset, isLoadingMore, isPending])
 
-  const isHistoryEmpty = !isLoading && !chats.length && nextOffset === null
+  // Filter chats based on search query
+  const filteredChats = chats.filter(chat => {
+    if (!searchQuery.trim()) return true
+
+    const searchLower = searchQuery.toLowerCase()
+    return (
+      chat.title?.toLowerCase().includes(searchLower) ||
+      chat.messages?.some(message => {
+        const content = (message as any).content
+
+        // Normalize non-string content into a string before searching.
+        // Handle strings, numbers, booleans, arrays and objects safely.
+        const contentStr =
+          typeof content === 'string'
+            ? content
+            : typeof content === 'number' || typeof content === 'boolean'
+              ? String(content)
+              : Array.isArray(content)
+                ? JSON.stringify(content)
+                : content && typeof content === 'object'
+                  ? JSON.stringify(content)
+                  : ''
+
+        return contentStr.toLowerCase().includes(searchLower)
+      })
+    )
+  })
+
+  // Group chats by date with new categories
+  const groupChatsByDate = () => {
+    const now = new Date()
+    const startOfToday = new Date(now.getFullYear(), now.getMonth(), now.getDate())
+    const startOfThisWeek = new Date(now)
+    startOfThisWeek.setDate(now.getDate() - now.getDay()) // Start of week (Sunday)
+    const startOfLastWeek = new Date(startOfThisWeek)
+    startOfLastWeek.setDate(startOfThisWeek.getDate() - 7)
+    const startOfThisMonth = new Date(now.getFullYear(), now.getMonth(), 1)
+    const startOfLastMonth = new Date(now.getFullYear(), now.getMonth() - 1, 1)
+
+    const groups = {
+      thisWeek: [] as Chat[],
+      lastWeek: [] as Chat[],
+      thisMonth: [] as Chat[],
+      older: [] as Chat[]
+    }
+
+    filteredChats.forEach((chat) => {
+      if (!chat.createdAt) return
+
+      let chatDate: Date
+      if (typeof chat.createdAt === 'object' && 'seconds' in chat.createdAt) {
+        chatDate = new Date((chat.createdAt as any).seconds * 1000)
+      } else {
+        chatDate = new Date(chat.createdAt)
+      }
+
+      if (isNaN(chatDate.getTime())) return
+
+      if (chatDate >= startOfThisWeek) {
+        groups.thisWeek.push(chat)
+      } else if (chatDate >= startOfLastWeek) {
+        groups.lastWeek.push(chat)
+      } else if (chatDate >= startOfThisMonth) {
+        groups.thisMonth.push(chat)
+      } else {
+        groups.older.push(chat)
+      }
+    })
+
+    return groups
+  }
+
+  const groups = groupChatsByDate()
+  const hasChats = groups.thisWeek.length > 0 || groups.lastWeek.length > 0 ||
+    groups.thisMonth.length > 0 || groups.older.length > 0
 
   return (
-    <div className="flex flex-col flex-1 h-full">
-      <SidebarGroup>
-        <div className="flex items-center justify-between w-full">
-          <SidebarGroupLabel className="p-0">History</SidebarGroupLabel>
-          <ClearHistoryAction empty={isHistoryEmpty} />
+    <div className="w-full max-w-3xl h-[60vh] sm:h-[80vh] p-0 bg-popover text-popover-foreground border border-border rounded-2xl shadow-xl overflow-hidden flex flex-col gap-0 cosmic-glass HiddenScrollbar">
+      <div className="flex-shrink-0 py-2 px-4">
+        <div className="flex items-center gap-3 mb-1">
+          <Search size={16} className="text-muted-foreground" />
+          <input
+            placeholder="Search titles and messages..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="border-none bg-transparent focus:outline-none text-sm h-8 flex-1 placeholder-muted-foreground/60"
+          />
+          <button
+            onClick={() => setHistoryDialogIsOpen(false)}
+            className="p-1 rounded-full hover:bg-muted transition-colors"
+          >
+            <X size={14} />
+          </button>
         </div>
-      </SidebarGroup>
-      <div className="flex-1 overflow-y-auto mb-2 relative HiddenScrollbar">
-        {isHistoryEmpty && !isPending ? (
-          <div className="px-2 text-foreground/30 text-sm text-center py-4">
-            No search history
-          </div>
-        ) : (
-          <SidebarMenu>
-            {chats.map(
-              (chat: Chat) => chat && <ChatMenuItem key={chat.id} chat={chat} />
-            )}
-          </SidebarMenu>
-        )}
-        <div ref={loadMoreRef} style={{ height: '1px' }} />
-        {(isLoading || isPending) && (
+
+        <div className='w-full h-[1px] bg-border' />
+      </div>
+
+      <div className="flex-1 overflow-y-auto py-2 px-2">
+        {isLoading ? (
+          // Show skeleton only during initial load when no chats are loaded yet
           <div className="py-2">
             <ChatHistorySkeleton />
           </div>
+        ) : !hasChats ? (
+          // Show empty state only after initial load is complete and no chats exist
+          <div className="flex flex-col items-center justify-center py-32 text-center">
+            <MessageCircle size={48} className="text-muted-foreground/40 mb-3" />
+            <p className="text-sm text-muted-foreground">
+              {searchQuery ? 'No chats found' : 'No chat history'}
+            </p>
+            {searchQuery && (
+              <p className="text-xs text-muted-foreground/60 mt-1">Try a different search term</p>
+            )}
+          </div>
+        ) : (
+          <>
+            {groups.thisWeek.length > 0 && (
+              <div className="mb-2">
+                <h3 className="text-xs font-semibold text-chart-1 px-3 py-2 bg-primary/10 rounded-lg  flex items-center gap-2">
+                  <History size={16} /> This Week
+                </h3>
+                <div className="space-y-1">
+                  {groups.thisWeek.map((chat) => (
+                    <ChatMenuItem
+                      key={chat.id}
+                      chat={chat}
+                    />
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {groups.lastWeek.length > 0 && (
+              <div className="mb-2">
+                <h3 className="text-xs font-semibold text-chart-1 px-3 py-2 bg-primary/10 rounded-lg  flex items-center gap-2">
+                  <History size={16} /> Last Week
+                </h3>
+                <div className="space-y-1">
+                  {groups.lastWeek.map((chat) => (
+                    <ChatMenuItem
+                      key={chat.id}
+                      chat={chat}
+                    />
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {groups.thisMonth.length > 0 && (
+              <div className="mb-2">
+                <h3 className="text-xs font-semibold text-chart-1 px-3 py-2 bg-primary/10 rounded-lg  flex items-center gap-2">
+                  <History size={16} /> This Month
+                </h3>
+                <div className="space-y-1">
+                  {groups.thisMonth.map((chat) => (
+                    <ChatMenuItem
+                      key={chat.id}
+                      chat={chat}
+                    />
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {groups.older.length > 0 && (
+              <div className="mb-2">
+                <h3 className="text-xs font-semibold text-chart-1 px-3 py-2 bg-primary/10 rounded-lg flex items-center gap-2">
+                  <History size={16} />  Older
+                </h3>
+                <div className="space-y-1">
+                  {groups.older.map((chat) => (
+                    <ChatMenuItem
+                      key={chat.id}
+                      chat={chat}
+                    />
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Loading skeleton for infinite scroll - only show when loading more */}
+            {(isLoadingMore || isPending) && (
+              <div className="py-2">
+                <ChatHistorySkeleton />
+              </div>
+            )}
+
+            {/* Load more trigger */}
+            <div ref={loadMoreRef} style={{ height: '1px' }} />
+          </>
         )}
       </div>
+
+      {/* <div className="border-t border-border/30 p-3 bg-muted/10">
+        <div className="text-xs text-muted-foreground text-center">
+          Designed and developed by Team Cluezy
+        </div>
+      </div> */}
     </div>
   )
 }

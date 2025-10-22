@@ -14,6 +14,7 @@ export function SearchModeToggle() {
 
   useEffect(() => {
     const savedMode = getCookie('search-mode')
+    console.log("savedmode", savedMode)
     if (savedMode !== null) {
       setIsSearchMode(savedMode === 'true')
     } else {
@@ -23,7 +24,7 @@ export function SearchModeToggle() {
 
   const handleSearchModeChange = (pressed: boolean) => {
     setIsSearchMode(pressed)
-    setCookie('search-mode', pressed.toString())
+    setCookie('search-mode', `${pressed}`)
   }
 
   return (
@@ -33,11 +34,10 @@ export function SearchModeToggle() {
       onPressedChange={handleSearchModeChange}
       variant="outline"
       className={cn(
-        'gap-1 px-3 border border-input text-muted-foreground bg-background',
-        'data-[state=on]:bg-accent-blue',
+        'gap-1 border border-input',
+        isSearchMode ? "text-secondary-foreground bg-secondary" : "text-muted-foreground bg-transparent",
+        'data-[state=on]:bg-secondary hover:bg-secondary/80 rounded-full',
         'data-[state=on]:text-accent-blue-foreground',
-        'data-[state=on]:border-accent-blue-border',
-        'hover:bg-accent hover:text-accent-foreground rounded-full'
       )}
     >
       <Globe className="size-4" />

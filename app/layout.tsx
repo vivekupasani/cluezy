@@ -11,9 +11,9 @@ import { Toaster } from '@/components/ui/sonner'
 
 import { ThemeProvider } from '@/components/theme-provider'
 
-import AppSidebar from '@/components/app-sidebar'
 import ArtifactRoot from '@/components/artifact/artifact-root'
 import Header from '@/components/header'
+import { HistoryDialogProvider } from '@/components/history-dialog'
 import './globals.css'
 
 const fontSans = FontSans({
@@ -21,7 +21,7 @@ const fontSans = FontSans({
   variable: '--font-sans'
 })
 
-const title = 'Cluezy'
+const title = 'Cluezy - Advanced AI search engine & Perplexity alternative | $12/month'
 const description =
   'AI-powered answer engine with a generative UI.'
 
@@ -69,28 +69,31 @@ export default async function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body
         className={cn(
-          'min-h-screen  flex flex-col font-sans antialiased',
+          'min-h-screen flex flex-col font-sans antialiased',
           fontSans.variable
         )}
       >
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
-          <SidebarProvider defaultOpen>
-            <div className="flex flex-col flex-1">
-              <AppSidebar />
-              <Header user={user} />
-              <main className="flex flex-1 min-h-0">
-                <ArtifactRoot>{children}</ArtifactRoot>
-              </main>
-            </div>
-          </SidebarProvider>
-          <Toaster />
-          <Analytics />
-        </ThemeProvider>
+        <HistoryDialogProvider>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+            <SidebarProvider defaultOpen>
+              <div className="flex flex-col flex-1">
+                {/* <AppSidebar /> */}
+                <Header user={user} />
+                <main className="flex flex-1 min-h-0">
+                  <ArtifactRoot>{children}</ArtifactRoot>
+                </main>
+                {/* <WaitlistPage /> */}
+              </div>
+            </SidebarProvider>
+            <Toaster />
+            <Analytics />
+          </ThemeProvider>
+        </HistoryDialogProvider>
       </body>
     </html>
   )

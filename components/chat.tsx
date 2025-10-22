@@ -12,6 +12,7 @@ import { cn } from '@/lib/utils'
 
 import { ChatMessages } from './chat-messages'
 import { ChatPanel } from './chat-panel'
+import { HistoryDialog, useHistoryDialog } from './history-dialog'
 
 // Define section structure
 interface ChatSection {
@@ -33,6 +34,7 @@ export function Chat({
 }) {
   const scrollContainerRef = useRef<HTMLDivElement>(null)
   const [isAtBottom, setIsAtBottom] = useState(true)
+  const { isHistoryDialogOpen } = useHistoryDialog();
 
   const {
     messages,
@@ -243,6 +245,8 @@ export function Chat({
         showScrollToBottomButton={!isAtBottom}
         scrollContainerRef={scrollContainerRef}
       />
+
+      {isHistoryDialogOpen && <HistoryDialog />}
     </div>
   )
 }
