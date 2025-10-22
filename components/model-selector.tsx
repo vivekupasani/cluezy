@@ -45,7 +45,7 @@ interface ModelSelectorProps {
 export function ModelSelector({ models }: ModelSelectorProps) {
   const [open, setOpen] = useState(false)
   const [value, setValue] = useState('')
-  const DEFAULT_SELECTED_MODEL = {
+  const DEFAULT_SELECTED_MODEL: Model = {
     "id": "gemini-2.5-flash",
     "name": "Gemini 2.5 Flash",
     "provider": "Google Generative AI",
@@ -66,6 +66,7 @@ export function ModelSelector({ models }: ModelSelectorProps) {
     }
     else {
       setCookie('selectedModel', JSON.stringify(DEFAULT_SELECTED_MODEL))
+      setValue(createModelId(DEFAULT_SELECTED_MODEL))
     }
   }, [])
 
