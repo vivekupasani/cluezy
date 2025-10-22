@@ -1,31 +1,28 @@
 'use client'
 
 // import Link from 'next/link' // No longer needed directly here for Sign In button
-import React from 'react'
+import React from 'react';
 
 
-import { cn } from '@/lib/utils'
+import { cn } from '@/lib/utils';
 
-import { useSidebar } from '@/components/ui/sidebar'
 
 // import { Button } from './ui/button' // No longer needed directly here for Sign In button
-import { Cross, TextSearch } from 'lucide-react'
+import { Cross, TextSearch } from 'lucide-react';
 import GuestMenu from './guest-menu'; // Import the new GuestMenu component
-import { useHistoryDialog } from './history-dialog'
-import UserMenu from './user-menu'
+import { useHistoryDialog } from './history-dialog';
+import UserMenu from './user-menu';
 
 interface HeaderProps {
   user: any
 }
 
 export const Header: React.FC<HeaderProps> = ({ user }) => {
-  const { open } = useSidebar()
   const { setHistoryDialogIsOpen } = useHistoryDialog();
   return (
     <header
       className={cn(
-        'absolute top-0 left-0 right-0 p-2 flex justify-between items-center z-10 backdrop-blur lg:backdrop-blur bg-background/80 lg:bg-transparent transition-[width] duration-200 ease-linear',
-        open ? 'md:w-[calc(100%-var(--sidebar-width))]' : 'md:w-full',
+        'absolute top-0 right-0 p-2 flex justify-between items-center z-10 backdrop-blur lg:backdrop-blur bg-background/80 lg:bg-transparent transition-[width] duration-200 ease-linear',
         'w-full'
       )}
     >
