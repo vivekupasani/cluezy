@@ -122,6 +122,8 @@ export const SearchResultsImageSection: React.FC<
 
         return (
           <Dialog key={actualIndex}>
+
+            {/* main images grid */}
             <DialogTrigger asChild>
               <div
                 className="aspect-video cursor-pointer relative"
@@ -154,7 +156,9 @@ export const SearchResultsImageSection: React.FC<
                   )}
               </div>
             </DialogTrigger>
-            <DialogContent className="sm:max-w-3xl max-h-[80vh] overflow-hidden CustomScrollbar">
+
+            {/* full image preview mode */}
+            <DialogContent className="sm:max-w-3xl max-h-[80vh] overflow-hidden CustomScrollbar bg-gradient-to-br from-background/95 via-background to-background/90 backdrop-blur-sm shadow-inner shadow-card-foreground/10">
               <DialogHeader>
                 <DialogTitle>Search Images</DialogTitle>
                 <DialogDescription className="text-sm">
@@ -189,10 +193,10 @@ export const SearchResultsImageSection: React.FC<
                   </CarouselContent>
                   {convertedImages.length > 1 && (
                     <div className="absolute inset-8 flex items-center justify-between p-4">
-                      <CarouselPrevious className="w-10 h-10 rounded-full shadow focus:outline-none">
+                      <CarouselPrevious className="w-10 h-10 rounded-full focus:outline-none bg-gradient-to-br from-card/95 via-card to-card/90 backdrop-blur-sm shadow-inner shadow-card-foreground/10">
                         <span className="sr-only">Previous</span>
                       </CarouselPrevious>
-                      <CarouselNext className="w-10 h-10 rounded-full shadow focus:outline-none">
+                      <CarouselNext className="w-10 h-10 rounded-full focus:outline-none bg-gradient-to-br from-card/95 via-card to-card/90 backdrop-blur-sm shadow-inner shadow-card-foreground/10">
                         <span className="sr-only">Next</span>
                       </CarouselNext>
                     </div>

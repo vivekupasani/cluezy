@@ -4,38 +4,38 @@
 
 @layer base {
   :root {
-    --background: #faf5fa;
-    --foreground: #501854;
-    --card: #faf5fa;
-    --card-foreground: #501854;
-    --popover: #ffffff;
-    --popover-foreground: #501854;
-    --primary: #a84370;
-    --primary-foreground: #ffffff;
-    --secondary: #f1c4e6;
-    --secondary-foreground: #77347c;
-    --muted: #f6e5f3;
-    --muted-foreground: #834588;
-    --accent: #f1c4e6;
-    --accent-foreground: #77347c;
-    --destructive: #ab4347;
-    --destructive-foreground: #ffffff;
-    --border: #efbdeb;
-    --input: #e7c1dc;
-    --ring: #db2777;
-    --chart-1: #d926a2;
-    --chart-2: #6c12b9;
-    --chart-3: #274754;
-    --chart-4: #e8c468;
-    --chart-5: #f4a462;
-    --sidebar: #f3e4f6;
-    --sidebar-foreground: #ac1668;
-    --sidebar-primary: #454554;
-    --sidebar-primary-foreground: #faf1f7;
-    --sidebar-accent: #f8f8f7;
-    --sidebar-accent-foreground: #454554;
-    --sidebar-border: #eceae9;
-    --sidebar-ring: #db2777;
+    --background: 223.8136 -172.5242% 100%;
+    --foreground: 223.8136 0% 3.9388%;
+    --card: 223.8136 -172.5242% 100%;
+    --card-foreground: 223.8136 0% 3.9388%;
+    --popover: 223.8136 -172.5242% 100%;
+    --popover-foreground: 223.8136 0% 3.9388%;
+    --primary: 223.8136 0% 9.0527%;
+    --primary-foreground: 223.8136 0.0004% 98.0256%;
+    --secondary: 223.8136 0.0002% 96.0587%;
+    --secondary-foreground: 223.8136 0% 9.0527%;
+    --muted: 223.8136 0.0002% 96.0587%;
+    --muted-foreground: 223.8136 0% 45.1519%;
+    --accent: 223.8136 0.0002% 96.0587%;
+    --accent-foreground: 223.8136 0% 9.0527%;
+    --destructive: 351.7303 123.6748% 40.5257%;
+    --destructive-foreground: 223.8136 -172.5242% 100%;
+    --border: 223.8136 0.0001% 89.8161%;
+    --input: 223.8136 0.0001% 89.8161%;
+    --ring: 223.8136 0% 63.0163%;
+    --chart-1: 211.788 101.9718% 78.6759%;
+    --chart-2: 217.4076 91.3672% 59.5787%;
+    --chart-3: 221.4336 86.3731% 54.0624%;
+    --chart-4: 223.6587 78.718% 47.8635%;
+    --chart-5: 226.5426 70.0108% 39.9224%;
+    --sidebar: 223.8136 0.0004% 98.0256%;
+    --sidebar-foreground: 223.8136 0% 3.9388%;
+    --sidebar-primary: 223.8136 0% 9.0527%;
+    --sidebar-primary-foreground: 223.8136 0.0004% 98.0256%;
+    --sidebar-accent: 223.8136 0.0002% 96.0587%;
+    --sidebar-accent-foreground: 223.8136 0% 9.0527%;
+    --sidebar-border: 223.8136 0.0001% 89.8161%;
+    --sidebar-ring: 223.8136 0% 63.0163%;
     --font-sans:
       ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI',
       Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif,
@@ -45,7 +45,7 @@
     --font-mono:
       ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono',
       'Courier New', monospace;
-    --radius: 0.5rem;
+    --radius: 0.625rem;
     --shadow-x: 0;
     --shadow-y: 1px;
     --shadow-blur: 3px;
@@ -70,38 +70,38 @@
   }
 
   .dark {
-    --background: #221d27;
-    --foreground: #d2c4de;
-    --card: #2c2632;
-    --card-foreground: #dbc5d2;
-    --popover: #100a0e;
-    --popover-foreground: #f8f1f5;
-    --primary: #a3004c;
-    --primary-foreground: #efc0d8;
-    --secondary: #362d3d;
-    --secondary-foreground: #d4c7e1;
-    --muted: #28222d;
-    --muted-foreground: #c2b6cf;
-    --accent: #463753;
-    --accent-foreground: #f8f1f5;
-    --destructive: #301015;
-    --destructive-foreground: #ffffff;
-    --border: #3b3237;
-    --input: #3e343c;
-    --ring: #db2777;
-    --chart-1: #a84370;
-    --chart-2: #934dcb;
-    --chart-3: #e88c30;
-    --chart-4: #af57db;
-    --chart-5: #e23670;
-    --sidebar: #181117;
-    --sidebar-foreground: #e0cad6;
-    --sidebar-primary: #1d4ed8;
-    --sidebar-primary-foreground: #ffffff;
-    --sidebar-accent: #261922;
-    --sidebar-accent-foreground: #f4f4f5;
-    --sidebar-border: #000000;
-    --sidebar-ring: #db2777;
+    --background: 223.8136 0% 3.9388%;
+    --foreground: 223.8136 0.0004% 98.0256%;
+    --card: 223.8136 0% 9.0527%;
+    --card-foreground: 223.8136 0.0004% 98.0256%;
+    --popover: 223.8136 0% 14.9382%;
+    --popover-foreground: 223.8136 0.0004% 98.0256%;
+    --primary: 223.8136 0.0001% 89.8161%;
+    --primary-foreground: 223.8136 0% 9.0527%;
+    --secondary: 223.8136 0% 14.9382%;
+    --secondary-foreground: 223.8136 0.0004% 98.0256%;
+    --muted: 223.8136 0% 14.9382%;
+    --muted-foreground: 223.8136 0% 63.0163%;
+    --accent: 223.8136 0% 25.0471%;
+    --accent-foreground: 223.8136 0.0004% 98.0256%;
+    --destructive: 358.7594 101.8439% 69.8357%;
+    --destructive-foreground: 223.8136 0.0004% 98.0256%;
+    --border: 223.8136 0% 15.5096%;
+    --input: 223.8136 0% 20.3885%;
+    --ring: 223.8136 0% 45.1519%;
+    --chart-1: 211.788 101.9718% 78.6759%;
+    --chart-2: 217.4076 91.3672% 59.5787%;
+    --chart-3: 221.4336 86.3731% 54.0624%;
+    --chart-4: 223.6587 78.718% 47.8635%;
+    --chart-5: 226.5426 70.0108% 39.9224%;
+    --sidebar: 223.8136 0% 9.0527%;
+    --sidebar-foreground: 223.8136 0.0004% 98.0256%;
+    --sidebar-primary: 225.3451 84.0953% 48.9841%;
+    --sidebar-primary-foreground: 223.8136 0.0004% 98.0256%;
+    --sidebar-accent: 223.8136 0% 14.9382%;
+    --sidebar-accent-foreground: 223.8136 0.0004% 98.0256%;
+    --sidebar-border: 223.8136 0% 15.5096%;
+    --sidebar-ring: 223.8136 0% 32.1993%;
     --font-sans:
       ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI',
       Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif,
@@ -111,7 +111,7 @@
     --font-mono:
       ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono',
       'Courier New', monospace;
-    --radius: 0.5rem;
+    --radius: 0.625rem;
     --shadow-x: 0;
     --shadow-y: 1px;
     --shadow-blur: 3px;

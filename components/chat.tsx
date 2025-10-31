@@ -10,8 +10,11 @@ import { toast } from 'sonner'
 import { Model } from '@/lib/types/models'
 import { cn } from '@/lib/utils'
 
+import { createClient } from '@/lib/supabase/client'
+import { User } from '@supabase/supabase-js'
 import { ChatMessages } from './chat-messages'
 import { ChatPanel } from './chat-panel'
+import Header from './header'
 import { HistoryDialog, useHistoryDialog } from './history-dialog'
 
 // Define section structure
@@ -35,6 +38,7 @@ export function Chat({
   const scrollContainerRef = useRef<HTMLDivElement>(null)
   const [isAtBottom, setIsAtBottom] = useState(true)
   const { isHistoryDialogOpen } = useHistoryDialog();
+  const [user, setUser] = useState<User | null>(null)
 
   const {
     messages,
@@ -145,6 +149,24 @@ export function Chat({
   }, [sections, messages, id])
 
   useEffect(() => {
+    const getUserData = async () => {
+      const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
+      const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+
+      if (supabaseUrl && supabaseAnonKey) {
+        const supabase = await createClient()
+        const {
+          data: { user: supabaseUser }
+        } = await supabase.auth.getUser()
+        setUser(supabaseUser ?? null)
+      }
+    }
+    if (!user) {
+      getUserData()
+    }
+  }, [])
+
+  useEffect(() => {
     setMessages(savedMessages)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id])
@@ -220,6 +242,10 @@ export function Chat({
       )}
       data-testid="full-chat"
     >
+      {/* header component */}
+      <Header user={user} />
+
+      {/* messages component */}
       <ChatMessages
         sections={sections}
         data={data}
@@ -231,6 +257,8 @@ export function Chat({
         onUpdateMessage={handleUpdateAndReloadMessage}
         reload={handleReloadFrom}
       />
+
+      {/* input component */}
       <ChatPanel
         input={input}
         handleInputChange={handleInputChange}
@@ -246,6 +274,7 @@ export function Chat({
         scrollContainerRef={scrollContainerRef}
       />
 
+      {/* history dialog component  */}
       {isHistoryDialogOpen && <HistoryDialog />}
     </div>
   )

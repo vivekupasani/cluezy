@@ -44,6 +44,7 @@ export const Section: React.FC<SectionProps> = ({
     case 'Images':
       // eslint-disable-next-line jsx-a11y/alt-text
       icon = <Image size={iconSize} className={iconClassName} />
+      type = 'badge'
       break
     case 'Videos':
       icon = <Film size={iconSize} className={iconClassName} />

@@ -8,6 +8,7 @@ import RetrieveSection from './retrieve-section'
 import { SearchSection } from './search-section'
 import { VideoSearchSection } from './video-search-section'
 import { WeatherSection } from './weather-section'
+import { YoutubeVideoAnalysisSection } from './youtube-video-analysis-section'
 
 interface ToolSectionProps {
   tool: ToolInvocation
@@ -88,6 +89,10 @@ export function ToolSection({
           onOpenChange={onOpenChange}
           chatId={chatId || ''}
         />
+      )
+    case 'youtubeVideoAnalysis':
+      return (
+        <YoutubeVideoAnalysisSection tool={tool} />
       )
     case 'retrieve':
       return (

@@ -3,7 +3,6 @@ import { Inter as FontSans } from 'next/font/google'
 
 import { Analytics } from '@vercel/analytics/next'
 
-import { createClient } from '@/lib/supabase/server'
 import { cn } from '@/lib/utils'
 
 import { SidebarProvider } from '@/components/ui/sidebar'
@@ -12,7 +11,6 @@ import { Toaster } from '@/components/ui/sonner'
 import { ThemeProvider } from '@/components/theme-provider'
 
 import ArtifactRoot from '@/components/artifact/artifact-root'
-import Header from '@/components/header'
 import { HistoryDialogProvider } from '@/components/history-dialog'
 import './globals.css'
 
@@ -23,7 +21,7 @@ const fontSans = FontSans({
 
 const title = 'Cluezy - Advanced AI search engine & Perplexity alternative | $12/month'
 const description =
-  'AI-powered answer engine with a generative UI.'
+  'AI-powered search engine with a generative UI.'
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://morphic.sh'),
@@ -53,18 +51,18 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode
 }>) {
-  let user = null
+  // let user = null
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
   const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
 
-  if (supabaseUrl && supabaseAnonKey) {
-    const supabase = await createClient()
-    const {
-      data: { user: supabaseUser }
-    } = await supabase.auth.getUser()
-    user = supabaseUser
-  }
-
+  // if (supabaseUrl && supabaseAnonKey) {
+  //   const supabase = await createClient()
+  //   const {
+  //     data: { user: supabaseUser }
+  //   } = await supabase.auth.getUser()
+  //   user = supabaseUser
+  // }
+  // console.log("users", user)
   return (
     <html lang="en" suppressHydrationWarning>
       <body
@@ -83,7 +81,7 @@ export default async function RootLayout({
             <SidebarProvider defaultOpen>
               <div className="flex flex-col flex-1">
                 {/* <AppSidebar /> */}
-                <Header user={user} />
+                {/* <Header /> */}
                 <main className="flex flex-1 min-h-0">
                   <ArtifactRoot>{children}</ArtifactRoot>
                 </main>

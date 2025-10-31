@@ -6,7 +6,6 @@ import { Message } from 'ai'
 import {
   ArrowUp,
   ChevronDown,
-  MessageCirclePlus,
   Square
 } from 'lucide-react'
 import { useRouter } from 'next/navigation'
@@ -16,8 +15,8 @@ import { useArtifact } from './artifact/artifact-context'
 import { EmptyScreen } from './empty-screen'
 import { ModelSelector } from './model-selector'
 import Shuffle from './Shuffle'
+import { clearChatHistoryCache } from './sidebar/chat-history-client'
 import { Button } from './ui/button'
-import { HoverBorderGradient } from './ui/hover-border-gradient'
 import { TextLoop } from './ui/text-loop'
 
 interface ChatPanelProps {
@@ -66,6 +65,20 @@ export function ChatPanel({
       setEnterDisabled(false)
     }, 300)
   }
+
+  const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    // Prevent submission if input is empty
+    if (input.trim().length === 0) return;
+
+    // Prevent submission during tool invocation
+    if (isToolInvocationInProgress()) return;
+
+    clearChatHistoryCache()
+
+    handleSubmit(e);
+  };
 
   const handleNewChat = () => {
     setMessages([])
@@ -182,7 +195,7 @@ export function ChatPanel({
         </div>
       )}
       <form
-        onSubmit={handleSubmit}
+        onSubmit={handleFormSubmit}
         className={cn('w-full mx-auto relative max-w-4xl')}
       >
         {/* Scroll to bottom button */}
@@ -191,7 +204,7 @@ export function ChatPanel({
             type="button"
             variant="outline"
             size="icon"
-            className="absolute -top-10 right-2 sm:right-4 z-20 size-7 sm:size-8 rounded-full shadow-md"
+            className="absolute -top-10 right-2 sm:right-4 z-20 size-7 sm:size-8 rounded-full bg-gradient-to-br from-card/95 via-card to-card/90 backdrop-blur-sm shadow-inner shadow-card-foreground/10"
             onClick={handleScrollToBottom}
             title="Scroll to bottom"
           >
@@ -199,8 +212,8 @@ export function ChatPanel({
           </Button>
         )}
 
-        <HoverBorderGradient as="div" className={cn(
-          "relative flex flex-row items-start gap-3 px-4 py-3 w-full bg-muted rounded-[22px] hover:border-border transition-colors"
+        <div className={cn(
+          "relative flex flex-row items-start gap-3 px-4 py-3 w-full bg-gradient-to-br from-card/95 via-card to-card/90 backdrop-blur-sm shadow-inner shadow-card-foreground/10 rounded-[22px] border-b border-border/50 transition-colors"
         )}>
           {/* Icon */}
           <div className="flex-shrink-0">
@@ -230,7 +243,7 @@ export function ChatPanel({
               spellCheck={true}
               autoFocus={true}
               value={input}
-              disabled={isLoading || isToolInvocationInProgress()}
+              disabled={isToolInvocationInProgress()}
               className="flex-1 resize-none HiddenScrollbar bg-transparent text-foreground placeholder:text-neutral-500 outline-none text-sm disabled:cursor-not-allowed disabled:opacity-50 min-h-6"
               onChange={e => {
                 handleInputChange(e)
@@ -272,7 +285,7 @@ export function ChatPanel({
               )
             }
 
-            {messages.length > 0 && (
+            {/* {messages.length > 0 && (
               <Button
                 variant="outline"
                 size="icon"
@@ -283,7 +296,7 @@ export function ChatPanel({
               >
                 <MessageCirclePlus size={18} />
               </Button>
-            )}
+            )} */}
 
             {/* Send button */}
             <Button
@@ -307,7 +320,7 @@ export function ChatPanel({
               )}
             </Button>
           </div>
-        </HoverBorderGradient>
+        </div>
 
         {messages.length === 0 && (
           <EmptyScreen

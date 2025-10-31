@@ -1,31 +1,32 @@
-import { Atom, BookOpenCheck, Bot, Brain, Code, DollarSign, FileText, Heart, Laptop, Layers, Leaf, MessageSquare, Recycle, Signal, Sparkles, TrendingUp, Wallet } from 'lucide-react';
+import { BookOpen, Clock, CloudRain, CloudSun, FileSearch, FileText, Globe, GraduationCap, MessageCircle, Search, ShoppingBag, ShoppingCart, Video, Youtube } from 'lucide-react';
 import { Button } from './ui';
 
 const latestTrendingQuestions = [
-  { heading: 'Quantum computing for cybersecurity', message: 'How is quantum computing transforming cybersecurity in 2025?', icon: Atom },
-  { heading: 'Agentic AI skills', message: 'Why are Agentic AI skills considered critical for tech professionals now?', icon: Brain },
-  { heading: '5G-enabled SaaS products', message: 'What new SaaS products are emerging thanks to 5G expansion?', icon: Signal },
-  { heading: 'Ethical AI in education', message: 'How are policymakers applying ethical AI to public education this year?', icon: BookOpenCheck },
-  { heading: 'Sustainable SaaS innovations', message: 'What are the top sustainable SaaS innovations in 2025?', icon: Leaf },
-  { heading: 'Startup ideas: Remote working tools', message: 'What are the most successful tech startup ideas for remote working?', icon: Laptop },
-  { heading: 'FinTech API opportunities', message: 'What new FinTech APIs are disrupting the payments industry?', icon: Wallet },
-  { heading: 'AI-powered content optimization', message: 'How does AI enhance content optimization for SaaS platforms?', icon: FileText },
-  { heading: 'Micro-SaaS advantages', message: 'Why is micro-SaaS gaining popularity among entrepreneurs?', icon: Layers },
-  { heading: 'Summary: https://arxiv.org/pdf/2501.05707', message: 'Summary: https://arxiv.org/pdf/2501.05707', icon: FileText }
+  { heading: 'Smart Search', message: 'What’s trending on the web right now?', icon: Search },
+  { heading: 'Academic Research', message: 'Find recent papers on AI and machine learning.', icon: BookOpen },
+  { heading: 'Document Insights', message: 'Retrieve key points from uploaded company documents.', icon: FileSearch },
+  { heading: 'Video Discovery', message: 'Find YouTube videos explaining blockchain in simple terms.', icon: Video },
+  { heading: 'Ask Anything', message: 'Ask questions about tech, science, or daily topics.', icon: MessageCircle },
+  { heading: 'Weather Update', message: 'What’s the weather like in Mumbai today?', icon: CloudSun },
+  { heading: 'YouTube Analysis', message: 'Summarize this YouTube video: https://youtu.be/example', icon: Youtube },
+  { heading: 'Date & Time Tools', message: 'Convert 5 PM IST to EST instantly.', icon: Clock },
+  { heading: 'Product Finder', message: 'Search for the best laptops under ₹70,000.', icon: ShoppingCart },
+  { heading: 'File Search (PDF/DOC/PPT)', message: 'Summarize the content of this uploaded PDF.', icon: FileText }
 ];
 
 const trendingQuestions = [
-  { heading: 'What is Agentic AI?', message: 'What is Agentic AI and why is it trending in 2025?', icon: Bot },
-  { heading: 'Best AI for coding', message: 'Which AI tools are best for coding tasks in 2025?', icon: Code },
-  { heading: 'Generative AI applications', message: 'What are the most impactful generative AI applications this year?', icon: Sparkles },
-  { heading: 'Quantum computing breakthroughs', message: 'What are the latest breakthroughs in quantum computing?', icon: Atom },
-  { heading: 'Top AI startups 2025', message: 'Which AI startups are making headlines in 2025?', icon: TrendingUp },
-  { heading: 'AI for therapy and wellbeing', message: 'How is AI being used for therapy and personal wellbeing?', icon: Heart },
-  { heading: '5G’s impact on technology', message: 'How is 5G transforming tech and business in 2025?', icon: Signal },
-  { heading: 'Sustainable technology trends', message: 'Which sustainable technologies are gaining momentum this year?', icon: Recycle },
-  { heading: 'AI agents vs Chatbots', message: 'How are AI agents different from traditional chatbots?', icon: MessageSquare },
-  { heading: 'Investment trends in SaaS', message: 'What are the current trends in SaaS startup investments?', icon: DollarSign }
+  { heading: 'Web Search Trends', message: 'Show me the latest news in artificial intelligence.', icon: Globe },
+  { heading: 'Academic Papers', message: 'Find scholarly articles about climate change.', icon: GraduationCap },
+  { heading: 'Retrieve from Docs', message: 'What does the policy document say about leave rules?', icon: FileSearch },
+  { heading: 'Video Search', message: 'Find videos that explain Stripe integration in Next.js.', icon: Video },
+  { heading: 'General Q&A', message: 'Explain clean architecture in Flutter.', icon: MessageCircle },
+  { heading: 'Weather Forecast', message: 'Will it rain in Delhi tomorrow?', icon: CloudRain },
+  { heading: 'YouTube Breakdown', message: 'Summarize this tech talk video from YouTube.', icon: Youtube },
+  { heading: 'Time Conversion', message: 'What time is it in New York when it’s 10 AM in India?', icon: Clock },
+  { heading: 'Product Comparison', message: 'Compare iPhone 15 vs Samsung S24.', icon: ShoppingBag },
+  { heading: 'Search in Files', message: 'Find “financial report” inside this PDF document.', icon: FileText }
 ];
+
 
 export function EmptyScreen({
   submitMessage,

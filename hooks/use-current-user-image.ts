@@ -11,7 +11,7 @@ export const useCurrentUserImage = () => {
         console.error(error)
       }
 
-      setImage(data.session?.user.user_metadata.avatar_url ?? null)
+      setImage(data.session?.user.user_metadata.avatar_url ?? data.session?.user.user_metadata.picture ?? null)
     }
     fetchUserImage()
   }, [])

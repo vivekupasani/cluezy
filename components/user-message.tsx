@@ -58,7 +58,7 @@ export const UserMessage: React.FC<UserMessageProps> = ({
               value={editedContent}
               onChange={e => setEditedContent(e.target.value)}
               autoFocus
-              className="resize-none flex w-full rounded-md border border-input bg-background px-3 py-2 text-sm placeholder:text-muted-foreground focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50"
+              className="resize-none flex w-full rounded-md shadow-inner shadow-foreground/10 border border-input bg-background px-3 py-2 text-sm placeholder:text-muted-foreground focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50"
               minRows={2}
               maxRows={10}
             />
@@ -72,7 +72,7 @@ export const UserMessage: React.FC<UserMessageProps> = ({
             </div>
           </div>
         ) : (
-          <div className="flex justify-between items-start">
+          <div className="flex justify-between items-start bg-gradient-to-br from-muted/75 via-card/65 to-muted/10 backdrop-blur-sm shadow-inner shadow-muted/5 border-b border-border/10 p-2 rounded-lg">
             <div className="max-w-2xl">{message}</div>
             <div
               className={cn(

@@ -1,13 +1,24 @@
 'use client'
 
+import { Chat } from '@/lib/types'
 import { History, MessageCircle, Search, X } from 'lucide-react'
 import { useCallback, useEffect, useRef, useState, useTransition } from 'react'
 import { toast } from 'sonner'
-
-import { Chat } from '@/lib/types'
 import { useHistoryDialog } from '../history-dialog'
 import { ChatHistorySkeleton } from './chat-history-skeleton'
 import { ChatMenuItem } from './chat-menu-item'
+
+// 🧠 Global cache (persists while app is running)
+let cachedChats: Chat[] | null = null
+let cachedNextOffset: number | null = null
+let hasFetchedOnce = false
+
+// 🧹 Exported reset function — call this when new chat is added or deleted
+export function clearChatHistoryCache() {
+  cachedChats = null
+  cachedNextOffset = null
+  hasFetchedOnce = false
+}
 
 interface ChatPageResponse {
   chats: Chat[]
@@ -15,14 +26,14 @@ interface ChatPageResponse {
 }
 
 export function ChatHistoryClient() {
-  const [chats, setChats] = useState<Chat[]>([])
-  const [nextOffset, setNextOffset] = useState<number | null>(null)
-  const [isLoading, setIsLoading] = useState(true)
+  const [chats, setChats] = useState<Chat[]>(cachedChats || [])
+  const [nextOffset, setNextOffset] = useState<number | null>(cachedNextOffset)
+  const [isLoading, setIsLoading] = useState(!hasFetchedOnce)
   const [isLoadingMore, setIsLoadingMore] = useState(false)
   const [searchQuery, setSearchQuery] = useState('')
   const loadMoreRef = useRef<HTMLDivElement>(null)
   const [isPending, startTransition] = useTransition()
-  const { setHistoryDialogIsOpen } = useHistoryDialog();
+  const { setHistoryDialogIsOpen } = useHistoryDialog()
 
   const fetchInitialChats = useCallback(async () => {
     setIsLoading(true)
@@ -31,11 +42,16 @@ export function ChatHistoryClient() {
       if (!response.ok) {
         throw new Error('Failed to fetch initial chat history')
       }
+
       const { chats: newChats, nextOffset: newNextOffset } =
         (await response.json()) as ChatPageResponse
 
+      // ✅ Update both state and cache
       setChats(newChats)
       setNextOffset(newNextOffset)
+      cachedChats = newChats
+      cachedNextOffset = newNextOffset
+      hasFetchedOnce = true
     } catch (error) {
       console.error('Failed to load initial chats:', error)
       toast.error('Failed to load chat history.')
@@ -45,8 +61,11 @@ export function ChatHistoryClient() {
     }
   }, [])
 
+  // 🧠 Only fetch when cache is empty
   useEffect(() => {
-    fetchInitialChats()
+    if (!hasFetchedOnce) {
+      fetchInitialChats()
+    }
   }, [fetchInitialChats])
 
   useEffect(() => {
@@ -69,11 +88,8 @@ export function ChatHistoryClient() {
     }
 
     window.addEventListener('keydown', handleKeyDown)
-    return () => {
-      window.removeEventListener('keydown', handleKeyDown)
-    }
+    return () => window.removeEventListener('keydown', handleKeyDown)
   }, [setHistoryDialogIsOpen])
-
 
   const fetchMoreChats = useCallback(async () => {
     if (isLoadingMore || nextOffset === null) return
@@ -84,11 +100,17 @@ export function ChatHistoryClient() {
       if (!response.ok) {
         throw new Error('Failed to fetch more chat history')
       }
+
       const { chats: newChats, nextOffset: newNextOffset } =
         (await response.json()) as ChatPageResponse
 
-      setChats(prevChats => [...prevChats, ...newChats])
+      const updatedChats = [...chats, ...newChats]
+      setChats(updatedChats)
       setNextOffset(newNextOffset)
+
+      // ✅ Update cache
+      cachedChats = updatedChats
+      cachedNextOffset = newNextOffset
     } catch (error) {
       console.error('Failed to load more chats:', error)
       toast.error('Failed to load more chat history.')
@@ -96,8 +118,9 @@ export function ChatHistoryClient() {
     } finally {
       setIsLoadingMore(false)
     }
-  }, [nextOffset, isLoadingMore])
+  }, [nextOffset, isLoadingMore, chats])
 
+  // Infinite scroll logic (same as before)
   useEffect(() => {
     const observerRefValue = loadMoreRef.current
     if (!observerRefValue || nextOffset === null || isPending) return
@@ -112,11 +135,8 @@ export function ChatHistoryClient() {
     )
 
     observer.observe(observerRefValue)
-
     return () => {
-      if (observerRefValue) {
-        observer.unobserve(observerRefValue)
-      }
+      if (observerRefValue) observer.unobserve(observerRefValue)
     }
   }, [fetchMoreChats, nextOffset, isLoadingMore, isPending])
 
@@ -197,7 +217,7 @@ export function ChatHistoryClient() {
     groups.thisMonth.length > 0 || groups.older.length > 0
 
   return (
-    <div className="w-full max-w-3xl h-[60vh] sm:h-[80vh] p-0 bg-popover text-popover-foreground border border-border rounded-2xl shadow-xl overflow-hidden flex flex-col gap-0 cosmic-glass HiddenScrollbar">
+    <div className="w-full max-w-3xl h-[60vh] sm:h-[80vh] p-0 bg-gradient-to-br from-popover/75 via-popover/55 to-popover/65 shadow-inner shadow-popover-foreground/10 backdrop-blur-sm text-popover-foreground border border-border rounded-2xl overflow-hidden flex flex-col gap-0 cosmic-glass HiddenScrollbar">
       <div className="flex-shrink-0 py-2 px-4">
         <div className="flex items-center gap-3 mb-1">
           <Search size={16} className="text-muted-foreground" />
@@ -239,7 +259,7 @@ export function ChatHistoryClient() {
           <>
             {groups.thisWeek.length > 0 && (
               <div className="mb-2">
-                <h3 className="text-xs font-semibold text-chart-1 px-3 py-2 bg-primary/10 rounded-lg  flex items-center gap-2">
+                <h3 className="text-xs font-semibold text-foreground px-3 py-2 bg-primary/10 rounded-lg flex items-center gap-2">
                   <History size={16} /> This Week
                 </h3>
                 <div className="space-y-1">
@@ -255,7 +275,7 @@ export function ChatHistoryClient() {
 
             {groups.lastWeek.length > 0 && (
               <div className="mb-2">
-                <h3 className="text-xs font-semibold text-chart-1 px-3 py-2 bg-primary/10 rounded-lg  flex items-center gap-2">
+                <h3 className="text-xs font-semibold text-foreground px-3 py-2 bg-primary/10 rounded-lg  flex items-center gap-2">
                   <History size={16} /> Last Week
                 </h3>
                 <div className="space-y-1">
@@ -271,7 +291,7 @@ export function ChatHistoryClient() {
 
             {groups.thisMonth.length > 0 && (
               <div className="mb-2">
-                <h3 className="text-xs font-semibold text-chart-1 px-3 py-2 bg-primary/10 rounded-lg  flex items-center gap-2">
+                <h3 className="text-xs font-semibold text-foreground px-3 py-2 bg-primary/10 rounded-lg  flex items-center gap-2">
                   <History size={16} /> This Month
                 </h3>
                 <div className="space-y-1">
@@ -287,7 +307,7 @@ export function ChatHistoryClient() {
 
             {groups.older.length > 0 && (
               <div className="mb-2">
-                <h3 className="text-xs font-semibold text-chart-1 px-3 py-2 bg-primary/10 rounded-lg flex items-center gap-2">
+                <h3 className="text-xs font-semibold text-foreground px-3 py-2 bg-primary/10 rounded-lg flex items-center gap-2">
                   <History size={16} />  Older
                 </h3>
                 <div className="space-y-1">

@@ -71,10 +71,12 @@ export async function handleStreamFinish({
       return
     }
 
-    // Get the chat from the database if it exists, otherwise create a new one
+    // Return from here if user is not authenticated
     if (userId == "anonymous") {
       return
     }
+
+    // Get the chat from the database if it exists, otherwise create a new one
     const savedChat = (await getChat(chatId, userId)) ?? {
       messages: [],
       createdAt: new Date(),

@@ -39,7 +39,7 @@ export function AnswerSection({
   }
 
   const message = content ? (
-    <div className="flex flex-col gap-1 px-4 w-screen  max-w-3xl">
+    <div className="flex flex-col gap-1 px-4 w-full  max-w-3xl">
       <BotMessage message={content} />
       {showActions && (
         <MessageActions

@@ -4,8 +4,8 @@ import React from 'react'
 
 import { useChat } from '@ai-sdk/react'
 import { JSONValue } from 'ai'
-import { ArrowRight } from 'lucide-react'
 
+import { Plus } from 'lucide-react'
 import { CollapsibleMessage } from './collapsible-message'
 import { Section } from './section'
 import { Button } from './ui/button'
@@ -74,24 +74,26 @@ export const RelatedQuestions: React.FC<RelatedQuestionsProps> = ({
       showIcon={false}
       showBorder={false}
     >
-      <Section title="Related" className="pt-0 pb-4 px-4 mx-4 sm:px-0">
+      <Section title="Related" className="pt-0 pb-4 mx-4">
         <div className="flex flex-col">
           {Array.isArray(relatedQuestions.items) ? (
             relatedQuestions.items
               ?.filter(item => item?.query !== '')
               .map((item, index) => (
-                <div className="flex items-start w-full" key={index}>
-                  <ArrowRight className="h-4 w-4 mr-2 mt-1 flex-shrink-0 text-accent-foreground/50" />
+                <div
+                  key={index}
+                  className="group flex items-start w-full py-2 border-b border-border hover:text-foreground"
+                >
                   <Button
-                    variant="link"
-                    className="flex-1 justify-start px-0 py-1 h-fit font-semibold text-accent-foreground/50 whitespace-normal text-left"
+                    className="flex-1 justify-start px-0 py-1 h-fit bg-transparent hover:bg-transparent font-semibold text-accent-foreground/50 group-hover:text-foreground whitespace-normal text-left"
                     type="submit"
-                    name={'related_query'}
+                    name="related_query"
                     value={item?.query}
                     onClick={() => onQuerySelect(item?.query)}
                   >
                     {item?.query}
                   </Button>
+                  <Plus className="hidden sm:visible h-4 w-4 mr-2 mt-1 flex-shrink-0 text-accent-foreground/50 group-hover:text-foreground" />
                 </div>
               ))
           ) : (

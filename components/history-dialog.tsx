@@ -29,7 +29,7 @@ export const useHistoryDialog = () => {
 
 export const HistoryDialog = () => {
     return (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-background/80 backdrop-blur-sm">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-background/10 backdrop-blur-sm">
             <ChatHistoryClient />
         </div>
     )

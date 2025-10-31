@@ -11,6 +11,7 @@ import { getCookie, setCookie } from '@/lib/utils/cookies'
 import { createModelId } from '../lib/utils'
 
 import { isReasoningModel } from '@/lib/utils/registry'
+import { toast } from 'sonner'
 import { Button } from './ui/button'
 import {
   Command,
@@ -79,6 +80,7 @@ export function ModelSelector({ models }: ModelSelectorProps) {
     )
     if (selectedModel) {
       setCookie('selectedModel', JSON.stringify(selectedModel))
+      toast.success(`Switched to ${selectedModel.name}`)
     } else {
       setCookie('selectedModel', '')
     }
@@ -107,7 +109,7 @@ export function ModelSelector({ models }: ModelSelectorProps) {
                 height={18}
                 className="bg-white rounded-full border"
               />
-              <span className="hidden sm:block text-xs font-medium">{selectedModel.name}</span>
+              <span className="text-xs font-medium">{selectedModel.name}</span>
               {isReasoningModel(selectedModel.id) && (
                 <Lightbulb size={12} className="hidden sm:block text-accent-blue-foreground" />
               )}
@@ -118,7 +120,7 @@ export function ModelSelector({ models }: ModelSelectorProps) {
           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-72 p-0" align="start">
+      <PopoverContent className="w-72 p-0 HiddenScrollbar" align="start">
         <Command>
           <CommandInput placeholder="Search models..." />
           <CommandList>

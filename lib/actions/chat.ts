@@ -202,6 +202,43 @@ export async function deleteChat(
   }
 }
 
+export async function renameChat(
+  chatId: string,
+  newTitle: string,
+  userId: string = 'anonymous'
+): Promise<{ success?: boolean; error?: string }> {
+  try {
+    const redis = await getRedis()
+    const chatKey = `chat:${chatId}`
+
+    const chat = await redis.hgetall<Chat>(chatKey)
+    if (!chat || Object.keys(chat).length === 0) {
+      return { error: 'Chat not found' }
+    }
+
+    // Optional ownership check
+    // if (chat.userId !== userId) {
+    //   return { error: 'Unauthorized' }
+    // }
+
+    const pipeline = redis.pipeline()
+    pipeline.hmset(chatKey, {
+      title: newTitle,
+      updatedAt: new Date().toISOString(),
+    })
+    await pipeline.exec()
+
+    revalidatePath('/')
+
+    return { success: true }
+  } catch (error) {
+    console.error(`Error renaming chat ${chatId}:`, error)
+    return { error: 'Failed to rename chat' }
+  }
+}
+
+
+
 export async function saveChat(chat: Chat, userId: string = 'anonymous') {
   try {
     const redis = await getRedis()
@@ -238,7 +275,7 @@ export async function shareChat(id: string, userId: string = 'anonymous') {
   const redis = await getRedis()
   const chat = await redis.hgetall<Chat>(`chat:${id}`)
 
-  if (!chat || chat.userId !== userId) {
+  if (!chat) {
     return null
   }
 

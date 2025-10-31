@@ -29,7 +29,6 @@ export function QuestionConfirmation({
   const { question, options, allowsInput, inputLabel, inputPlaceholder } =
     toolInvocation.args
 
-  // Get result data if available
   const resultData =
     toolInvocation.state === 'result' && toolInvocation.result
       ? toolInvocation.result
@@ -44,13 +43,11 @@ export function QuestionConfirmation({
     selectedOptions.length === 0 && (!allowsInput || inputText.trim() === '')
 
   const handleOptionChange = (label: string) => {
-    setSelectedOptions(prev => {
-      if (prev.includes(label)) {
-        return prev.filter(item => item !== label)
-      } else {
-        return [...prev, label]
-      }
-    })
+    setSelectedOptions(prev =>
+      prev.includes(label)
+        ? prev.filter(item => item !== label)
+        : [...prev, label]
+    )
   }
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -65,95 +62,71 @@ export function QuestionConfirmation({
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-
-    const response = {
-      selectedOptions,
-      inputText: inputText.trim(),
-      question
-    }
-
+    const response = { selectedOptions, inputText: inputText.trim(), question }
     onConfirm(toolInvocation.toolCallId, true, response)
     setCompleted(true)
   }
 
-  // Get options to display (from result or local state)
-  const getDisplayedOptions = (): string[] => {
-    if (resultData && Array.isArray(resultData.selectedOptions)) {
-      return resultData.selectedOptions
-    }
-    return selectedOptions
-  }
+  const getDisplayedOptions = (): string[] =>
+    resultData?.selectedOptions ?? selectedOptions
 
-  // Get input text to display (from result or local state)
-  const getDisplayedInputText = (): string => {
-    if (resultData && resultData.inputText) {
-      return resultData.inputText
-    }
-    return inputText
-  }
+  const getDisplayedInputText = (): string =>
+    resultData?.inputText ?? inputText
 
-  // Check if question was skipped
-  const wasSkipped = (): boolean => {
-    if (resultData && resultData.skipped) {
-      return true
-    }
-    return skipped
-  }
+  const wasSkipped = (): boolean => resultData?.skipped ?? skipped
 
   const updatedQuery = () => {
-    // If skipped, show skipped message
-    if (wasSkipped()) {
-      return 'Question skipped'
-    }
+    if (wasSkipped()) return 'Question skipped'
 
     const displayOptions = getDisplayedOptions()
     const displayInputText = getDisplayedInputText()
 
     const optionsText =
       displayOptions.length > 0 ? `Selected: ${displayOptions.join(', ')}` : ''
-
     const inputTextDisplay =
       displayInputText.trim() !== '' ? `Input: ${displayInputText}` : ''
 
     return [optionsText, inputTextDisplay].filter(Boolean).join(' | ')
   }
 
-  // Show result view if completed or if tool has result state
+  // ✅ Completed or result state view
   if (completed || toolInvocation.state === 'result') {
     const isSkipped = wasSkipped()
-
     return (
-      <Card className="p-3 md:p-4 w-full flex flex-col justify-between items-center gap-2">
-        <CardTitle className="text-base font-medium text-muted-foreground w-full">
-          {question}
-        </CardTitle>
-        <div className="flex items-center justify-start gap-1 w-full">
-          {isSkipped ? (
-            <SkipForward size={16} className="text-yellow-500 w-4 h-4" />
-          ) : (
-            <Check size={16} className="text-green-500 w-4 h-4" />
-          )}
-          <h5 className="text-muted-foreground text-xs truncate">
-            {updatedQuery()}
-          </h5>
+      <Card className="p-4 border-border/50 shadow-sm bg-card/60 max-w-[720px] ml-4 backdrop-blur-sm rounded-xl">
+        <div className="flex flex-col space-y-2">
+          <CardTitle className="text-base font-medium text-foreground/90">
+            {question}
+          </CardTitle>
+          <div className="flex items-center gap-2 text-sm text-muted-foreground">
+            {isSkipped ? (
+              <SkipForward size={16} className="text-yellow-500" />
+            ) : (
+              <Check size={16} className="text-green-500" />
+            )}
+            <p className="truncate">{updatedQuery()}</p>
+          </div>
         </div>
       </Card>
     )
   }
 
+  // ✅ Default (active) view
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle className="text-lg">{question}</CardTitle>
+    <Card className="border-border/50 shadow-md bg-card/70 max-w-[720px] ml-4 backdrop-blur-sm rounded-xl">
+      <CardHeader className="pb-2">
+        <CardTitle className="text-base font-semibold text-foreground/90">
+          {question}
+        </CardTitle>
       </CardHeader>
       <CardContent>
-        <form onSubmit={handleSubmit}>
-          <div className="flex flex-wrap justify-start mb-4">
-            {options &&
-              options.map((option: QuestionOption, index: number) => (
+        <form onSubmit={handleSubmit} className="flex flex-col gap-6">
+          {options && (
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+              {options.map((option: QuestionOption, index: number) => (
                 <div
                   key={`option-${index}`}
-                  className="flex items-center space-x-1.5 mb-2"
+                  className="flex items-center space-x-2 rounded-md border border-border/40 px-3 py-2 hover:bg-accent/40 transition-colors"
                 >
                   <Checkbox
                     id={option.value}
@@ -161,39 +134,51 @@ export function QuestionConfirmation({
                     onCheckedChange={() => handleOptionChange(option.label)}
                   />
                   <label
-                    className="text-sm whitespace-nowrap pr-4"
                     htmlFor={option.value}
+                    className="text-sm cursor-pointer select-none"
                   >
                     {option.label}
                   </label>
                 </div>
               ))}
-          </div>
+            </div>
+          )}
 
           {allowsInput && (
-            <div className="mb-6 flex flex-col space-y-2 text-sm">
-              <label className="text-muted-foreground" htmlFor="query">
+            <div className="flex flex-col space-y-2">
+              <label
+                htmlFor="query"
+                className="text-sm text-muted-foreground font-medium"
+              >
                 {inputLabel}
               </label>
               <Input
-                type="text"
-                name="additional_query"
-                className="w-full"
                 id="query"
+                type="text"
                 placeholder={inputPlaceholder}
                 value={inputText}
                 onChange={handleInputChange}
+                className="border-border/40"
               />
             </div>
           )}
 
-          <div className="flex justify-end space-x-2">
-            <Button type="button" variant="outline" onClick={handleSkip}>
-              <SkipForward size={16} className="mr-1" />
+          <div className="flex justify-end gap-3 pt-2">
+            <Button
+              type="button"
+              variant="outline"
+              onClick={handleSkip}
+              className="flex items-center gap-1 text-xs sm:text-sm"
+            >
+              <SkipForward size={16} />
               Skip
             </Button>
-            <Button type="submit" disabled={isButtonDisabled}>
-              <ArrowRight size={16} className="mr-1" />
+            <Button
+              type="submit"
+              disabled={isButtonDisabled}
+              className="flex items-center gap-1 text-xs sm:text-sm"
+            >
+              <ArrowRight size={16} />
               Send
             </Button>
           </div>

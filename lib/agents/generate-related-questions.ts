@@ -79,12 +79,10 @@ export async function generateRelatedQuestions(
   model: string
 ) {
   // Find the first user message (the original query)
-  const originalQuery = messages.find(m => m.role === 'user')
-
-  const lastMessages = originalQuery ? [originalQuery] : [{
-    role: 'user' as const,
-    content: 'Generate related search questions'
-  }]
+  const lastMessages = messages.slice(-1).map(message => ({
+    ...message,
+    role: 'user'
+  })) as CoreMessage[]
 
   const supportedModel = isToolCallSupported(model)
   const currentModel = supportedModel

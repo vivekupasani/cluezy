@@ -64,16 +64,6 @@ export function SearchSection({
       onOpenChange={onOpenChange}
       showIcon={false}
     >
-      {searchResults &&
-        searchResults.images &&
-        searchResults.images.length > 0 && (
-          <Section>
-            <SearchResultsImageSection
-              images={searchResults.images}
-              query={query}
-            />
-          </Section>
-        )}
       {isLoading && isToolLoading ? (
         <SearchSkeleton />
       ) : searchResults?.results ? (
@@ -81,6 +71,17 @@ export function SearchSection({
           <SearchResults results={searchResults.results} />
         </Section>
       ) : null}
+
+      {searchResults &&
+        searchResults.images &&
+        searchResults.images.length > 0 && (
+          <Section title='Images'>
+            <SearchResultsImageSection
+              images={searchResults.images}
+              query={query}
+            />
+          </Section>
+        )}
     </CollapsibleMessage>
   )
 }

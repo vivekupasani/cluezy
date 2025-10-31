@@ -1,15 +1,13 @@
-import { ChevronDown } from 'lucide-react'
 
 import { cn } from '@/lib/utils'
 
+import { Separator } from '@radix-ui/react-separator'
 import { CurrentUserAvatar } from './current-user-avatar'
 import {
   Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger
+  CollapsibleContent
 } from './ui/collapsible'
 import { IconLogo } from './ui/icons'
-import { Separator } from './ui/separator'
 
 interface CollapsibleMessageProps {
   children: React.ReactNode
@@ -35,7 +33,7 @@ export function CollapsibleMessage({
   const content = <div className="flex-1">{children}</div>
 
   return (
-    <div className="flex mb-2 max-w-3xl px-2">
+    <div className="flex max-w-3xl px-2">
       {showIcon && (
         <div className="relative flex flex-col items-center">
           <div className="w-5">
@@ -51,8 +49,7 @@ export function CollapsibleMessage({
       {isCollapsible ? (
         <div
           className={cn(
-            'flex-1 rounded-2xl p-4',
-            showBorder && 'border border-border/50'
+            'flex-1 rounded-2xl px-4',
           )}
         >
           <Collapsible
@@ -60,7 +57,7 @@ export function CollapsibleMessage({
             onOpenChange={onOpenChange}
             className="w-full"
           >
-            <div className="flex items-center justify-between w-full gap-2">
+            {/* <div className="flex items-center justify-between w-full gap-2">
               {header && <div className="text-sm w-full">{header}</div>}
               <CollapsibleTrigger asChild>
                 <button
@@ -71,10 +68,10 @@ export function CollapsibleMessage({
                   <ChevronDown className="h-4 w-4 text-muted-foreground transition-transform duration-200 group-data-[state=open]:rotate-180" />
                 </button>
               </CollapsibleTrigger>
-            </div>
+            </div> */}
             <CollapsibleContent className="data-[state=closed]:animate-collapse-up data-[state=open]:animate-collapse-down">
-              <Separator className="my-4 border-border/50" />
               {content}
+              <Separator className="my-4 border-border/50" />
             </CollapsibleContent>
           </Collapsible>
         </div>

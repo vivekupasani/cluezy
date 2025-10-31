@@ -25,6 +25,10 @@ export function SearchResults({
     setShowAllResults(true)
   }
 
+  const handleViewLess = () => {
+    setShowAllResults(false)
+  }
+
   // Logic for grid mode
   const displayedGridResults = showAllResults ? results : results.slice(0, 3)
   const additionalResultsCount = results.length > 3 ? results.length - 3 : 0
@@ -91,7 +95,7 @@ export function SearchResults({
       {displayedGridResults.map((result, index) => (
         <div className="w-1/2 md:w-1/4 p-1" key={index}>
           <Link href={result.url} passHref target="_blank">
-            <Card className="flex-1 h-full hover:bg-muted/50 transition-colors">
+            <Card className="flex-1 h-full hover:bg-muted/50 transition-colors shadow-inner shadow-muted-foreground/10">
               <CardContent className="p-2 flex flex-col justify-between h-full">
                 <p className="text-xs line-clamp-2 min-h-[2rem]">
                   {result.title || result.content}
@@ -126,6 +130,22 @@ export function SearchResults({
                 onClick={handleViewMore}
               >
                 View {additionalResultsCount} more
+              </Button>
+            </CardContent>
+          </Card>
+        </div>
+      )}
+
+      {showAllResults && additionalResultsCount > 0 && (
+        <div className="w-1/2 md:w-1/4 p-1">
+          <Card className="flex-1 flex h-full items-center justify-center shadow-inner shadow-muted-foreground/10">
+            <CardContent className="p-2">
+              <Button
+                variant={'link'}
+                className="text-muted-foreground"
+                onClick={handleViewLess}
+              >
+                View less
               </Button>
             </CardContent>
           </Card>
