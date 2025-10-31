@@ -1,17 +1,15 @@
-import { BookOpen, Clock, CloudRain, CloudSun, FileSearch, FileText, Globe, GraduationCap, MessageCircle, Search, ShoppingBag, ShoppingCart, Video, Youtube } from 'lucide-react';
+import { BookOpen, Clock, CloudRain, CloudSun, FileSearch, Globe, GraduationCap, MessageCircle, Search, ShoppingBag, ShoppingCart, Video, Youtube } from 'lucide-react';
 import { Button } from './ui';
 
 const latestTrendingQuestions = [
   { heading: 'Smart Search', message: 'What’s trending on the web right now?', icon: Search },
   { heading: 'Academic Research', message: 'Find recent papers on AI and machine learning.', icon: BookOpen },
-  { heading: 'Document Insights', message: 'Retrieve key points from uploaded company documents.', icon: FileSearch },
+  { heading: 'Document Insights', message: 'Retrieve key points from https://en.wikipedia.org/wiki/Agentic_AI', icon: FileSearch },
   { heading: 'Video Discovery', message: 'Find YouTube videos explaining blockchain in simple terms.', icon: Video },
-  { heading: 'Ask Anything', message: 'Ask questions about tech, science, or daily topics.', icon: MessageCircle },
   { heading: 'Weather Update', message: 'What’s the weather like in Mumbai today?', icon: CloudSun },
-  { heading: 'YouTube Analysis', message: 'Summarize this YouTube video: https://youtu.be/example', icon: Youtube },
+  { heading: 'YouTube Analysis', message: 'Summarize this YouTube video: https://youtu.be/QY6yHJC2DIE?si=2qb2_hor4qSlb91X', icon: Youtube },
   { heading: 'Date & Time Tools', message: 'Convert 5 PM IST to EST instantly.', icon: Clock },
   { heading: 'Product Finder', message: 'Search for the best laptops under ₹70,000.', icon: ShoppingCart },
-  { heading: 'File Search (PDF/DOC/PPT)', message: 'Summarize the content of this uploaded PDF.', icon: FileText }
 ];
 
 const trendingQuestions = [
@@ -21,10 +19,8 @@ const trendingQuestions = [
   { heading: 'Video Search', message: 'Find videos that explain Stripe integration in Next.js.', icon: Video },
   { heading: 'General Q&A', message: 'Explain clean architecture in Flutter.', icon: MessageCircle },
   { heading: 'Weather Forecast', message: 'Will it rain in Delhi tomorrow?', icon: CloudRain },
-  { heading: 'YouTube Breakdown', message: 'Summarize this tech talk video from YouTube.', icon: Youtube },
   { heading: 'Time Conversion', message: 'What time is it in New York when it’s 10 AM in India?', icon: Clock },
   { heading: 'Product Comparison', message: 'Compare iPhone 15 vs Samsung S24.', icon: ShoppingBag },
-  { heading: 'Search in Files', message: 'Find “financial report” inside this PDF document.', icon: FileText }
 ];
 
 
