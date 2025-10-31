@@ -5,7 +5,7 @@ import { SearXNGSearchProvider } from './searxng'
 import { TavilySearchProvider } from './tavily'
 
 export type SearchProviderType = 'tavily' | 'exa' | 'searxng' | 'firecrawl'
-export const DEFAULT_PROVIDER: SearchProviderType = 'exa'
+export const DEFAULT_PROVIDER: SearchProviderType = 'tavily'
 
 export function createSearchProvider(
   type?: SearchProviderType

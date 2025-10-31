@@ -345,7 +345,6 @@ export function ChatPanel({
             </div>
           )
         }
-
       </form>
     </div>
   )

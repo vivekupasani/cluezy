@@ -93,7 +93,7 @@ export const RelatedQuestions: React.FC<RelatedQuestionsProps> = ({
                   >
                     {item?.query}
                   </Button>
-                  <Plus className="hidden sm:visible h-4 w-4 mr-2 mt-1 flex-shrink-0 text-accent-foreground/50 group-hover:text-foreground" />
+                  <Plus className="hidden sm:flex h-4 w-4 mr-2 mt-1 flex-shrink-0 text-accent-foreground/50 group-hover:text-foreground" />
                 </div>
               ))
           ) : (
