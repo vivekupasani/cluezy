@@ -24,12 +24,12 @@ const description =
   'AI-powered search engine with a generative UI.'
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://morphic.sh'),
+  metadataBase: new URL('https://www.cluezy.site'),
   title,
   description,
   openGraph: {
     title,
-    description
+    description,
   },
   twitter: {
     title,

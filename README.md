@@ -2,7 +2,7 @@
 
 An AI-powered search engine with a generative UI.
 
-![capture](/public/screenshot-2025-05-04.png)
+![capture](/opengraph-image.png)
 
 ## 🗂️ Overview
 
@@ -14,8 +14,6 @@ An AI-powered search engine with a generative UI.
 - 💙 [Sponsors](#-sponsors)
 - 👥 [Contributing](#-contributing)
 - 📄 [License](#-license)
-
-📝 Explore AI-generated documentation on [DeepWiki](https://deepwiki.com/miurla/cluezy)
 
 ## 🛠 Features
 
