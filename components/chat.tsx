@@ -16,6 +16,8 @@ import { ChatMessages } from './chat-messages'
 import { ChatPanel } from './chat-panel'
 import Header from './header'
 import { HistoryDialog, useHistoryDialog } from './history-dialog'
+import { Button } from './ui'
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from './ui/dialog'
 
 // Define section structure
 interface ChatSection {
@@ -39,6 +41,8 @@ export function Chat({
   const [isAtBottom, setIsAtBottom] = useState(true)
   const { isHistoryDialogOpen } = useHistoryDialog();
   const [user, setUser] = useState<User | null>(null)
+  const [isRateLimitDialogOpen, setisRateLimitDialogOpen] = useState(false)
+  const [rateLimitMessage, setRateLimitMessage] = useState('')
 
   const {
     messages,
@@ -67,8 +71,23 @@ export function Chat({
       }
       window.dispatchEvent(new CustomEvent('chat-history-updated'))
     },
-    onError: error => {
-      toast.error(`Error in chat: ${error.message}`)
+    onError: async (error) => {
+      console.log(error)
+      const message = error?.message || "Something went wrong."
+      // 👇 Handle rate limit case
+      if (message.includes("limit of") && message.includes("wait until")) {
+        try {
+          setRateLimitMessage(message)
+          setisRateLimitDialogOpen(true)
+          return
+        } catch {
+          setRateLimitMessage(error.message)
+          setisRateLimitDialogOpen(true)
+          return
+        }
+      } else {
+        toast.error(`Error in chat: ${error.message}`)
+      }
     },
     sendExtraMessageFields: false, // Disable extra message fields,
     experimental_throttle: 100
@@ -288,6 +307,27 @@ export function Chat({
           </div>
         </div>
       } */}
+
+      {/* rate limit dialog component */}
+      <Dialog open={isRateLimitDialogOpen} onOpenChange={setisRateLimitDialogOpen}>
+        <DialogContent className='w-[90%] bg-gradient-to-br from-card/75 via-card/55 to-card/65 shadow-inner shadow-card-foreground/10 backdrop-blur-sm'>
+          <DialogHeader>
+            <DialogTitle>Daily Limit Reached</DialogTitle>
+            <DialogDescription>
+              {rateLimitMessage ||
+                "You’ve reached the daily limit. Please log in for unlimited access."}
+            </DialogDescription>
+          </DialogHeader>
+          <div className="flex justify-end gap-2 mt-4">
+            <Button variant="outline" onClick={() => setisRateLimitDialogOpen(false)}>
+              Close
+            </Button>
+            <Button onClick={() => (window.location.href = '/auth/login')}>
+              Login
+            </Button>
+          </div>
+        </DialogContent>
+      </Dialog>
 
       {/* history dialog component  */}
       {isHistoryDialogOpen && <HistoryDialog />}

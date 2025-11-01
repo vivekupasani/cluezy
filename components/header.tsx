@@ -42,7 +42,7 @@ export const Header: React.FC<HeaderProps> = ({ user }) => {
       </div>
 
       <div className="flex items-center gap-2">
-        <span onClick={() => setHistoryDialogIsOpen(true)} className='hover:cursor-pointer bg-gradient-to-br from-card/95 via-card to-card/90 backdrop-blur-sm shadow-inner shadow-card-foreground/10 border-b border-primary/8 rounded-full px-2 py-2'><TextSearch size={18} /></span>
+        <span onClick={() => setHistoryDialogIsOpen(true)} className='hover:cursor-pointer bg-gradient-to-br from-card/95 via-card to-card/90 backdrop-blur-sm shadow-inner shadow-card-foreground/10 border-b border-primary/8 rounded-full px-2 py-2 hover:text-foreground/80 transition-colors'><TextSearch size={18} /></span>
         <SearchModeToggle />
         {user ? <UserMenu user={user} /> : <GuestMenu />}
       </div>

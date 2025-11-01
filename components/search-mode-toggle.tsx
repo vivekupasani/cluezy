@@ -33,8 +33,8 @@ export function SearchModeToggle() {
       aria-label="Toggle search mode"
       onClick={handleSearchModeChange}
       className={cn(
-        "bg-gradient-to-br from-card/95 via-card to-card/90 backdrop-blur-sm shadow-inner shadow-card-foreground/10 border-b border-primary/8 rounded-full px-2 py-2 cursor-pointer items-center",
-        isSearchMode && "text-chart-1 transition-colors duration-200",
+        "bg-gradient-to-br from-card/95 via-card to-card/90 backdrop-blur-sm shadow-inner shadow-card-foreground/10 border-b border-primary/8 rounded-full px-2 py-2 cursor-pointer items-center hover:text-foreground/80 transition-colors",
+        isSearchMode && "text-chart-1 transition-colors duration-200 hover:text-chart-1/90",
       )}
     >
       <Globe size={18} />

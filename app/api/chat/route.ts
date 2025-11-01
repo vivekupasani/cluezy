@@ -4,6 +4,7 @@ import { getCurrentUserId } from '@/lib/auth/get-current-user'
 import { createManualToolStreamResponse } from '@/lib/streaming/create-manual-tool-stream'
 import { createToolCallingStreamResponse } from '@/lib/streaming/create-tool-calling-stream'
 import { Model } from '@/lib/types/models'
+import { authenticatedRateLimit, getClientIdentifier, unauthenticatedRateLimit } from '@/lib/utils/rate-limit'
 import { isProviderEnabled } from '@/lib/utils/registry'
 
 export const maxDuration = 30
@@ -23,6 +24,40 @@ export async function POST(req: Request) {
     const referer = req.headers.get('referer')
     const isSharePage = referer?.includes('/share/')
     const userId = await getCurrentUserId()
+    console.log("user id : ", userId)
+
+    if (userId == "anonymous") {
+      const identifier = getClientIdentifier(req);
+      const { success, limit, reset } = await unauthenticatedRateLimit.limit(identifier);
+
+      // Rate limit check for unauthenticated users
+      if (!success) {
+        const resetDate = new Date(reset);
+        return new Response(
+          `You've reached the limit of ${limit} searches per day for unauthenticated users. Sign in for more searches or wait until ${resetDate.toLocaleString()}.`,
+          {
+            status: 429,
+            statusText: 'Too Many Requests',
+          }
+        );
+      }
+    }
+    else {
+      const identifier = getClientIdentifier(req);
+      const { success, limit, reset } = await authenticatedRateLimit.limit(identifier);
+
+      // Rate limit check for unauthenticated users
+      if (!success) {
+        const resetDate = new Date(reset);
+        return new Response(
+          `You've reached your daily limit of ${limit} searches for authenticated users. Upgrade to Premium to continue, or wait until ${resetDate.toLocaleString()}.`,
+          {
+            status: 429,
+            statusText: 'Too Many Requests',
+          }
+        );
+      }
+    }
 
     if (isSharePage) {
       return new Response('Chat API is not available on share pages', {

@@ -51,7 +51,7 @@ export const RelatedQuestions: React.FC<RelatedQuestionsProps> = ({
     return null
   }
 
-  if (relatedQuestions.items.length === 0 && isLoading) {
+  if (relatedQuestions.items.length === 0) {
     return (
       <CollapsibleMessage
         role="assistant"
