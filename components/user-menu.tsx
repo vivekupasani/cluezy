@@ -3,7 +3,7 @@
 import { useRouter } from 'next/navigation'
 
 import { User } from '@supabase/supabase-js'
-import { Link2, LogOut, Palette } from 'lucide-react'
+import { Link2, LogOut, LucideBadgeAlert, Palette } from 'lucide-react'
 
 import { createClient } from '@/lib/supabase/client'
 
@@ -22,6 +22,7 @@ import {
 
 import { AvatarImage } from '@radix-ui/react-avatar'
 import { toast } from 'sonner'
+import { CompanyInfoItems } from './company-info'
 import { ExternalLinkItems } from './external-link-items'
 import { ThemeMenuItems } from './theme-menu-items'
 import { Button } from './ui/button'
@@ -104,6 +105,15 @@ export default function UserMenu({ user }: UserMenuProps) {
           </DropdownMenuSubTrigger>
           <DropdownMenuSubContent>
             <ExternalLinkItems />
+          </DropdownMenuSubContent>
+        </DropdownMenuSub>
+        <DropdownMenuSub>
+          <DropdownMenuSubTrigger className='cursor-pointer'>
+            <LucideBadgeAlert className="mr-2 h-4 w-4" />
+            <span>Company Info</span>
+          </DropdownMenuSubTrigger>
+          <DropdownMenuSubContent>
+            <CompanyInfoItems />
           </DropdownMenuSubContent>
         </DropdownMenuSub>
         <DropdownMenuSeparator />

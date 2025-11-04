@@ -5,6 +5,7 @@ import Link from 'next/link'
 import {
   Link2,
   LogIn,
+  LucideBadgeAlert,
   Palette,
   Settings2 // Or EllipsisVertical, etc.
 } from 'lucide-react'
@@ -20,6 +21,7 @@ import {
   DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu'
 
+import { CompanyInfoItems } from './company-info'
 import { ExternalLinkItems } from './external-link-items'
 import { ThemeMenuItems } from './theme-menu-items'
 
@@ -55,6 +57,15 @@ export default function GuestMenu() {
           </DropdownMenuSubTrigger>
           <DropdownMenuSubContent>
             <ExternalLinkItems />
+          </DropdownMenuSubContent>
+        </DropdownMenuSub>
+        <DropdownMenuSub>
+          <DropdownMenuSubTrigger className='cursor-pointer'>
+            <LucideBadgeAlert className="mr-2 h-4 w-4" />
+            <span>Company Info</span>
+          </DropdownMenuSubTrigger>
+          <DropdownMenuSubContent>
+            <CompanyInfoItems />
           </DropdownMenuSubContent>
         </DropdownMenuSub>
       </DropdownMenuContent>
