@@ -7,7 +7,7 @@ interface TermSection {
     content: string;
 }
 
-export const termsOfUse: TermSection[] = [
+const termsOfUse: TermSection[] = [
     {
         id: 1,
         title: "Acceptance of Terms",

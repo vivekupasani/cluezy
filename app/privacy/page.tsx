@@ -7,7 +7,7 @@ interface PrivacySection {
     content: string;
 }
 
-export const privacy: PrivacySection[] = [
+const privacy: PrivacySection[] = [
     {
         id: 1,
         title: "Information We Collect",
