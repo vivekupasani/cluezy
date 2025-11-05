@@ -43,8 +43,8 @@ export async function POST(req: Request) {
       }
     }
     else {
-      const identifier = getClientIdentifier(req);
-      const { success, limit, reset } = await authenticatedRateLimit.limit(identifier);
+      // const identifier = getClientIdentifier(req);
+      const { success, limit, reset } = await authenticatedRateLimit.limit(userId);
 
       // Rate limit check for unauthenticated users
       if (!success) {

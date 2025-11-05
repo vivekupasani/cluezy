@@ -72,7 +72,7 @@ export const UserMessage: React.FC<UserMessageProps> = ({
             </div>
           </div>
         ) : (
-          <div className="flex justify-between items-start bg-gradient-to-br from-muted/75 via-card/65 to-muted/10 backdrop-blur-sm shadow-inner shadow-muted/5 border-b border-border/10 p-2 rounded-lg">
+          <div className="flex justify-between items-start bg-gradient-to-br from-muted/75 via-card/65 to-muted/10 backdrop-blur-sm shadow-inner shadow-muted/5 border border-border/30 p-2 rounded-lg">
             <div className="max-w-2xl">{message}</div>
             <div
               className={cn(

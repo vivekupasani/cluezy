@@ -63,16 +63,16 @@ export default function UserMenu({ user }: UserMenuProps) {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="ghost" className="relative h-[35px] w-[35px] hover:bg-transparent rounded-full shadow-inner shadow-muted-foreground/10 p-0">
+        <Button variant="ghost" className="relative h-[35px] w-[35px] hover:bg-transparent rounded-full shadow-inner shadow-foreground/5 p-0">
           <Avatar className="h-[35px] w-[35px]">
             <AvatarImage src={avatarUrl} alt={userName} />
-            <AvatarFallback className='text-xs pt-[2px] bg-gradient-to-br from-card/95 via-card to-card/90 backdrop-blur-sm shadow-inner shadow-card-foreground/10 border-b border-primary/8'>
+            <AvatarFallback className='text-xs pt-[2px] bg-gradient-to-tr from-card/55 via-card/70 to-card/45 backdrop-blur-sm drop-shadow-sm shadow-inner shadow-foreground/5 border border-border/80'>
               {getInitials(userName, user.email)}
             </AvatarFallback>
           </Avatar>
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="w-60 bg-muted/20 shadow-inner shadow-muted-foreground/10 border-b border-primary/8" align="end" forceMount>
+      <DropdownMenuContent className="w-60 bg-muted/20 shadow-inner shadow-muted-foreground/5 border-b border-primary/8" align="end" forceMount>
         <DropdownMenuLabel className="font-normal">
           <div className="flex flex-col space-y-1">
             <p className="text-sm font-medium leading-none truncate">
@@ -90,7 +90,7 @@ export default function UserMenu({ user }: UserMenuProps) {
           <p className='text-sm'>Settings</p>
         </Link> */}
         <DropdownMenuSub>
-          <DropdownMenuSubTrigger>
+          <DropdownMenuSubTrigger className='cursor-pointer'>
             <Palette className="mr-2 h-4 w-4" />
             <span>Theme</span>
           </DropdownMenuSubTrigger>

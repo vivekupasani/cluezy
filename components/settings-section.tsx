@@ -4,7 +4,7 @@ import { CurrentUserAvatar } from "@/components/current-user-avatar";
 import { useCurrentUserEmail, useCurrentUserName } from "@/hooks/use-current-user-name";
 import { createClient } from "@/lib/supabase/client";
 import { cn } from "@/lib/utils";
-import { Info, Monitor, Moon, Sun } from "lucide-react";
+import { ArrowLeft, Info } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import CommunityTab from "./community-tab";
@@ -39,14 +39,14 @@ export default function SettingsSection() {
     };
 
     return (
-        <>
+        <div>
             {/* Header */}
-            <div className="flex items-center justify-end mb-8">
-                {/* <button className="flex items-center gap-2 hover:bg-accent hover:text-accent-foreground rounded-md px-2 py-1 transition-colors">
+            <div className="flex items-center justify-start mb-8">
+                <button className="flex items-center gap-2 hover:bg-accent hover:text-accent-foreground rounded-md px-2 py-1 transition-colors">
                     <ArrowLeft size={18} />
                     <span className="text-sm">Back to Chat</span>
-                </button> */}
-                <div className="flex items-center gap-3 bg-card px-3 py-2 rounded-full shadow-inner shadow-card-foreground/10 border border-border">
+                </button>
+                {/* <div className="flex items-center gap-3 bg-card px-3 py-2 rounded-full shadow-inner shadow-card-foreground/10 border border-border">
                     <button className="p-1.5 rounded-full hover:bg-muted transition-colors">
                         <Monitor size={16} className="text-card-foreground/80" />
                     </button>
@@ -56,7 +56,7 @@ export default function SettingsSection() {
                     <button className="p-1.5 rounded-full hover:bg-muted transition-colors">
                         <Moon size={16} className="text-card-foreground/80" />
                     </button>
-                </div>
+                </div> */}
             </div>
 
             <div className="flex gap-8">
@@ -117,7 +117,7 @@ export default function SettingsSection() {
                 </div>
 
                 {/* Main Content */}
-                <div className="flex-1 max-w-3xl">
+                <div className="flex-1 max-w-[870px]">
                     {/* Tabs */}
                     <div className="flex gap-6 border-b border-border mb-6">
                         {["preferences", "models", "community", "contact"].map((tab) => (
@@ -137,7 +137,7 @@ export default function SettingsSection() {
                     {renderTabContent()}
                 </div>
             </div>
-        </>
+        </div>
     );
 }
 

@@ -166,7 +166,7 @@ export function ChatMenuItem({ chat }: ChatMenuItemProps) {
           onClick={() => setShowRenameDialog(false)}
         >
           <div
-            className="bg-popover rounded-lg p-6 w-96 mx-4"
+            className="bg-background border border-border rounded-lg p-6 w-96 mx-4"
             onClick={(e) => e.stopPropagation()}
           >
             <div className="flex items-center justify-between mb-4">
@@ -222,7 +222,7 @@ export function ChatMenuItem({ chat }: ChatMenuItemProps) {
           onClick={() => !isDeleting && setShowDeleteDialog(false)}
         >
           <div
-            className="bg-popover rounded-lg p-6 w-96 mx-4"
+            className="bg-background border border-border rounded-lg p-6 w-96 mx-4"
             onClick={(e) => e.stopPropagation()}
           >
             <div className="flex items-center justify-between mb-4">
