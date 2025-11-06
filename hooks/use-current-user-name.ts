@@ -10,7 +10,7 @@ export const useCurrentUserName = () => {
       if (error) {
         console.error(error)
       }
-      console.log("User meta data : ", data.session?.user.user_metadata)
+      // console.log("User meta data : ", data.session?.user.user_metadata)
       setName(data.session?.user.user_metadata.full_name ?? '?')
     }
 
@@ -29,7 +29,7 @@ export const useCurrentUserEmail = () => {
       if (error) {
         console.error(error)
       }
-      console.log("User meta data : ", data.session?.user.user_metadata)
+      // console.log("User meta data : ", data.session?.user.user_metadata)
       setEmail(data.session?.user.user_metadata.email ?? '?')
     }
 

@@ -63,10 +63,10 @@ export default function UserMenu({ user }: UserMenuProps) {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="ghost" className="relative h-[35px] w-[35px] hover:bg-transparent rounded-full shadow-inner shadow-foreground/5 p-0">
+        <Button variant="ghost" className="relative h-[35px] w-[35px] hover:bg-transparent rounded-full shadow-inner shadow-foreground/5 p-0 focus:ring-0">
           <Avatar className="h-[35px] w-[35px]">
             <AvatarImage src={avatarUrl} alt={userName} />
-            <AvatarFallback className='text-xs pt-[2px] bg-gradient-to-tr from-card/55 via-card/70 to-card/45 backdrop-blur-sm drop-shadow-sm shadow-inner shadow-foreground/5 border border-border/80'>
+            <AvatarFallback className='text-xs pt-[2px] bg-gradient-to-tr from-card/55 via-card/70 to-card/45 backdrop-blur-sm drop-shadow-sm shadow-inner shadow-primary-foreground border border-border/80'>
               {getInitials(userName, user.email)}
             </AvatarFallback>
           </Avatar>

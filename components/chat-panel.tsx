@@ -13,7 +13,6 @@ import { useEffect, useRef, useState } from 'react'
 import Textarea from 'react-textarea-autosize'
 import { useArtifact } from './artifact/artifact-context'
 import { EmptyScreen } from './empty-screen'
-import { ModelSelector } from './model-selector'
 import Shuffle from './Shuffle'
 import { clearChatHistoryCache } from './sidebar/chat-history-client'
 import { Button } from './ui/button'
@@ -200,13 +199,13 @@ export function ChatPanel({
         <div>
           {/* <div className='flex justify-center items-center gap-1 p-2 border border-border rounded-3xl'> Changed from rounded-[34px] to rounded-3xl */}
           <div className={cn(
-            "relative flex flex-row items-start gap-3 px-4 py-3 w-full bg-gradient-to-tr from-card/55 via-card/70 to-card/45 backdrop-blur-sm drop-shadow-sm shadow-inner shadow-foreground/5 rounded-3xl border border-border/80 transition-colors" // Changed from rounded-[22px] to rounded-2xl
+            "relative flex flex-row items-start gap-3 px-4 py-3 w-full bg-gradient-to-tr from-card/55 via-card/70 to-card/45 backdrop-blur-sm drop-shadow-sm shadow-inner shadow-primary-foreground rounded-full border border-border/80 transition-colors" // Changed from rounded-[22px] to rounded-2xl
           )}>
             {/* Icon */}
             <div className="flex-shrink-0 bg-gradient-to-tr from-card/55 via-card/70 to-card/45 backdrop-blur-sm rounded-xl">
               <svg
-                width="30"
-                height="30"
+                width="28"
+                height="28"
                 viewBox="0 0 67 61"
                 xmlns="http://www.w3.org/2000/svg"
               >
@@ -263,6 +262,9 @@ export function ChatPanel({
                     {[
                       "What is Agentic AI and why is it trending in 2025?",
                       "Which AI tools are best for coding tasks in 2025?",
+                      "Find recent papers on AI and machine learning.",
+                      "Search for the best laptops under ₹70,000.",
+                      "Find videos that explain Stripe integration in Next.js."
                     ].map((text) => (
                       <span key={text} className="block text-left text-foreground/70 opacity-40 text-xs sm:text-sm select-none pointer-events-none">
                         {text}
@@ -312,11 +314,11 @@ export function ChatPanel({
           messages.length === 0 && (
             <div
               className={cn(
-                "items-center mt-4 justify-center",
+                "items-center mt-4 justify-center h-10",
                 messages.length === 0 ? "flex" : "hidden sm:flex"
               )}
             >
-              <ModelSelector models={models ?? []} />
+              {/* <ModelSelector models={models ?? []} /> */}
             </div>
           )
         }

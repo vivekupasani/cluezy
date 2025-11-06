@@ -291,7 +291,7 @@ export const WeatherSection = ({ tool }: WeatherSectionProps) => {
                 </div>
 
                 {/* Right: Weather Icon & Quick Stats */}
-                <div className="flex flex-col items-center justify-center">
+                <div className="hidden sm:flex flex-col items-center justify-center">
                     <div className="relative">
                         <div className="absolute inset-0 bg-primary/20 blur-3xl rounded-full"></div>
                         <div className="relative">

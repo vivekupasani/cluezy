@@ -95,8 +95,8 @@ export function SearchResults({
       {displayedGridResults.map((result, index) => (
         <div className="w-1/2 md:w-1/4 p-1" key={index}>
           <Link href={result.url} passHref target="_blank">
-            <Card className="flex-1 h-full hover:bg-muted/50 transition-colors shadow-inner shadow-muted-foreground/5">
-              <CardContent className="p-2 flex flex-col justify-between h-full">
+            <div className="flex-1 h-full hover:bg-muted/50 transition-colors bg-gradient-to-br from-card/55 via-card/70 to-card/45 backdrop-blur-sm drop-shadow-sm shadow-inner shadow-primary-foreground border border-border/80 rounded-lg">
+              <div className="p-2 flex flex-col justify-between h-full">
                 <p className="text-xs line-clamp-2 min-h-[2rem]">
                   {result.title || result.content}
                 </p>
@@ -115,15 +115,15 @@ export function SearchResults({
                     {`${displayUrlName(result.url)} - ${index + 1}`}
                   </div>
                 </div>
-              </CardContent>
-            </Card>
+              </div>
+            </div>
           </Link>
         </div>
       ))}
       {!showAllResults && additionalResultsCount > 0 && (
         <div className="w-1/2 md:w-1/4 p-1">
-          <Card className="flex-1 flex h-full items-center justify-center">
-            <CardContent className="p-2">
+          <div className="flex-1 flex h-full items-center justify-center  bg-gradient-to-br from-card/55 via-card/70 to-card/45 backdrop-blur-sm drop-shadow-sm shadow-inner shadow-primary-foreground border border-border/80 rounded-lg">
+            <div className="p-2">
               <Button
                 variant={'link'}
                 className="text-muted-foreground"
@@ -131,24 +131,24 @@ export function SearchResults({
               >
                 View {additionalResultsCount} more
               </Button>
-            </CardContent>
-          </Card>
+            </div>
+          </div>
         </div>
       )}
 
       {showAllResults && additionalResultsCount > 0 && (
         <div className="w-1/2 md:w-1/4 p-1">
-          <Card className="flex-1 flex h-full items-center justify-center shadow-inner shadow-muted-foreground/10">
-            <CardContent className="p-2">
+          <div className="flex-1 flex h-full items-center justify-center bg-gradient-to-br from-card/55 via-card/70 to-card/45 backdrop-blur-sm drop-shadow-sm shadow-inner shadow-primary-foreground border border-border/80 rounded-lg">
+            <div className="p-2">
               <Button
                 variant={'link'}
-                className="text-muted-foreground"
+                className="text-muted-foreground hover:text-primary"
                 onClick={handleViewLess}
               >
                 View less
               </Button>
-            </CardContent>
-          </Card>
+            </div>
+          </div>
         </div>
       )}
     </div>

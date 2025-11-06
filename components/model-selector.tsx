@@ -3,14 +3,13 @@
 import Image from 'next/image'
 import { useEffect, useState } from 'react'
 
-import { Check, ChevronsUpDown, Lightbulb } from 'lucide-react'
+import { Check } from 'lucide-react'
 
 import { Model } from '@/lib/types/models'
 import { getCookie, setCookie } from '@/lib/utils/cookies'
 
 import { createModelId } from '../lib/utils'
 
-import { isReasoningModel } from '@/lib/utils/registry'
 import { toast } from 'sonner'
 import { Button } from './ui/button'
 import {
@@ -93,35 +92,28 @@ export function ModelSelector({ models }: ModelSelectorProps) {
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
-      <PopoverTrigger asChild>
+      <PopoverTrigger asChild >
         <Button
-          variant="outline"
           role="combobox"
           aria-expanded={open}
-          className="text-sm bg-transparent hover:bg-secondary/80 border-none rounded-full shadow-none focus:ring-0"
+          className="w-9 h-9 p-0 bg-transparent hover:bg-transparent flex items-center justify-center rounded-full bg-gradient-to-tr from-card/55 via-card/70 to-card/45 backdrop-blur-sm drop-shadow-sm shadow-inner shadow-primary-foreground border border-border/80 focus:ring-0"
         >
           {selectedModel ? (
-            <div className="flex items-center space-x-1">
-              <Image
-                src={`/providers/logos/${selectedModel.providerId}.svg`}
-                alt={selectedModel.provider}
-                width={18}
-                height={18}
-                className="bg-white rounded-full border"
-              />
-              <span className="text-xs font-medium">{selectedModel.name}</span>
-              {isReasoningModel(selectedModel.id) && (
-                <Lightbulb size={12} className="hidden sm:block text-accent-blue-foreground" />
-              )}
-            </div>
+            <Image
+              src={`/providers/logos/${selectedModel.providerId}.svg`}
+              alt={selectedModel.provider}
+              width={18}
+              height={18}
+              className="rounded-full"
+            />
           ) : (
             'Select model'
           )}
-          <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+          {/* <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" /> */}
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-72 p-0 HiddenScrollbar" align="start">
-        <Command>
+      <PopoverContent className="w-72 p-0 mr-2 HiddenScrollbar" align="start">
+        <Command className='bg-background'>
           <CommandInput placeholder="Search models..." />
           <CommandList>
             <CommandEmpty>No model found.</CommandEmpty>

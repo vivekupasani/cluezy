@@ -94,7 +94,7 @@ export default async function PrivacyPage() {
                         <Link href="" className="hover:cursor-pointer">
                             <SiX />
                         </Link>
-                        <Link href="" className="hover:cursor-pointer">
+                        <Link href="https://www.linkedin.com/company/cluezy/" className="hover:cursor-pointer">
                             <SiLinkedin />
                         </Link>
                         <Link href="" className="hover:cursor-pointer">

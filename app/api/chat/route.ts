@@ -28,7 +28,8 @@ export async function POST(req: Request) {
 
     if (userId == "anonymous") {
       const identifier = getClientIdentifier(req);
-      const { success, limit, reset } = await unauthenticatedRateLimit.limit(identifier);
+      const { success, limit, reset, remaining } = await unauthenticatedRateLimit.limit(identifier);
+      console.log("Remaining credits for the day : ", remaining)
 
       // Rate limit check for unauthenticated users
       if (!success) {
@@ -44,8 +45,8 @@ export async function POST(req: Request) {
     }
     else {
       // const identifier = getClientIdentifier(req);
-      const { success, limit, reset } = await authenticatedRateLimit.limit(userId);
-
+      const { success, limit, reset, remaining } = await authenticatedRateLimit.limit(userId);
+      console.log("Remaining credits for the day : ", remaining)
       // Rate limit check for unauthenticated users
       if (!success) {
         const resetDate = new Date(reset);

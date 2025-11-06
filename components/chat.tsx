@@ -35,7 +35,7 @@ export function Chat({
   id: string
   savedMessages?: Message[]
   query?: string
-  models?: Model[]
+  models: Model[]
 }) {
   const scrollContainerRef = useRef<HTMLDivElement>(null)
   const [isAtBottom, setIsAtBottom] = useState(true)
@@ -262,7 +262,7 @@ export function Chat({
       data-testid="full-chat"
     >
       {/* header component */}
-      <Header user={user} />
+      <Header user={user} models={models} />
 
       {/* messages component */}
       <ChatMessages
