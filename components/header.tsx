@@ -44,7 +44,7 @@ export const Header: React.FC<HeaderProps> = ({ user, models }) => {
         </Link>
       </div>
 
-      <div className="flex items-center gap-2">
+      <div className="flex items-center gap-2" suppressHydrationWarning>
         <SearchModeToggle />
         <span onClick={() => setHistoryDialogIsOpen(true)} className='hover:cursor-pointer bg-gradient-to-tr from-card/55 via-card/70 to-card/45 backdrop-blur-sm drop-shadow-sm shadow-inner shadow-primary-foreground border border-border/80 rounded-full px-2 py-2 hover:text-foreground/80 transition-colors'><TextSearch size={18} /></span>
         <ModelSelector models={models} />

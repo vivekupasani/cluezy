@@ -21,13 +21,15 @@ const fontSans = FontSans({
 
 const title = 'Cluezy - Advanced AI search engine & Perplexity alternative | $12/month'
 const description =
-  'AI-powered search engine with a generative UI.'
+  'Cluezy is an advanced AI search engine that finds, analyzes, and cites the live web'
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://www.cluezy.site'),
   title,
   description,
   openGraph: {
+    url: "https://www.cluezy.site",
+    siteName: "Cluezy AI",
     title,
     description,
   },
@@ -36,7 +38,46 @@ export const metadata: Metadata = {
     description,
     card: 'summary_large_image',
     creator: '@v1vekupasani'
-  }
+  },
+  keywords: [
+    'cluezy.ai',
+    'free ai search',
+    'ai search',
+    'ai research tool',
+    'ai search tool',
+    'perplexity ai alternative',
+    'perplexity alternative',
+    'chatgpt alternative',
+    'ai search engine',
+    'search engine',
+    'cluezy ai',
+    'cluezy AI',
+    'cluezy AI',
+    'cluezy.AI',
+    'cluezy github',
+    'ai search engine',
+    'cluezy',
+    'cluezy',
+    'cluezy.app',
+    'cluezy ai',
+    'cluezy ai app',
+    'cluezy',
+    'cluezy AI',
+    'Perplexity alternatives',
+    'Perplexity AI alternatives',
+    'open source ai search engine',
+    'minimalistic ai search engine',
+    'minimalistic ai search alternatives',
+    'ai search',
+    'minimal ai search',
+    'minimal ai search alternatives',
+    'AI Search Engine',
+    'vivek upasani',
+    'cluezy.how',
+    'search engine',
+    'AI',
+    'perplexity',
+  ],
 }
 
 export const viewport: Viewport = {

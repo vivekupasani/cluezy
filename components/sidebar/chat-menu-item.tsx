@@ -6,7 +6,7 @@ import { usePathname, useRouter } from 'next/navigation'
 import { useState, useTransition } from 'react'
 import { toast } from 'sonner'
 
-import { SidebarMenuButton, SidebarMenuItem } from '@/components/ui/sidebar'
+import { SidebarMenuItem } from '@/components/ui/sidebar'
 import { Chat } from '@/lib/types'
 import { useHistoryDialog } from '../history-dialog'
 import { Spinner } from '../ui/spinner'
@@ -104,9 +104,8 @@ export function ChatMenuItem({ chat }: ChatMenuItemProps) {
   return (
     <>
       <SidebarMenuItem>
-        <SidebarMenuButton
-          isActive={isActive}
-          className="h-auto flex-row gap-0.5 items-center justify-center px-4 py-1 "
+        <div
+          className="h-auto flex gap-0.5 items-center justify-center px-4 py-1 "
         >
           <Link
             href={chat.path}
@@ -156,7 +155,7 @@ export function ChatMenuItem({ chat }: ChatMenuItemProps) {
               <span className="sr-only">Delete chat</span>
             </button>
           </div>
-        </SidebarMenuButton>
+        </div>
       </SidebarMenuItem>
 
       {/* Rename Dialog */}

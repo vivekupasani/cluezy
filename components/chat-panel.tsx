@@ -6,7 +6,8 @@ import { Message } from 'ai'
 import {
   ArrowUp,
   ChevronDown,
-  Square
+  Square,
+  WandSparkles
 } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { useEffect, useRef, useState } from 'react'
@@ -274,27 +275,46 @@ export function ChatPanel({
                 )
               }
 
-              {/* Send button */}
-              <Button
-                type={isLoading ? 'button' : 'submit'}
-                size={'icon'}
-                variant={'ghost'}
-                className={cn(
-                  'flex-shrink-0 text-foreground hover:text-forground hover:bg-neutral-800 disabled:opacity-50 transition-colors rounded-full size-8', // Consistent rounded-full for circular buttons
-                  isLoading && 'animate-pulse'
-                )}
-                disabled={
-                  (input.length === 0 && !isLoading) ||
-                  isToolInvocationInProgress()
+              <div>
+                {
+                  // 95
+                  input.length !== 0 &&
+                  <Button
+                    type='button'
+                    size={'icon'}
+                    variant={'ghost'}
+                    className={cn(
+                      'flex-shrink-0 text-foreground hover:bg-transparent hover:text-forground hover:bg-neutral-800 disabled:opacity-50 transition-colors rounded-full size-8', // Consistent rounded-full for circular buttons
+                      isEnhancePromptLoading && 'animate-pulse bg-transparent'
+                    )}
+                    onClick={handleEnhancePrompt}
+                  >
+                    <WandSparkles size={18} />
+                  </Button>
                 }
-                onClick={isLoading ? stop : undefined}
-              >
-                {isLoading ? (
-                  <Square size={18} />
-                ) : (
-                  <ArrowUp size={18} />
-                )}
-              </Button>
+
+                {/* Send button */}
+                <Button
+                  type={isLoading ? 'button' : 'submit'}
+                  size={'icon'}
+                  variant={'ghost'}
+                  className={cn(
+                    'flex-shrink-0 text-foreground hover:text-forground hover:bg-neutral-800 disabled:opacity-50 transition-colors rounded-full size-8', // Consistent rounded-full for circular buttons
+                    isLoading && 'animate-pulse'
+                  )}
+                  disabled={
+                    (input.length === 0 && !isLoading) ||
+                    isToolInvocationInProgress()
+                  }
+                  onClick={isLoading ? stop : undefined}
+                >
+                  {isLoading ? (
+                    <Square size={18} />
+                  ) : (
+                    <ArrowUp size={18} />
+                  )}
+                </Button>
+              </div>
             </div>
           </div>
         </div>

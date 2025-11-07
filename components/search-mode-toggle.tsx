@@ -30,6 +30,7 @@ export function SearchModeToggle() {
 
   return (
     <div
+      suppressHydrationWarning
       aria-label="Toggle search mode"
       // onClick={handleSearchModeChange}
       className={cn(
