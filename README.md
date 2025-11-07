@@ -2,7 +2,7 @@
 
 An AI-powered search engine with a generative UI.
 
-![capture](/opengraph-image.png)
+![capture](/app/opengraph-image.png)
 
 ## 🗂️ Overview
 
