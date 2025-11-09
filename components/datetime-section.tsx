@@ -2,6 +2,7 @@
 
 import { ToolInvocation } from 'ai'
 import { useEffect, useState } from 'react'
+import { Skeleton } from './ui/skeleton'
 
 interface DateTimeSectionProps {
     tool: ToolInvocation
@@ -27,6 +28,54 @@ interface DateTimeData {
     }
 }
 
+// Skeleton Loader Component
+const DateTimeSkeleton = () => {
+    return (
+        <div className="flex flex-col w-full max-w-5xl mx-auto px-4 sm:px-6 py-6 rounded-2xl shadow-lg bg-background">
+            {/* Time Display Skeleton */}
+            <div className="flex flex-col items-center justify-center py-6">
+                {/* Digital Clock Skeleton */}
+                <div className="relative mb-6 w-full flex justify-center">
+                    <div className="flex flex-wrap sm:flex-nowrap items-center justify-center gap-2 sm:gap-3">
+                        {/* Hours */}
+                        <Skeleton className="h-20 sm:h-28 w-20 sm:w-28 rounded-2xl" />
+                        {/* Colon */}
+                        <Skeleton className="h-6 sm:h-8 w-2 rounded-full" />
+                        {/* Minutes */}
+                        <Skeleton className="h-20 sm:h-28 w-20 sm:w-28 rounded-2xl" />
+                        {/* Colon */}
+                        <Skeleton className="h-6 sm:h-8 w-2 rounded-full" />
+                        {/* Seconds */}
+                        <Skeleton className="h-20 sm:h-28 w-20 sm:w-28 rounded-2xl" />
+
+                        {/* AM/PM Skeleton */}
+                        <div className="flex flex-col gap-1 ml-2 sm:ml-3">
+                            <Skeleton className="h-8 w-12 rounded-md" />
+                            <Skeleton className="h-8 w-12 rounded-md" />
+                        </div>
+                    </div>
+                </div>
+
+                {/* Date Display Skeleton */}
+                <div className="text-center mb-4 w-full max-w-md">
+                    <Skeleton className="h-7 w-64 mx-auto mb-2" />
+                    <Skeleton className="h-6 w-32 mx-auto mb-2" />
+                    <Skeleton className="h-5 w-24 mx-auto" />
+                </div>
+
+                {/* Day Progress Skeleton */}
+                <div className="w-full max-w-md mt-4 px-4 sm:px-0">
+                    <div className="flex items-center justify-between text-xs mb-2">
+                        <Skeleton className="h-4 w-20" />
+                        <Skeleton className="h-4 w-12" />
+                    </div>
+                    <Skeleton className="w-full h-2 rounded-full" />
+                </div>
+            </div>
+        </div>
+    )
+}
+
 export const DateTimeSection = ({ tool }: DateTimeSectionProps) => {
     const data = tool.state === 'result' ? (tool.result as DateTimeData) : undefined
     const [currentTime, setCurrentTime] = useState(new Date())
@@ -35,6 +84,11 @@ export const DateTimeSection = ({ tool }: DateTimeSectionProps) => {
         const timer = setInterval(() => setCurrentTime(new Date()), 1000)
         return () => clearInterval(timer)
     }, [])
+
+    // Show skeleton while loading or if no data
+    if (tool.state === 'call' || !data) {
+        return <DateTimeSkeleton />
+    }
 
     // Format time
     const hours = currentTime.getHours()
@@ -76,7 +130,7 @@ export const DateTimeSection = ({ tool }: DateTimeSectionProps) => {
     }
 
     return (
-        <div className="flex flex-col w-full max-w-5xl mx-auto px-4 sm:px-6 py-6 rounded-2xl shadow-lg bg-background border border-border/40">
+        <div className="flex flex-col w-full max-w-5xl mx-auto px-4 sm:px-6 py-6 rounded-2xl shadow-lg bg-background">
             {/* Time Display */}
             <div className="flex flex-col items-center justify-center py-6">
                 {/* Digital Clock */}
@@ -150,9 +204,9 @@ export const DateTimeSection = ({ tool }: DateTimeSectionProps) => {
             </div>
 
             {/* Divider */}
-            <div className="w-full h-[1px] bg-border mt-6"></div>
+            {/* <div className="w-full h-[1px] bg-border mt-6"></div> */}
 
-            {/* Location / Timezone Info */}
+            {/* Location / Timezone Info
             {data?.timezone && (
                 <div className="mt-4 text-center text-sm sm:text-base text-muted-foreground">
                     <p>
@@ -165,7 +219,7 @@ export const DateTimeSection = ({ tool }: DateTimeSectionProps) => {
                         </p>
                     )}
                 </div>
-            )}
+            )} */}
         </div>
     )
 }

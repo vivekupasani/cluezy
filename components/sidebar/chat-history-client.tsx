@@ -217,7 +217,7 @@ export function ChatHistoryClient() {
     groups.thisMonth.length > 0 || groups.older.length > 0
 
   return (
-    <div className="w-full max-w-3xl h-[60vh] sm:h-[80vh] p-0 bg-gradient-to-br from-background/75 via-background/55 to-background/65 shadow-inner shadow-foreground/5 backdrop-blur-sm text-popover-foreground border border-border rounded-2xl overflow-hidden flex flex-col gap-0 cosmic-glass HiddenScrollbar">
+    <div className="w-full max-w-3xl h-[60vh] sm:h-[80vh] p-0 bg-background shadow-inner shadow-foreground/5 backdrop-blur-sm text-popover-foreground border border-border rounded-2xl overflow-hidden flex flex-col gap-0 cosmic-glass HiddenScrollbar">
       <div className="flex-shrink-0 py-2 px-4">
         <div className="flex items-center gap-3 mb-1">
           <Search size={16} className="text-muted-foreground" />

@@ -20,6 +20,7 @@ import {
 } from "lucide-react"
 import { useEffect, useState } from "react"
 import { Area, AreaChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts"
+import { Skeleton } from "./ui/skeleton"
 
 interface WeatherSectionProps {
     tool: ToolInvocation
@@ -101,6 +102,81 @@ const CustomTooltip = ({ active, payload, label }: any) => {
     return null
 }
 
+// Skeleton Loader Component
+const WeatherSkeleton = () => {
+    return (
+        <div className="flex flex-col w-full max-w-5xl mx-auto px-6 py-5 rounded-2xl">
+            {/* Header Skeleton */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pb-6 mb-6 border-b border-border/50">
+                <div className="flex flex-col justify-center">
+                    <div className="flex items-center gap-3 mb-3">
+                        <Skeleton className="h-5 w-5 rounded-full" />
+                        <div className="space-y-2">
+                            <Skeleton className="h-7 w-32" />
+                            <Skeleton className="h-4 w-20" />
+                        </div>
+                    </div>
+                    <Skeleton className="h-14 w-24 mb-2" />
+                    <Skeleton className="h-5 w-36 mb-3" />
+                    <div className="flex items-center gap-4">
+                        <Skeleton className="h-4 w-24" />
+                        <Skeleton className="h-4 w-4 rounded-full" />
+                        <Skeleton className="h-4 w-28" />
+                    </div>
+                </div>
+                <div className="hidden sm:flex flex-col items-center justify-center">
+                    <Skeleton className="h-32 w-32 rounded-full mb-6" />
+                    <div className="grid grid-cols-2 gap-4 w-full">
+                        <Skeleton className="h-16 rounded-lg" />
+                        <Skeleton className="h-16 rounded-lg" />
+                    </div>
+                </div>
+            </div>
+
+            {/* Chart Skeleton */}
+            <div className="pb-6 mb-6 border-b border-border/50">
+                <div className="flex items-center gap-2 mb-4">
+                    <Skeleton className="h-4 w-4 rounded-full" />
+                    <Skeleton className="h-5 w-32" />
+                </div>
+                <Skeleton className="h-56 w-full rounded-lg" />
+            </div>
+
+            {/* Stats Grid Skeleton */}
+            <div className="pb-6 mb-6 border-b border-border/50">
+                <div className="flex items-center gap-2 mb-4">
+                    <Skeleton className="h-4 w-4 rounded-full" />
+                    <Skeleton className="h-5 w-40" />
+                </div>
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    {Array.from({ length: 4 }).map((_, i) => (
+                        <Skeleton key={i} className="h-24 rounded-xl" />
+                    ))}
+                </div>
+            </div>
+
+            {/* 5-Day Forecast Skeleton */}
+            <div className="pb-6">
+                <div className="flex items-center gap-2 mb-4">
+                    <Skeleton className="h-4 w-4 rounded-full" />
+                    <Skeleton className="h-5 w-32" />
+                </div>
+                <div className="grid grid-cols-2 md:grid-cols-5 gap-3">
+                    {Array.from({ length: 5 }).map((_, i) => (
+                        <Skeleton key={i} className="h-40 rounded-xl" />
+                    ))}
+                </div>
+            </div>
+
+            {/* Footer Skeleton */}
+            <div className="flex items-center justify-between pt-2">
+                <Skeleton className="h-4 w-32" />
+                <Skeleton className="h-4 w-24" />
+            </div>
+        </div>
+    )
+}
+
 export const WeatherSection = ({ tool }: WeatherSectionProps) => {
     const data = tool.state === "result" ? (tool.result as WeatherData) : undefined
     const [currentTime, setCurrentTime] = useState(new Date())
@@ -110,21 +186,9 @@ export const WeatherSection = ({ tool }: WeatherSectionProps) => {
         return () => clearInterval(timer)
     }, [])
 
-    if (!data || !data.list || data.list.length === 0) {
-        return (
-            <div className="flex flex-col w-full max-w-4xl mx-auto bg-gradient-to-br from-card to-card/50 backdrop-blur-sm px-6 py-5 rounded-2xl border border-border shadow-lg">
-                <div className="flex items-center justify-between mb-4">
-                    <div className="flex items-center gap-2">
-                        <Cloud className="h-5 w-5 text-muted-foreground" />
-                        <span className="text-sm font-semibold text-muted-foreground">WEATHER DATA</span>
-                    </div>
-                </div>
-                <div className="py-12 flex flex-col items-center justify-center">
-                    <Cloud className="h-16 w-16 text-muted-foreground/30 mb-4" />
-                    <p className="text-muted-foreground">No weather data available</p>
-                </div>
-            </div>
-        )
+    // Show skeleton while loading or if no data
+    if (tool.state === "call" || !data || !data.list || data.list.length === 0) {
+        return <WeatherSkeleton />
     }
 
     const currentWeather = data.list[0]
@@ -237,21 +301,7 @@ export const WeatherSection = ({ tool }: WeatherSectionProps) => {
     })).slice(0, 5) // Show 5 days
 
     return (
-        <div className="flex flex-col w-full max-w-5xl mx-auto px-6 py-5 rounded-2xl shadow-md">
-            {/* Header */}
-            {/* <div className="flex items-center justify-between pb-4 mb-5 border-b border-border/50">
-                <div className="flex items-center gap-2">
-                    <div className="p-2 bg-primary/10 rounded-lg">
-                        {getWeatherIcon(currentWeather.weather[0]?.id, 20)}
-                    </div>
-                    <span className="text-sm font-semibold tracking-wide">WEATHER FORECAST</span>
-                </div>
-                <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                    <MapPin className="h-4 w-4" />
-                    <span>{city?.name}, {city?.country}</span>
-                </div>
-            </div> */}
-
+        <div className="flex flex-col w-full max-w-5xl mx-auto px-6 py-5 rounded-2xl">
             {/* Current Weather - Hero Section */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pb-6 mb-6 border-b border-border/50">
                 {/* Left: Main Info */}
@@ -469,7 +519,6 @@ export const WeatherSection = ({ tool }: WeatherSectionProps) => {
             <div className="flex items-center justify-between text-xs text-muted-foreground pt-2">
                 <span>Last updated: {currentTime.toLocaleTimeString()}</span>
                 <span className="flex items-center gap-1">
-                    {/* <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span> */}
                     provided by open weather
                 </span>
             </div>
