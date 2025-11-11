@@ -29,11 +29,11 @@ export default function GuestMenu() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <button className='bg-gradient-to-tr from-card/55 via-card/70 to-card/45 backdrop-blur-sm drop-shadow-sm shadow-inner shadow-primary-foreground border border-border/80 rounded-full px-2 py-2 cursor-pointer items-center'>
-          <Settings2 size={18} /> {/* Choose an icon */}
+        <button className='bg-gradient-to-tr from-card/55 via-card/70 to-card/45 backdrop-blur-sm drop-shadow-sm  border border-border/80 rounded-full px-2 py-2 cursor-pointer items-center'>
+          <Settings2 size={16} /> {/* Choose an icon */}
         </button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="w-56 bg-muted/20 shadow-inner shadow-muted-foreground/10 border-b border-primary/8" align="end" forceMount>
+      <DropdownMenuContent className="w-56 bg-muted/20 border-b border-primary/8" align="end" forceMount>
         <DropdownMenuItem asChild>
           <Link href="/auth/login" className='cursor-pointer'>
             <LogIn className="mr-2 h-4 w-4" />

@@ -93,7 +93,7 @@ export function QuestionConfirmation({
   if (completed || toolInvocation.state === 'result') {
     const isSkipped = wasSkipped()
     return (
-      <Card className="p-4 border-border/50 shadow-sm bg-card/60 max-w-[720px] ml-4 backdrop-blur-sm rounded-xl">
+      <Card className="p-4 border-border/50 shadow-sm bg-card/60 w-[90%] mx-auto max-w-[720px] ml-4 backdrop-blur-sm rounded-xl">
         <div className="flex flex-col space-y-2">
           <CardTitle className="text-base font-medium text-foreground/90">
             {question}
@@ -113,7 +113,7 @@ export function QuestionConfirmation({
 
   // ✅ Default (active) view
   return (
-    <Card className="border-border/50 shadow-md bg-card/70 max-w-[720px] ml-4 backdrop-blur-sm rounded-xl">
+    <Card className="border-border/50 shadow-md bg-card/70 w-[90%] mx-auto max-w-[720px] backdrop-blur-sm rounded-xl">
       <CardHeader className="pb-2">
         <CardTitle className="text-base font-semibold text-foreground/90">
           {question}

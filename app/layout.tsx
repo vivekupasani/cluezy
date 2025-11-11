@@ -19,7 +19,7 @@ const fontSans = FontSans({
   variable: '--font-sans'
 })
 
-const title = 'Cluezy - Advanced AI search engine & Perplexity alternative | $12/month'
+const title = 'Cluezy - Advanced AI search & answer engine'
 const description =
   'Cluezy is an advanced AI search engine that finds, analyzes, and cites the live web'
 

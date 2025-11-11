@@ -158,7 +158,7 @@ export const SearchResultsImageSection: React.FC<
             </DialogTrigger>
 
             {/* full image preview mode */}
-            <DialogContent className="sm:max-w-3xl max-h-[80vh] overflow-hidden CustomScrollbar bg-gradient-to-br from-background/95 via-background to-background/90 backdrop-blur-sm shadow-inner shadow-card-foreground/10">
+            <DialogContent className="w-[90%] sm:w-full sm:max-w-3xl max-h-[80vh] overflow-hidden CustomScrollbar bg-gradient-to-br from-background/95 via-background to-background/90 backdrop-blur-sm">
               <DialogHeader>
                 <DialogTitle>Search Images</DialogTitle>
                 <DialogDescription className="text-sm">
@@ -193,10 +193,10 @@ export const SearchResultsImageSection: React.FC<
                   </CarouselContent>
                   {convertedImages.length > 1 && (
                     <div className="absolute inset-8 flex items-center justify-between p-4">
-                      <CarouselPrevious className="w-10 h-10 rounded-full focus:outline-none bg-gradient-to-br from-card/95 via-card to-card/90 backdrop-blur-sm shadow-inner shadow-card-foreground/10">
+                      <CarouselPrevious className="w-10 h-10 rounded-full focus:outline-none bg-gradient-to-br from-card/95 via-card to-card/90 backdrop-blur-sm border-none">
                         <span className="sr-only">Previous</span>
                       </CarouselPrevious>
-                      <CarouselNext className="w-10 h-10 rounded-full focus:outline-none bg-gradient-to-br from-card/95 via-card to-card/90 backdrop-blur-sm shadow-inner shadow-card-foreground/10">
+                      <CarouselNext className="w-10 h-10 rounded-full focus:outline-none bg-gradient-to-br from-card/95 via-card to-card/90 backdrop-blur-sm border-none">
                         <span className="sr-only">Next</span>
                       </CarouselNext>
                     </div>
