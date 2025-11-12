@@ -73,7 +73,7 @@ export const UserMessage: React.FC<UserMessageProps> = ({
           </div>
         ) : (
           <div className="flex justify-between items-start bg-gradient-to-r from-card/45 via-card/40 to-card/5 backdrop-blur-sm drop-shadow-sm border border-border/30 p-2 rounded-lg">
-            <div className="max-w-3xl">{message}</div>
+            <div className="max-w-2xl txt-grad">{message}</div>
             <div
               className={cn(
                 'absolute top-1 right-1 transition-opacity ml-2',

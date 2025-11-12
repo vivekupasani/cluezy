@@ -117,7 +117,7 @@ export function ChatMenuItem({ chat }: ChatMenuItemProps) {
           >
             <div className="flex items-center justify-between pr-2 w-full">
               <div className="flex items-center gap-2 flex-1 min-w-0">
-                <div className="text-sm w-48 font-medium truncate select-none flex-1">
+                <div className="text-sm w-48 font-medium txt-grad truncate select-none flex-1">
                   {chat.title}
                 </div>
               </div>
@@ -134,7 +134,7 @@ export function ChatMenuItem({ chat }: ChatMenuItemProps) {
               onClick={(e) =>
                 handleActionClick(e, () => setShowRenameDialog(true))
               }
-              className="size-7 p-1 text-foreground hover:bg-accent rounded-sm flex items-center justify-center"
+              className="size-7 p-1 text-foreground/70 hover:bg-accent rounded-sm flex items-center justify-center"
               title="Rename chat"
               disabled={isRenaming}
             >
@@ -147,7 +147,7 @@ export function ChatMenuItem({ chat }: ChatMenuItemProps) {
               onClick={(e) =>
                 handleActionClick(e, () => setShowDeleteDialog(true))
               }
-              className="size-7 p-1 text-foreground hover:bg-accent rounded-sm flex items-center justify-center"
+              className="size-7 p-1 text-foreground/70 hover:bg-accent rounded-sm flex items-center justify-center"
               title="Delete chat"
               disabled={isDeleting}
             >

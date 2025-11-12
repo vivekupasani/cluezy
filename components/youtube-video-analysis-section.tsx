@@ -14,7 +14,7 @@ export const YoutubeVideoAnalysisSection = ({
     console.log("youtube data :", data)
 
     return (
-        <div className="p-1 flex items-center justify-center w-full max-w-3xl pl-6">
+        <div className="p-1 flex items-center justify-center w-full max-w-2xl pl-6">
             {isToolLoading && (
                 <Skeleton className="w-full aspect-video rounded-lg" />
             )}

@@ -77,13 +77,13 @@ export function ChatShare({ chatId, className }: ChatShareProps) {
             variant={'ghost'}
             onClick={() => setOpen(true)}
           >
-            <Share size={14} />
+            <Share size={14} className='text-foreground/70 hover:text-foreground' />
           </Button>
         </DialogTrigger>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Share link to search result</DialogTitle>
-            <DialogDescription>
+            <DialogTitle className='txt-grad'>Share link to search result</DialogTitle>
+            <DialogDescription className='txt-mut'>
               Anyone with the link will be able to view this search result.
             </DialogDescription>
           </DialogHeader>

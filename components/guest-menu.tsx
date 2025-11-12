@@ -29,22 +29,22 @@ export default function GuestMenu() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <button className='bg-gradient-to-tr from-card/55 via-card/70 to-card/45 backdrop-blur-sm drop-shadow-sm  border border-border/80 rounded-full px-2 py-2 cursor-pointer items-center'>
-          <Settings2 size={16} /> {/* Choose an icon */}
+        <button className='group bg-gradient-to-tr from-card/55 via-card/70 to-card/45 hover:bg-card backdrop-blur-sm drop-shadow-sm  border border-border/80 rounded-full px-2 py-2 cursor-pointer items-center'>
+          <Settings2 size={16} className=' text-foreground/70 group-hover:text-foreground' /> {/* Choose an icon */}
         </button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56 bg-muted/20 border-b border-primary/8" align="end" forceMount>
         <DropdownMenuItem asChild>
           <Link href="/auth/login" className='cursor-pointer'>
-            <LogIn className="mr-2 h-4 w-4" />
-            <span>Sign In</span>
+            <LogIn className="mr-2 h-4 w-4 text-foreground/70" />
+            <span className='txt-grad'>Sign In</span>
           </Link>
         </DropdownMenuItem>
         <DropdownMenuSeparator />
         <DropdownMenuSub>
           <DropdownMenuSubTrigger className='cursor-pointer'>
-            <Palette className="mr-2 h-4 w-4" />
-            <span>Theme</span>
+            <Palette className="mr-2 h-4 w-4 text-foreground/70" />
+            <span className='txt-grad'>Theme</span>
           </DropdownMenuSubTrigger>
           <DropdownMenuSubContent>
             <ThemeMenuItems />
@@ -52,8 +52,8 @@ export default function GuestMenu() {
         </DropdownMenuSub>
         <DropdownMenuSub>
           <DropdownMenuSubTrigger className='cursor-pointer'>
-            <Link2 className="mr-2 h-4 w-4" />
-            <span>Links</span>
+            <Link2 className="mr-2 h-4 w-4 text-foreground/70" />
+            <span className='txt-grad'>Links</span>
           </DropdownMenuSubTrigger>
           <DropdownMenuSubContent>
             <ExternalLinkItems />
@@ -61,8 +61,8 @@ export default function GuestMenu() {
         </DropdownMenuSub>
         <DropdownMenuSub>
           <DropdownMenuSubTrigger className='cursor-pointer'>
-            <LucideBadgeAlert className="mr-2 h-4 w-4" />
-            <span>Company Info</span>
+            <LucideBadgeAlert className="mr-2 h-4 w-4 text-foreground/70" />
+            <span className='txt-grad'>Company Info</span>
           </DropdownMenuSubTrigger>
           <DropdownMenuSubContent>
             <CompanyInfoItems />

@@ -52,7 +52,7 @@ export function MessageActions({
         onClick={handleCopy}
         className="rounded-full"
       >
-        <Copy size={14} />
+        <Copy size={14} className='text-foreground/70 hover:text-foreground transition-colors' />
       </Button>
       {enableShare && chatId && <ChatShare chatId={chatId} />}
     </div>

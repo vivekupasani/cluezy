@@ -85,7 +85,7 @@ export const RelatedQuestions: React.FC<RelatedQuestionsProps> = ({
                   className="group flex items-start w-full py-2 border-b border-border hover:text-foreground"
                 >
                   <Button
-                    className="flex-1 justify-start px-0 py-1 h-fit bg-transparent hover:bg-transparent font-semibold text-accent-foreground/50 group-hover:text-foreground whitespace-normal text-left"
+                    className="flex-1 justify-start px-0 py-1 h-fit bg-transparent hover:bg-transparent font-semibold txt-mut group-hover:txt-grad whitespace-normal text-left"
                     type="submit"
                     name="related_query"
                     value={item?.query}
@@ -93,7 +93,7 @@ export const RelatedQuestions: React.FC<RelatedQuestionsProps> = ({
                   >
                     {item?.query}
                   </Button>
-                  <Plus className="hidden sm:flex h-4 w-4 mr-2 mt-1 flex-shrink-0 text-accent-foreground/50 group-hover:text-foreground" />
+                  <Plus className="hidden sm:flex h-4 w-4 mr-2 mt-1 flex-shrink-0 text-accent-foreground/50 group-hover:text-foreground/70 cursor-pointer" />
                 </div>
               ))
           ) : (

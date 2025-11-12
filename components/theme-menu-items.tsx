@@ -12,16 +12,16 @@ export function ThemeMenuItems() {
   return (
     <>
       <DropdownMenuItem onClick={() => setTheme('light')} className='cursor-pointer'>
-        <Sun className="mr-2 h-4 w-4" />
-        <span>Light</span>
+        <Sun className="mr-2 h-4 w-4 text-foreground/70" />
+        <span className='txt-grad'>Light</span>
       </DropdownMenuItem>
       <DropdownMenuItem onClick={() => setTheme('dark')} className='cursor-pointer'>
-        <Moon className="mr-2 h-4 w-4" />
-        <span>Dark</span>
+        <Moon className="mr-2 h-4 w-4 text-foreground/70" />
+        <span className='txt-grad'>Dark</span>
       </DropdownMenuItem>
       <DropdownMenuItem onClick={() => setTheme('system')} className='cursor-pointer'>
-        <Laptop className="mr-2 h-4 w-4" />
-        <span>System</span>
+        <Laptop className="mr-2 h-4 w-4 text-foreground/70" />
+        <span className='txt-grad'>System</span>
       </DropdownMenuItem>
     </>
   )

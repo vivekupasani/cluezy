@@ -95,9 +95,9 @@ export function SearchResults({
       {displayedGridResults.map((result, index) => (
         <div className="w-1/2 md:w-1/4 p-1" key={index}>
           <Link href={result.url} passHref target="_blank">
-            <div className="flex-1 h-full hover:bg-muted/50 transition-colors bg-gradient-to-br from-card/55 via-card/70 to-card/45 backdrop-blur-sm drop-shadow-sm shadow-inner border border-border rounded-lg">
+            <div className="flex-1 h-full hover:bg-muted/50 transition-colors bg-gradient-to-br from-card/55 via-card/70 to-card/45 backdrop-blur-sm drop-shadow-sm border border-border rounded-lg">
               <div className="p-2 flex flex-col justify-between h-full">
-                <p className="text-xs line-clamp-2 min-h-[2rem]">
+                <p className="text-xs line-clamp-2 min-h-[2rem] txt-grad">
                   {result.title || result.content}
                 </p>
                 <div className="mt-2 flex items-center space-x-1">
@@ -111,7 +111,7 @@ export function SearchResults({
                       {new URL(result.url).hostname[0]}
                     </AvatarFallback>
                   </Avatar>
-                  <div className="text-xs opacity-60 truncate">
+                  <div className="text-xs opacity-60 truncate txt-grad">
                     {`${displayUrlName(result.url)} - ${index + 1}`}
                   </div>
                 </div>
@@ -126,7 +126,7 @@ export function SearchResults({
             <div className="p-2">
               <Button
                 variant={'link'}
-                className="text-muted-foreground"
+                className="txt-grad hover:text-primary"
                 onClick={handleViewMore}
               >
                 View {additionalResultsCount} more
@@ -142,7 +142,7 @@ export function SearchResults({
             <div className="p-2">
               <Button
                 variant={'link'}
-                className="text-muted-foreground hover:text-primary"
+                className="txt-grad hover:text-primary"
                 onClick={handleViewLess}
               >
                 View less

@@ -16,7 +16,6 @@ import { useEffect, useRef, useState } from 'react'
 import Textarea from 'react-textarea-autosize'
 import { useArtifact } from './artifact/artifact-context'
 import { EmptyScreen } from './empty-screen'
-import Shuffle from './Shuffle'
 import { clearChatHistoryCache } from './sidebar/chat-history-client'
 import { Button } from './ui/button'
 import { TextLoop } from './ui/text-loop'
@@ -157,7 +156,7 @@ export function ChatPanel({
   return (
     <div
       className={cn(
-        'w-full group/form-container shrink-0 mx-auto max-w-3xl',
+        'w-full group/form-container shrink-0 mx-auto max-w-2xl',
         'pr-2 sm:pr-2 sm:px-0',
         messages.length > 0
           ? 'sticky bottom-0 pb-6 sm:pb-4 px-2'
@@ -166,7 +165,7 @@ export function ChatPanel({
     >
       {messages.length === 0 && (
         <div className="flex flex-col items-center mb-4">
-          <Shuffle
+          {/* <Shuffle
             text="ask a question"
             shuffleDirection="right"
             duration={0.85}
@@ -179,8 +178,9 @@ export function ChatPanel({
             triggerOnHover={true}
             respectReducedMotion={true}
             loop={true}
-          />
+          /> */}
           {/* <RotatingText /> */}
+          <h1 className='text-4xl md:text-6xl tracking-tight mb-2 font-medium bg-clip-text text-transparent bg-gradient-to-tr from-foreground to-foreground/60'>ask a question</h1>
         </div>
       )}
       <form
@@ -193,7 +193,7 @@ export function ChatPanel({
             type="button"
             variant="outline"
             size="icon"
-            className="absolute -top-10 right-2 sm:right-4 z-20 size-7 sm:size-8 rounded-full bg-gradient-to-tr from-card/55 via-card/70 to-card/45 backdrop-blur-sm drop-shadow-sm"
+            className="absolute -top-10 border border-border right-2 sm:right-4 z-20 size-7 sm:size-8 rounded-full bg-gradient-to-tr from-card/55 via-card/70 to-card/45 backdrop-blur-sm drop-shadow-sm"
             onClick={handleScrollToBottom}
             title="Scroll to bottom"
           >
@@ -205,7 +205,7 @@ export function ChatPanel({
           {/* <div className='flex justify-center items-center gap-1 p-2 border border-border rounded-3xl'> Changed from rounded-[34px] to rounded-3xl */}
           <div className={cn(
             "relative flex flex-row items-start gap-3 px-3 py-[10px] w-full bg-gradient-to-tr from-card/55 via-card/70 to-card/45 backdrop-blur-sm drop-shadow-sm border border-border/80 transition-colors",
-            isMobile ? (input.length > 30 ? "rounded-3xl" : "rounded-full") : (input.length > 95 ? "rounded-3xl" : "rounded-full")
+            isMobile ? (input.length > 30 ? "rounded-3xl" : "rounded-full") : (input.length > 66 ? "rounded-3xl" : "rounded-full")
           )}>
             {/* Icon */}
             <div className="flex justify-center items-center pt-[6px] rounded-xl">
@@ -220,7 +220,7 @@ export function ChatPanel({
                   fill="#888888"
                 />
               </svg> */}
-              <Search className='text-muted-foreground' size={18} />
+              <Search className='text-foreground/70' size={18} />
             </div>
             <div className="flex-1 flex flex-row items-center gap-3">
               <Textarea
@@ -236,7 +236,7 @@ export function ChatPanel({
                 autoFocus={true}
                 value={input}
                 disabled={isToolInvocationInProgress()}
-                className="flex-1 resize-none HiddenScrollbar bg-transparent text-foreground placeholder:text-neutral-500 outline-none text-sm disabled:cursor-not-allowed disabled:opacity-50 min-h-6"
+                className="flex-1 resize-none HiddenScrollbar bg-transparent text-foreground/90 placeholder:text-neutral-500 outline-none text-sm disabled:cursor-not-allowed disabled:opacity-50 min-h-6"
                 onChange={e => {
                   handleInputChange(e)
                 }}
@@ -272,7 +272,7 @@ export function ChatPanel({
                       "Search for the best laptops under ₹70,000.",
                       "Find videos that explain Stripe integration in Next.js."
                     ].map((text) => (
-                      <span key={text} className="block text-left text-foreground/70 opacity-40 text-xs sm:text-sm select-none pointer-events-none">
+                      <span key={text} className="block text-left txt-grad opacity-40 text-xs sm:text-sm select-none pointer-events-none">
                         {text}
                       </span>
                     ))}
@@ -289,7 +289,7 @@ export function ChatPanel({
                     size={'icon'}
                     variant={'ghost'}
                     className={cn(
-                      'flex-shrink-0 text-foreground hover:bg-transparent hover:text-forground hover:bg-neutral-800 disabled:opacity-50 transition-colors rounded-full size-8', // Consistent rounded-full for circular buttons
+                      'flex-shrink-0 text-foreground/70 hover:bg-transparent hover:text-forground hover:bg-neutral-800 disabled:opacity-50 transition-colors rounded-full size-8', // Consistent rounded-full for circular buttons
                       isEnhancePromptLoading && 'animate-pulse bg-transparent'
                     )}
                     onClick={handleEnhancePrompt}
@@ -304,7 +304,7 @@ export function ChatPanel({
                   size={'icon'}
                   variant={'ghost'}
                   className={cn(
-                    'flex-shrink-0 text-foreground hover:text-forground hover:bg-neutral-800 disabled:opacity-50 transition-colors rounded-full size-8', // Consistent rounded-full for circular buttons
+                    'flex-shrink-0 text-foreground/70 hover:text-forground hover:bg-neutral-800 disabled:opacity-50 transition-colors rounded-full size-8', // Consistent rounded-full for circular buttons
                     isLoading && 'animate-pulse'
                   )}
                   disabled={

@@ -309,16 +309,16 @@ export const WeatherSection = ({ tool }: WeatherSectionProps) => {
                     <div className="flex items-center gap-3 mb-3">
                         <MapPin className="h-5 w-5 text-primary" />
                         <div>
-                            <h2 className="text-2xl font-bold">{city?.name}</h2>
-                            <p className="text-sm text-muted-foreground">{city?.country}</p>
+                            <h2 className="text-2xl font-bold txt-grad">{city?.name}</h2>
+                            <p className="text-sm txt-mut">{city?.country}</p>
                         </div>
                     </div>
 
                     <div className="flex items-baseline gap-2 mb-2">
-                        <span className="text-6xl font-bold">
+                        <span className="text-6xl font-bold txt-grad">
                             {kelvinToCelsius(currentWeather.main.temp)}°
                         </span>
-                        <span className="text-2xl text-muted-foreground">C</span>
+                        <span className="text-2xl txt-mut">C</span>
                     </div>
 
                     <p className="text-lg capitalize text-muted-foreground mb-3">
@@ -328,14 +328,14 @@ export const WeatherSection = ({ tool }: WeatherSectionProps) => {
                     <div className="flex items-center gap-4 text-sm">
                         <span className="flex items-center gap-1">
                             <span className="text-muted-foreground">Feels like</span>
-                            <span className="font-semibold">{formatTempForDisplay(currentWeather.main.feels_like)}</span>
+                            <span className="font-semibold txt-grad">{formatTempForDisplay(currentWeather.main.feels_like)}</span>
                         </span>
                         <span className="text-muted-foreground">•</span>
                         <span className="flex items-center gap-1">
                             <span className="text-muted-foreground">H:</span>
-                            <span className="font-semibold">{formatTempForDisplay(currentWeather.main.temp_max)}</span>
+                            <span className="font-semibold txt-grad">{formatTempForDisplay(currentWeather.main.temp_max)}</span>
                             <span className="text-muted-foreground">L:</span>
-                            <span className="font-semibold">{formatTempForDisplay(currentWeather.main.temp_min)}</span>
+                            <span className="font-semibold txt-grad">{formatTempForDisplay(currentWeather.main.temp_min)}</span>
                         </span>
                     </div>
                 </div>
@@ -352,12 +352,12 @@ export const WeatherSection = ({ tool }: WeatherSectionProps) => {
                         <div className="bg-muted/50 rounded-lg p-3 text-center backdrop-blur-sm">
                             <Droplets className="h-4 w-4 mx-auto mb-1 text-blue-400" />
                             <p className="text-xs text-muted-foreground">Humidity</p>
-                            <p className="text-lg font-bold">{currentWeather.main.humidity}%</p>
+                            <p className="text-lg font-bold txt-grad">{currentWeather.main.humidity}%</p>
                         </div>
                         <div className="bg-muted/50 rounded-lg p-3 text-center backdrop-blur-sm">
                             <Wind className="h-4 w-4 mx-auto mb-1 text-cyan-400" />
                             <p className="text-xs text-muted-foreground">Wind</p>
-                            <p className="text-lg font-bold">{(currentWeather.wind.speed * 3.6).toFixed(1)}</p>
+                            <p className="text-lg font-bold txt-grad">{(currentWeather.wind.speed * 3.6).toFixed(1)}</p>
                             <p className="text-xs text-muted-foreground">km/h</p>
                         </div>
                     </div>
@@ -368,7 +368,7 @@ export const WeatherSection = ({ tool }: WeatherSectionProps) => {
             <div className="pb-6 mb-6 border-b border-border/50">
                 <div className="flex items-center gap-2 mb-4">
                     <Calendar className="h-4 w-4 text-primary" />
-                    <h3 className="text-sm font-semibold tracking-wide">24-HOUR FORECAST</h3>
+                    <h3 className="text-sm font-semibold tracking-wide txt-grad">24-HOUR FORECAST</h3>
                 </div>
                 <div className="h-56 bg-muted/20 rounded-lg p-4">
                     <ResponsiveContainer width="100%" height="100%">
@@ -413,7 +413,7 @@ export const WeatherSection = ({ tool }: WeatherSectionProps) => {
             <div className="pb-6 mb-6 border-b border-border/50">
                 <div className="flex items-center gap-2 mb-4">
                     <Gauge className="h-4 w-4 text-primary" />
-                    <h3 className="text-sm font-semibold tracking-wide">CURRENT CONDITIONS</h3>
+                    <h3 className="text-sm font-semibold tracking-wide txt-grad">CURRENT CONDITIONS</h3>
                 </div>
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                     <div className="bg-muted/30 rounded-xl p-4 backdrop-blur-sm shadow-inner shadow-muted-foreground/10 border-b border-foreground/20 transition-colors">
@@ -421,7 +421,7 @@ export const WeatherSection = ({ tool }: WeatherSectionProps) => {
                             <Wind className="h-4 w-4 text-cyan-400" />
                             <span className="text-xs font-medium text-muted-foreground">WIND</span>
                         </div>
-                        <p className="text-2xl font-bold">{(currentWeather.wind.speed * 3.6).toFixed(1)}</p>
+                        <p className="text-2xl font-bold txt-grad">{(currentWeather.wind.speed * 3.6).toFixed(1)}</p>
                         <p className="text-xs text-muted-foreground mt-1">
                             km/h {getWindDirection(currentWeather.wind.deg)}
                         </p>
@@ -432,7 +432,7 @@ export const WeatherSection = ({ tool }: WeatherSectionProps) => {
                             <Eye className="h-4 w-4 text-purple-400" />
                             <span className="text-xs font-medium text-muted-foreground">VISIBILITY</span>
                         </div>
-                        <p className="text-2xl font-bold">
+                        <p className="text-2xl font-bold txt-grad">
                             {(currentWeather.visibility / 1000).toFixed(1)}
                         </p>
                         <p className="text-xs text-muted-foreground mt-1">kilometers</p>
@@ -443,7 +443,7 @@ export const WeatherSection = ({ tool }: WeatherSectionProps) => {
                             <Droplets className="h-4 w-4 text-blue-400" />
                             <span className="text-xs font-medium text-muted-foreground">HUMIDITY</span>
                         </div>
-                        <p className="text-2xl font-bold">{currentWeather.main.humidity}</p>
+                        <p className="text-2xl font-bold txt-grad">{currentWeather.main.humidity}</p>
                         <p className="text-xs text-muted-foreground mt-1">percent</p>
                     </div>
 
@@ -452,7 +452,7 @@ export const WeatherSection = ({ tool }: WeatherSectionProps) => {
                             <Gauge className="h-4 w-4 text-orange-400" />
                             <span className="text-xs font-medium text-muted-foreground">PRESSURE</span>
                         </div>
-                        <p className="text-2xl font-bold">{currentWeather.main.pressure}</p>
+                        <p className="text-2xl font-bold txt-grad">{currentWeather.main.pressure}</p>
                         <p className="text-xs text-muted-foreground mt-1">hPa</p>
                     </div>
                 </div>
@@ -462,7 +462,7 @@ export const WeatherSection = ({ tool }: WeatherSectionProps) => {
             <div className="pb-6">
                 <div className="flex items-center gap-2 mb-4">
                     <Calendar className="h-4 w-4 text-primary" />
-                    <h3 className="text-sm font-semibold tracking-wide">5-DAY FORECAST</h3>
+                    <h3 className="text-sm font-semibold tracking-wide txt-grad">5-DAY FORECAST</h3>
                 </div>
                 <div className="grid grid-cols-2 md:grid-cols-5 gap-3">
                     {dailyForecast.map((day, index) => (
@@ -470,14 +470,14 @@ export const WeatherSection = ({ tool }: WeatherSectionProps) => {
                             key={day.date}
                             className="bg-muted/30 shadow-inner shadow-muted-foreground/10 border-b border-foreground/20 rounded-xl p-4 backdrop-blur-sm transition-all duration-200"
                         >
-                            <p className="text-sm font-semibold mb-3 text-center">
+                            <p className="text-sm font-semibold mb-3 text-center txt-grad">
                                 {index === 0 ? 'Today' : day.day}
                             </p>
                             <div className="flex justify-center mb-3">
                                 {getWeatherIcon(day.icon, 40)}
                             </div>
                             <div className="text-center">
-                                <p className="text-2xl font-bold mb-1">
+                                <p className="text-2xl font-bold mb-1 txt-grad">
                                     {day.temp}°
                                 </p>
                                 <p className="text-xs text-muted-foreground capitalize mb-2 line-clamp-2">
@@ -501,14 +501,14 @@ export const WeatherSection = ({ tool }: WeatherSectionProps) => {
                             <Sunrise className="h-5 w-5 text-orange-400" />
                             <div>
                                 <p className="text-xs text-muted-foreground">Sunrise</p>
-                                <p className="text-sm font-semibold">{formatTime(data.city.sunrise)}</p>
+                                <p className="text-sm font-semibold txt-grad">{formatTime(data.city.sunrise)}</p>
                             </div>
                         </div>
                         <div className="flex items-center gap-3 bg-gradient-to-r from-purple-500/10 to-transparent rounded-lg p-3">
                             <Sunset className="h-5 w-5 text-purple-400" />
                             <div>
                                 <p className="text-xs text-muted-foreground">Sunset</p>
-                                <p className="text-sm font-semibold">{formatTime(data.city.sunset)}</p>
+                                <p className="text-sm font-semibold txt-grad">{formatTime(data.city.sunset)}</p>
                             </div>
                         </div>
                     </div>

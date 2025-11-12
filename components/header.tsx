@@ -36,9 +36,9 @@ export const Header: React.FC<HeaderProps> = ({ user, models }) => {
         <Link href="/" className="group flex gap-1 bg-gradient-to-tr from-card/55 via-card/70 to-card/45 backdrop-blur-sm drop-shadow-sm border border-border rounded-full px-2 py-2 cursor-pointer items-center">
           <Cross
             size={16}
-            className="group-hover:rotate-90 group-hover:opacity-95 transition-transform duration-100 text-foreground"
+            className="group-hover:rotate-90 group-hover:opacity-95 transition-transform duration-100 text-foreground/70 group-hover:text-foreground"
           />
-          <span className="text-xs font-medium text-foreground hidden group-hover:inline-block transition-all duration-200">
+          <span className="text-xs font-medium text-foreground/70 hidden group-hover:inline-block transition-all duration-200 group-hover:text-foreground">
             New
           </span>
         </Link>
@@ -46,7 +46,7 @@ export const Header: React.FC<HeaderProps> = ({ user, models }) => {
 
       <div className="flex items-center gap-2" suppressHydrationWarning>
         <SearchModeToggle />
-        <span onClick={() => setHistoryDialogIsOpen(true)} className='hover:cursor-pointer bg-gradient-to-tr from-card/55 via-card/70 to-card/45 backdrop-blur-sm drop-shadow-sm border border-border rounded-full px-2 py-2 hover:text-foreground/80 transition-colors'><TextSearch size={16} /></span>
+        <span onClick={() => setHistoryDialogIsOpen(true)} className='group hover:cursor-pointer bg-gradient-to-tr from-card/55 via-card/70 to-card/45 backdrop-blur-sm drop-shadow-sm border border-border rounded-full px-2 py-2 hover:bg-card'><TextSearch size={16} className=' text-foreground/70 group-hover:text-foreground' /></span>
         <ModelSelector models={models} />
         {user ? <UserMenu user={user} /> : <GuestMenu />}
       </div>

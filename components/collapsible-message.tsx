@@ -33,7 +33,7 @@ export function CollapsibleMessage({
   const content = <div className="flex-1">{children}</div>
 
   return (
-    <div className="flex max-w-3xl px-2">
+    <div className="flex max-w-2xl px-2">
       {showIcon && (
         <div className="relative flex flex-col items-center">
           <div className="w-5">

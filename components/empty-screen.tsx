@@ -48,12 +48,12 @@ export function EmptyScreen({
             {latestTrendingQuestions.concat(latestTrendingQuestions).map((message, index) => (
               <Button
                 key={`row1-${index}`}
-                className="h-7 text-xs sm:text-sm font-normal text-foreground whitespace-nowrap bg-transparent hover:bg-card px-3 py-1.5 rounded-xl flex-shrink-0 border border-border/80 hover:border-border transition-colors"
+                className="h-7 text-xs sm:text-sm font-normal text-foreground whitespace-nowrap bg-transparent hover:bg-transparent px-3 py-1.5 rounded-xl flex-shrink-0 transition-colors"
                 name={message.message}
                 onClick={async () => submitMessage(message.message)}
               >
-                <div className="flex items-center gap-2">
-                  <message.icon size={16} className="text-muted-foreground" />
+                <div className="group flex items-center gap-2 bg-clip-text text-transparent bg-gradient-to-tr from-foreground/90 to-foreground/60 hover:text-foreground">
+                  <message.icon size={16} className='text-foreground/70 group-hover:text-foreground' />
                   {message.message}
                 </div>
               </Button>
@@ -67,12 +67,12 @@ export function EmptyScreen({
             {trendingQuestions.concat(trendingQuestions).map((message, index) => (
               <Button
                 key={`row2-${index}`}
-                className="h-7 text-xs sm:text-sm font-normal text-foreground whitespace-nowrap bg-transparent hover:bg-card px-3 py-1.5 rounded-xl flex-shrink-0 border border-border/80 hover:border-border transition-colors"
+                className="h-7 text-xs sm:text-sm font-normal text-foreground whitespace-nowrap bg-transparent hover:bg-transparent px-3 py-1.5 rounded-xl flex-shrink-0 transition-colors"
                 name={message.message}
                 onClick={async () => submitMessage(message.message)}
               >
-                <div className="flex items-center gap-2">
-                  <message.icon size={16} className="text-muted-foreground" />
+                <div className="group flex items-center gap-2 bg-clip-text text-transparent bg-gradient-to-tr from-foreground/90 to-foreground/60 hover:text-foreground ">
+                  <message.icon size={16} className='text-foreground/70 group-hover:text-foreground' />
                   {message.message}
                 </div>
               </Button>

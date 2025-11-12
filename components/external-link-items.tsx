@@ -9,22 +9,22 @@ const externalLinks = [
   {
     name: 'X',
     href: 'https://x.com/v1vekupasani',
-    icon: <SiX className="mr-2 h-4 w-4" />
+    icon: <SiX className="mr-2 h-4 w-4 text-foreground/70" />
   },
   {
     name: 'GitHub',
     href: 'https://github.com/cluezy',
-    icon: <SiGithub className="mr-2 h-4 w-4" />
+    icon: <SiGithub className="mr-2 h-4 w-4 text-foreground/70" />
   },
   {
     name: 'Linkedin',
     href: 'https://www.linkedin.com/company/cluezy',
-    icon: <SiLinkedin className="mr-2 h-4 w-4" />
+    icon: <SiLinkedin className="mr-2 h-4 w-4 text-foreground/70" />
   },
   {
     name: 'Instagram',
     href: 'https://www.instagram.com/v1vekupasani/',
-    icon: <SiInstagram className="mr-2 h-4 w-4" />
+    icon: <SiInstagram className="mr-2 h-4 w-4 text-foreground/70" />
   }
 ]
 
@@ -35,7 +35,7 @@ export function ExternalLinkItems() {
         <DropdownMenuItem key={link.name} asChild className='cursor-pointer'>
           <Link href={link.href} target="_blank" rel="noopener noreferrer">
             {link.icon}
-            <span>{link.name}</span>
+            <span className='txt-grad'>{link.name}</span>
           </Link>
         </DropdownMenuItem>
       ))}

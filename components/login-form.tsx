@@ -83,16 +83,16 @@ export function LoginForm({
       <div className='w-full h-full max-w-[400px] rounded-2xl bg-muted/80 border border-muted-foreground/10 backdrop-blur-xl p-2'>
         <Card className="w-full h-full max-w-[400px] rounded-xl bg-background drop-shadow-xl">
           <CardHeader className="text-center">
-            <CardTitle className="text-2xl flex flex-col items-center justify-center gap-4">
+            <CardTitle className="text-2xl txt-grad flex flex-col items-center justify-center gap-4">
               Welcome back!
             </CardTitle>
-            <CardDescription>Please enter your details to login</CardDescription>
+            <CardDescription className='txt-mut'>Please enter your details to login</CardDescription>
           </CardHeader>
           <CardContent>
             <div className="flex flex-col gap-4">
               <form onSubmit={handleLogin} className="flex flex-col gap-4">
                 <div className="grid gap-2">
-                  <Label htmlFor="email">Email Address</Label>
+                  <Label htmlFor="email" className='txt-grad'>Email Address</Label>
                   <Input
                     id="email"
                     type="email"
@@ -104,7 +104,7 @@ export function LoginForm({
                 </div>
                 <div className="grid gap-2">
                   <div className="flex items-center">
-                    <Label htmlFor="password">Password</Label>
+                    <Label htmlFor="password" className='txt-grad'>Password</Label>
                   </div>
                   <PasswordInput
                     id="password"
@@ -116,7 +116,7 @@ export function LoginForm({
                   />
                   <Link
                     href="/auth/forgot-password"
-                    className="inline-block text-sm underline-offset-4 hover:underline"
+                    className="inline-block text-sm txt-grad underline-offset-4 hover:underline"
                   >
                     Forgot password?
                   </Link>

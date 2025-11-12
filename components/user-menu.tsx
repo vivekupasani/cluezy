@@ -63,10 +63,10 @@ export default function UserMenu({ user }: UserMenuProps) {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="ghost" className="relative h-[33px] w-[33px] hover:bg-transparent rounded-full p-0 focus:ring-0">
+        <Button variant="ghost" className="relative h-[33px] w-[33px] text-foreground/70 hover:bg-transparent rounded-full p-0 focus:ring-0">
           <Avatar className="h-[33px] w-[32px]">
             <AvatarImage src={avatarUrl} alt={userName} />
-            <AvatarFallback className='text-xs pt-[2px] bg-gradient-to-tr from-card/55 via-card/70 to-card/45 backdrop-blur-sm drop-shadow-sm border border-border/80'>
+            <AvatarFallback className='text-xs pt-[2px] text-foreground/70 bg-gradient-to-tr from-card/55 via-card/70 to-card/45 backdrop-blur-sm drop-shadow-sm border border-border/80'>
               {getInitials(userName, user.email)}
             </AvatarFallback>
           </Avatar>
@@ -75,10 +75,10 @@ export default function UserMenu({ user }: UserMenuProps) {
       <DropdownMenuContent className="w-60 bg-muted/20 border-b border-primary/8" align="end" forceMount>
         <DropdownMenuLabel className="font-normal">
           <div className="flex flex-col space-y-1">
-            <p className="text-sm font-medium leading-none truncate">
+            <p className="text-sm pb-[1.2px] font-medium txt-grad leading-none truncate">
               {userName}
             </p>
-            <p className="text-xs pb-[1.2px] leading-none text-muted-foreground truncate">
+            <p className="text-xs pb-[1.2px] leading-none txt-mut truncate">
               {user.email}
             </p>
           </div>
@@ -91,8 +91,8 @@ export default function UserMenu({ user }: UserMenuProps) {
         </Link> */}
         <DropdownMenuSub>
           <DropdownMenuSubTrigger className='cursor-pointer'>
-            <Palette className="mr-2 h-4 w-4" />
-            <span>Theme</span>
+            <Palette className="mr-2 h-4 w-4 text-foreground/70" />
+            <span className='txt-grad'>Theme</span>
           </DropdownMenuSubTrigger>
           <DropdownMenuSubContent>
             <ThemeMenuItems />
@@ -100,8 +100,8 @@ export default function UserMenu({ user }: UserMenuProps) {
         </DropdownMenuSub>
         <DropdownMenuSub>
           <DropdownMenuSubTrigger className='cursor-pointer'>
-            <Link2 className="mr-2 h-4 w-4" />
-            <span>Links</span>
+            <Link2 className="mr-2 h-4 w-4 text-foreground/70" />
+            <span className='txt-grad'>Links</span>
           </DropdownMenuSubTrigger>
           <DropdownMenuSubContent>
             <ExternalLinkItems />
@@ -109,8 +109,8 @@ export default function UserMenu({ user }: UserMenuProps) {
         </DropdownMenuSub>
         <DropdownMenuSub>
           <DropdownMenuSubTrigger className='cursor-pointer'>
-            <LucideBadgeAlert className="mr-2 h-4 w-4" />
-            <span>Company Info</span>
+            <LucideBadgeAlert className="mr-2 h-4 w-4 text-foreground/70" />
+            <span className='txt-grad'>Company Info</span>
           </DropdownMenuSubTrigger>
           <DropdownMenuSubContent>
             <CompanyInfoItems />
@@ -118,8 +118,8 @@ export default function UserMenu({ user }: UserMenuProps) {
         </DropdownMenuSub>
         <DropdownMenuSeparator />
         <DropdownMenuItem onClick={handleLogout} className='cursor-pointer'>
-          <LogOut className="mr-2 h-4 w-4" />
-          <span>Logout</span>
+          <LogOut className="mr-2 h-4 w-4 text-foreground/70" />
+          <span className='txt-grad'>Logout</span>
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

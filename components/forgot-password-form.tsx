@@ -67,8 +67,8 @@ export function ForgotPasswordForm({
         <div className='w-full max-w-sm shadow-lg shadow-muted rounded-md'>
           <Card className='bg-background shadow-inner shadow-foreground/10 border-b border-foreground/12'>
             <CardHeader>
-              <CardTitle className="text-2xl">Reset Your Password</CardTitle>
-              <CardDescription>
+              <CardTitle className="text-2xl txt-grad">Reset Your Password</CardTitle>
+              <CardDescription className='txt-mut'>
                 Type in your email and we&apos;ll send you a link to reset your
                 password
               </CardDescription>
@@ -77,7 +77,7 @@ export function ForgotPasswordForm({
               <form onSubmit={handleForgotPassword}>
                 <div className="flex flex-col gap-6">
                   <div className="grid gap-2">
-                    <Label htmlFor="email">Email</Label>
+                    <Label htmlFor="email" className='txt-grad'>Email</Label>
                     <Input
                       id="email"
                       type="email"
@@ -85,6 +85,7 @@ export function ForgotPasswordForm({
                       required
                       value={email}
                       onChange={e => setEmail(e.target.value)}
+                      className='text-foreground/90'
                     />
                   </div>
                   {error && <p className="text-sm text-red-500">{error}</p>}
@@ -92,11 +93,11 @@ export function ForgotPasswordForm({
                     {isLoading ? 'Sending...' : 'Send reset email'}
                   </Button>
                 </div>
-                <div className="mt-4 text-center text-sm">
+                <div className="mt-4 text-center text-sm txt-grad ">
                   Already have an account?{' '}
                   <Link
                     href="/auth/login"
-                    className="underline underline-offset-4"
+                    className="hover:underline underline-offset-4 text-foreground/70 hover:text-foreground"
                   >
                     Login
                   </Link>

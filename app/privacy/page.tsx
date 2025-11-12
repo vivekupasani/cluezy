@@ -67,7 +67,7 @@ const privacy: PrivacySection[] = [
 export default async function PrivacyPage() {
     return (
         <div className="h-screen overflow-y-auto CustomScrollbar">
-            <div className="max-w-3xl flex flex-col mx-auto px-4">
+            <div className="max-w-2xl flex flex-col mx-auto px-4">
                 <div className="mt-16 flex flex-col justify-center items-center text-center">
                     <h1 className="text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-tr from-foreground to-foreground/60">
                         Privacy Policy

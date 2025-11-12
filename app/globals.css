@@ -137,6 +137,19 @@
   }
 }
 
+@layer utilities {
+  .txt-grad {
+    @apply bg-clip-text text-transparent bg-gradient-to-tr from-foreground to-foreground/60;
+  }
+
+  .txt-mut {
+    @apply bg-clip-text text-transparent bg-gradient-to-tr from-muted-foreground to-muted-foreground/60;
+  }
+
+  .txt-act {
+    @apply bg-clip-text text-transparent bg-gradient-to-tr from-accent-foreground to-accent-foreground/60;
+  }
+}
 @layer base {
   * {
     @apply border-border;

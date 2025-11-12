@@ -70,10 +70,10 @@ export function VideoCarouselDialog({
   return (
     <Dialog>
       <DialogTrigger asChild>{children}</DialogTrigger>
-      <DialogContent className="sm:max-w-3xl max-h-[80vh] HiddenScrollbar">
+      <DialogContent className="sm:max-w-2xl max-h-[80vh] HiddenScrollbar">
         <DialogHeader>
-          <DialogTitle>Search Videos</DialogTitle>
-          <DialogDescription className="text-sm">{query}</DialogDescription>
+          <DialogTitle className='txt-grad'>Search Videos</DialogTitle>
+          <DialogDescription className="text-sm txt-mut">{query}</DialogDescription>
         </DialogHeader>
         <div className="py-4">
           <Carousel
@@ -105,10 +105,10 @@ export function VideoCarouselDialog({
               })}
             </CarouselContent>
             <div className="absolute inset-8 flex items-center justify-between p-4 pointer-events-none">
-              <CarouselPrevious className="w-10 h-10 rounded-full shadow focus:outline-none pointer-events-auto">
+              <CarouselPrevious className="w-10 h-10 rounded-full shadow focus:outline-none pointer-events-auto text-foreground/70">
                 <span className="sr-only">Previous</span>
               </CarouselPrevious>
-              <CarouselNext className="w-10 h-10 rounded-full shadow focus:outline-none pointer-events-auto">
+              <CarouselNext className="w-10 h-10 rounded-full shadow focus:outline-none pointer-events-auto text-foreground/70">
                 <span className="sr-only">Next</span>
               </CarouselNext>
             </div>

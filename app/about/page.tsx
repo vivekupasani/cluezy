@@ -4,7 +4,7 @@ import { SiInstagram, SiLinkedin, SiX } from "react-icons/si"
 export default async function AboutPage() {
     return (
         <div className="h-screen overflow-y-auto CustomScrollbar">
-            <div className="max-w-3xl flex flex-col mx-auto px-4">
+            <div className="max-w-2xl flex flex-col mx-auto px-4">
                 <div className="mt-16 flex flex-col justify-center items-center text-center">
                     <h1 className="text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-tr from-foreground to-foreground/60">
                         About Us
@@ -23,18 +23,18 @@ export default async function AboutPage() {
 
                     <span className="text-sm text-foreground/80 mb-2 leading-relaxed">
                         We combine <b>advanced AI models</b>, <b>contextual understanding</b>, and <b>real-time search capabilities</b> to deliver
-                        accurate, meaningful, and reliable answers — not just results. Whether you’re exploring, learning, or researching,
+                        accurate, meaningful, and reliable answers not just results. Whether you’re exploring, learning, or researching,
                         Cluezy helps you find clarity and insight in seconds.
                     </span>
 
                     <span className="text-sm text-foreground/80 mb-2 leading-relaxed">
                         Founded with a vision to redefine how people interact with information, Cluezy continues to evolve through innovation,
-                        user feedback, and technology. We’re not just building a tool — we’re building a smarter way to think, search, and learn.
+                        user feedback, and technology. We’re not just building a tool we’re building a smarter way to think, search, and learn.
                     </span>
 
                     <span className="text-sm text-foreground/80 mb-10 leading-relaxed">
                         At <b>Cluezy</b>, we’re driven by the belief that technology should empower curiosity, creativity, and growth.
-                        Through Cluezy, we’re shaping the future of intelligent information discovery — one question at a time.
+                        Through Cluezy, we’re shaping the future of intelligent information discovery one question at a time.
                     </span>
                 </div>
 

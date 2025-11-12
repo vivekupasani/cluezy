@@ -297,11 +297,11 @@ export function Chat({
       {
         messages.length === 0 &&
         <div className='absolute bottom-2 flex gap-1 justify-center items-center'>
-          <div className='flex gap-2'>
-            <Link href="/terms" className='text-xs text-foreground/60 hover:text-foreground transition-colors'>Terms</Link>
-            <Link href="/privacy" className='text-xs text-foreground/60 hover:text-foreground transition-colors'>Privacy</Link>
-            <Link href="/contact" className='text-xs text-foreground/60 hover:text-foreground transition-colors'>Contact</Link>
-            <Link href="/about" className='text-xs text-foreground/60 hover:text-foreground transition-colors'>About</Link>
+          <div className='flex gap-2 bg-clip-text text-transparent bg-gradient-to-tr from-foreground/90 to-foreground/60'>
+            <Link href="/terms" className='text-xs hover:text-foreground transition-colors'>Terms</Link>
+            <Link href="/privacy" className='text-xs hover:text-foreground transition-colors'>Privacy</Link>
+            {/* <Link href="/contact" className='text-xs hover:text-foreground transition-colors'>Contact</Link> */}
+            <Link href="/about" className='text-xs hover:text-foreground transition-colors'>About</Link>
           </div>
           {/* <div className='text-xs text-foreground/60'>
             © 2025 All Rights Reserved From CLUEZY

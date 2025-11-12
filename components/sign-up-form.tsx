@@ -81,10 +81,10 @@ export function SignUpForm({
       <div className="w-full h-full max-w-[400px] rounded-2xl bg-muted/80 border border-muted-foreground/10 backdrop-blur-xl p-2">
         <Card className="w-full h-full max-w-[400px] rounded-xl bg-background drop-shadow-xl">
           <CardHeader className="text-center">
-            <CardTitle className="text-2xl flex flex-col items-center justify-center gap-4">
+            <CardTitle className="text-2xl flex flex-col items-center justify-center gap-4 txt-grad">
               Create an account
             </CardTitle>
-            <CardDescription>
+            <CardDescription className='txt-mut'>
               Enter your details to get started
             </CardDescription>
           </CardHeader>
@@ -93,7 +93,7 @@ export function SignUpForm({
             <div className="flex flex-col gap-4">
               <form onSubmit={handleSignUp} className="flex flex-col gap-4">
                 <div className="grid gap-2">
-                  <Label htmlFor="email">Email Address</Label>
+                  <Label htmlFor="email" className='txt-grad'>Email Address</Label>
                   <Input
                     id="email"
                     type="email"
@@ -105,7 +105,7 @@ export function SignUpForm({
                 </div>
 
                 <div className="grid gap-2">
-                  <Label htmlFor="password">Password</Label>
+                  <Label htmlFor="password" className='txt-grad'>Password</Label>
                   <PasswordInput
                     id="password"
                     placeholder="********"
@@ -116,7 +116,7 @@ export function SignUpForm({
                 </div>
 
                 <div className="grid gap-2">
-                  <Label htmlFor="repeatPassword">Repeat Password</Label>
+                  <Label htmlFor="repeatPassword" className='txt-grad pb-[0.2px]'>Repeat Password</Label>
                   <PasswordInput
                     id="repeatPassword"
                     placeholder="********"

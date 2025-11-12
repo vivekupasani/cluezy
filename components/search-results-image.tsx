@@ -158,10 +158,10 @@ export const SearchResultsImageSection: React.FC<
             </DialogTrigger>
 
             {/* full image preview mode */}
-            <DialogContent className="w-[90%] sm:w-full sm:max-w-3xl max-h-[80vh] overflow-hidden CustomScrollbar bg-gradient-to-br from-background/95 via-background to-background/90 backdrop-blur-sm">
+            <DialogContent className="w-[90%] sm:w-full sm:max-w-2xl max-h-[80vh] overflow-hidden CustomScrollbar bg-gradient-to-br from-background/95 via-background to-background/90 backdrop-blur-sm">
               <DialogHeader>
-                <DialogTitle>Search Images</DialogTitle>
-                <DialogDescription className="text-sm">
+                <DialogTitle className='txt-grad'>Search Images</DialogTitle>
+                <DialogDescription className="text-sm txt-mut">
                   {query}
                 </DialogDescription>
               </DialogHeader>
@@ -193,10 +193,10 @@ export const SearchResultsImageSection: React.FC<
                   </CarouselContent>
                   {convertedImages.length > 1 && (
                     <div className="absolute inset-8 flex items-center justify-between p-4">
-                      <CarouselPrevious className="w-10 h-10 rounded-full focus:outline-none bg-gradient-to-br from-card/95 via-card to-card/90 backdrop-blur-sm border-none">
+                      <CarouselPrevious className="w-10 h-10 rounded-full text-foreground/70 focus:outline-none bg-gradient-to-br from-card/95 via-card to-card/90 backdrop-blur-sm border-none">
                         <span className="sr-only">Previous</span>
                       </CarouselPrevious>
-                      <CarouselNext className="w-10 h-10 rounded-full focus:outline-none bg-gradient-to-br from-card/95 via-card to-card/90 backdrop-blur-sm border-none">
+                      <CarouselNext className="w-10 h-10 rounded-full text-foreground/70 focus:outline-none bg-gradient-to-br from-card/95 via-card to-card/90 backdrop-blur-sm border-none">
                         <span className="sr-only">Next</span>
                       </CarouselNext>
                     </div>

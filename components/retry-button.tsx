@@ -22,7 +22,7 @@ export const RetryButton: React.FC<RetryButtonProps> = ({
       onClick={() => reload()}
       aria-label={`Retry from message ${messageId}`}
     >
-      <RotateCcw className="w-4 h-4" />
+      <RotateCcw className="w-4 h-4 text-foreground/70 hover:text-foreground" />
       <span className="sr-only">Retry</span>
     </Button>
   )

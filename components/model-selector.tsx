@@ -3,7 +3,7 @@
 import Image from 'next/image'
 import { useEffect, useState } from 'react'
 
-import { Check } from 'lucide-react'
+import { Bot, Check } from 'lucide-react'
 
 import { Model } from '@/lib/types/models'
 import { getCookie, setCookie } from '@/lib/utils/cookies'
@@ -96,7 +96,7 @@ export function ModelSelector({ models }: ModelSelectorProps) {
         <Button
           role="combobox"
           aria-expanded={open}
-          className="w-[33px] h-[33px] p-0 bg-transparent hover:bg-transparent flex items-center justify-center rounded-full bg-gradient-to-tr from-card/55 via-card/70 to-card/45 backdrop-blur-sm drop-shadow-sm border border-border/80 focus:ring-0"
+          className="w-[33px] h-[33px] p-0 bg-transparent flex items-center justify-center rounded-full bg-gradient-to-tr from-card/55 via-card/70 to-card/45 backdrop-blur-sm drop-shadow-sm border border-border/80 hover:bg-card focus:ring-0"
         >
           {selectedModel ? (
             <Image
@@ -107,7 +107,7 @@ export function ModelSelector({ models }: ModelSelectorProps) {
               className="rounded-full"
             />
           ) : (
-            'Select model'
+            <Bot size={16} className='text-foreground/70' />
           )}
           {/* <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" /> */}
         </Button>
@@ -116,7 +116,7 @@ export function ModelSelector({ models }: ModelSelectorProps) {
         <Command className='bg-background'>
           <CommandInput placeholder="Search models..." />
           <CommandList>
-            <CommandEmpty>No model found.</CommandEmpty>
+            <CommandEmpty className='txt-grad'>No model found.</CommandEmpty>
             {Object.entries(groupedModels).map(([provider, models]) => (
               <CommandGroup key={provider} heading={provider}>
                 {models.map(model => {
@@ -136,7 +136,7 @@ export function ModelSelector({ models }: ModelSelectorProps) {
                           height={18}
                           className="bg-white rounded-full border"
                         />
-                        <span className="text-xs font-medium">
+                        <span className="text-xs font-medium txt-grad">
                           {model.name}
                         </span>
                       </div>
