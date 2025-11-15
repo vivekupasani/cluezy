@@ -78,6 +78,7 @@ export const metadata: Metadata = {
     'AI',
     'perplexity',
   ],
+  manifest: "/manifest.json"
 }
 
 export const viewport: Viewport = {

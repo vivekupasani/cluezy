@@ -72,7 +72,7 @@ export default function UserMenu({ user }: UserMenuProps) {
           </Avatar>
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="w-60 bg-muted/20 border-b border-primary/8" align="end" forceMount>
+      <DropdownMenuContent className="w-60 bg-background border-b border-primary/8" align="end" forceMount>
         <DropdownMenuLabel className="font-normal">
           <div className="flex flex-col space-y-1">
             <p className="text-sm pb-[1.2px] font-medium txt-grad leading-none truncate">

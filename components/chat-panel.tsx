@@ -106,7 +106,7 @@ export function ChatPanel({
       }
 
       const data = await res.json()
-      console.log("Enhanced prompt:", data)
+      // console.log("Enhanced prompt:", data)
 
       if (data?.enhancedPrompt) {
         handleInputChange({
@@ -201,7 +201,7 @@ export function ChatPanel({
           </Button>
         )}
 
-        <div>
+        <div className='bg-background'>
           {/* <div className='flex justify-center items-center gap-1 p-2 border border-border rounded-3xl'> Changed from rounded-[34px] to rounded-3xl */}
           <div className={cn(
             "relative flex flex-row items-start gap-3 px-3 py-[10px] w-full bg-gradient-to-tr from-card/55 via-card/70 to-card/45 backdrop-blur-sm drop-shadow-sm border border-border/80 transition-colors",

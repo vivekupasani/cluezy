@@ -33,7 +33,7 @@ export default function GuestMenu() {
           <Settings2 size={16} className=' text-foreground/70 group-hover:text-foreground' /> {/* Choose an icon */}
         </button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="w-56 bg-muted/20 border-b border-primary/8" align="end" forceMount>
+      <DropdownMenuContent className="w-56 bg-background border-b border-primary/8" align="end" forceMount>
         <DropdownMenuItem asChild>
           <Link href="/auth/login" className='cursor-pointer'>
             <LogIn className="mr-2 h-4 w-4 text-foreground/70" />

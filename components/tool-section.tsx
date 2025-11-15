@@ -3,6 +3,7 @@
 import { ToolInvocation } from 'ai'
 
 import { DateTimeSection } from './datetime-section'
+import { DocumentSection } from './doument-section'
 import { QuestionConfirmation } from './question-confirmation'
 import RetrieveSection from './retrieve-section'
 import { SearchSection } from './search-section'
@@ -110,12 +111,12 @@ export function ToolSection({
       return (
         <DateTimeSection tool={tool} />
       )
-    // case 'pdfSearch':
-    // case 'pptSearch':
-    // case 'docSearch':
-    //   return (
-    //     <h1>Hello</h1>
-    //   )
+    case 'pdfSearch':
+    case 'pptSearch':
+    case 'docSearch':
+      return (
+        <DocumentSection tool={tool} />
+      )
     default:
       return null
   }

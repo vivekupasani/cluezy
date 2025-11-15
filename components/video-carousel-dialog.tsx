@@ -70,7 +70,7 @@ export function VideoCarouselDialog({
   return (
     <Dialog>
       <DialogTrigger asChild>{children}</DialogTrigger>
-      <DialogContent className="sm:max-w-2xl max-h-[80vh] HiddenScrollbar">
+      <DialogContent className="w-[95%] sm:w-full sm:max-w-2xl max-h-[80vh] HiddenScrollbar">
         <DialogHeader>
           <DialogTitle className='txt-grad'>Search Videos</DialogTitle>
           <DialogDescription className="text-sm txt-mut">{query}</DialogDescription>

@@ -311,16 +311,16 @@ export function Chat({
 
       {/* rate limit dialog component */}
       <Dialog open={isRateLimitDialogOpen} onOpenChange={setisRateLimitDialogOpen}>
-        <DialogContent className='w-[90%] bg-gradient-to-br from-card/75 via-card/55 to-card/65 shadow-inner shadow-card-foreground/10 backdrop-blur-sm'>
+        <DialogContent className='w-[90%] bg-gradient-to-br from-card/75 via-card/55 to-card/65 rounded-2xl backdrop-blur-sm'>
           <DialogHeader>
-            <DialogTitle>Daily Limit Reached</DialogTitle>
-            <DialogDescription>
+            <DialogTitle className='txt-grad'>Daily Limit Reached</DialogTitle>
+            <DialogDescription className='txt-mut'>
               {rateLimitMessage ||
                 "You’ve reached the daily limit. Please log in for unlimited access."}
             </DialogDescription>
           </DialogHeader>
           <div className="flex justify-end gap-2 mt-4">
-            <Button variant="outline" onClick={() => setisRateLimitDialogOpen(false)}>
+            <Button variant="outline" className='txt-grad' onClick={() => setisRateLimitDialogOpen(false)}>
               Close
             </Button>
             <Button onClick={() => (window.location.href = '/auth/login')}>

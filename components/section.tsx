@@ -6,6 +6,7 @@ import {
   BookCheck,
   Check,
   File,
+  FileText,
   Film,
   Image,
   MessageCircleMore,
@@ -64,6 +65,11 @@ export const Section: React.FC<SectionProps> = ({
     case 'Content':
       icon = <File size={iconSize} className={iconClassName} />
       type = 'badge'
+      break
+    case 'PDFs':
+    case 'Documents':
+    case 'Presentations':
+      icon = <FileText size={iconSize} className={iconClassName} />
       break
     default:
       icon = <Search size={iconSize} className={iconClassName} />

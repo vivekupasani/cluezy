@@ -158,7 +158,7 @@ export const SearchResultsImageSection: React.FC<
             </DialogTrigger>
 
             {/* full image preview mode */}
-            <DialogContent className="w-[90%] sm:w-full sm:max-w-2xl max-h-[80vh] overflow-hidden CustomScrollbar bg-gradient-to-br from-background/95 via-background to-background/90 backdrop-blur-sm">
+            <DialogContent className="w-[95%] sm:w-full sm:max-w-2xl max-h-[80vh] overflow-hidden CustomScrollbar bg-gradient-to-br from-background/95 via-background to-background/90 backdrop-blur-sm">
               <DialogHeader>
                 <DialogTitle className='txt-grad'>Search Images</DialogTitle>
                 <DialogDescription className="text-sm txt-mut">
