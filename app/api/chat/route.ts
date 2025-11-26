@@ -25,6 +25,7 @@ export async function POST(req: Request) {
     const isSharePage = referer?.includes('/share/')
     const userId = await getCurrentUserId()
     console.log("user id : ", userId)
+    // console.log("Messages from server : ", JSON.stringify(messages, null, 2))
 
     if (userId == "anonymous") {
       const identifier = getClientIdentifier(req);
@@ -51,7 +52,7 @@ export async function POST(req: Request) {
       if (!success) {
         const resetDate = new Date(reset);
         return new Response(
-          `You've reached your daily limit of ${limit} searches for authenticated users. Upgrade to Premium to continue, or wait until ${resetDate.toLocaleString()}.`,
+          `You've reached your daily limit of ${limit} searches for authenticated users. Premium will be available soon. Until then, you can wait until ${resetDate.toLocaleString()} to continue searching.`,
           {
             status: 429,
             statusText: 'Too Many Requests',

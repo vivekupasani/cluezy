@@ -89,10 +89,10 @@ export const retrieveTool = tool({
     const useJina = process.env.JINA_API_KEY
     if (useJina) {
       results = await fetchJinaReaderData(url)
-      console.log('JINA RESULT : ', results)
+      // console.log('JINA RESULT : ', results)
     } else {
       results = await fetchTavilyExtractData(url)
-      console.log('TAVILY RESULT : ', results)
+      // console.log('TAVILY RESULT : ', results)
     }
 
     console.log("RESULTS : ", results)

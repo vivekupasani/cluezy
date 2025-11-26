@@ -5,6 +5,7 @@ import { useCurrentUserEmail, useCurrentUserName } from "@/hooks/use-current-use
 import { createClient } from "@/lib/supabase/client";
 import { cn } from "@/lib/utils";
 import { ArrowLeft, Info } from "lucide-react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import CommunityTab from "./community-tab";
@@ -42,10 +43,12 @@ export default function SettingsSection() {
         <div>
             {/* Header */}
             <div className="flex items-center justify-start mb-8">
-                <button className="flex items-center gap-2 hover:bg-accent hover:text-accent-foreground rounded-md px-2 py-1 transition-colors">
-                    <ArrowLeft size={18} />
-                    <span className="text-sm">Back to Chat</span>
-                </button>
+                <Link
+                    href="/"
+                    className="group flex items-center gap-1 txt-grad hover:bg-accent hover:text-foreground rounded-md px-2 py-1 transition-colors">
+                    <ArrowLeft size={18} className="text-foreground/70 group-hover:text-foreground" />
+                    <span className="text-sm">Back</span>
+                </Link>
                 {/* <div className="flex items-center gap-3 bg-card px-3 py-2 rounded-full shadow-inner shadow-card-foreground/10 border border-border">
                     <button className="p-1.5 rounded-full hover:bg-muted transition-colors">
                         <Monitor size={16} className="text-card-foreground/80" />

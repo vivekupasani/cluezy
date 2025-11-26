@@ -52,11 +52,13 @@ export function ToolSection({
     // When result is available, display the result
     if (tool.state === 'result') {
       return (
-        <QuestionConfirmation
-          toolInvocation={tool}
-          isCompleted={true}
-          onConfirm={() => { }} // Not used in result display mode
-        />
+        <div className='-mb-4'>
+          <QuestionConfirmation
+            toolInvocation={tool}
+            isCompleted={true}
+            onConfirm={() => { }} // Not used in result display mode
+          />
+        </div>
       )
     }
   }
@@ -64,44 +66,54 @@ export function ToolSection({
   switch (tool.toolName) {
     case 'search':
       return (
-        <SearchSection
-          tool={tool}
-          isOpen={isOpen}
-          onOpenChange={onOpenChange}
-          chatId={chatId || ''}
-        />
+        <div className='-mb-8'>
+          <SearchSection
+            tool={tool}
+            isOpen={isOpen}
+            onOpenChange={onOpenChange}
+            chatId={chatId || ''}
+          />
+        </div>
       )
 
     case 'acadamicSearch':
       return (
-        <SearchSection
-          tool={tool}
-          isOpen={isOpen}
-          onOpenChange={onOpenChange}
-          chatId={chatId || ''}
-        />
+        <div className='-mb-6'>
+          <SearchSection
+            tool={tool}
+            isOpen={isOpen}
+            onOpenChange={onOpenChange}
+            chatId={chatId || ''}
+          />
+        </div>
       )
 
     case 'videoSearch':
       return (
-        <VideoSearchSection
-          tool={tool}
-          isOpen={isOpen}
-          onOpenChange={onOpenChange}
-          chatId={chatId || ''}
-        />
+        <div className='-mb-10 mt-1'>
+          <VideoSearchSection
+            tool={tool}
+            isOpen={isOpen}
+            onOpenChange={onOpenChange}
+            chatId={chatId || ''}
+          />
+        </div>
       )
     case 'youtubeVideoAnalysis':
       return (
-        <YoutubeVideoAnalysisSection tool={tool} />
+        <div className='-mb-5 mx-2'>
+          <YoutubeVideoAnalysisSection tool={tool} />
+        </div>
       )
     case 'retrieve':
       return (
-        <RetrieveSection
-          tool={tool}
-          isOpen={isOpen}
-          onOpenChange={onOpenChange}
-        />
+        <div className='-mb-10'>
+          <RetrieveSection
+            tool={tool}
+            isOpen={isOpen}
+            onOpenChange={onOpenChange}
+          />
+        </div>
       )
     case 'weather':
       return (
@@ -115,7 +127,9 @@ export function ToolSection({
     case 'pptSearch':
     case 'docSearch':
       return (
-        <DocumentSection tool={tool} />
+        <div className='-mb-6 mt-1'>
+          <DocumentSection tool={tool} />
+        </div>
       )
     default:
       return null

@@ -11,10 +11,10 @@ export const YoutubeVideoAnalysisSection = ({
     const data = tool.state === "result" ? tool.result : undefined
     const isToolLoading = tool.state === "call"
 
-    console.log("youtube data :", data)
+    // console.log("youtube data :", data)
 
     return (
-        <div className="p-1 flex items-center justify-center w-full max-w-2xl pl-6">
+        <div className="p-1 flex items-center justify-center w-full max-w-2xl pl-2 md:pl-6 mt-2">
             {isToolLoading && (
                 <Skeleton className="w-full aspect-video rounded-lg" />
             )}

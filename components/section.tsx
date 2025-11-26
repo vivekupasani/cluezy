@@ -48,7 +48,7 @@ export const Section: React.FC<SectionProps> = ({
       break
     case 'Videos':
       icon = <Film size={iconSize} className={iconClassName} />
-      type = 'badge'
+      // type = 'badge'
       break
     case 'Sources':
       icon = <Newspaper size={iconSize} className={iconClassName} />

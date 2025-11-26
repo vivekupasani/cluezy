@@ -1,5 +1,4 @@
 import {
-  convertToCoreMessages,
   CoreMessage,
   CoreToolMessage,
   generateId,
@@ -13,6 +12,7 @@ import { twMerge } from 'tailwind-merge'
 import { type Model } from '@/lib/types/models'
 
 import { ExtendedCoreMessage } from '../types'
+
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
 }
@@ -29,11 +29,11 @@ export function transformToolMessages(messages: CoreMessage[]): CoreMessage[] {
   return messages.map(message =>
     message.role === 'tool'
       ? {
-          ...message,
-          role: 'assistant',
-          content: JSON.stringify(message.content),
-          type: 'tool'
-        }
+        ...message,
+        role: 'assistant',
+        content: JSON.stringify(message.content),
+        type: 'tool'
+      }
       : message
   ) as CoreMessage[]
 }
@@ -122,11 +122,9 @@ export function convertToUIMessages(
           'data' in content
         ) {
           if (content.type === 'reasoning') {
-            // If content.data is an object, capture its reasoning and time;
-            // otherwise treat it as a simple string.
             if (typeof content.data === 'object' && content.data !== null) {
               pendingReasoning = (content.data as any).reasoning
-              pendingReasoningTime = (content.data as any).time
+              pendingReasoningTime = (content.data as any).time as number | undefined
             } else {
               pendingReasoning = content.data as string
               pendingReasoningTime = 0
@@ -139,9 +137,10 @@ export function convertToUIMessages(
       return chatMessages
     }
 
-    // Build the text content and tool invocations from message.content.
+    // Build the text content, tool invocations, and file attachments from message.content.
     let textContent = ''
     let toolInvocations: Array<ToolInvocation> = []
+    let fileParts: Array<any> = []
 
     if (message.content) {
       if (typeof message.content === 'string') {
@@ -154,22 +153,67 @@ export function convertToUIMessages(
             } else if (
               content.type === 'tool-call' &&
               'toolCallId' in content &&
-              'toolName' in content &&
-              'args' in content
+              'toolName' in content
             ) {
-              toolInvocations.push({
+              // FIX: More flexible handling of tool-call, args might be optional or in different format
+              const toolInvocation: ToolInvocation = {
                 state: 'call',
-                toolCallId: content.toolCallId,
-                toolName: content.toolName,
-                args: content.args
-              } as ToolInvocation)
+                toolCallId: content.toolCallId as string,
+                toolName: content.toolName as string,
+                args: content.args || {} // Ensure args always exists
+              }
+
+              // Debug logging for specific tools
+              if (content.toolName === 'retrieval' || content.toolName === 'ask_question') {
+                console.log(`Processing ${content.toolName} tool:`, {
+                  toolCallId: content.toolCallId,
+                  args: content.args,
+                  fullContent: content
+                })
+              }
+
+              toolInvocations.push(toolInvocation)
+            } else if (
+              content.type === 'tool-result' &&
+              'toolCallId' in content &&
+              'toolName' in content
+            ) {
+              // Convert tool-result to proper tool invocation with result state
+              const existingInvocation = toolInvocations.find(
+                inv => inv.toolCallId === content.toolCallId
+              )
+
+              if (!existingInvocation) {
+                toolInvocations.push({
+                  state: 'result',
+                  toolCallId: content.toolCallId,
+                  toolName: content.toolName,
+                  result: (content as any).result || {},
+                  args: (content as any).args || {} // Include args for context
+                } as ToolInvocation)
+              }
+            } else if (
+              content.type === 'file' &&
+              'url' in content &&
+              'name' in content &&
+              'mimeType' in content
+            ) {
+              const fileContent = {
+                type: 'file' as const,
+                url: content.url as string,
+                name: content.name as string,
+                mimeType: content.mimeType as string,
+                size: typeof content.size === 'number' ? content.size : 0,
+                data: content.data as string || content.url as string
+              }
+              fileParts.push(fileContent)
             }
           }
         }
       }
     }
 
-    // For assistant messages, assemble annotations from any stashed data.
+    // Rest of your function remains the same...
     let annotations: JSONValue[] | undefined = undefined
     if (message.role === 'assistant') {
       if (pendingAnnotations.length > 0 || pendingReasoning !== undefined) {
@@ -177,20 +221,19 @@ export function convertToUIMessages(
           ...pendingAnnotations,
           ...(pendingReasoning !== undefined
             ? [
-                {
-                  type: 'reasoning',
-                  data: {
-                    reasoning: pendingReasoning,
-                    time: pendingReasoningTime ?? 0
-                  }
+              {
+                type: 'reasoning',
+                data: {
+                  reasoning: pendingReasoning,
+                  time: pendingReasoningTime ?? 0
                 }
-              ]
+              } as JSONValue
+            ]
             : [])
         ]
       }
     }
 
-    // Create the new message. Note: we do not include a top-level "reasoning" property.
     const newMessage: Message = {
       id: generateId(),
       role: message.role,
@@ -199,9 +242,22 @@ export function convertToUIMessages(
       annotations: annotations
     }
 
+    if (message.role === 'user' && (fileParts.length > 0 || textContent)) {
+      const parts: any[] = []
+
+      if (textContent) {
+        parts.push({
+          type: 'text',
+          text: textContent
+        })
+      }
+
+      parts.push(...fileParts)
+        ; (newMessage as any).parts = parts
+    }
+
     chatMessages.push(newMessage)
 
-    // Clear pending state after processing an assistant message.
     if (message.role === 'assistant') {
       pendingAnnotations = []
       pendingReasoning = undefined
@@ -210,6 +266,148 @@ export function convertToUIMessages(
 
     return chatMessages
   }, [])
+}
+
+// Custom conversion function that preserves file attachments and handles all content types
+function convertMessagesWithFiles(messages: any[]): CoreMessage[] {
+  return messages.map((message: any) => {
+    const coreMessage: CoreMessage = {
+      role: message.role,
+      content: []
+    }
+
+    // console.log("Processing message:", JSON.stringify(message, null, 2));
+
+    // Handle messages with 'parts' array (contains files and other content types)
+    if (message.parts && Array.isArray(message.parts)) {
+      coreMessage.content = message.parts.map((part: any): any => {
+        if (part.type === 'text') {
+          return {
+            type: 'text',
+            text: part.text
+          }
+        } else if (part.type === 'file') {
+          return {
+            type: 'file',
+            url: part.url,
+            name: part.name,
+            mimeType: part.mimeType,
+            size: typeof part.size === 'number' ? part.size : 0,
+            data: part.data || part.url
+          }
+        } else if (part.type === 'tool-invocation') {
+          // Handle tool-invocation type specifically with safe access
+          const toolInvocation = part.toolInvocation;
+
+          if (!toolInvocation) {
+            return {
+              type: 'text',
+              text: 'Invalid tool invocation: missing toolInvocation property'
+            }
+          }
+
+          // console.log("=============================")
+          // console.log("tool invocation : ", toolInvocation)
+          // console.log("=============================")
+
+          // Safe access to args with fallback
+          const args = toolInvocation.args || {};
+          const result = toolInvocation.result || {};
+
+          if (toolInvocation.state === 'result') {
+            return {
+              type: 'tool-result',
+              toolCallId: toolInvocation.toolCallId,
+              toolName: toolInvocation.toolName,
+              args: args, // Include args for context
+              result: result
+            }
+          } else if (toolInvocation.state === 'call') {
+            return {
+              type: 'tool-call',
+              toolCallId: toolInvocation.toolCallId,
+              toolName: toolInvocation.toolName,
+              args: args
+            }
+          } else {
+            // Unknown state, fallback to text
+            return {
+              type: 'text',
+              text: `Tool invocation with state: ${toolInvocation.state}`
+            }
+          }
+        }
+        // Fallback for unknown part types - convert to text
+        return {
+          type: 'text',
+          text: typeof part === 'object' ? JSON.stringify(part) : String(part)
+        }
+      })
+    }
+    // Handle tool invocations from the message object
+    else if (message.toolInvocations && Array.isArray(message.toolInvocations)) {
+      const contentParts: any[] = []
+
+      // Add text content if it exists
+      if (message.content && typeof message.content === 'string') {
+        contentParts.push({
+          type: 'text',
+          text: message.content
+        })
+      }
+
+      // Convert tool invocations to content parts
+      message.toolInvocations.forEach((invocation: any) => {
+        // console.log("=============================")
+        // console.log("tool invocation : ", JSON.stringify(invocation, null, 2))
+        // console.log("=============================")
+        if (invocation.state === 'call') {
+          contentParts.push({
+            type: 'tool-call',
+            toolCallId: invocation.toolCallId,
+            toolName: invocation.toolName,
+            args: invocation.args || {} // Safe fallback
+          })
+        } else if (invocation.state === 'result') {
+          contentParts.push({
+            type: 'tool-result',
+            toolCallId: invocation.toolCallId,
+            toolName: invocation.toolName,
+            result: invocation.result || {}, // Safe fallback
+            args: invocation.args || {} // Safe fallback
+          })
+        }
+      })
+
+      coreMessage.content = contentParts
+    }
+    // Handle legacy format: plain content string
+    else if (typeof message.content === 'string') {
+      coreMessage.content = [{
+        type: 'text',
+        text: message.content
+      }]
+    }
+    // Handle already converted content array
+    else if (Array.isArray(message.content)) {
+      coreMessage.content = message.content.map((content: any) => {
+        if (content && typeof content === 'object' && 'type' in content) {
+          return content
+        }
+        // Convert unknown content to text
+        return {
+          type: 'text',
+          text: String(content)
+        }
+      })
+    }
+    // Handle empty content
+    else {
+      coreMessage.content = []
+    }
+
+    return coreMessage
+  })
 }
 
 export function convertToExtendedCoreMessages(
@@ -235,12 +433,12 @@ export function convertToExtendedCoreMessages(
         typeof message.reasoning === 'string'
           ? { reasoning: message.reasoning, time: reasoningTime }
           : {
-              ...(message.reasoning as Record<string, unknown>),
-              time:
-                (message as any).reasoningTime ??
-                (message.reasoning as any).time ??
-                0
-            }
+            ...(message.reasoning as Record<string, unknown>),
+            time:
+              (message as any).reasoningTime ??
+              (message.reasoning as any).time ??
+              0
+          }
       result.push({
         role: 'data',
         content: {
@@ -251,7 +449,7 @@ export function convertToExtendedCoreMessages(
     }
 
     // Convert current message
-    const converted = convertToCoreMessages([message])
+    const converted = convertMessagesWithFiles([message])
     result.push(...converted)
   }
 

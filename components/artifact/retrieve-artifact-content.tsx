@@ -8,7 +8,7 @@ import type {
 } from '@/lib/types/index'
 
 import { SearchResults } from '@/components/search-results'
-import { Section, ToolArgsSection } from '@/components/section'
+import { Section } from '@/components/section'
 
 import { MemoizedReactMarkdown } from '../ui/markdown'
 
@@ -17,7 +17,7 @@ const MAX_CONTENT_LENGTH = 1000
 export function RetrieveArtifactContent({ tool }: { tool: ToolInvocation }) {
   const searchResults: TypeSearchResults | undefined =
     tool.state === 'result' ? tool.result : undefined
-  const url = tool.args?.url as string | undefined
+  // const url = tool.args?.url as string | undefined
 
   if (!searchResults?.results) {
     return <div className="p-4">No retrieved content</div>
@@ -35,7 +35,7 @@ export function RetrieveArtifactContent({ tool }: { tool: ToolInvocation }) {
 
   return (
     <div className="space-y-2 ">
-      <ToolArgsSection tool="retrieve">{url}</ToolArgsSection>
+      {/* <ToolArgsSection tool="retrieve">{url}</ToolArgsSection> */}
 
       <Section title="Sources">
         <SearchResults results={truncatedResults} displayMode="list" />

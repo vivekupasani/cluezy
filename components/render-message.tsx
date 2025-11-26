@@ -107,6 +107,7 @@ export function RenderMessage({
         message={message.content}
         messageId={messageId}
         onUpdateMessage={onUpdateMessage}
+        parts={message.parts}
       />
     )
   }

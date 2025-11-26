@@ -7,6 +7,7 @@ import { Pencil } from 'lucide-react'
 
 import { cn } from '@/lib/utils'
 
+import Link from 'next/link'
 import { CollapsibleMessage } from './collapsible-message'
 import { Button } from './ui/button'
 
@@ -14,12 +15,23 @@ type UserMessageProps = {
   message: string
   messageId?: string
   onUpdateMessage?: (messageId: string, newContent: string) => Promise<void>
+  parts: any
+}
+
+type UserMessageFileTypeProps = {
+  data: string
+  mimeType: string
+  name: string
+  size: any
+  type: string
+  url: string
 }
 
 export const UserMessage: React.FC<UserMessageProps> = ({
   message,
   messageId,
-  onUpdateMessage
+  onUpdateMessage,
+  parts
 }) => {
   const [isEditing, setIsEditing] = useState(false)
   const [editedContent, setEditedContent] = useState(message)
@@ -72,8 +84,31 @@ export const UserMessage: React.FC<UserMessageProps> = ({
             </div>
           </div>
         ) : (
-          <div className="flex justify-between items-start bg-gradient-to-r from-card/45 via-card/40 to-card/5 backdrop-blur-sm drop-shadow-sm border border-border/30 p-2 rounded-lg">
+          <div className="flex flex-col justify-between items-start bg-gradient-to-r from-card/45 via-card/40 to-card/5 backdrop-blur-sm drop-shadow-sm border border-border/30 p-2 rounded-lg">
             <div className="max-w-2xl txt-grad">{message}</div>
+            <div className='mr-5'>
+              {parts.map((item: UserMessageFileTypeProps, index: number) =>
+                item.type === "file" && (
+                  <div key={index} className="flex items-center gap-2 bg-secondary/50 px-1 py-1 rounded-lg border">
+                    <span className="text-xs text-foreground/80"><Link href={item.url} target='_blank'>📎{item.name}</Link></span>
+                  </div>
+                  // <div key={index} className="mt-2 p-2 border rounded-md bg-muted/30">
+                  //   <div className="font-medium"> {item.name}</div>
+                  //   <div className="text-xs opacity-75">
+                  //     {item.mimeType?.split('/')[1]?.toUpperCase()} • {(item.size / 1024).toFixed(1)} KB
+                  //   </div>
+                  //   <a
+                  //     href={item.url}
+                  //     target="_blank"
+                  //     rel="noopener noreferrer"
+                  //     className="text-blue-500 underline text-sm"
+                  //   >
+                  //     View / Download
+                  //   </a>
+                  // </div>
+                )
+              )}
+            </div>
             <div
               className={cn(
                 'absolute top-1 right-1 transition-opacity ml-2',

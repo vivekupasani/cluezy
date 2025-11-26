@@ -39,7 +39,7 @@ export function AnswerSection({
   }
 
   const message = content ? (
-    <div className="flex flex-col gap-1 px-4 w-full max-w-2xl overflow-x-scroll">
+    <div className="flex flex-col px-4 mt-2 w-full max-w-2xl overflow-x-scroll">
       <BotMessage message={content} />
       {showActions && (
         <MessageActions
@@ -65,5 +65,8 @@ export function AnswerSection({
     >
       {message}
     </CollapsibleMessage>
+    // <div>
+    //   {message}
+    // </div>
   )
 }

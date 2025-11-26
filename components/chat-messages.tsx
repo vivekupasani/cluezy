@@ -139,7 +139,7 @@ export function ChatMessages({
             }
           >
             {/* User message */}
-            <div className="flex flex-col gap-4 mb-4 px-2" >
+            <div className="flex flex-col gap-4 px-2" >
               <RenderMessage
                 message={section.userMessage}
                 messageId={section.userMessage.id}
@@ -151,7 +151,7 @@ export function ChatMessages({
                 onUpdateMessage={onUpdateMessage}
                 reload={reload}
               />
-              {showLoading && <Spinner />}
+              {showLoading && <Spinner className='ml-2' />}
             </div>
 
             {/* Assistant messages */}

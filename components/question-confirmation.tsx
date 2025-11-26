@@ -93,9 +93,9 @@ export function QuestionConfirmation({
   if (completed || toolInvocation.state === 'result') {
     const isSkipped = wasSkipped()
     return (
-      <Card className="p-4 border-border/50 shadow-sm bg-card/60 w-[90%] mx-auto max-w-[720px] ml-4 backdrop-blur-sm rounded-xl">
+      <Card className="p-4 border-border/50 shadow-sm bg-card/60 w-[90%] mx-auto max-w-[720px] md:ml-10 mt-2 backdrop-blur-sm rounded-xl">
         <div className="flex flex-col space-y-2">
-          <CardTitle className="text-base font-medium text-foreground/90">
+          <CardTitle className="text-base font-medium txt-grad">
             {question}
           </CardTitle>
           <div className="flex items-center gap-2 text-sm text-muted-foreground">
@@ -104,7 +104,7 @@ export function QuestionConfirmation({
             ) : (
               <Check size={16} className="text-green-500" />
             )}
-            <p className="truncate">{updatedQuery()}</p>
+            <p className="truncate txt-mut">{updatedQuery()}</p>
           </div>
         </div>
       </Card>
@@ -113,9 +113,9 @@ export function QuestionConfirmation({
 
   // ✅ Default (active) view
   return (
-    <Card className="border-border/50 shadow-md bg-card/70 w-[90%] mx-auto max-w-[720px] backdrop-blur-sm rounded-xl">
+    <Card className="border-border/50 shadow-md bg-card/70 w-[90%] mx-auto max-w-[720px] mt-2 backdrop-blur-sm rounded-xl">
       <CardHeader className="pb-2">
-        <CardTitle className="text-base font-semibold text-foreground/90">
+        <CardTitle className="text-base font-semibold txt-grad">
           {question}
         </CardTitle>
       </CardHeader>
@@ -135,7 +135,7 @@ export function QuestionConfirmation({
                   />
                   <label
                     htmlFor={option.value}
-                    className="text-sm cursor-pointer select-none"
+                    className="text-sm cursor-pointer select-none txt-act"
                   >
                     {option.label}
                   </label>
@@ -148,7 +148,7 @@ export function QuestionConfirmation({
             <div className="flex flex-col space-y-2">
               <label
                 htmlFor="query"
-                className="text-sm text-muted-foreground font-medium"
+                className="text-sm txt-mut font-medium"
               >
                 {inputLabel}
               </label>

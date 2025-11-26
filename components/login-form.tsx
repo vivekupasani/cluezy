@@ -77,7 +77,7 @@ export function LoginForm({
 
   return (
     <div
-      className={cn('flex flex-col items-center justify-center gap-6', className)}
+      className={cn('flex flex-col items-center justify-center gap-3', className)}
       {...props}
     >
       <div className='w-full h-full max-w-[400px] rounded-2xl bg-muted/80 border border-muted-foreground/10 backdrop-blur-xl p-2'>

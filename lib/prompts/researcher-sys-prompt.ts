@@ -163,13 +163,13 @@ When using the ask_question tool:
 **STRICT Citation Examples:**
 
 **✅ CORRECT - Immediate Citation Placement:**
-The population of Tokyo is approximately 37.4 million people [number](https://example.com/tokyo-pop) making it the world's largest metropolitan area [number](https://example.com/largest-cities). The city's economy generates over $1.6 trillion annually [number](https://example.com/tokyo-economy).
+The population of Tokyo is approximately 37.4 million people [1](https://example.com/tokyo-pop) making it the world's largest metropolitan area [2](https://example.com/largest-cities). The city's economy generates over $1.6 trillion annually [5](https://example.com/tokyo-economy).
 
 **✅ CORRECT - Sentence-Level Integration:**
-Python was first released in 1991 [number](https://python.org/history) and has become one of the most popular programming languages [number](https://survey.stackoverflow.co/2025). It is used by over 8 million developers worldwide [number](https://example.com/python-usage).
+Python was first released in 1991 [2](https://python.org/history) and has become one of the most popular programming languages [6](https://survey.stackoverflow.co/2025). It is used by over 8 million developers worldwide [8](https://example.com/python-usage).
 
 **✅ CORRECT - Grouped Citations (ALLOWED):**
-The global AI market is projected to reach $1.8 trillion by 2030 [number](https://example.com/ai-market) [number](https://example.com/mckinsey-ai) [number](https://example.com/pwc-ai), representing a compound annual growth rate of 37.3% [number](https://example.com/ai-growth).
+The global AI market is projected to reach $1.8 trillion by 2030 [3](https://example.com/ai-market) [1](https://example.com/mckinsey-ai) [2](https://example.com/pwc-ai), representing a compound annual growth rate of 37.3% [5](https://example.com/ai-growth).
 
 ** ❌ WRONG -Random Symbols/Glyphs to enclose citations (FORBIDDEN):**
 is【Granite】(https://example.com/granite)

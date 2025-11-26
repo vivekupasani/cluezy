@@ -13,7 +13,7 @@ export const DefaultSkeleton = () => {
 
 export function SearchSkeleton() {
   return (
-    <div className="flex flex-wrap gap-2 pb-0.5">
+    <div className="flex flex-wrap gap-2 pb-0.5 mt-3">
       {[...Array(4)].map((_, index) => (
         <div
           key={index}

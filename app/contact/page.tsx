@@ -1,141 +1,153 @@
 "use client"
+import { Button } from '@/components/ui';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
-import Link from 'next/link';
+import { Textarea } from '@/components/ui/textarea';
 import { useState } from 'react';
-import { SiInstagram, SiLinkedin, SiX } from 'react-icons/si';
 
 export default function ContactPage() {
     const [formData, setFormData] = useState({
-        firstName: '',
-        lastName: '',
+        reason: 'select-reason',
         email: '',
-        phone: '',
+        subject: '',
         message: ''
     });
 
-    const handleSubmit = (e: any) => {
+    const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        console.log('Form submitted:', formData);
+
+        // Validate required fields
+        if (formData.reason === 'select-reason') {
+            console.log('Please select a reason');
+            return;
+        }
+
+        if (!formData.email || !formData.subject || !formData.message) {
+            console.log('Please fill all required fields');
+            return;
+        }
+
+        console.log('Form submitted:', {
+            ...formData,
+            timestamp: new Date().toISOString()
+        });
+
+        // Reset form after submission
+        setFormData({
+            reason: 'select-reason',
+            email: '',
+            subject: '',
+            message: ''
+        });
+
+        // Show success message (you can replace this with a toast notification)
+        alert('Thank you for your message! We will get back to you soon.');
     };
 
-    const handleChange = (e: any) => {
-        setFormData({
-            ...formData,
-            [e.target.name]: e.target.value
-        });
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+        const { name, value } = e.target;
+        setFormData(prev => ({
+            ...prev,
+            [name]: value
+        }));
     };
 
     return (
         <div className="min-h-screen bg-background text-foreground flex items-center justify-center p-4">
-            <div className="w-full max-w-2xl">
-                {/* Header */}
-                <div className="text-center mb-12">
-                    <div className="flex items-center justify-center gap-3 mb-4">
-                        <h1 className="text-4xl font-bold">Lets Have a Chat</h1>
-                    </div>
-                    <p className="text-muted-foreground text-sm">
-                        Have questions about Cluezy, feature suggestions? We’d love to hear from you
-                    </p>
-                </div>
+            <div className='w-full max-w-[600px] rounded-2xl bg-muted/80 border border-muted-foreground/10 backdrop-blur-xl p-2'>
+                <Card className="w-full max-w-[600px] rounded-xl bg-background drop-shadow-xl border-0">
+                    <CardHeader className="text-center space-y-4">
+                        <CardTitle className="text-3xl font-bold txt-grad text-transparent">
+                            Contact Us
+                        </CardTitle>
+                        <CardDescription className='text-muted-foreground text-base'>
+                            You can contact us for any help, support, account recovery related requests or any business related discussions
+                        </CardDescription>
+                    </CardHeader>
+                    <CardContent>
+                        <form onSubmit={handleSubmit} className="flex flex-col gap-6">
+                            <div className='flex flex-col md:flex-row gap-4'>
+                                <div className="grid gap-2 w-full">
+                                    <label htmlFor="reason" className="text-sm font-medium text-foreground">
+                                        Select Reason *
+                                    </label>
+                                    <select
+                                        id="reason"
+                                        name="reason"
+                                        className='border border-input bg-background h-10 px-3 py-2 text-sm rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent'
+                                        required
+                                        value={formData.reason}
+                                        onChange={handleChange}
+                                    >
+                                        <option value="select-reason">Select Reason</option>
+                                        <option value="payment">Payment</option>
+                                        <option value="model">Model Request</option>
+                                        <option value="feature">Feature Request</option>
+                                        <option value="bugs">Bugs</option>
+                                        <option value="feedback">Feedback</option>
+                                        <option value="other">Other</option>
+                                    </select>
+                                </div>
+                                <div className="grid gap-2 w-full">
+                                    <label htmlFor="email" className="text-sm font-medium text-foreground">
+                                        Email Address *
+                                    </label>
+                                    <Input
+                                        id="email"
+                                        name="email"
+                                        type="email"
+                                        placeholder="you@example.com"
+                                        required
+                                        value={formData.email}
+                                        onChange={handleChange}
+                                        className="focus:ring-2 focus:ring-primary"
+                                    />
+                                </div>
+                            </div>
 
-                {/* Form */}
-                <div className="space-y-6">
-                    {/* Name Fields */}
-                    <div className="grid grid-cols-2 gap-4">
-                        <div>
-                            <label className="block text-sm text-muted-foreground mb-2">
-                                First name
-                            </label>
-                            <Input
-                                type="text"
-                                name="firstName"
-                                value={formData.firstName}
-                                onChange={handleChange}
-                                placeholder="Jonathan"
-                            />
-                        </div>
-                        <div>
-                            <label className="block text-sm text-muted-foreground mb-2">
-                                Last name
-                            </label>
-                            <Input
-                                type="text"
-                                name="lastName"
-                                value={formData.lastName}
-                                onChange={handleChange}
-                                placeholder="James"
-                            />
-                        </div>
-                    </div>
+                            <div className="grid gap-2">
+                                <label htmlFor="subject" className="text-sm font-medium text-foreground">
+                                    Subject *
+                                </label>
+                                <Input
+                                    id="subject"
+                                    name="subject"
+                                    type="text"
+                                    placeholder="Reason for contacting"
+                                    required
+                                    value={formData.subject}
+                                    onChange={handleChange}
+                                    className="focus:ring-2 focus:ring-primary"
+                                />
+                            </div>
 
-                    {/* Email and Phone */}
-                    <div className="grid grid-cols-2 gap-4">
-                        <div>
-                            <label className="block text-sm text-muted-foreground mb-2">
-                                Email
-                            </label>
-                            <Input
-                                type="email"
-                                name="email"
-                                value={formData.email}
-                                onChange={handleChange}
-                                placeholder="Jonathan2718@gmail.com"
-                            />
-                        </div>
-                        <div>
-                            <label className="block text-sm text-muted-foreground mb-2">
-                                Phone number
-                            </label>
-                            <Input
-                                type="tel"
-                                name="phone"
-                                value={formData.phone}
-                                onChange={handleChange}
-                                placeholder="+x xxx xxx xxxx"
-                            />
-                        </div>
-                    </div>
+                            <div className="grid gap-2">
+                                <label htmlFor="message" className="text-sm font-medium text-foreground">
+                                    Message *
+                                </label>
+                                <Textarea
+                                    id="message"
+                                    name="message"
+                                    placeholder="I am writing this message to tell you that you built really cool product."
+                                    required
+                                    value={formData.message}
+                                    onChange={handleChange}
+                                    className="min-h-[120px] resize-vertical focus:ring-2 focus:ring-primary CustomScrollbar"
+                                    rows={6}
+                                />
+                            </div>
 
-                    {/* Message */}
-                    <div>
-                        <label className="block text-sm text-muted-foreground mb-2">
-                            Message
-                        </label>
-                        <textarea
-                            name="message"
-                            value={formData.message}
-                            onChange={handleChange}
-                            placeholder="Hey I have some issues activating my account..."
-                            rows={4}
-                            className="w-full bg-background border border-input rounded-lg px-4 py-3 text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 resize-none"
-                        />
-                    </div>
-
-                    {/* Submit Button */}
-                    <button
-                        onClick={handleSubmit}
-                        className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-medium py-2 rounded-lg transition-colors duration-200"
-                    >
-                        Send message
-                    </button>
-
-                    {/* Social Icons */}
-                    <div className="flex flex-col gap-2 mb-10 justify-center items-center">
-                        <div className="flex gap-4">
-                            <Link href="" className="hover:cursor-pointer">
-                                <SiX />
-                            </Link>
-                            <Link href="https://www.linkedin.com/company/cluezy/" className="hover:cursor-pointer">
-                                <SiLinkedin />
-                            </Link>
-                            <Link href="" className="hover:cursor-pointer">
-                                <SiInstagram />
-                            </Link>
-                        </div>
-                        <span className="text-xs mt-2">
-                            © 2025 Cluezy. All rights reserved.
-                        </span>
-                    </div>
+                            <Button
+                                type="submit"
+                                className="w-full text-primary-foreground font-medium py-2.5 transition-all duration-200"
+                            >
+                                Submit Message
+                            </Button>
+                        </form>
+                    </CardContent>
+                </Card>
+                <div className="my-4 text-center text-sm txt-mut">
+                    Designed & Developed by <a href="https://linkedin.com/in/vivekupasani" className='txt-mut hover:txt-grad hover:underline'>Vivek Upasani</a>
                 </div>
             </div>
         </div>

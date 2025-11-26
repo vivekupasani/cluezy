@@ -1,18 +1,15 @@
 'use client'
 
-import { useEffect, useMemo, useRef, useState } from 'react'
-
-import { useChat } from '@ai-sdk/react'
-import { ChatRequestOptions } from 'ai'
-import { Message } from 'ai/react'
-import { toast } from 'sonner'
-
+import { createClient } from '@/lib/supabase/client'
 import { Model } from '@/lib/types/models'
 import { cn } from '@/lib/utils'
-
-import { createClient } from '@/lib/supabase/client'
+import { useChat } from '@ai-sdk/react'
 import { User } from '@supabase/supabase-js'
+import { ChatRequestOptions } from 'ai'
+import { Message } from 'ai/react'
 import Link from 'next/link'
+import { useEffect, useMemo, useRef, useState } from 'react'
+import { toast } from 'sonner'
 import { ChatMessages } from './chat-messages'
 import { ChatPanel } from './chat-panel'
 import Header from './header'
@@ -26,6 +23,28 @@ interface ChatSection {
   userMessage: Message
   assistantMessages: Message[]
 }
+
+// Define file attachment type
+interface FileAttachment {
+  id: string
+  name: string
+  type: string
+  size: number
+  url: string
+  content?: string // For text-based files
+}
+
+// Define message part types that match the AI SDK expectations
+type MessagePart =
+  | { type: 'text'; text: string }
+  | {
+    type: 'file';
+    url: string;
+    name: string;
+    mimeType: string;
+    size: number;
+    data: string; // Add the required data property
+  }
 
 export function Chat({
   id,
@@ -44,7 +63,9 @@ export function Chat({
   const [user, setUser] = useState<User | null>(null)
   const [isRateLimitDialogOpen, setisRateLimitDialogOpen] = useState(false)
   const [rateLimitMessage, setRateLimitMessage] = useState('')
-
+  const [isRateLimitDialogControlVisible, setIsRateLimitDialogControlVisible] = useState(true)
+  const [attachedFiles, setAttachedFiles] = useState<FileAttachment[]>([])
+  const [isFileUploading, setIsFileUploading] = useState(false)
   const {
     messages,
     input,
@@ -60,13 +81,11 @@ export function Chat({
     reload
   } = useChat({
     initialMessages: savedMessages,
-    id: id, // Use unique chat ID for isolated streaming
+    id: id,
     body: {
       id
     },
     onFinish: () => {
-      // Only update URL if we're on the home page (new chat)
-      // Don't update if we're already on a search page to avoid hijacking navigation
       if (window.location.pathname === '/') {
         window.history.replaceState({}, '', `/search/${id}`)
       }
@@ -75,22 +94,36 @@ export function Chat({
     onError: async (error) => {
       console.log(error)
       const message = error?.message || "Something went wrong."
-      // 👇 Handle rate limit case
       if (message.includes("limit of") && message.includes("wait until")) {
-        try {
-          setRateLimitMessage(message)
-          setisRateLimitDialogOpen(true)
-          return
-        } catch {
-          setRateLimitMessage(error.message)
-          setisRateLimitDialogOpen(true)
-          return
+        if (message.includes("unauthenticated")) {
+          try {
+            setRateLimitMessage(message)
+            setisRateLimitDialogOpen(true)
+            return
+          } catch {
+            setRateLimitMessage(error.message)
+            setisRateLimitDialogOpen(true)
+            return
+          }
+        }
+        else {
+          try {
+            setRateLimitMessage(message)
+            setisRateLimitDialogOpen(true)
+            setIsRateLimitDialogControlVisible(false)
+            return
+          } catch {
+            setRateLimitMessage(error.message)
+            setisRateLimitDialogOpen(true)
+            setIsRateLimitDialogControlVisible(false)
+            return
+          }
         }
       } else {
         toast.error(`Error in chat: ${error.message}`)
       }
     },
-    sendExtraMessageFields: false, // Disable extra message fields,
+    sendExtraMessageFields: false,
     experimental_throttle: 100
   })
 
@@ -100,10 +133,8 @@ export function Chat({
   const sections = useMemo<ChatSection[]>(() => {
     const result: ChatSection[] = []
     let currentSection: ChatSection | null = null
-
     for (const message of messages) {
       if (message.role === 'user') {
-        // Start a new section when a user message is found
         if (currentSection) {
           result.push(currentSection)
         }
@@ -113,19 +144,178 @@ export function Chat({
           assistantMessages: []
         }
       } else if (currentSection && message.role === 'assistant') {
-        // Add assistant message to the current section
         currentSection.assistantMessages.push(message)
       }
-      // Ignore other role types like 'system' for now
     }
 
-    // Add the last section if exists
     if (currentSection) {
       result.push(currentSection)
     }
 
     return result
   }, [messages])
+
+  const handleFileUpload = async (files: FileList | null) => {
+    if (!files || files.length === 0) return
+
+    if (attachedFiles.length >= 1) {
+      toast.error("Only one file can be attached at a time");
+      return;
+    }
+
+    console.log("Starting file upload...", files.length, "files")
+    setIsFileUploading(true)
+
+    const newAttachments: FileAttachment[] = []
+    const uploadPromises: Promise<void>[] = []
+
+    for (const file of Array.from(files)) {
+      // Check file size (limit to 10MB)
+      if (file.size > 10 * 1024 * 1024) {
+        toast.error(`File ${file.name} is too large. Maximum size is 10MB.`)
+        continue
+      }
+
+      // Check file type
+      const allowedTypes = [
+        'application/pdf',
+        'image/jpeg',
+      ]
+
+      if (!allowedTypes.includes(file.type)) {
+        toast.error(`File type ${file.type} is not supported.`)
+        continue
+      }
+
+      const fileId = `file-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`
+
+      // Create upload promise for each file
+      const uploadPromise = uploadFileToStorage(file)
+        .then((fileUrl) => {
+          console.log("File uploaded successfully:", file.name, fileUrl)
+
+          const attachment: FileAttachment = {
+            id: fileId,
+            name: file.name,
+            type: file.type,
+            size: file.size,
+            url: fileUrl
+          }
+
+          newAttachments.push(attachment)
+          toast.success(`File ${file.name} uploaded successfully`)
+        })
+        .catch((error) => {
+          console.error('Error uploading file:', file.name, error)
+          toast.error(`Failed to upload file ${file.name}`)
+        })
+
+      uploadPromises.push(uploadPromise)
+    }
+
+    // Wait for all uploads to complete
+    try {
+      await Promise.all(uploadPromises)
+      console.log("All file uploads completed")
+
+      // Update attachments only after all files are processed
+      if (newAttachments.length > 0) {
+        setAttachedFiles(prev => [...prev, ...newAttachments])
+      }
+    } catch (error) {
+      console.error('Error in file upload process:', error)
+    } finally {
+      // Always set loading to false when done
+      setIsFileUploading(false)
+      console.log("File upload loading state set to false")
+    }
+  }
+
+  // function for file upload to storage
+  const uploadFileToStorage = async (file: File): Promise<string> => {
+    try {
+      console.log("Uploading file:", file.name, file.type, file.size)
+
+      const formData = new FormData()
+      formData.append("file", file)
+
+      const res = await fetch("/api/upload", {
+        method: "POST",
+        body: formData
+      })
+
+      if (!res.ok) {
+        const errorData = await res.json().catch(() => ({ error: 'Upload failed' }))
+        throw new Error(errorData.error || `Upload failed with status ${res.status}`)
+      }
+
+      const data = await res.json()
+      console.log("Upload response:", data)
+
+      if (!data.url) {
+        throw new Error('No URL returned from upload')
+      }
+
+      return data.url
+    } catch (error) {
+      console.error('Upload file error:', error)
+      throw new Error(`File upload failed: ${error instanceof Error ? error.message : 'Unknown error'}`)
+    }
+  }
+
+  // Remove attached file
+  const handleRemoveFile = (fileId: string) => {
+    setAttachedFiles(prev => prev.filter(file => file.id !== fileId))
+  }
+
+  // Modified submit handler to include files in parts
+  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+
+    if (input.trim() === '' && attachedFiles.length === 0) {
+      return
+    }
+
+    // Don't allow submission while files are uploading
+    if (isFileUploading) {
+      toast.error("Please wait for file upload to complete")
+      return
+    }
+
+    const messageParts: MessagePart[] = []
+
+    // Add text part if there's input
+    if (input.trim()) {
+      messageParts.push({
+        type: 'text',
+        text: input
+      })
+    }
+
+    // Add file parts for each attached file
+    attachedFiles.forEach(file => {
+      messageParts.push({
+        type: 'file',
+        url: file.url,
+        name: file.name,
+        mimeType: file.type,
+        size: file.size,
+        data: file.url // Use the URL as data, or you can use file content if available
+      })
+    })
+
+    // Create the message with parts
+    append({
+      role: 'user',
+      content: input, // Keep the original content for compatibility
+      parts: messageParts
+    })
+
+    // Clear input and attached files
+    handleInputChange({ target: { value: '' } } as any)
+    setAttachedFiles([])
+    setData(undefined)
+  }
 
   // Detect if scroll container is at the bottom
   useEffect(() => {
@@ -134,7 +324,7 @@ export function Chat({
 
     const handleScroll = () => {
       const { scrollTop, scrollHeight, clientHeight } = container
-      const threshold = 50 // threshold in pixels
+      const threshold = 50
       if (scrollHeight - scrollTop - clientHeight < threshold) {
         setIsAtBottom(true)
       } else {
@@ -143,14 +333,13 @@ export function Chat({
     }
 
     container.addEventListener('scroll', handleScroll, { passive: true })
-    handleScroll() // Set initial state
+    handleScroll()
 
     return () => container.removeEventListener('scroll', handleScroll)
   }, [])
 
   // Scroll to the section when a new user message is sent
   useEffect(() => {
-    // Only scroll if this chat is currently visible in the URL
     const isCurrentChat =
       window.location.pathname === `/search/${id}` ||
       (window.location.pathname === '/' && sections.length > 0)
@@ -158,7 +347,6 @@ export function Chat({
     if (isCurrentChat && sections.length > 0) {
       const lastMessage = messages[messages.length - 1]
       if (lastMessage && lastMessage.role === 'user') {
-        // If the last message is from user, find the corresponding section
         const sectionId = lastMessage.id
         requestAnimationFrame(() => {
           const sectionElement = document.getElementById(`section-${sectionId}`)
@@ -194,7 +382,8 @@ export function Chat({
   const onQuerySelect = (query: string) => {
     append({
       role: 'user',
-      content: query
+      content: query,
+      parts: [{ type: 'text', text: query }]
     })
   }
 
@@ -248,12 +437,6 @@ export function Chat({
     return await reload(options)
   }
 
-  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-    setData(undefined)
-    handleSubmit(e)
-  }
-
   return (
     <div
       className={cn(
@@ -262,10 +445,8 @@ export function Chat({
       )}
       data-testid="full-chat"
     >
-      {/* header component */}
       <Header user={user} models={models} />
 
-      {/* messages component */}
       <ChatMessages
         sections={sections}
         data={data}
@@ -278,7 +459,6 @@ export function Chat({
         reload={handleReloadFrom}
       />
 
-      {/* input component */}
       <ChatPanel
         input={input}
         handleInputChange={handleInputChange}
@@ -292,10 +472,13 @@ export function Chat({
         models={models}
         showScrollToBottomButton={!isAtBottom}
         scrollContainerRef={scrollContainerRef}
+        attachedFiles={attachedFiles}
+        isFileUploading={isFileUploading}
+        onFileUpload={handleFileUpload}
+        onRemoveFile={handleRemoveFile}
       />
 
-      {
-        messages.length === 0 &&
+      {messages.length === 0 && (
         <div className='absolute bottom-2 flex gap-1 justify-center items-center'>
           <div className='flex gap-2 bg-clip-text text-transparent bg-gradient-to-tr from-foreground/90 to-foreground/60'>
             <Link href="/terms" className='text-xs hover:text-foreground transition-colors'>Terms</Link>
@@ -303,34 +486,31 @@ export function Chat({
             {/* <Link href="/contact" className='text-xs hover:text-foreground transition-colors'>Contact</Link> */}
             <Link href="/about" className='text-xs hover:text-foreground transition-colors'>About</Link>
           </div>
-          {/* <div className='text-xs text-foreground/60'>
-            © 2025 All Rights Reserved From CLUEZY
-          </div> */}
         </div>
-      }
+      )}
 
-      {/* rate limit dialog component */}
       <Dialog open={isRateLimitDialogOpen} onOpenChange={setisRateLimitDialogOpen}>
         <DialogContent className='w-[90%] bg-gradient-to-br from-card/75 via-card/55 to-card/65 rounded-2xl backdrop-blur-sm'>
           <DialogHeader>
             <DialogTitle className='txt-grad'>Daily Limit Reached</DialogTitle>
             <DialogDescription className='txt-mut'>
               {rateLimitMessage ||
-                "You’ve reached the daily limit. Please log in for unlimited access."}
+                "You've reached the daily limit. Please log in for unlimited access."}
             </DialogDescription>
           </DialogHeader>
-          <div className="flex justify-end gap-2 mt-4">
-            <Button variant="outline" className='txt-grad' onClick={() => setisRateLimitDialogOpen(false)}>
-              Close
-            </Button>
-            <Button onClick={() => (window.location.href = '/auth/login')}>
-              Login
-            </Button>
-          </div>
+          {isRateLimitDialogControlVisible &&
+            <div className="flex justify-end gap-2 mt-4">
+              <Button variant="outline" className='txt-grad' onClick={() => setisRateLimitDialogOpen(false)}>
+                Close
+              </Button>
+              <Button onClick={() => (window.location.href = '/auth/login')}>
+                Login
+              </Button>
+            </div>
+          }
         </DialogContent>
       </Dialog>
 
-      {/* history dialog component  */}
       {isHistoryDialogOpen && <HistoryDialog />}
     </div>
   )

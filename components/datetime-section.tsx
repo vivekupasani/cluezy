@@ -31,7 +31,7 @@ interface DateTimeData {
 // Skeleton Loader Component
 const DateTimeSkeleton = () => {
     return (
-        <div className="flex flex-col w-full max-w-5xl mx-auto px-4 sm:px-6 py-6 rounded-2xl shadow-lg bg-background">
+        <div className="flex flex-col w-full max-w-5xl mx-auto px-4 sm:px-6 pt-6 rounded-2xl bg-background">
             {/* Time Display Skeleton */}
             <div className="flex flex-col items-center justify-center py-6">
                 {/* Digital Clock Skeleton */}
@@ -130,26 +130,26 @@ export const DateTimeSection = ({ tool }: DateTimeSectionProps) => {
     }
 
     return (
-        <div className="flex flex-col w-full max-w-5xl mx-auto px-4 sm:px-6 py-6 rounded-2xl shadow-lg bg-background">
+        <div className="flex flex-col w-full max-w-5xl mx-auto px-4 sm:px-6 pt-6 rounded-2xl bg-background">
             {/* Time Display */}
             <div className="flex flex-col items-center justify-center py-6">
                 {/* Digital Clock */}
                 <div className="relative mb-6 w-full flex justify-center">
                     <div className="flex flex-wrap sm:flex-nowrap items-center justify-center gap-2 sm:gap-3">
                         <div className="bg-muted/50 rounded-2xl px-4 sm:px-6 py-3 sm:py-4 backdrop-blur-sm border border-border/30">
-                            <span className="text-5xl sm:text-7xl font-bold tabular-nums">
+                            <span className="text-5xl sm:text-7xl font-bold tabular-nums txt-grad">
                                 {String(displayHours).padStart(2, '0')}
                             </span>
                         </div>
                         <span className="text-4xl sm:text-6xl font-bold text-primary animate-pulse">:</span>
                         <div className="bg-muted/50 rounded-2xl px-4 sm:px-6 py-3 sm:py-4 backdrop-blur-sm border border-border/30">
-                            <span className="text-5xl sm:text-7xl font-bold tabular-nums">
+                            <span className="text-5xl sm:text-7xl font-bold tabular-nums txt-grad">
                                 {String(minutes).padStart(2, '0')}
                             </span>
                         </div>
                         <span className="text-4xl sm:text-6xl font-bold text-primary animate-pulse">:</span>
                         <div className="bg-muted/50 rounded-2xl px-4 sm:px-6 py-3 sm:py-4 backdrop-blur-sm border border-border/30">
-                            <span className="text-5xl sm:text-7xl font-bold tabular-nums">
+                            <span className="text-5xl sm:text-7xl font-bold tabular-nums txt-grad">
                                 {String(seconds).padStart(2, '0')}
                             </span>
                         </div>
@@ -178,7 +178,7 @@ export const DateTimeSection = ({ tool }: DateTimeSectionProps) => {
 
                 {/* Date Display */}
                 <div className="text-center mb-4">
-                    <p className="text-xl sm:text-2xl font-semibold mb-1">
+                    <p className="text-xl sm:text-2xl font-semibold mb-1 txt-grad">
                         {dayName}, {monthName} {dayNumber}
                         {getOrdinalSuffix(dayNumber)}
                     </p>

@@ -7,11 +7,13 @@ import type { SearchResults as TypeSearchResults } from '@/lib/types'
 
 import { useArtifact } from '@/components/artifact/artifact-context'
 
+import { useState } from 'react'
 import { CollapsibleMessage } from './collapsible-message'
 import { SearchSkeleton } from './default-skeleton'
 import { SearchResults } from './search-results'
 import { SearchResultsImageSection } from './search-results-image'
 import { Section, ToolArgsSection } from './section'
+import { SourcesDialog } from './sources-dialog'
 
 interface SearchSectionProps {
   tool: ToolInvocation
@@ -39,6 +41,8 @@ export function SearchSection({
   const includeDomainsString = includeDomains
     ? ` [${includeDomains.join(', ')}]`
     : ''
+
+  const [isSourceDialogOpen, setIsSourceDialogOpen] = useState(false)
 
   const { open } = useArtifact()
   const header = (
@@ -82,6 +86,10 @@ export function SearchSection({
             />
           </Section>
         )}
+
+      {
+        isSourceDialogOpen && <SourcesDialog sources={searchResults.results} />
+      }
     </CollapsibleMessage>
   )
 }

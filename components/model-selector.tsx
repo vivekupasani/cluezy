@@ -116,7 +116,7 @@ export function ModelSelector({ models }: ModelSelectorProps) {
         <Command className='bg-background'>
           <CommandInput placeholder="Search models..." />
           <CommandList>
-            <CommandEmpty className='txt-grad'>No model found.</CommandEmpty>
+            <CommandEmpty className='txt-grad text-sm text-center py-2 border-t border-border'>No model found.</CommandEmpty>
             {Object.entries(groupedModels).map(([provider, models]) => (
               <CommandGroup key={provider} heading={provider}>
                 {models.map(model => {
@@ -147,8 +147,11 @@ export function ModelSelector({ models }: ModelSelectorProps) {
                     </CommandItem>
                   )
                 })}
+
               </CommandGroup>
             ))}
+
+            <p className='txt-grad text-xs text-center py-2 border-t border-border'>More models will be coming soon</p>
           </CommandList>
         </Command>
       </PopoverContent>

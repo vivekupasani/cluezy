@@ -301,7 +301,7 @@ export const WeatherSection = ({ tool }: WeatherSectionProps) => {
     })).slice(0, 5) // Show 5 days
 
     return (
-        <div className="flex flex-col w-full max-w-5xl mx-auto px-6 py-5 rounded-2xl">
+        <div className="flex flex-col w-full max-w-5xl mx-auto px-6 pt-5 rounded-2xl">
             {/* Current Weather - Hero Section */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pb-6 mb-6 border-b border-border/50">
                 {/* Left: Main Info */}
@@ -416,7 +416,7 @@ export const WeatherSection = ({ tool }: WeatherSectionProps) => {
                     <h3 className="text-sm font-semibold tracking-wide txt-grad">CURRENT CONDITIONS</h3>
                 </div>
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                    <div className="bg-muted/30 rounded-xl p-4 backdrop-blur-sm shadow-inner shadow-muted-foreground/10 border-b border-foreground/20 transition-colors">
+                    <div className="bg-muted/30 rounded-xl p-4 backdrop-blur-sm transition-colors border border-border">
                         <div className="flex items-center gap-2 mb-2">
                             <Wind className="h-4 w-4 text-cyan-400" />
                             <span className="text-xs font-medium text-muted-foreground">WIND</span>
@@ -427,7 +427,7 @@ export const WeatherSection = ({ tool }: WeatherSectionProps) => {
                         </p>
                     </div>
 
-                    <div className="bg-muted/30 rounded-xl p-4 backdrop-blur-sm shadow-inner shadow-muted-foreground/10 border-b border-foreground/20 transition-colors">
+                    <div className="bg-muted/30 rounded-xl p-4 backdrop-blur-sm transition-colors border border-border">
                         <div className="flex items-center gap-2 mb-2">
                             <Eye className="h-4 w-4 text-purple-400" />
                             <span className="text-xs font-medium text-muted-foreground">VISIBILITY</span>
@@ -438,7 +438,7 @@ export const WeatherSection = ({ tool }: WeatherSectionProps) => {
                         <p className="text-xs text-muted-foreground mt-1">kilometers</p>
                     </div>
 
-                    <div className="bg-muted/30 rounded-xl p-4 backdrop-blur-sm shadow-inner shadow-muted-foreground/10 border-b border-foreground/20 transition-colors">
+                    <div className="bg-muted/30 rounded-xl p-4 backdrop-blur-sm transition-colors border border-border">
                         <div className="flex items-center gap-2 mb-2">
                             <Droplets className="h-4 w-4 text-blue-400" />
                             <span className="text-xs font-medium text-muted-foreground">HUMIDITY</span>
@@ -447,7 +447,7 @@ export const WeatherSection = ({ tool }: WeatherSectionProps) => {
                         <p className="text-xs text-muted-foreground mt-1">percent</p>
                     </div>
 
-                    <div className="bg-muted/30 rounded-xl p-4 backdrop-blur-sm shadow-inner shadow-muted-foreground/10 border-b border-foreground/20 transition-colors">
+                    <div className="bg-muted/30 rounded-xl p-4 backdrop-blur-sm transition-colors border border-border">
                         <div className="flex items-center gap-2 mb-2">
                             <Gauge className="h-4 w-4 text-orange-400" />
                             <span className="text-xs font-medium text-muted-foreground">PRESSURE</span>
@@ -468,7 +468,7 @@ export const WeatherSection = ({ tool }: WeatherSectionProps) => {
                     {dailyForecast.map((day, index) => (
                         <div
                             key={day.date}
-                            className="bg-muted/30 shadow-inner shadow-muted-foreground/10 border-b border-foreground/20 rounded-xl p-4 backdrop-blur-sm transition-all duration-200"
+                            className="bg-muted/30 border border-border rounded-xl p-4 backdrop-blur-sm transition-all duration-200"
                         >
                             <p className="text-sm font-semibold mb-3 text-center txt-grad">
                                 {index === 0 ? 'Today' : day.day}

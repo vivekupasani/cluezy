@@ -1,12 +1,12 @@
-import { notFound, redirect } from 'next/navigation'
+import { notFound, redirect } from 'next/navigation';
 
-import { getChat } from '@/lib/actions/chat'
-import { getCurrentUserId } from '@/lib/auth/get-current-user'
-import { getModels } from '@/lib/config/models'
-import { ExtendedCoreMessage, SearchResults } from '@/lib/types' // Added SearchResults
-import { convertToUIMessages } from '@/lib/utils'
+import { getChat } from '@/lib/actions/chat';
+import { getCurrentUserId } from '@/lib/auth/get-current-user';
+import { getModels } from '@/lib/config/models';
+import { ExtendedCoreMessage, SearchResults } from '@/lib/types'; // Added SearchResults
+import { convertToUIMessages } from '@/lib/utils';
 
-import { Chat } from '@/components/chat'
+import { Chat } from '@/components/chat';
 
 export const maxDuration = 60
 
@@ -65,7 +65,8 @@ export default async function SearchPage(props: {
   const chat = await getChat(id, userId)
   // convertToUIMessages for useChat hook
   const messages = convertToUIMessages(chat?.messages || [])
-
+  // console.log("rudraaaa :", chat)
+  // console.log("vivekkkk :", messages)
   if (!chat) {
     redirect('/')
   }

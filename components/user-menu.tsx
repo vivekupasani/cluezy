@@ -24,6 +24,7 @@ import { AvatarImage } from '@radix-ui/react-avatar'
 import { toast } from 'sonner'
 import { CompanyInfoItems } from './company-info'
 import { ExternalLinkItems } from './external-link-items'
+import { clearChatHistoryCache } from './sidebar/chat-history-client'
 import { ThemeMenuItems } from './theme-menu-items'
 import { Button } from './ui/button'
 
@@ -55,6 +56,7 @@ export default function UserMenu({ user }: UserMenuProps) {
   const handleLogout = async () => {
     const supabase = createClient()
     await supabase.auth.signOut()
+    clearChatHistoryCache()
     router.push('/')
     router.refresh()
     toast.success('Logged out successfully')

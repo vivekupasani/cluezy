@@ -78,9 +78,9 @@ export const weatherTool = tool({
                 }
             }
 
-            console.log('Latitude:', lat);
-            console.log('Longitude:', lng);
-            console.log('Location:', locationName);
+            // console.log('Latitude:', lat);
+            // console.log('Longitude:', lng);
+            // console.log('Location:', locationName);
 
             const apiKey = process.env.OPENWEATHER_API_KEY;
             const [weatherResponse, airPollutionResponse, dailyForecastResponse] = await Promise.all([
@@ -117,7 +117,7 @@ export const weatherTool = tool({
                 daily_forecast: dailyForecastData,
             }
 
-            console.log("Result ", res)
+            // console.log("Result ", res)
 
             return res;
         } catch (error) {

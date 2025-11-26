@@ -9,6 +9,7 @@ import { toast } from 'sonner'
 import { SidebarMenuItem } from '@/components/ui/sidebar'
 import { Chat } from '@/lib/types'
 import { useHistoryDialog } from '../history-dialog'
+import { Input } from '../ui/input'
 import { Spinner } from '../ui/spinner'
 
 // 🕒 Format date as "time ago"
@@ -169,7 +170,7 @@ export function ChatMenuItem({ chat }: ChatMenuItemProps) {
             onClick={(e) => e.stopPropagation()}
           >
             <div className="flex items-center justify-between mb-4">
-              <h3 className="text-lg font-semibold">Rename Chat</h3>
+              <h3 className="text-lg font-semibold txt-grad">Rename Chat</h3>
               <button
                 onClick={() => setShowRenameDialog(false)}
                 className="p-1 hover:bg-accent rounded-sm"
@@ -177,10 +178,10 @@ export function ChatMenuItem({ chat }: ChatMenuItemProps) {
                 <X size={16} />
               </button>
             </div>
-            <p className="text-sm text-muted-foreground mb-4">
+            <p className="text-sm txt-mut mb-4">
               Enter a new name for this chat.
             </p>
-            <input
+            <Input
               type="text"
               value={newTitle}
               onChange={(e) => setNewTitle(e.target.value)}
@@ -196,7 +197,7 @@ export function ChatMenuItem({ chat }: ChatMenuItemProps) {
             <div className="flex justify-end gap-2">
               <button
                 onClick={() => setShowRenameDialog(false)}
-                className="px-3 py-2 text-sm border border-border rounded-md hover:bg-accent"
+                className="px-3 py-2 text-sm  border border-border rounded-md hover:bg-accent"
                 disabled={isRenaming}
               >
                 Cancel
@@ -225,7 +226,7 @@ export function ChatMenuItem({ chat }: ChatMenuItemProps) {
             onClick={(e) => e.stopPropagation()}
           >
             <div className="flex items-center justify-between mb-4">
-              <h3 className="text-lg font-semibold">Delete Chat</h3>
+              <h3 className="text-lg font-semibold txt-grad">Delete Chat</h3>
               <button
                 onClick={() => setShowDeleteDialog(false)}
                 className="p-1 hover:bg-accent rounded-sm"
@@ -234,7 +235,7 @@ export function ChatMenuItem({ chat }: ChatMenuItemProps) {
                 <X size={16} />
               </button>
             </div>
-            <p className="text-sm text-muted-foreground mb-4">
+            <p className="text-sm txt-mut mb-4">
               Are you sure you want to delete this chat? This action cannot be undone.
             </p>
             <div className="flex justify-end gap-2">

@@ -1,3 +1,4 @@
+import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
 import { SiInstagram, SiLinkedin, SiX } from "react-icons/si";
 
@@ -68,7 +69,14 @@ export default async function PrivacyPage() {
     return (
         <div className="h-screen overflow-y-auto CustomScrollbar">
             <div className="max-w-2xl flex flex-col mx-auto px-4">
-                <div className="mt-16 flex flex-col justify-center items-center text-center">
+                <Link
+                    href="/"
+                    className="group mt-10 md:mt-16 flex gap-2 items-center cursor-pointer">
+                    <ArrowLeft size={18} className="text-foreground/70 group-hover:text-foreground" />
+                    <p className="txt-grad group-hover:text-foreground text-sm">Back</p>
+                </Link>
+
+                <div className="mt-10 flex flex-col justify-center items-center text-center">
                     <h1 className="text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-tr from-foreground to-foreground/60">
                         Privacy Policy
                     </h1>
