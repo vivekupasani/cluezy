@@ -23,6 +23,7 @@ import {
 import { AvatarImage } from '@radix-ui/react-avatar'
 import { toast } from 'sonner'
 import { CompanyInfoItems } from './company-info'
+import { useAuth } from './context/auth-context'
 import { ExternalLinkItems } from './external-link-items'
 import { clearChatHistoryCache } from './sidebar/chat-history-client'
 import { ThemeMenuItems } from './theme-menu-items'
@@ -34,6 +35,7 @@ interface UserMenuProps {
 
 export default function UserMenu({ user }: UserMenuProps) {
   const router = useRouter()
+  const { setUser } = useAuth()
   const userName =
     user.user_metadata?.full_name || user.user_metadata?.name || 'User'
   const avatarUrl =
@@ -56,6 +58,7 @@ export default function UserMenu({ user }: UserMenuProps) {
   const handleLogout = async () => {
     const supabase = createClient()
     await supabase.auth.signOut()
+    setUser(null)
     clearChatHistoryCache()
     router.push('/')
     router.refresh()
@@ -65,10 +68,10 @@ export default function UserMenu({ user }: UserMenuProps) {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="ghost" className="relative h-[33px] w-[33px] text-foreground/70 hover:bg-transparent rounded-full p-0 focus:ring-0">
+        <Button variant="ghost" className="relative h-[33px] w-[33px] text-foreground/70 hover:bg-muted rounded-full p-0 focus:ring-0">
           <Avatar className="h-[33px] w-[32px]">
             <AvatarImage src={avatarUrl} alt={userName} />
-            <AvatarFallback className='text-xs pt-[2px] text-foreground/70 bg-gradient-to-tr from-card/55 via-card/70 to-card/45 backdrop-blur-sm drop-shadow-sm border border-border/80'>
+            <AvatarFallback className='text-xs pt-[2px] text-foreground/70 bg-gradient-to-tr from-card/55 via-card/70 to-card/45 border border-border/80'>
               {getInitials(userName, user.email)}
             </AvatarFallback>
           </Avatar>

@@ -32,7 +32,7 @@ export const CurrentUserAvatar = ({ size = 16, className }: CurrentUserAvatarPro
   const initials = getInitials(name, email)
 
   return (
-    <Avatar className={`size-6 ${className || ''}`}>
+    <Avatar className={`size-7 ${className || ''}`}>
       {/* Only show AvatarImage if valid */}
       {profileImage && profileImage.trim() !== '' && (
         <AvatarImage src={profileImage} alt={name || 'User'} />

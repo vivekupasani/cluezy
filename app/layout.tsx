@@ -11,8 +11,11 @@ import { Toaster } from '@/components/ui/sonner'
 import { ThemeProvider } from '@/components/theme-provider'
 
 import ArtifactRoot from '@/components/artifact/artifact-root'
+import { AuthProvider } from '@/components/context/auth-context'
+import Header from '@/components/header'
 import { HistoryDialogProvider } from '@/components/history-dialog'
 import { SourcesDialogProvider } from '@/components/sources-dialog'
+import { getModels } from '@/lib/config/models'
 import './globals.css'
 
 const fontSans = FontSans({
@@ -94,18 +97,8 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode
 }>) {
-  // let user = null
-  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
-  const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+  const models = await getModels()
 
-  // if (supabaseUrl && supabaseAnonKey) {
-  //   const supabase = await createClient()
-  //   const {
-  //     data: { user: supabaseUser }
-  //   } = await supabase.auth.getUser()
-  //   user = supabaseUser
-  // }
-  // console.log("users", user)
   return (
     <html lang="en" suppressHydrationWarning>
       <body
@@ -114,29 +107,30 @@ export default async function RootLayout({
           fontSans.variable
         )}
       >
-        <HistoryDialogProvider>
-          <SourcesDialogProvider>
-            <ThemeProvider
-              attribute="class"
-              defaultTheme="system"
-              enableSystem
-              disableTransitionOnChange
-            >
-              <SidebarProvider defaultOpen>
-                <div className="flex flex-col flex-1">
-                  {/* <AppSidebar /> */}
-                  {/* <Header /> */}
-                  <main className="flex flex-1 min-h-0">
-                    <ArtifactRoot>{children}</ArtifactRoot>
-                  </main>
-                  {/* <WaitlistPage /> */}
-                </div>
-              </SidebarProvider>
-              <Toaster />
-              <Analytics />
-            </ThemeProvider>
-          </SourcesDialogProvider>
-        </HistoryDialogProvider>
+        <AuthProvider>
+          <HistoryDialogProvider>
+            <SourcesDialogProvider>
+              <ThemeProvider
+                attribute="class"
+                defaultTheme="system"
+                enableSystem
+                disableTransitionOnChange
+              >
+                <SidebarProvider defaultOpen>
+                  <div className="flex flex-col flex-1">
+                    {/* <AppSidebar /> */}
+                    <Header models={models} />
+                    <main className="flex flex-1 min-h-0">
+                      <ArtifactRoot>{children}</ArtifactRoot>
+                    </main>
+                  </div>
+                </SidebarProvider>
+                <Toaster />
+                <Analytics />
+              </ThemeProvider>
+            </SourcesDialogProvider>
+          </HistoryDialogProvider>
+        </AuthProvider>
       </body>
     </html>
   )

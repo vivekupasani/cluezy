@@ -12,7 +12,6 @@ import { useEffect, useMemo, useRef, useState } from 'react'
 import { toast } from 'sonner'
 import { ChatMessages } from './chat-messages'
 import { ChatPanel } from './chat-panel'
-import Header from './header'
 import { HistoryDialog, useHistoryDialog } from './history-dialog'
 import { Button } from './ui'
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from './ui/dialog'
@@ -445,7 +444,7 @@ export function Chat({
       )}
       data-testid="full-chat"
     >
-      <Header user={user} models={models} />
+      {/* <Header /> */}
 
       <ChatMessages
         sections={sections}
@@ -511,7 +510,7 @@ export function Chat({
         </DialogContent>
       </Dialog>
 
-      {isHistoryDialogOpen && <HistoryDialog />}
+      <HistoryDialog />
     </div>
   )
 }

@@ -1,10 +1,11 @@
 'use client'
 
 import { Chat } from '@/lib/types'
-import { History, MessageCircle, Search, X } from 'lucide-react'
+import { History, MessageCircle, Search } from 'lucide-react'
 import { useCallback, useEffect, useRef, useState, useTransition } from 'react'
 import { toast } from 'sonner'
 import { useHistoryDialog } from '../history-dialog'
+import { Dialog, DialogContent, DialogTitle } from '../ui/dialog'
 import { ChatHistorySkeleton } from './chat-history-skeleton'
 import { ChatMenuItem } from './chat-menu-item'
 
@@ -33,7 +34,7 @@ export function ChatHistoryClient() {
   const [searchQuery, setSearchQuery] = useState('')
   const loadMoreRef = useRef<HTMLDivElement>(null)
   const [isPending, startTransition] = useTransition()
-  const { setHistoryDialogIsOpen } = useHistoryDialog()
+  const { isHistoryDialogOpen, setHistoryDialogIsOpen } = useHistoryDialog()
 
   const fetchInitialChats = useCallback(async () => {
     setIsLoading(true)
@@ -80,16 +81,16 @@ export function ChatHistoryClient() {
     }
   }, [fetchInitialChats])
 
-  useEffect(() => {
-    const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') {
-        setHistoryDialogIsOpen(false)
-      }
-    }
+  // useEffect(() => {
+  //   const handleKeyDown = (event: KeyboardEvent) => {
+  //     if (event.key === 'Escape') {
+  //       setHistoryDialogIsOpen(false)
+  //     }
+  //   }
 
-    window.addEventListener('keydown', handleKeyDown)
-    return () => window.removeEventListener('keydown', handleKeyDown)
-  }, [setHistoryDialogIsOpen])
+  //   window.addEventListener('keydown', handleKeyDown)
+  //   return () => window.removeEventListener('keydown', handleKeyDown)
+  // }, [setHistoryDialogIsOpen])
 
   const fetchMoreChats = useCallback(async () => {
     if (isLoadingMore || nextOffset === null) return
@@ -217,128 +218,131 @@ export function ChatHistoryClient() {
     groups.thisMonth.length > 0 || groups.older.length > 0
 
   return (
-    <div className="w-full max-w-2xl h-[60vh] sm:h-[80vh] p-0 bg-background backdrop-blur-sm text-popover-foreground border border-border rounded-2xl overflow-hidden flex flex-col gap-0 cosmic-glass HiddenScrollbar">
-      <div className="flex-shrink-0 py-2 px-4">
-        <div className="flex items-center gap-3 mb-1">
-          <Search size={16} className="text-muted-foreground" />
-          <input
-            placeholder="Search titles and messages..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            className="border-none bg-transparent focus:outline-none text-sm h-8 flex-1 placeholder-txt-mut text-foreground/90"
-          />
-          <button
-            onClick={() => setHistoryDialogIsOpen(false)}
-            className="p-1 rounded-full hover:bg-muted transition-colors"
-          >
-            <X size={14} />
-          </button>
+    <Dialog open={isHistoryDialogOpen} onOpenChange={() => setHistoryDialogIsOpen(false)}>
+      <DialogTitle></DialogTitle>
+      <DialogContent className="w-[95%] md:w-full max-w-xl h-[60vh] sm:h-[80vh] p-0 bg-background backdrop-blur-sm text-popover-foreground border border-border rounded-2xl overflow-hidden flex flex-col gap-0 cosmic-glass HiddenScrollbar">
+        <div className="flex-shrink-0 py-2 px-4">
+          <div className="flex items-center gap-3 mb-1">
+            <Search size={16} className="text-muted-foreground" />
+            <input
+              placeholder="Search titles and messages..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="border-none bg-transparent focus:outline-none text-sm h-8 flex-1 placeholder-txt-mut text-foreground/90"
+            />
+            {/* <button
+              onClick={() => setHistoryDialogIsOpen(false)}
+              className="p-1 rounded-full hover:bg-muted transition-colors"
+            >
+              <X size={14} />
+            </button> */}
+          </div>
+
+          <div className='w-full h-[1px] bg-border' />
         </div>
 
-        <div className='w-full h-[1px] bg-border' />
-      </div>
-
-      <div className="flex-1 overflow-y-auto py-2 px-2">
-        {isLoading ? (
-          // Show skeleton only during initial load when no chats are loaded yet
-          <div className="py-2">
-            <ChatHistorySkeleton />
-          </div>
-        ) : !hasChats ? (
-          // Show empty state only after initial load is complete and no chats exist
-          <div className="flex flex-col items-center justify-center py-32 text-center">
-            <MessageCircle size={48} className="text-muted-foreground/40 mb-3" />
-            <p className="text-sm text-muted-foreground">
-              {searchQuery ? 'No chats found' : 'No chat history'}
-            </p>
-            {searchQuery && (
-              <p className="text-xs text-muted-foreground/60 mt-1">Try a different search term</p>
-            )}
-          </div>
-        ) : (
-          <>
-            {groups.thisWeek.length > 0 && (
-              <div className="mb-2">
-                <h3 className="text-xs font-semibold text-foreground px-3 py-2 bg-primary/10 rounded-lg flex items-center gap-2">
-                  <History size={16} /> This Week
-                </h3>
-                <div className="space-y-1">
-                  {groups.thisWeek.map((chat) => (
-                    <ChatMenuItem
-                      key={chat.id}
-                      chat={chat}
-                    />
-                  ))}
+        <div className="flex-1 overflow-y-auto py-2 px-2">
+          {isLoading ? (
+            // Show skeleton only during initial load when no chats are loaded yet
+            <div className="py-2">
+              <ChatHistorySkeleton />
+            </div>
+          ) : !hasChats ? (
+            // Show empty state only after initial load is complete and no chats exist
+            <div className="flex flex-col items-center justify-center py-32 text-center">
+              <MessageCircle size={48} className="text-muted-foreground/40 mb-3" />
+              <p className="text-sm text-muted-foreground">
+                {searchQuery ? 'No chats found' : 'No chat history'}
+              </p>
+              {searchQuery && (
+                <p className="text-xs text-muted-foreground/60 mt-1">Try a different search term</p>
+              )}
+            </div>
+          ) : (
+            <>
+              {groups.thisWeek.length > 0 && (
+                <div className="mb-2">
+                  <h3 className="text-xs font-semibold text-foreground px-3 py-2 bg-primary/10 rounded-lg flex items-center gap-2">
+                    <History size={16} /> This Week
+                  </h3>
+                  <div className="space-y-1">
+                    {groups.thisWeek.map((chat) => (
+                      <ChatMenuItem
+                        key={chat.id}
+                        chat={chat}
+                      />
+                    ))}
+                  </div>
                 </div>
-              </div>
-            )}
+              )}
 
-            {groups.lastWeek.length > 0 && (
-              <div className="mb-2">
-                <h3 className="text-xs font-semibold text-foreground px-3 py-2 bg-primary/10 rounded-lg  flex items-center gap-2">
-                  <History size={16} /> Last Week
-                </h3>
-                <div className="space-y-1">
-                  {groups.lastWeek.map((chat) => (
-                    <ChatMenuItem
-                      key={chat.id}
-                      chat={chat}
-                    />
-                  ))}
+              {groups.lastWeek.length > 0 && (
+                <div className="mb-2">
+                  <h3 className="text-xs font-semibold text-foreground px-3 py-2 bg-primary/10 rounded-lg  flex items-center gap-2">
+                    <History size={16} /> Last Week
+                  </h3>
+                  <div className="space-y-1">
+                    {groups.lastWeek.map((chat) => (
+                      <ChatMenuItem
+                        key={chat.id}
+                        chat={chat}
+                      />
+                    ))}
+                  </div>
                 </div>
-              </div>
-            )}
+              )}
 
-            {groups.thisMonth.length > 0 && (
-              <div className="mb-2">
-                <h3 className="text-xs font-semibold text-foreground px-3 py-2 bg-primary/10 rounded-lg  flex items-center gap-2">
-                  <History size={16} /> This Month
-                </h3>
-                <div className="space-y-1">
-                  {groups.thisMonth.map((chat) => (
-                    <ChatMenuItem
-                      key={chat.id}
-                      chat={chat}
-                    />
-                  ))}
+              {groups.thisMonth.length > 0 && (
+                <div className="mb-2">
+                  <h3 className="text-xs font-semibold text-foreground px-3 py-2 bg-primary/10 rounded-lg  flex items-center gap-2">
+                    <History size={16} /> This Month
+                  </h3>
+                  <div className="space-y-1">
+                    {groups.thisMonth.map((chat) => (
+                      <ChatMenuItem
+                        key={chat.id}
+                        chat={chat}
+                      />
+                    ))}
+                  </div>
                 </div>
-              </div>
-            )}
+              )}
 
-            {groups.older.length > 0 && (
-              <div className="mb-2">
-                <h3 className="text-xs font-semibold text-foreground px-3 py-2 bg-primary/10 rounded-lg flex items-center gap-2">
-                  <History size={16} />  Older
-                </h3>
-                <div className="space-y-1">
-                  {groups.older.map((chat) => (
-                    <ChatMenuItem
-                      key={chat.id}
-                      chat={chat}
-                    />
-                  ))}
+              {groups.older.length > 0 && (
+                <div className="mb-2">
+                  <h3 className="text-xs font-semibold text-foreground px-3 py-2 bg-primary/10 rounded-lg flex items-center gap-2">
+                    <History size={16} />  Older
+                  </h3>
+                  <div className="space-y-1">
+                    {groups.older.map((chat) => (
+                      <ChatMenuItem
+                        key={chat.id}
+                        chat={chat}
+                      />
+                    ))}
+                  </div>
                 </div>
-              </div>
-            )}
+              )}
 
-            {/* Loading skeleton for infinite scroll - only show when loading more */}
-            {(isLoadingMore || isPending) && (
-              <div className="py-2">
-                <ChatHistorySkeleton />
-              </div>
-            )}
+              {/* Loading skeleton for infinite scroll - only show when loading more */}
+              {(isLoadingMore || isPending) && (
+                <div className="py-2">
+                  <ChatHistorySkeleton />
+                </div>
+              )}
 
-            {/* Load more trigger */}
-            <div ref={loadMoreRef} style={{ height: '1px' }} />
-          </>
-        )}
-      </div>
+              {/* Load more trigger */}
+              <div ref={loadMoreRef} style={{ height: '1px' }} />
+            </>
+          )}
+        </div>
 
-      {/* <div className="border-t border-border/30 p-3 bg-muted/10">
+        {/* <div className="border-t border-border/30 p-3 bg-muted/10">
         <div className="text-xs text-muted-foreground text-center">
           Designed and developed by Team Cluezy
         </div>
       </div> */}
-    </div>
+      </DialogContent>
+    </Dialog>
   )
 }

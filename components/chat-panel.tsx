@@ -70,6 +70,58 @@ import {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   Paperclip,
   Search,
   Square,
@@ -328,7 +380,7 @@ export function ChatPanel({
 
         <div className='bg-background'>
           <div className={cn(
-            "relative flex flex-row items-start gap-3 px-3 py-[10px] w-full bg-gradient-to-tr from-card/55 via-card/70 to-card/45 backdrop-blur-sm drop-shadow-sm border border-border/80 transition-colors",
+            "relative flex flex-row items-start gap-3 px-3 py-[10px] w-full bg-gradient-to-tr from-card/55 via-card/70 to-card/45 border border-border/80 transition-colors",
             isMobile ? (input.length > 30 ? "rounded-3xl" : "rounded-full") : (input.length > 66 ? "rounded-3xl" : "rounded-full")
           )}>
             {/* Icon */}

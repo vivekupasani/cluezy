@@ -75,7 +75,7 @@ const SectionTile = ({ data, sectionTitle }: SectionTileProps) => {
                     {displayed.map((item, index) => (
                         <div className="w-1/2 md:w-1/4 p-1" key={index}>
                             <Link href={item.link} target="_blank">
-                                <div className="flex-1 h-full hover:bg-muted/50 transition-colors bg-gradient-to-br from-card/55 via-card/70 to-card/45 backdrop-blur-sm drop-shadow-sm border border-border rounded-lg">
+                                <div className="flex-1 h-full hover:bg-muted/50 transition-colors bg-gradient-to-br from-primary-foreground/55 via-primary-foreground/70 to-primary-foreground/45 backdrop-blur-sm drop-shadow-sm border border-border rounded-lg">
                                     <div className="p-2 flex flex-col justify-between h-full">
 
                                         <p className="text-xs line-clamp-2 min-h-[2rem] txt-grad">
@@ -105,7 +105,7 @@ const SectionTile = ({ data, sectionTitle }: SectionTileProps) => {
 
                     {!showAll && extraCount > 0 && (
                         <div className="w-1/2 md:w-1/4 p-1">
-                            <div className="flex-1 flex h-full items-center justify-center bg-gradient-to-br from-card/55 via-card/70 to-card/45 backdrop-blur-sm border border-border rounded-lg">
+                            <div className="flex-1 flex h-full items-center justify-center bg-gradient-to-br from-primary-foreground/55 via-primary-foreground/70 to-primary-foreground/45 backdrop-blur-sm border border-border rounded-lg">
                                 <Button variant="link" onClick={() => setShowAll(true)}>
                                     View {extraCount} more
                                 </Button>
@@ -115,7 +115,7 @@ const SectionTile = ({ data, sectionTitle }: SectionTileProps) => {
 
                     {showAll && extraCount > 0 && (
                         <div className="w-1/2 md:w-1/4 p-1">
-                            <div className="flex-1 flex h-full items-center justify-center bg-gradient-to-br from-card/55 via-card/70 to-card/45 backdrop-blur-sm border border-border rounded-lg">
+                            <div className="flex-1 flex h-full items-center justify-center bg-gradient-to-br from-primary-foreground/55 via-primary-foreground/70 to-primary-foreground/45 backdrop-blur-sm border border-border rounded-lg">
                                 <Button variant="link" onClick={() => setShowAll(false)}>
                                     View less
                                 </Button>

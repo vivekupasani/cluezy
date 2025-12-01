@@ -29,8 +29,8 @@ export default function GuestMenu() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <button className='group bg-gradient-to-tr from-card/55 via-card/70 to-card/45 hover:bg-card backdrop-blur-sm drop-shadow-sm  border border-border/80 rounded-full px-2 py-2 cursor-pointer items-center'>
-          <Settings2 size={16} className=' text-foreground/70 group-hover:text-foreground' /> {/* Choose an icon */}
+        <button className='group bg-gradient-to-tr from-card/55 via-card/70 to-card/45 hover:bg-muted border border-border/80 rounded-full px-2 py-2 cursor-pointer items-center'>
+          <Settings2 size={16} className=' text-foreground/70' /> {/* Choose an icon */}
         </button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56 bg-background border-b border-primary/8" align="end" forceMount>

@@ -19,6 +19,8 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 
 import { toast } from 'sonner'
+import { useAuth } from './context/auth-context'
+import { clearChatHistoryCache } from './sidebar/chat-history-client'
 import { PasswordInput } from './ui/password-input'
 
 export function LoginForm({
@@ -30,6 +32,7 @@ export function LoginForm({
   const [error, setError] = useState<string | null>(null)
   const [isLoading, setIsLoading] = useState(false)
   const router = useRouter()
+  const { getUserData } = useAuth()
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -43,6 +46,8 @@ export function LoginForm({
         password
       })
       if (error) throw error
+      clearChatHistoryCache()
+      await getUserData()
       router.push('/')
       router.refresh()
       toast.success('Logged in successfully')
@@ -66,6 +71,7 @@ export function LoginForm({
         }
       })
       if (error) throw error
+      clearChatHistoryCache()
     } catch (error: unknown) {
       setError(
         error instanceof Error ? error.message : 'An OAuth error occurred'

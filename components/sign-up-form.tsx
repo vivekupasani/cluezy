@@ -18,6 +18,7 @@ import { PasswordInput } from '@/components/ui/password-input'
 import { createClient } from '@/lib/supabase/client'
 import { cn } from '@/lib/utils'
 import { toast } from 'sonner'
+import { clearChatHistoryCache } from './sidebar/chat-history-client'
 
 export function SignUpForm({
   className,
@@ -49,6 +50,7 @@ export function SignUpForm({
         options: { emailRedirectTo: `${window.location.origin}/` }
       })
       if (error) throw error
+      clearChatHistoryCache()
       router.push('/auth/sign-up-success')
       toast.success('Account created successfully. Please verify your email.')
     } catch (error: unknown) {
@@ -68,6 +70,7 @@ export function SignUpForm({
         options: { redirectTo: `${location.origin}/auth/oauth` }
       })
       if (error) throw error
+      clearChatHistoryCache()
     } catch (error: unknown) {
       setError(error instanceof Error ? error.message : 'An OAuth error occurred')
     } finally {

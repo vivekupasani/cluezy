@@ -70,8 +70,8 @@ export const UserMessage: React.FC<UserMessageProps> = ({
               value={editedContent}
               onChange={e => setEditedContent(e.target.value)}
               autoFocus
-              className="resize-none flex w-full rounded-md shadow-inner shadow-foreground/10 border border-input bg-background px-3 py-2 text-sm placeholder:text-muted-foreground focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50"
-              minRows={2}
+              className="resize-none flex w-full rounded-lg border border-input bg-background p-2 placeholder:text-muted-foreground focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50"
+              minRows={1}
               maxRows={10}
             />
             <div className="flex justify-end gap-2">
