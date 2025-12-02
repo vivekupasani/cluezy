@@ -3,6 +3,7 @@
 import { SearchResultItem } from "@/lib/types"
 import { createContext, useState } from "react"
 import { SearchResults } from "./search-results"
+import { Sidebar, SidebarContent } from "./ui/sidebar"
 
 export interface SourcesDialogProps {
     sources: SearchResultItem[]
@@ -70,8 +71,18 @@ export const SourcesDialog = ({ sources }: SourcesDialogProps) => {
     ]
 
     return (
-        <div className="fixed right-0 top-0 w-[92%] md:w-[40%] rounded-s-3xl h-screen z-50 flex items-start justify-start p-4 bg-background border-l border-border overflow-y-scroll CustomScrollbar">
-            <SearchResults results={sources ?? dummySearchResults} displayMode="list" />
-        </div>
+        <Sidebar
+            side="right"
+            className="fixed right-0 top-0 w-[92%] md:w-[80%] rounded-s-3xl h-screen 
+                       z-50 flex items-start justify-start p-4 bg-background 
+                       border-l border-border overflow-y-scroll CustomScrollbar"
+        >
+            <SidebarContent>
+                <SearchResults
+                    results={sources ?? dummySearchResults}
+                    displayMode="list"
+                />
+            </SidebarContent>
+        </Sidebar>
     )
 }

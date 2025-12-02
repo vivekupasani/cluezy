@@ -40,7 +40,7 @@ export function BotMessage({
       <ol className="list-decimal pl-6 space-y-1 text-sm text-muted-foreground" {...props} />
     ),
     li: (props: any) => <li className="my-1" {...props} />,
-    strong: (props: any) => <strong className="font-semibold text-foreground/70" {...props} />,
+    strong: (props: any) => <strong className="font-semibold text-foreground/85" {...props} />,
     em: (props: any) => <em className="italic text-muted-foreground" {...props} />,
     blockquote: (props: any) => (
       <blockquote className="border-l-4 border-accent pl-4 italic text-muted-foreground" {...props} />

@@ -4,7 +4,7 @@ import { cn } from '@/lib/utils'
 
 import { IconLogo } from './icons'
 
-interface SpinnerProps extends React.SVGProps<SVGSVGElement> {}
+interface SpinnerProps extends React.SVGProps<SVGSVGElement> { }
 
 export const Spinner = ({ className, ...props }: SpinnerProps) => (
   <svg

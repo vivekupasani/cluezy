@@ -5,7 +5,7 @@
   "display": "standalone",
   "start_url": "/",
   "scope": "/",
-  "orientation": "any",
+  "orientation": "portrait",
   "id": "",
   "lang": "en",
   "dir": "auto",
