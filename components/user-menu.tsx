@@ -71,7 +71,7 @@ export default function UserMenu({ user }: UserMenuProps) {
         <Button variant="ghost" className="relative h-[33px] w-[33px] text-foreground/70 hover:bg-muted rounded-full p-0 focus:ring-0">
           <Avatar className="h-[33px] w-[32px]">
             <AvatarImage src={avatarUrl} alt={userName} />
-            <AvatarFallback className='text-xs pt-[2px] text-foreground/70 bg-gradient-to-tr from-card/55 via-card/70 to-card/45 border border-border/80'>
+            <AvatarFallback className='text-xs pt-[2px] text-foreground/70 bg-card border border-border/80'>
               {getInitials(userName, user.email)}
             </AvatarFallback>
           </Avatar>

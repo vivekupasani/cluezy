@@ -190,6 +190,15 @@ export function ChatPanel({
           : 'px-2 sm:px-0'
       )}
     >
+      {/* <div className='w-full'>
+        <Image
+          src="/cluezy-logo.png"
+          alt="Cluezy Logo"
+          width={50}
+          height={20}
+          className="mx-auto"
+        />
+      </div> */}
       {messages.length === 0 && (
         <div className="flex flex-col items-center mb-4">
           <h1 className='text-4xl md:text-6xl tracking-tight mb-2 font-medium bg-clip-text text-transparent bg-gradient-to-tr from-foreground to-foreground/60'>ask a question</h1>
@@ -264,9 +273,12 @@ export function ChatPanel({
           </Button>
         )}
 
-        <div className='bg-background'>
+        <div className={cn(
+          'bg-background',
+          isMobile ? (input.length > 30 ? "rounded-3xl" : "rounded-full") : (input.length > 66 ? "rounded-3xl" : "rounded-full")
+        )}>
           <div className={cn(
-            "relative flex flex-row items-start gap-3 px-3 py-[10px] w-full bg-gradient-to-tr from-card/55 via-card/70 to-card/45 border border-border/80 transition-colors",
+            "relative flex flex-row items-start gap-3 px-3 py-[10px] w-full bg-card border border-border/80 transition-colors",
             isMobile ? (input.length > 30 ? "rounded-3xl" : "rounded-full") : (input.length > 66 ? "rounded-3xl" : "rounded-full")
           )}>
             {/* Icon */}

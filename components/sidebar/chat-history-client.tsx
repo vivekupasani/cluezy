@@ -1,7 +1,7 @@
 'use client'
 
 import { Chat } from '@/lib/types'
-import { History, MessageCircle, Search } from 'lucide-react'
+import { History, MessageCircle, RefreshCcw, Search } from 'lucide-react'
 import { useCallback, useEffect, useRef, useState, useTransition } from 'react'
 import { toast } from 'sonner'
 import { useHistoryDialog } from '../history-dialog'
@@ -169,6 +169,22 @@ export function ChatHistoryClient() {
     )
   })
 
+  const handleRefresh = () => {
+    startTransition(() => {
+      // Clear in-memory cache
+      clearChatHistoryCache()
+
+      // Reset local state immediately for UI feedback
+      setChats([])
+      setNextOffset(null)
+      setIsLoading(true)
+      setSearchQuery('')
+
+      // Fetch everything again
+      fetchInitialChats()
+    })
+  }
+
   // Group chats by date with new categories
   const groupChatsByDate = () => {
     const now = new Date()
@@ -230,12 +246,12 @@ export function ChatHistoryClient() {
               onChange={(e) => setSearchQuery(e.target.value)}
               className="border-none bg-transparent focus:outline-none text-sm h-8 flex-1 placeholder-txt-mut text-foreground/90"
             />
-            {/* <button
-              onClick={() => setHistoryDialogIsOpen(false)}
-              className="p-1 rounded-full hover:bg-muted transition-colors"
+            <button
+              onClick={handleRefresh}
+              className="p-1 mr-5 rounded-full hover:bg-muted transition-colors"
             >
-              <X size={14} />
-            </button> */}
+              <RefreshCcw size={14} />
+            </button>
           </div>
 
           <div className='w-full h-[1px] bg-border' />
@@ -265,7 +281,7 @@ export function ChatHistoryClient() {
                   <h3 className="text-xs font-semibold text-foreground px-3 py-2 bg-primary/10 rounded-lg flex items-center gap-2">
                     <History size={16} /> This Week
                   </h3>
-                  <div className="space-y-1">
+                  <div className="space-y-1 mt-2">
                     {groups.thisWeek.map((chat) => (
                       <ChatMenuItem
                         key={chat.id}
@@ -281,7 +297,7 @@ export function ChatHistoryClient() {
                   <h3 className="text-xs font-semibold text-foreground px-3 py-2 bg-primary/10 rounded-lg  flex items-center gap-2">
                     <History size={16} /> Last Week
                   </h3>
-                  <div className="space-y-1">
+                  <div className="space-y-1 mt-2">
                     {groups.lastWeek.map((chat) => (
                       <ChatMenuItem
                         key={chat.id}
@@ -297,7 +313,7 @@ export function ChatHistoryClient() {
                   <h3 className="text-xs font-semibold text-foreground px-3 py-2 bg-primary/10 rounded-lg  flex items-center gap-2">
                     <History size={16} /> This Month
                   </h3>
-                  <div className="space-y-1">
+                  <div className="space-y-1 mt-2">
                     {groups.thisMonth.map((chat) => (
                       <ChatMenuItem
                         key={chat.id}
@@ -313,7 +329,7 @@ export function ChatHistoryClient() {
                   <h3 className="text-xs font-semibold text-foreground px-3 py-2 bg-primary/10 rounded-lg flex items-center gap-2">
                     <History size={16} />  Older
                   </h3>
-                  <div className="space-y-1">
+                  <div className="space-y-1 mt-2">
                     {groups.older.map((chat) => (
                       <ChatMenuItem
                         key={chat.id}

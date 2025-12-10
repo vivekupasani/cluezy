@@ -13,7 +13,6 @@ import { SearchSkeleton } from './default-skeleton'
 import { SearchResults } from './search-results'
 import { SearchResultsImageSection } from './search-results-image'
 import { Section, ToolArgsSection } from './section'
-import { SourcesDialog } from './sources-dialog'
 
 interface SearchSectionProps {
   tool: ToolInvocation
@@ -86,10 +85,6 @@ export function SearchSection({
             />
           </Section>
         )}
-
-      {
-        isSourceDialogOpen && <SourcesDialog sources={searchResults.results} />
-      }
     </CollapsibleMessage>
   )
 }

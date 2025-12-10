@@ -1,8 +1,8 @@
-import Exa from 'exa-js'
+import Exa from 'exa-js';
 
-import { SearchResults } from '@/lib/types'
+import { SearchResults } from '@/lib/types';
 
-import { BaseSearchProvider } from './base'
+import { BaseSearchProvider } from './base';
 
 export class ExaSearchProvider extends BaseSearchProvider {
   async search(
@@ -12,26 +12,52 @@ export class ExaSearchProvider extends BaseSearchProvider {
     includeDomains: string[] = [],
     excludeDomains: string[] = []
   ): Promise<SearchResults> {
-    const apiKey = process.env.EXA_API_KEY
-    this.validateApiKey(apiKey, 'EXA')
+    const apiKey = process.env.EXA_API_KEY;
+    this.validateApiKey(apiKey, 'EXA');
 
-    const exa = new Exa(apiKey)
+    const exa = new Exa(apiKey);
     const exaResults = await exa.searchAndContents(query, {
       highlights: true,
       numResults: maxResults,
       includeDomains,
-      excludeDomains
-    })
+      excludeDomains,
+    });
 
+    // --- Serper Image Search ---
+    const imageRes = await fetch("https://google.serper.dev/images", {
+      method: "POST",
+      headers: {
+        "X-API-KEY": process.env.SERPER_API_KEY || "",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ q: query }),
+    });
+
+    if (!imageRes.ok) {
+      throw new Error(`Network response was not ok: ${imageRes.status}`);
+    }
+
+    const imageData = await imageRes.json();
+    // console.log("IMAGE RESPONSE:", imageData);
+
+    const images =
+      imageData?.images?.map((img: any, idx: number) => ({
+        url: img.imageUrl,
+        description: img.title || `Image ${idx + 1}`,
+      })) || [];
+
+    // console.log("Extracted Images:", images);
+
+    // --- Return Results ---
     return {
       results: exaResults.results.map((result: any) => ({
         title: result.title,
         url: result.url,
-        content: result.highlight || result.text
+        content: result.highlight || result.text,
       })),
       query,
-      images: [],
-      number_of_results: exaResults.results.length
-    }
+      images, // ← FIXED
+      number_of_results: exaResults.results.length,
+    };
   }
 }

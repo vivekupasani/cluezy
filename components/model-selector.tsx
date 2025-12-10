@@ -96,14 +96,14 @@ export function ModelSelector({ models }: ModelSelectorProps) {
         <Button
           role="combobox"
           aria-expanded={open}
-          className="w-[33px] h-[33px] p-0 bg-transparent flex items-center justify-center rounded-full bg-gradient-to-tr from-card/55 via-card/70 to-card/20 border border-border/80 hover:bg-muted focus:ring-0"
+          className="w-[33px] h-[33px] p-0 flex items-center justify-center rounded-full bg-transparent hover:bg-muted focus:ring-0"
         >
           {selectedModel ? (
             <Image
               src={`/providers/logos/${selectedModel.providerId}.svg`}
               alt={selectedModel.provider}
-              width={16}
-              height={16}
+              width={18}
+              height={18}
               className="rounded-full"
             />
           ) : (

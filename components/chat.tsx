@@ -119,7 +119,8 @@ export function Chat({
           }
         }
       } else {
-        toast.error(`Error in chat: ${error.message}`)
+        // toast.error(`Error in chat: ${error.message}`)
+        console.log("Error in chat: ", error.message)
       }
     },
     sendExtraMessageFields: false,

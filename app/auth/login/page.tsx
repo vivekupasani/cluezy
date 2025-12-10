@@ -7,7 +7,7 @@ export default function Page() {
     <div className="relative flex min-h-svh w-screen items-center justify-center p-3 md:p-10">
       <Link
         href="/"
-        className="absolute top-28 md:top-0 md:left-72 group ml-2 mt-10 md:mt-16 flex gap-2 items-start cursor-pointer w-full max-w-[400px]">
+        className="hidden md:absolute top-28 md:top-0 md:left-72 group ml-2 mt-10 md:mt-16 md:flex gap-2 items-start cursor-pointer w-full max-w-[400px]">
         <ArrowLeft size={18} className="text-foreground/70 group-hover:text-foreground" />
         <p className="txt-grad group-hover:text-foreground text-sm">Back</p>
       </Link>

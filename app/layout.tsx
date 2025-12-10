@@ -14,7 +14,6 @@ import ArtifactRoot from '@/components/artifact/artifact-root'
 import { AuthProvider } from '@/components/context/auth-context'
 import Header from '@/components/header'
 import { HistoryDialogProvider } from '@/components/history-dialog'
-import { SourcesDialogProvider } from '@/components/sources-dialog'
 import { getModels } from '@/lib/config/models'
 import './globals.css'
 
@@ -109,26 +108,24 @@ export default async function RootLayout({
       >
         <AuthProvider>
           <HistoryDialogProvider>
-            <SourcesDialogProvider>
-              <ThemeProvider
-                attribute="class"
-                defaultTheme="system"
-                enableSystem
-                disableTransitionOnChange
-              >
-                <SidebarProvider defaultOpen>
-                  <div className="flex flex-col flex-1">
-                    {/* <AppSidebar /> */}
-                    <Header models={models} />
-                    <main className="flex flex-1 min-h-0">
-                      <ArtifactRoot>{children}</ArtifactRoot>
-                    </main>
-                  </div>
-                </SidebarProvider>
-                <Toaster />
-                <Analytics />
-              </ThemeProvider>
-            </SourcesDialogProvider>
+            <ThemeProvider
+              attribute="class"
+              defaultTheme="system"
+              enableSystem
+              disableTransitionOnChange
+            >
+              <SidebarProvider defaultOpen>
+                <div className="flex flex-col flex-1">
+                  {/* <AppSidebar /> */}
+                  <Header models={models} />
+                  <main className="flex flex-1 min-h-0">
+                    <ArtifactRoot>{children}</ArtifactRoot>
+                  </main>
+                </div>
+              </SidebarProvider>
+              <Toaster />
+              <Analytics />
+            </ThemeProvider>
           </HistoryDialogProvider>
         </AuthProvider>
       </body>
