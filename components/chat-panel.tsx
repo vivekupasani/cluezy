@@ -186,7 +186,7 @@ export function ChatPanel({
         'w-full group/form-container shrink-0 mx-auto max-w-2xl',
         'pr-2 sm:pr-2 sm:px-0',
         messages.length > 0
-          ? 'sticky bottom-0 pb-6 sm:pb-4 px-2'
+          ? 'sticky bottom-0 pb-4 sm:pb-4 px-2'
           : 'px-2 sm:px-0'
       )}
     >
@@ -201,7 +201,7 @@ export function ChatPanel({
       </div> */}
       {messages.length === 0 && (
         <div className="flex flex-col items-center mb-4">
-          <h1 className='text-4xl md:text-6xl tracking-tight mb-2 font-medium bg-clip-text text-transparent bg-gradient-to-tr from-foreground to-foreground/60'>ask a question</h1>
+          <h1 className='text-4xl md:text-5xl tracking-tight mb-2 font-medium bg-clip-text text-transparent bg-gradient-to-tr from-foreground to-foreground/60'>ask a question</h1>
         </div>
       )}
 

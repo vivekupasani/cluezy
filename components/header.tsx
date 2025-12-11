@@ -47,9 +47,9 @@ export const Header: React.FC<HeaderProps> = ({ models }) => {
     >
       {/* This div can be used for a logo or title on the left if needed */}
       <div className='flex items-center gap-2'>
-        <Link href="/" className="group flex gap-1 rounded-full px-2 py-2 cursor-pointer items-center hover:bg-muted">
+        <Link href="/" className="group flex gap-1 rounded-full px-2 py-2 cursor-pointer items-center hover:bg-muted border border-border">
           <Cross
-            size={18}
+            size={16}
             className="group-hover:rotate-90 group-hover:opacity-95 transition-transform duration-100 text-foreground/70 group-hover:text-foreground"
           />
           {/* <span className="text-xs font-medium text-foreground/70 hidden group-hover:inline-block transition-all duration-200 group-hover:text-foreground">
@@ -58,16 +58,9 @@ export const Header: React.FC<HeaderProps> = ({ models }) => {
         </Link>
       </div>
 
-      <div className="flex items-center" suppressHydrationWarning>
+      <div className="flex items-center gap-2" suppressHydrationWarning>
         {/* <SearchModeToggle /> */}
-
-        {/* {
-          user ?
-          :
-          <Link href="/auth/login" className='rounded-full bg-[#644a40] text-[#ffffff] dark:bg-[#393028] dark:text-[#ffffff] drop-shadow-sm px-3 py-2 text-xs hover:bg-primary/90 border border-border'>Sign In</Link>
-        } */}
-
-        <span onClick={() => setHistoryDialogIsOpen(true)} className='group hover:cursor-pointer rounded-full px-2 py-2 hover:bg-muted'><TextSearch size={18} className=' text-foreground/70' /></span>
+        <span onClick={() => setHistoryDialogIsOpen(true)} className='group hover:cursor-pointer rounded-full px-2 py-2 hover:bg-muted border border-border'><TextSearch size={16} className=' text-foreground/70' /></span>
         <ModelSelector models={models} />
         {user ? <UserMenu user={user} /> : <GuestMenu />}
       </div>

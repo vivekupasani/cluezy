@@ -3,7 +3,7 @@
 import { useRouter } from 'next/navigation'
 
 import { User } from '@supabase/supabase-js'
-import { Link2, LogOut, LucideBadgeAlert, Palette } from 'lucide-react'
+import { Link2, LogOut, Palette } from 'lucide-react'
 
 import { createClient } from '@/lib/supabase/client'
 
@@ -22,7 +22,6 @@ import {
 
 import { AvatarImage } from '@radix-ui/react-avatar'
 import { toast } from 'sonner'
-import { CompanyInfoItems } from './company-info'
 import { useAuth } from './context/auth-context'
 import { ExternalLinkItems } from './external-link-items'
 import { clearChatHistoryCache } from './sidebar/chat-history-client'
@@ -70,7 +69,7 @@ export default function UserMenu({ user }: UserMenuProps) {
       <DropdownMenuTrigger asChild>
         <Button variant="ghost" className="relative h-[33px] w-[33px] text-foreground/70 hover:bg-muted rounded-full p-0 focus:ring-0">
           <Avatar className="h-[33px] w-[32px]">
-            <AvatarImage src={avatarUrl} alt={userName} />
+            <AvatarImage className='h-[33px] w-[32px]' src={avatarUrl} alt={userName} />
             <AvatarFallback className='text-xs pt-[2px] text-foreground/70 bg-card border border-border/80'>
               {getInitials(userName, user.email)}
             </AvatarFallback>
@@ -112,7 +111,7 @@ export default function UserMenu({ user }: UserMenuProps) {
             <ExternalLinkItems />
           </DropdownMenuSubContent>
         </DropdownMenuSub>
-        <DropdownMenuSub>
+        {/* <DropdownMenuSub>
           <DropdownMenuSubTrigger className='cursor-pointer'>
             <LucideBadgeAlert className="mr-2 h-4 w-4 text-foreground/70" />
             <span className='txt-grad'>Company Info</span>
@@ -120,7 +119,7 @@ export default function UserMenu({ user }: UserMenuProps) {
           <DropdownMenuSubContent>
             <CompanyInfoItems />
           </DropdownMenuSubContent>
-        </DropdownMenuSub>
+        </DropdownMenuSub> */}
         <DropdownMenuSeparator />
         <DropdownMenuItem onClick={handleLogout} className='cursor-pointer'>
           <LogOut className="mr-2 h-4 w-4 text-foreground/70" />
