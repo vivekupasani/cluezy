@@ -1,6 +1,6 @@
 # Cluezy
 
-An AI-powered search engine with a generative UI.
+Agentic Research Engine.
 
 ![capture](/app/opengraph-image.png)
 
@@ -19,11 +19,26 @@ An AI-powered search engine with a generative UI.
 
 ### Core Features
 
-- AI-powered search with GenerativeUI
-- Natural language question understanding
-- Multiple search providers support (Tavily, SearXNG, Exa)
-- Model selection from UI (switch between available AI models)
-  - Reasoning models with visible thought process
+- **AI-powered search with Generative UI** for instant, contextual answers
+- **Natural language question understanding** for conversational and research-grade queries
+- **Multiple search provider support** (Tavily, SearXNG, Exa, Firecrawl) for broader and reliable coverage
+- **AI model selection from the UI**, allowing users to switch between available models
+  - Support for **reasoning models with visible thought processes**
+
+- **Deep Research Mode**
+  - Runs multi-step searches across sources
+  - Cross-verifies information
+  - Produces structured, citation-backed research reports
+
+- **YouTube URL summarization**  
+  Paste any YouTube link to get concise, structured summaries
+
+- **Document Intelligence**
+  - Upload **PDFs, Docs, and PPTs**
+  - **Chat with documents** or ask for instant summaries
+  - **Search across uploaded files** for specific answers
+
+- **Live data retrieval**, including real-time weather and up-to-date information
 
 ### Authentication
 
@@ -110,7 +125,7 @@ Models are configured in `public/config/models.json`. Each model requires its co
 Fork the repo to your Github account, then run the following command to clone the repo:
 
 ```bash
-git clone git@github.com:[YOUR_GITHUB_ACCOUNT]/cluezy.git
+git clone https://github.com/vivekupasani/cluezy.git
 ```
 
 ### 2. Install dependencies
@@ -158,7 +173,7 @@ Host your own live version of cluezy with Vercel, Cloudflare Pages, or Docker.
 
 ### Vercel
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fmiurla%2Fcluezy&env=OPENAI_API_KEY,TAVILY_API_KEY,UPSTASH_REDIS_REST_URL,UPSTASH_REDIS_REST_TOKEN)
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fvivekupasani%2Fcluezy&env=OPENAI_API_KEY,TAVILY_API_KEY,UPSTASH_REDIS_REST_URL,UPSTASH_REDIS_REST_TOKEN)
 
 ### Docker Prebuilt Image
 
@@ -201,14 +216,6 @@ If you want to use cluezy as a search engine in your browser, follow these steps
 7. Find "cluezy" in the list of site search, click on the three dots next to it, and select "Make default".
 
 This will allow you to use cluezy as your default search engine in the browser.
-
-## 💙 Sponsors
-
-This project is proudly supported by:
-
-<a href="https://vercel.com/oss">
-  <img alt="Vercel OSS Program" src="https://vercel.com/oss/program-badge.svg" />
-</a>
 
 ## 👥 Contributing
 

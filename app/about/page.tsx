@@ -25,7 +25,7 @@ export default async function AboutPage() {
                 <div className="mt-10 flex flex-col">
                     <span className="text-sm text-foreground/80 mb-2 leading-relaxed">
                         At <b>Cluezy</b>, we believe that finding accurate answers shouldn’t be complicated. Built by <b>Cluezy</b>, Cluezy is an
-                        <b> AI-powered search and answer engine</b> designed to make information discovery smarter, faster, and more intuitive.
+                        <b> agentic research engine</b> designed to make information discovery smarter, faster, and more intuitive.
                         Our mission is to make knowledge access <b>instant, intelligent, and effortless</b> for everyone.
                     </span>
 

@@ -22,9 +22,9 @@ const fontSans = FontSans({
   variable: '--font-sans'
 })
 
-const title = 'Cluezy - Advanced AI search & answer engine'
+const title = 'Cluezy - Agentic Research Engine'
 const description =
-  'Cluezy is an advanced AI search engine that finds, analyzes, and cites the live web'
+  'Cluezy is an Agentic Research Engine that searches, analyzes, and cites information from the live web to deliver clear, trustworthy answers.'
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://www.cluezy.site'),
@@ -80,6 +80,35 @@ export const metadata: Metadata = {
     'search engine',
     'AI',
     'perplexity',
+    'agentic research',
+    'agentic research engine',
+    'ai agent',
+    'ai agents',
+    'research agent',
+    'ai research agent',
+    'agentic ai',
+    'agent-based ai',
+    'autonomous ai agent',
+    'autonomous research agent',
+    'ai answer agent',
+    'ai search agent',
+    'web research agent',
+    'agentic search',
+    'agentic search engine',
+    'agentic reasoning',
+    'agentic intelligence',
+    'multi-agent ai',
+    'autonomous ai research',
+    'agentic workflows',
+    'ai reasoning agent',
+    'tool-using ai agent',
+    'ai research automation',
+    'autonomous search ai',
+    'ai agent search engine',
+    'agentic ai search alternative',
+    'perplexity agent alternative',
+    'ai research agent alternative',
+    'autonomous ai search engine',
   ],
   manifest: "/manifest.json"
 }
