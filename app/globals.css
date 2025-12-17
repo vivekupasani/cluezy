@@ -170,40 +170,6 @@
   @apply bg-primary text-primary-foreground;
 }
 
-@keyframes marquee {
-  0% {
-    transform: translateX(0%);
-  }
-  100% {
-    transform: translateX(-50%);
-  }
-}
-
-@keyframes marquee-reverse {
-  0% {
-    transform: translateX(-50%);
-  }
-  100% {
-    transform: translateX(0%);
-  }
-}
-
-.marquee,
-.marquee-reverse {
-  overflow: hidden;
-  white-space: nowrap;
-}
-
-.marquee-content {
-  display: inline-flex;
-  gap: 0.5rem; /* spacing between buttons */
-  animation: marquee 15s linear infinite;
-}
-
-.marquee-reverse .marquee-content {
-  animation: marquee-reverse 15s linear infinite;
-}
-
 @theme inline {
   @keyframes shadanim {
     0% {

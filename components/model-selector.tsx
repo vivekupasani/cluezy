@@ -107,7 +107,7 @@ export function ModelSelector({ models }: ModelSelectorProps) {
               className="rounded-full"
             />
           ) : (
-            <Bot size={16} className='text-foreground/70' />
+            <Bot size={16} className='text-foreground/80' />
           )}
           {/* <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" /> */}
         </Button>

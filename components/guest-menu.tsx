@@ -28,7 +28,7 @@ export default function GuestMenu() {
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <button className='group hover:bg-muted rounded-full px-2 py-2 cursor-pointer items-center border border-border'>
-          <Settings2 size={16} className=' text-foreground/70' /> {/* Choose an icon */}
+          <Settings2 size={16} className=' text-foreground/80' /> {/* Choose an icon */}
         </button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56 bg-background border-b border-primary/8" align="end" forceMount>

@@ -22,7 +22,10 @@ const fontSans = FontSans({
   variable: '--font-sans'
 })
 
-const title = 'Cluezy - Agentic Research Engine'
+const title = {
+  default: 'Cluezy - Agentic Research Engine',
+  template: '%s | Cluezy AI',
+}
 const description =
   'Cluezy is an Agentic Research Engine that searches, analyzes, and cites information from the live web to deliver clear, trustworthy answers.'
 

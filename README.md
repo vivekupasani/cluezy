@@ -1,6 +1,6 @@
 # Cluezy
 
-Agentic Research Engine.
+Agentic Search Engine.
 
 ![capture](/app/opengraph-image.png)
 
@@ -20,15 +20,15 @@ Agentic Research Engine.
 ### Core Features
 
 - **AI-powered search with Generative UI** for instant, contextual answers
-- **Natural language question understanding** for conversational and research-grade queries
+- **Natural language question understanding** for conversational and search-grade queries
 - **Multiple search provider support** (Tavily, SearXNG, Exa, Firecrawl) for broader and reliable coverage
 - **AI model selection from the UI**, allowing users to switch between available models
   - Support for **reasoning models with visible thought processes**
 
-- **Deep Research Mode**
+- **Deep Search Mode**
   - Runs multi-step searches across sources
   - Cross-verifies information
-  - Produces structured, citation-backed research reports
+  - Produces structured, citation-backed search reports
 
 - **YouTube URL summarization**  
   Paste any YouTube link to get concise, structured summaries

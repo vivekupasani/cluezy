@@ -53,7 +53,7 @@ export function EmptyScreen({
                 onClick={async () => submitMessage(message.message)}
               >
                 <div className="group flex items-center gap-2 bg-clip-text text-transparent bg-gradient-to-tr from-foreground/90 to-foreground/60 hover:text-foreground">
-                  <message.icon size={16} className='text-foreground/70 group-hover:text-foreground' />
+                  <message.icon size={16} className='text-foreground/80 group-hover:text-foreground' />
                   {message.message}
                 </div>
               </Button>
@@ -72,7 +72,7 @@ export function EmptyScreen({
                 onClick={async () => submitMessage(message.message)}
               >
                 <div className="group flex items-center gap-2 bg-clip-text text-transparent bg-gradient-to-tr from-foreground/90 to-foreground/60 hover:text-foreground ">
-                  <message.icon size={16} className='text-foreground/70 group-hover:text-foreground' />
+                  <message.icon size={16} className='text-foreground/80 group-hover:text-foreground' />
                   {message.message}
                 </div>
               </Button>

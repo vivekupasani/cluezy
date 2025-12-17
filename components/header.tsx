@@ -50,7 +50,7 @@ export const Header: React.FC<HeaderProps> = ({ models }) => {
         <Link href="/" className="group flex gap-1 rounded-full px-2 py-2 cursor-pointer items-center hover:bg-muted border border-border">
           <Cross
             size={16}
-            className="group-hover:rotate-90 group-hover:opacity-95 transition-transform duration-100 text-foreground/70 group-hover:text-foreground"
+            className="group-hover:rotate-90 group-hover:opacity-95 transition-transform duration-100 text-foreground/80 group-hover:text-foreground"
           />
           {/* <span className="text-xs font-medium text-foreground/70 hidden group-hover:inline-block transition-all duration-200 group-hover:text-foreground">
             New
@@ -60,7 +60,7 @@ export const Header: React.FC<HeaderProps> = ({ models }) => {
 
       <div className="flex items-center gap-2" suppressHydrationWarning>
         {/* <SearchModeToggle /> */}
-        <span onClick={() => setHistoryDialogIsOpen(true)} className='group hover:cursor-pointer rounded-full px-2 py-2 hover:bg-muted border border-border'><TextSearch size={16} className=' text-foreground/70' /></span>
+        <span onClick={() => setHistoryDialogIsOpen(true)} className='group hover:cursor-pointer rounded-full px-2 py-2 hover:bg-muted border border-border'><TextSearch size={16} className=' text-foreground/80' /></span>
         <ModelSelector models={models} />
         {user ? <UserMenu user={user} /> : <GuestMenu />}
       </div>
