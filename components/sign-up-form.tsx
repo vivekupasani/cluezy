@@ -1,8 +1,13 @@
 'use client'
 
+import { useState } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import { useState } from 'react'
+
+import { toast } from 'sonner'
+
+import { createClient } from '@/lib/supabase/client'
+import { cn } from '@/lib/utils'
 
 import { Button } from '@/components/ui/button'
 import {
@@ -15,9 +20,7 @@ import {
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { PasswordInput } from '@/components/ui/password-input'
-import { createClient } from '@/lib/supabase/client'
-import { cn } from '@/lib/utils'
-import { toast } from 'sonner'
+
 import { clearChatHistoryCache } from './sidebar/chat-history-client'
 
 export function SignUpForm({
@@ -197,6 +200,10 @@ export function SignUpForm({
             Sign In
           </Link>
         </div>
+      </div>
+
+      <div className='text-xs mt-5 text-center txt-mut'>
+        By continuing, you agree to our <br /><Link href="/terms" className="hover:underline text-foreground/70">Terms of Service</Link> and <Link href="/privacy" className="hover:underline text-foreground/70">Privacy Policy</Link>.
       </div>
     </div>
   )

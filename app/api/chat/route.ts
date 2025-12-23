@@ -106,6 +106,10 @@ export async function POST(req: Request) {
     //   userId
     // })
 
+    console.log("====================")
+    console.log("Messages: ", messages)
+    console.log("====================")
+
     return supportsToolCalling
       ? createToolCallingStreamResponse({
         messages,

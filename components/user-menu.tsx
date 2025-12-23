@@ -2,8 +2,10 @@
 
 import { useRouter } from 'next/navigation'
 
+import { AvatarImage } from '@radix-ui/react-avatar'
 import { User } from '@supabase/supabase-js'
 import { Link2, LogOut, Palette } from 'lucide-react'
+import { toast } from 'sonner'
 
 import { createClient } from '@/lib/supabase/client'
 
@@ -20,8 +22,6 @@ import {
   DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu'
 
-import { AvatarImage } from '@radix-ui/react-avatar'
-import { toast } from 'sonner'
 import { useAuth } from './context/auth-context'
 import { ExternalLinkItems } from './external-link-items'
 import { clearChatHistoryCache } from './sidebar/chat-history-client'
@@ -70,13 +70,13 @@ export default function UserMenu({ user }: UserMenuProps) {
         <Button variant="ghost" className="relative h-[33px] w-[33px] text-foreground/70 hover:bg-muted rounded-full p-0 focus:ring-0">
           <Avatar className="h-[33px] w-[32px]">
             <AvatarImage className='h-[33px] w-[32px]' src={avatarUrl} alt={userName} />
-            <AvatarFallback className='text-xs pt-[2px] text-foreground/70 bg-card border border-border/80'>
+            <AvatarFallback className='text-xs pt-[0px] text-foreground/70 bg-card border border-border/80'>
               {getInitials(userName, user.email)}
             </AvatarFallback>
           </Avatar>
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="w-60 bg-background border-b border-primary/8" align="end" forceMount>
+      <DropdownMenuContent className="w-60 bg-card border-b border-primary/8" align="end" forceMount>
         <DropdownMenuLabel className="font-normal">
           <div className="flex flex-col space-y-1">
             <p className="text-sm pb-[1.2px] font-medium txt-grad leading-none truncate">

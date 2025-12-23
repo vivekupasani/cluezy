@@ -1,5 +1,7 @@
 "use client";
 import React from "react";
+import { useRef } from "react";
+
 import {
   motion,
   useAnimationFrame,
@@ -7,7 +9,7 @@ import {
   useMotionValue,
   useTransform,
 } from "framer-motion";
-import { useRef } from "react";
+
 import { cn } from "@/lib/utils/index";
 
 export function Button({

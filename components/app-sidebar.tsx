@@ -1,7 +1,5 @@
-import Link from 'next/link'
 import { Suspense } from 'react'
-
-
+import Link from 'next/link'
 
 import {
   Sidebar,

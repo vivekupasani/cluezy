@@ -6,8 +6,10 @@ import {
 } from 'ai'
 
 import { researcher } from '@/lib/agents/researcher'
+
 import { getMaxAllowedTokens, truncateMessages } from '../utils/context-window'
 import { isReasoningModel } from '../utils/registry'
+
 import { handleStreamFinish } from './handle-stream-finish'
 import { BaseStreamConfig } from './types'
 

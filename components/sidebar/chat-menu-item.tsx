@@ -1,13 +1,16 @@
 'use client'
 
-import { Check, Edit, Trash2, X } from 'lucide-react'
 import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
 import { useState, useTransition } from 'react'
+
+import { Check, Edit, Trash2, X } from 'lucide-react'
 import { toast } from 'sonner'
 
-import { SidebarMenuItem } from '@/components/ui/sidebar'
 import { Chat } from '@/lib/types'
+
+import { SidebarMenuItem } from '@/components/ui/sidebar'
+
 import { useHistoryDialog } from '../history-dialog'
 import { Spinner } from '../ui/spinner'
 
@@ -131,7 +134,7 @@ export function ChatMenuItem({ chat }: ChatMenuItemProps) {
       <SidebarMenuItem>
         <div className="h-auto flex gap-2 items-center bg-red-500/10 border border-red-500/50 rounded-xl px-4 py-1">
           <div className="text-sm text-red-500 flex-1">
-            Delete "{chat.title}"?
+            Delete &quot;{chat.title}&quot;?
           </div>
 
           <button

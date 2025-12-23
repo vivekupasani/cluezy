@@ -1,7 +1,9 @@
 "use client"
-import { createClient } from "@/lib/supabase/client";
-import { User } from "@supabase/supabase-js";
 import React from "react";
+
+import { User } from "@supabase/supabase-js";
+
+import { createClient } from "@/lib/supabase/client";
 
 export const AuthContext = React.createContext<{
     user: User | null;

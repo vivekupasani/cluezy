@@ -6,9 +6,9 @@ import { toast } from 'sonner'
 
 import { cn } from '@/lib/utils'
 
+import { Button } from './ui/button'
 import { ChatShare } from './chat-share'
 import { RetryButton } from './retry-button'
-import { Button } from './ui/button'
 
 interface MessageActionsProps {
   message: string

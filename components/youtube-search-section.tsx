@@ -1,9 +1,10 @@
 "use client"
 
+import { useState } from "react"
+import Image from "next/image"
+
 import { ToolInvocation } from "ai"
 import { Play } from "lucide-react"
-import Image from "next/image"
-import { useState } from "react"
 
 interface YoutubeSearchSectionProps {
     tool: ToolInvocation

@@ -1,15 +1,18 @@
 'use client'
 
-import { createClient } from '@/lib/supabase/client'
-import { Model } from '@/lib/types/models'
-import { cn } from '@/lib/utils'
+import Link from 'next/link'
+import { useEffect, useMemo, useRef, useState } from 'react'
+
 import { useChat } from '@ai-sdk/react'
 import { User } from '@supabase/supabase-js'
 import { ChatRequestOptions } from 'ai'
 import { Message } from 'ai/react'
-import Link from 'next/link'
-import { useEffect, useMemo, useRef, useState } from 'react'
 import { toast } from 'sonner'
+
+import { createClient } from '@/lib/supabase/client'
+import { Model } from '@/lib/types/models'
+import { cn } from '@/lib/utils'
+
 import { ChatMessages } from './chat-messages'
 import { ChatPanel } from './chat-panel'
 import { HistoryDialog, useHistoryDialog } from './history-dialog'
@@ -119,8 +122,8 @@ export function Chat({
           }
         }
       } else {
-        // toast.error(`Error in chat: ${error.message}`)
-        console.log("Error in chat: ", error.message)
+        toast.error(`Error in chat: ${error.message}`)
+        // console.log("Error in chat: ", error.message)
       }
     },
     sendExtraMessageFields: false,

@@ -1,5 +1,7 @@
-import { cn } from '@/lib/utils';
 import { BookOpen, Clock, CloudRain, CloudSun, FileSearch, Globe, GraduationCap, MessageCircle, Search, ShoppingBag, ShoppingCart, Video, Youtube } from 'lucide-react';
+
+import { cn } from '@/lib/utils';
+
 import { Button } from './ui';
 
 const latestTrendingQuestions = [

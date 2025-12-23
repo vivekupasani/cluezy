@@ -1,9 +1,11 @@
 'use client'
 
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
+import { User2 } from 'lucide-react'
+
 import { useCurrentUserImage } from '@/hooks/use-current-user-image'
 import { useCurrentUserEmail, useCurrentUserName } from '@/hooks/use-current-user-name'
-import { User2 } from 'lucide-react'
+
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 
 interface CurrentUserAvatarProps {
   size?: number | string

@@ -1,11 +1,13 @@
 'use client'
 
-import { ToolInvocation } from "ai"
-import Link from 'next/link'
 import { useState } from 'react'
+import Link from 'next/link'
+
+import { ToolInvocation } from "ai"
 
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Button } from '@/components/ui/button'
+
 import { SearchSkeleton } from "./default-skeleton"
 import { Section } from "./section"
 
@@ -66,7 +68,6 @@ const SectionTile = ({ data, sectionTitle }: SectionTileProps) => {
 
     const displayed = showAll ? data : data.slice(0, 3)
     const extraCount = data.length > 3 ? data.length - 3 : 0
-    console.log(sectionTitle)
     return (
         <div className="mx-6">
             <Section title={sectionTitle}>

@@ -1,8 +1,10 @@
 'use client'
 
-import { useIsMobile } from '@/hooks/use-mobile'
-import { Model } from '@/lib/types/models'
-import { cn } from '@/lib/utils'
+import { useEffect, useRef, useState } from 'react'
+import Textarea from 'react-textarea-autosize'
+import Link from 'next/link'
+import { useRouter } from 'next/navigation'
+
 import { Message } from 'ai'
 import {
   ArrowUp,
@@ -13,14 +15,16 @@ import {
   Square,
   WandSparkles
 } from 'lucide-react'
-import Link from 'next/link'
-import { useRouter } from 'next/navigation'
-import { useEffect, useRef, useState } from 'react'
-import Textarea from 'react-textarea-autosize'
+
+import { Model } from '@/lib/types/models'
+import { cn } from '@/lib/utils'
+
+import { useIsMobile } from '@/hooks/use-mobile'
+
 import { useArtifact } from './artifact/artifact-context'
-import { EmptyScreen } from './empty-screen'
 import { clearChatHistoryCache } from './sidebar/chat-history-client'
 import { Button } from './ui/button'
+import { EmptyScreen } from './empty-screen'
 
 // Add FileAttachment interface
 interface FileAttachment {
@@ -278,7 +282,7 @@ export function ChatPanel({
           isMobile ? (input.length > 30 ? "rounded-3xl" : "rounded-full") : (input.length > 66 ? "rounded-3xl" : "rounded-full")
         )}>
           <div className={cn(
-            "relative flex flex-row items-start gap-3 px-3 py-[10px] w-full bg-card border border-border/80 transition-colors",
+            "relative flex flex-row items-start gap-3 px-3 py-[10px] w-full bg-card border border-border/80 transition-colors drop-shadow-sm",
             isMobile ? (input.length > 30 ? "rounded-3xl" : "rounded-full") : (input.length > 66 ? "rounded-3xl" : "rounded-full")
           )}>
             {/* Icon */}

@@ -1,8 +1,10 @@
 'use client'
 
-import { DropdownMenuItem } from '@/components/ui/dropdown-menu'
-import { FileText, Info, Lock } from 'lucide-react'
 import Link from 'next/link'
+
+import { FileText, Info, Lock } from 'lucide-react'
+
+import { DropdownMenuItem } from '@/components/ui/dropdown-menu'
 
 const externalLinks = [
     {

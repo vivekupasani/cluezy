@@ -1,11 +1,15 @@
 'use client'
 
-import { Chat } from '@/lib/types'
-import { History, MessageCircle, RefreshCcw, Search } from 'lucide-react'
 import { useCallback, useEffect, useRef, useState, useTransition } from 'react'
+
+import { History, MessageCircle, RefreshCcw, Search } from 'lucide-react'
 import { toast } from 'sonner'
+
+import { Chat } from '@/lib/types'
+
 import { useHistoryDialog } from '../history-dialog'
 import { Dialog, DialogContent, DialogTitle } from '../ui/dialog'
+
 import { ChatHistorySkeleton } from './chat-history-skeleton'
 import { ChatMenuItem } from './chat-menu-item'
 

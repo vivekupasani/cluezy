@@ -4,12 +4,12 @@ import React from 'react'
 
 import { useChat } from '@ai-sdk/react'
 import { JSONValue } from 'ai'
-
 import { CornerDownRight, Plus } from 'lucide-react'
-import { CollapsibleMessage } from './collapsible-message'
-import { Section } from './section'
+
 import { Button } from './ui/button'
 import { Skeleton } from './ui/skeleton'
+import { CollapsibleMessage } from './collapsible-message'
+import { Section } from './section'
 
 export interface RelatedQuestionsProps {
   annotations: JSONValue[]

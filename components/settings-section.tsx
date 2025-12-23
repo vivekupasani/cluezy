@@ -1,13 +1,18 @@
 "use client";
 
-import { CurrentUserAvatar } from "@/components/current-user-avatar";
-import { useCurrentUserEmail, useCurrentUserName } from "@/hooks/use-current-user-name";
-import { createClient } from "@/lib/supabase/client";
-import { cn } from "@/lib/utils";
-import { ArrowLeft, Info } from "lucide-react";
+import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+
+import { ArrowLeft, Info } from "lucide-react";
+
+import { createClient } from "@/lib/supabase/client";
+import { cn } from "@/lib/utils";
+
+import { useCurrentUserEmail, useCurrentUserName } from "@/hooks/use-current-user-name";
+
+import { CurrentUserAvatar } from "@/components/current-user-avatar";
+
 import CommunityTab from "./community-tab";
 import ContactTab from "./contact-tab";
 import ModelsTab from "./models-tab";

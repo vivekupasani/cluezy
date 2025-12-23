@@ -1,17 +1,16 @@
 'use client'
 
 // import Link from 'next/link' // No longer needed directly here for Sign In button
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import React from 'react';
 
-
-import { cn } from '@/lib/utils';
-
+import { Cross, TextSearch } from 'lucide-react';
 
 // import { Button } from './ui/button' // No longer needed directly here for Sign In button
 import { Model } from '@/lib/types/models';
-import { Cross, TextSearch } from 'lucide-react';
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { cn } from '@/lib/utils';
+
 import { useAuth } from './context/auth-context';
 import GuestMenu from './guest-menu'; // Import the new GuestMenu component
 import { useHistoryDialog } from './history-dialog';
@@ -47,9 +46,9 @@ export const Header: React.FC<HeaderProps> = ({ models }) => {
     >
       {/* This div can be used for a logo or title on the left if needed */}
       <div className='flex items-center gap-2'>
-        <Link href="/" className="group flex gap-1 rounded-full px-2 py-2 cursor-pointer items-center hover:bg-muted border border-border">
+        <Link href="/" className="group flex gap-1 rounded-full px-2 py-2 cursor-pointer items-center bg-card hover:bg-muted border border-border">
           <Cross
-            size={16}
+            size={14}
             className="group-hover:rotate-90 group-hover:opacity-95 transition-transform duration-100 text-foreground/80 group-hover:text-foreground"
           />
           {/* <span className="text-xs font-medium text-foreground/70 hidden group-hover:inline-block transition-all duration-200 group-hover:text-foreground">
@@ -60,7 +59,7 @@ export const Header: React.FC<HeaderProps> = ({ models }) => {
 
       <div className="flex items-center gap-2" suppressHydrationWarning>
         {/* <SearchModeToggle /> */}
-        <span onClick={() => setHistoryDialogIsOpen(true)} className='group hover:cursor-pointer rounded-full px-2 py-2 hover:bg-muted border border-border'><TextSearch size={16} className=' text-foreground/80' /></span>
+        <span onClick={() => setHistoryDialogIsOpen(true)} className='group hover:cursor-pointer rounded-full px-2 py-2 bg-card hover:bg-muted border border-border'><TextSearch size={14} className=' text-foreground/80' /></span>
         <ModelSelector models={models} />
         {user ? <UserMenu user={user} /> : <GuestMenu />}
       </div>

@@ -1,5 +1,6 @@
-import { cn } from '@/lib/utils/index';
 import React from 'react';
+
+import { cn } from '@/lib/utils/index';
 
 export function PatternText({
 	text = 'Text',

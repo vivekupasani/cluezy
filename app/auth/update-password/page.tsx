@@ -1,19 +1,34 @@
-import { UpdatePasswordForm } from '@/components/update-password-form'
-import { ArrowLeft } from 'lucide-react'
 import Link from 'next/link'
+
+import { ArrowLeft } from 'lucide-react'
+
+import { UpdatePasswordForm } from '@/components/update-password-form'
 
 export default function Page() {
   return (
-    <div className="relative flex min-h-svh w-screen items-center justify-center p-6 md:p-10">
-      <Link
-        href="/"
-        className="absolute top-60 left-4 md:top-0 md:left-72 group ml-2 mt-10 md:mt-16 flex gap-2 items-start cursor-pointer w-full max-w-[400px]">
-        <ArrowLeft size={18} className="text-foreground/70 group-hover:text-foreground" />
-        <p className="txt-grad group-hover:text-foreground text-sm">Back</p>
-      </Link>
-      <div className="w-full max-w-sm">
-        <UpdatePasswordForm />
-      </div>
+    <div className="min-h-svh w-screen flex flex-col">
+      {/* Header */}
+      <header className="h-14 flex items-center px-5 md:px-10">
+        <Link
+          href="/"
+          className="group flex items-center gap-2 text-sm"
+        >
+          <ArrowLeft
+            size={18}
+            className="text-foreground/70 group-hover:text-foreground"
+          />
+          <span className="txt-grad group-hover:text-foreground">
+            Back
+          </span>
+        </Link>
+      </header>
+
+      {/* Centered Form */}
+      <main className="flex flex-1 items-center justify-center px-4">
+        <div className="w-full max-w-sm -mt-28">
+          <UpdatePasswordForm />
+        </div>
+      </main>
     </div>
   )
 }

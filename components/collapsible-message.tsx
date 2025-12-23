@@ -1,13 +1,14 @@
 
+import { Separator } from '@radix-ui/react-separator'
+
 import { cn } from '@/lib/utils'
 
-import { Separator } from '@radix-ui/react-separator'
-import { CurrentUserAvatar } from './current-user-avatar'
 import {
   Collapsible,
   CollapsibleContent
 } from './ui/collapsible'
 import { IconLogo } from './ui/icons'
+import { CurrentUserAvatar } from './current-user-avatar'
 
 interface CollapsibleMessageProps {
   children: React.ReactNode

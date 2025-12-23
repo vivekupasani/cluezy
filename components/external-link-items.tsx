@@ -1,7 +1,7 @@
 'use client'
 
-import Link from 'next/link'
 import { SiGithub, SiInstagram, SiLinkedin, SiX } from 'react-icons/si'
+import Link from 'next/link'
 
 import { DropdownMenuItem } from '@/components/ui/dropdown-menu'
 

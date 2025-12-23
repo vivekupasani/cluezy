@@ -2,14 +2,14 @@
 
 import React, { useState } from 'react'
 import TextareaAutosize from 'react-textarea-autosize'
+import Link from 'next/link'
 
 import { Pencil } from 'lucide-react'
 
 import { cn } from '@/lib/utils'
 
-import Link from 'next/link'
-import { CollapsibleMessage } from './collapsible-message'
 import { Button } from './ui/button'
+import { CollapsibleMessage } from './collapsible-message'
 
 type UserMessageProps = {
   message: string

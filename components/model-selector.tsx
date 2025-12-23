@@ -4,13 +4,13 @@ import Image from 'next/image'
 import { useEffect, useState } from 'react'
 
 import { Bot, Check } from 'lucide-react'
+import { toast } from 'sonner'
 
 import { Model } from '@/lib/types/models'
 import { getCookie, setCookie } from '@/lib/utils/cookies'
 
 import { createModelId } from '../lib/utils'
 
-import { toast } from 'sonner'
 import { Button } from './ui/button'
 import {
   Command,
@@ -96,14 +96,14 @@ export function ModelSelector({ models }: ModelSelectorProps) {
         <Button
           role="combobox"
           aria-expanded={open}
-          className="w-[33px] h-[33px] p-0 flex items-center justify-center rounded-full bg-transparent hover:bg-muted focus:ring-0 border border-border"
+          className="w-[32px] h-[32px] p-0 flex items-center justify-center rounded-full bg-card hover:bg-muted focus:ring-0 border border-border"
         >
           {selectedModel ? (
             <Image
               src={`/providers/logos/${selectedModel.providerId}.svg`}
               alt={selectedModel.provider}
-              width={16}
-              height={16}
+              width={14}
+              height={14}
               className="rounded-full"
             />
           ) : (

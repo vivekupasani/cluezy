@@ -3,18 +3,18 @@ import { Inter as FontSans } from 'next/font/google'
 
 import { Analytics } from '@vercel/analytics/next'
 
+import { getModels } from '@/lib/config/models'
 import { cn } from '@/lib/utils'
 
 import { SidebarProvider } from '@/components/ui/sidebar'
 import { Toaster } from '@/components/ui/sonner'
 
-import { ThemeProvider } from '@/components/theme-provider'
-
 import ArtifactRoot from '@/components/artifact/artifact-root'
 import { AuthProvider } from '@/components/context/auth-context'
 import Header from '@/components/header'
 import { HistoryDialogProvider } from '@/components/history-dialog'
-import { getModels } from '@/lib/config/models'
+import { ThemeProvider } from '@/components/theme-provider'
+
 import './globals.css'
 
 const fontSans = FontSans({
