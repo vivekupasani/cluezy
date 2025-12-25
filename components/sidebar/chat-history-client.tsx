@@ -248,6 +248,7 @@ export function ChatHistoryClient() {
               placeholder="Search titles and messages..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
+              autoFocus={false}
               className="border-none bg-transparent focus:outline-none text-sm h-8 flex-1 placeholder-txt-mut text-foreground/90"
             />
             <button

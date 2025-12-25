@@ -3,7 +3,7 @@
 import Image from 'next/image'
 import { useEffect, useState } from 'react'
 
-import { Bot, Check } from 'lucide-react'
+import { Bot, Check, ChevronDown } from 'lucide-react'
 import { toast } from 'sonner'
 
 import { Model } from '@/lib/types/models'
@@ -96,7 +96,7 @@ export function ModelSelector({ models }: ModelSelectorProps) {
         <Button
           role="combobox"
           aria-expanded={open}
-          className="w-[32px] h-[32px] p-0 flex items-center justify-center rounded-full bg-card hover:bg-muted focus:ring-0 border border-border"
+          className="h-8 px-2 flex items-center justify-center gap-1.5 rounded-lg bg-secondary/30 hover:bg-secondary/60 text-muted-foreground hover:text-foreground transition-all duration-200 border-0"
         >
           {selectedModel ? (
             <Image
@@ -104,54 +104,59 @@ export function ModelSelector({ models }: ModelSelectorProps) {
               alt={selectedModel.provider}
               width={14}
               height={14}
-              className="rounded-full"
+              className="rounded-full shrink-0"
             />
           ) : (
-            <Bot size={16} className='text-foreground/80' />
+            <Bot size={14} className='shrink-0' />
           )}
-          {/* <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" /> */}
+          <span className="text-xs font-medium truncate max-w-[100px] hidden sm:block">
+            {selectedModel?.name || 'Select model'}
+          </span>
+          <ChevronDown size={12} className="opacity-50" />
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-72 p-0 mr-2 HiddenScrollbar" align="start">
-        <Command className='bg-background'>
-          <CommandInput placeholder="Search models..." />
-          <CommandList>
-            <CommandEmpty className='txt-grad text-sm text-center py-2 border-t border-border'>No model found.</CommandEmpty>
+      <PopoverContent className="w-[300px] p-0 mx-2 HiddenScrollbar border-border/50 shadow-xl rounded-xl" align="start">
+        <Command className='bg-background/95 backdrop-blur-sm'>
+          <CommandInput placeholder="Search models..." className="h-10 text-sm" />
+          <CommandList className="max-h-[300px] overflow-y-auto CustomScrollbar p-1">
+            <CommandEmpty className='txt-grad text-sm text-center py-4'>No model found.</CommandEmpty>
             {Object.entries(groupedModels).map(([provider, models]) => (
-              <CommandGroup key={provider} heading={provider}>
+              <CommandGroup key={provider} heading={provider} className="text-muted-foreground/70 font-medium">
                 {models.map(model => {
                   const modelId = createModelId(model)
+                  const isSelected = value === modelId
                   return (
                     <CommandItem
                       key={modelId}
                       value={modelId}
                       onSelect={handleModelSelect}
-                      className="flex justify-between"
+                      className={`flex justify-between items-center px-3 py-2 rounded-lg mb-0.5 cursor-pointer aria-selected:bg-accent/50 ${isSelected ? 'bg-accent/50' : ''}`}
                     >
-                      <div className="flex items-center space-x-2">
-                        <Image
-                          src={`/providers/logos/${model.providerId}.svg`}
-                          alt={model.provider}
-                          width={18}
-                          height={18}
-                          className="bg-white rounded-full border"
-                        />
-                        <span className="text-xs font-medium txt-grad">
+                      <div className="flex items-center space-x-2.5 overflow-hidden">
+                        <div className="shrink-0 rounded-full border border-border/40 p-0.5 bg-background">
+                          <Image
+                            src={`/providers/logos/${model.providerId}.svg`}
+                            alt={model.provider}
+                            width={16}
+                            height={16}
+                            className="rounded-full"
+                          />
+                        </div>
+                        <span className={`text-sm font-medium truncate ${isSelected ? 'text-foreground' : 'text-muted-foreground group-hover:text-foreground'}`}>
                           {model.name}
                         </span>
                       </div>
-                      <Check
-                        className={`h-4 w-4 ${value === modelId ? 'opacity-100' : 'opacity-0'
-                          }`}
-                      />
+                      {isSelected && (
+                        <Check className="h-4 w-4 text-primary shrink-0" />
+                      )}
                     </CommandItem>
                   )
                 })}
-
               </CommandGroup>
             ))}
-
-            <p className='txt-grad text-xs text-center py-2 border-t border-border'>More models will be coming soon</p>
+            <div className='p-2 border-t border-border/40 mt-1'>
+              <p className='text-[10px] text-center text-muted-foreground/60'>More models coming soon</p>
+            </div>
           </CommandList>
         </Command>
       </PopoverContent>

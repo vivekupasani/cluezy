@@ -1,30 +1,8 @@
-import { BookOpen, Clock, CloudRain, CloudSun, FileSearch, Globe, GraduationCap, MessageCircle, Search, ShoppingBag, ShoppingCart, Video, Youtube } from 'lucide-react';
+import { BookOpen, CloudSun, FileSearch, Search } from 'lucide-react';
 
 import { cn } from '@/lib/utils';
 
 import { Button } from './ui';
-
-const latestTrendingQuestions = [
-  { heading: 'Smart Search', message: 'What’s trending on the web right now?', icon: Search },
-  { heading: 'Academic Research', message: 'Find recent papers on AI and machine learning.', icon: BookOpen },
-  { heading: 'Document Insights', message: 'Retrieve key points from https://en.wikipedia.org/wiki/Agentic_AI', icon: FileSearch },
-  { heading: 'Video Discovery', message: 'Find YouTube videos explaining blockchain in simple terms.', icon: Video },
-  { heading: 'Weather Update', message: 'What’s the weather like in Mumbai today?', icon: CloudSun },
-  { heading: 'YouTube Analysis', message: 'Summarize this YouTube video: https://youtu.be/QY6yHJC2DIE?si=2qb2_hor4qSlb91X', icon: Youtube },
-  { heading: 'Date & Time Tools', message: 'Convert 5 PM IST to EST instantly.', icon: Clock },
-  { heading: 'Product Finder', message: 'Search for the best laptops under ₹70,000.', icon: ShoppingCart },
-];
-
-const trendingQuestions = [
-  { heading: 'Web Search Trends', message: 'Show me the latest news in artificial intelligence.', icon: Globe },
-  { heading: 'Academic Papers', message: 'Find scholarly articles about climate change.', icon: GraduationCap },
-  { heading: 'Retrieve from Docs', message: 'What does the policy document say about leave rules?', icon: FileSearch },
-  { heading: 'Video Search', message: 'Find videos that explain Stripe integration in Next.js.', icon: Video },
-  { heading: 'General Q&A', message: 'Explain clean architecture in Flutter.', icon: MessageCircle },
-  { heading: 'Weather Forecast', message: 'Will it rain in Delhi tomorrow?', icon: CloudRain },
-  { heading: 'Time Conversion', message: 'What time is it in New York when it\'s 10 AM in India?', icon: Clock },
-  { heading: 'Product Comparison', message: 'Compare iPhone 15 vs Samsung S24.', icon: ShoppingBag },
-];
 
 export function EmptyScreen({
   submitMessage,
@@ -33,101 +11,36 @@ export function EmptyScreen({
   submitMessage: (message: string) => void
   className?: string
 }) {
+  const exampleMessages = [
+    { heading: 'Smart Search', message: 'What’s trending on the web right now?', icon: Search },
+    { heading: 'Academic Research', message: 'Find recent papers on AI and machine learning.', icon: BookOpen },
+    { heading: 'Document Insights', message: 'Retrieve key points from https://en.wikipedia.org/wiki/Agentic_AI', icon: FileSearch },
+    { heading: 'Weather Update', message: 'What’s the weather like in Mumbai today?', icon: CloudSun },
+  ]
+
   return (
     <div className={cn(
-      "relative w-[95%] mx-auto overflow-hidden mt-2",
+      "w-full max-w-3xl mx-auto",
       className
     )}>
-      {/* Fade effect overlays */}
-      <div className="pointer-events-none absolute top-0 left-0 z-10 h-full w-28 sm:w-44 bg-gradient-to-r from-background to-transparent" />
-      <div className="pointer-events-none absolute top-0 right-0 z-10 h-full w-28 sm:w-44 bg-gradient-to-l from-background to-transparent" />
-
-      <div className="relative w-full bg-background px-2 sm:px-0 py-2 sm:py-3">
-
-        {/* Top Row → Right to Left */}
-        <div className="marquee">
-          <div className="marquee-content flex gap-2.5 sm:gap-4">
-            {latestTrendingQuestions.concat(latestTrendingQuestions).map((message, index) => (
-              <Button
-                key={`row1-${index}`}
-                className="h-7 text-xs sm:text-sm font-normal text-foreground whitespace-nowrap bg-transparent hover:bg-transparent px-3 py-1.5 rounded-xl flex-shrink-0 transition-colors"
-                name={message.message}
-                onClick={async () => submitMessage(message.message)}
-              >
-                <div className="group flex items-center gap-2 bg-clip-text text-transparent bg-gradient-to-tr from-foreground/90 to-foreground/60 hover:text-foreground">
-                  <message.icon size={16} className='text-foreground/80 group-hover:text-foreground' />
-                  {message.message}
-                </div>
-              </Button>
-            ))}
-          </div>
-        </div>
-
-        {/* Bottom Row → Left to Right */}
-        <div className="marquee-reverse mt-3 sm:mt-4">
-          <div className="marquee-content flex gap-2.5 sm:gap-4">
-            {trendingQuestions.concat(trendingQuestions).map((message, index) => (
-              <Button
-                key={`row2-${index}`}
-                className="h-7 text-xs sm:text-sm font-normal text-foreground whitespace-nowrap bg-transparent hover:bg-transparent px-3 py-1.5 rounded-xl flex-shrink-0 transition-colors"
-                name={message.message}
-                onClick={async () => submitMessage(message.message)}
-              >
-                <div className="group flex items-center gap-2 bg-clip-text text-transparent bg-gradient-to-tr from-foreground/90 to-foreground/60 hover:text-foreground ">
-                  <message.icon size={16} className='text-foreground/80 group-hover:text-foreground' />
-                  {message.message}
-                </div>
-              </Button>
-            ))}
-          </div>
-        </div>
+      <div className="grid grid-cols-4 md:grid-cols-4 gap-3 p-4">
+        {exampleMessages.map((example, index) => (
+          <Button
+            key={index}
+            variant="outline"
+            className="h-auto p-2 flex flex-col items-start gap-2 whitespace-normal text-left min-h-[3rem] hover:bg-secondary/50 transition-colors border-border/60 shadow-sm"
+            onClick={() => submitMessage(example.message)}
+          >
+            <div className="flex items-center gap-2 text-foreground font-semibold text-xs">
+              <example.icon size={16} className="text-primary" />
+              {example.heading}
+            </div>
+            {/* <span className="text-xs text-muted-foreground line-clamp-2">
+              {example.message}
+            </span> */}
+          </Button>
+        ))}
       </div>
-
-      <style jsx>{`
-        .marquee {
-          overflow: hidden;
-          position: relative;
-        }
-
-        .marquee-content {
-          animation: marquee 130s linear infinite;
-          display: flex;
-          width: max-content;
-        }
-
-        /* Pause on hover (any button inside) */
-        .marquee-content:hover {
-          animation-play-state: paused;
-        }
-
-        .marquee-reverse .marquee-content {
-          animation: marquee-reverse 90s linear infinite;
-        }
-
-        /* Pause reverse animation on hover */
-        .marquee-reverse .marquee-content:hover {
-          animation-play-state: paused;
-        }
-
-        @keyframes marquee {
-          0% { transform: translateX(0); }
-          100% { transform: translateX(-50%); }
-        }
-
-        @keyframes marquee-reverse {
-          0% { transform: translateX(-50%); }
-          100% { transform: translateX(0); }
-        }
-
-        @media (max-width: 640px) {
-          .marquee-content {
-            animation-duration: 130s;
-          }
-          .marquee-reverse .marquee-content {
-            animation-duration: 100s;
-          }
-        }
-      `}</style>
     </div>
   )
 }

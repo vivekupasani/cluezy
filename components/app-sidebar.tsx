@@ -1,54 +1,112 @@
-import { Suspense } from 'react'
-import Link from 'next/link'
+'use client'
 
+import { useRouter } from 'next/navigation'
+
+import { History, Plus, Settings } from 'lucide-react'
+
+import { useAuth } from '@/components/context/auth-context'
+import GuestMenu from '@/components/guest-menu'
+import { useHistoryDialog } from '@/components/history-dialog'
 import {
   Sidebar,
   SidebarContent,
+  SidebarFooter,
+  SidebarGroup,
   SidebarHeader,
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-  SidebarRail,
-  SidebarTrigger
+  SidebarTrigger,
+  useSidebar
 } from '@/components/ui/sidebar'
+import UserMenu from '@/components/user-menu'
+import { Tooltip, TooltipContent, TooltipTrigger } from './ui/tooltip'
 
-import { ChatHistorySection } from './sidebar/chat-history-section'
-import { ChatHistorySkeleton } from './sidebar/chat-history-skeleton'
+export function AppSidebar() {
+  const router = useRouter()
+  const { setHistoryDialogIsOpen } = useHistoryDialog()
+  const { user } = useAuth()
+  const { toggleSidebar, state } = useSidebar()
 
-export default function AppSidebar() {
   return (
-    <Sidebar side="left" variant="sidebar" collapsible="offcanvas">
-      <SidebarHeader className="flex flex-row items-center justify-center">
-        <div className='absolute left-3 top-5'>
-          <SidebarTrigger />
-        </div>
-        <Link href="/" className="flex-1 items-center gap-1 px-2 py-3">
-          {/* <IconLogo className={cn('size-5')} /> */}
-          <span className="font-semibold text-sm flex justify-center items-center">Cluezy</span>
-        </Link>
+    <Sidebar collapsible="icon" className='border-r-0'>
+      <SidebarHeader className="flex flex-row items-center justify-between pt-4 pb-2 px-4 gap-0">
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <SidebarTrigger className='dark:text-neutral-400' />
+          </TooltipTrigger>
+          <TooltipContent side="right">
+            <p>Toggle Sidebar</p>
+          </TooltipContent>
+        </Tooltip>
       </SidebarHeader>
-      <SidebarContent className="flex flex-col px-2 py-4 h-full">
-        <SidebarMenu>
-          <SidebarMenuItem>
-            <SidebarMenuButton
-              asChild
-              className="w-full bg-primary text-primary-foreground px-4 py-[18px] rounded-md text-sm"
-            >
-              <Link href="/" className="flex items-center justify-center gap-2">
-                {/* You can uncomment and replace with your actual icon component */}
-                {/* <PenSquareIcon className="size-4" /> */}
-                New chat
-              </Link>
-            </SidebarMenuButton>
-          </SidebarMenuItem>
-        </SidebarMenu>
-        <div className="flex-1 overflow-y-auto">
-          <Suspense fallback={<ChatHistorySkeleton />}>
-            <ChatHistorySection />
-          </Suspense>
-        </div>
+
+      <SidebarContent className="">
+        <SidebarGroup>
+          <SidebarMenu>
+            <SidebarMenuItem>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <SidebarMenuButton
+                    onClick={() => {
+                      router.push('/')
+                      // Optional: Refresh or reset chat state if needed
+                    }}
+                    className="justify-start gap-2 data-[state=open]:px-2"
+                  >
+                    <Plus className="size-5" />
+                    <span>New Chat</span>
+                  </SidebarMenuButton>
+                </TooltipTrigger>
+                <TooltipContent side="right">New Chat</TooltipContent>
+              </Tooltip>
+            </SidebarMenuItem>
+
+            <SidebarMenuItem>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <SidebarMenuButton
+                    onClick={() => setHistoryDialogIsOpen(true)}
+                    className="justify-start gap-2 data-[state=open]:px-2"
+                  >
+                    <History className="size-5" />
+                    <span>History</span>
+                  </SidebarMenuButton>
+                </TooltipTrigger>
+                <TooltipContent side="right">History</TooltipContent>
+              </Tooltip>
+            </SidebarMenuItem>
+            <SidebarMenuItem>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <SidebarMenuButton
+                    className="justify-start gap-2 data-[state=open]:px-2 cursor-not-allowed opacity-50"
+                  >
+                    <Settings className="size-5" />
+                    <span>Settings</span>
+                  </SidebarMenuButton>
+                </TooltipTrigger>
+                <TooltipContent side="right">Settings (Coming Soon)</TooltipContent>
+              </Tooltip>
+            </SidebarMenuItem>
+          </SidebarMenu>
+        </SidebarGroup>
       </SidebarContent>
-      <SidebarRail />
+
+      <SidebarFooter className='pl-2'>
+        <div className="flex flex-col gap-2 items-start w-full">
+          {user ? (
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <UserMenu user={user} />
+              </TooltipTrigger>
+              <TooltipContent side="right">User Menu</TooltipContent>
+            </Tooltip>
+          ) : (
+            <GuestMenu />
+          )}
+        </div>
+      </SidebarFooter>
     </Sidebar>
   )
 }

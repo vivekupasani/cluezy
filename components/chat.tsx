@@ -1,6 +1,5 @@
 'use client'
 
-import Link from 'next/link'
 import { useEffect, useMemo, useRef, useState } from 'react'
 
 import { useChat } from '@ai-sdk/react'
@@ -443,7 +442,7 @@ export function Chat({
   return (
     <div
       className={cn(
-        'relative flex h-full min-w-0 w-screen flex-1 flex-col',
+        'relative flex h-full min-w-0 w-full flex-1 flex-col',
         messages.length === 0 ? 'items-center justify-center' : ''
       )}
       data-testid="full-chat"
@@ -481,16 +480,16 @@ export function Chat({
         onRemoveFile={handleRemoveFile}
       />
 
-      {messages.length === 0 && (
+      {/* {messages.length === 0 && (
         <div className='absolute bottom-2 flex gap-1 justify-center items-center'>
           <div className='flex gap-2 bg-clip-text text-transparent bg-gradient-to-tr from-foreground/90 to-foreground/60'>
             <Link href="/terms" className='text-xs hover:text-foreground transition-colors'>Terms</Link>
             <Link href="/privacy" className='text-xs hover:text-foreground transition-colors'>Privacy</Link>
-            {/* <Link href="/contact" className='text-xs hover:text-foreground transition-colors'>Contact</Link> */}
+            <Link href="/contact" className='text-xs hover:text-foreground transition-colors'>Contact</Link>
             <Link href="/about" className='text-xs hover:text-foreground transition-colors'>About</Link>
           </div>
         </div>
-      )}
+      )} */}
 
       <Dialog open={isRateLimitDialogOpen} onOpenChange={setisRateLimitDialogOpen}>
         <DialogContent className='w-[90%] bg-gradient-to-br from-card/75 via-card/55 to-card/65 rounded-2xl backdrop-blur-sm'>

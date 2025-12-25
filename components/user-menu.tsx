@@ -22,6 +22,7 @@ import {
   DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu'
 
+import { cn } from '@/lib/utils'
 import { useAuth } from './context/auth-context'
 import { ExternalLinkItems } from './external-link-items'
 import { clearChatHistoryCache } from './sidebar/chat-history-client'
@@ -30,9 +31,10 @@ import { Button } from './ui/button'
 
 interface UserMenuProps {
   user: User
+  showLabel?: boolean
 }
 
-export default function UserMenu({ user }: UserMenuProps) {
+export default function UserMenu({ user, showLabel = false }: UserMenuProps) {
   const router = useRouter()
   const { setUser } = useAuth()
   const userName =
@@ -67,13 +69,24 @@ export default function UserMenu({ user }: UserMenuProps) {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="ghost" className="relative h-[33px] w-[33px] text-foreground/70 hover:bg-muted rounded-full p-0 focus:ring-0">
-          <Avatar className="h-[33px] w-[32px]">
-            <AvatarImage className='h-[33px] w-[32px]' src={avatarUrl} alt={userName} />
+        <Button
+          variant="ghost"
+          className={cn(
+            "relative text-foreground/70 hover:bg-muted rounded-full p-0 focus:ring-0 transition-all",
+            showLabel ? "w-full justify-start px-2 gap-2 h-10 rounded-md" : "h-[33px] w-[33px]"
+          )}
+        >
+          <Avatar className="h-[32px] w-[31px]">
+            <AvatarImage className='h-[32px] w-[31px]' src={avatarUrl} alt={userName} />
             <AvatarFallback className='text-xs pt-[0px] text-foreground/70 bg-card border border-border/80'>
               {getInitials(userName, user.email)}
             </AvatarFallback>
           </Avatar>
+          {showLabel && (
+            <div className="flex flex-col items-start truncate text-sm">
+              <span className="font-medium truncate">{userName}</span>
+            </div>
+          )}
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-60 bg-card border-b border-primary/8" align="end" forceMount>

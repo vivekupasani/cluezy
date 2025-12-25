@@ -1,9 +1,9 @@
 'use client'
 
-import { useEffect, useRef, useState } from 'react'
-import Textarea from 'react-textarea-autosize'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
+import { useEffect, useRef, useState } from 'react'
+import Textarea from 'react-textarea-autosize'
 
 import { Message } from 'ai'
 import {
@@ -11,7 +11,6 @@ import {
   ChevronDown,
   Loader2,
   Paperclip,
-  Search,
   Square,
   WandSparkles
 } from 'lucide-react'
@@ -22,9 +21,11 @@ import { cn } from '@/lib/utils'
 import { useIsMobile } from '@/hooks/use-mobile'
 
 import { useArtifact } from './artifact/artifact-context'
+import { EmptyScreen } from './empty-screen'
+import { ModelSelector } from './model-selector'
 import { clearChatHistoryCache } from './sidebar/chat-history-client'
 import { Button } from './ui/button'
-import { EmptyScreen } from './empty-screen'
+import { Tooltip, TooltipContent, TooltipTrigger } from './ui/tooltip'
 
 // Add FileAttachment interface
 interface FileAttachment {
@@ -187,27 +188,20 @@ export function ChatPanel({
   return (
     <div
       className={cn(
-        'w-full group/form-container shrink-0 mx-auto max-w-2xl',
-        'pr-2 sm:pr-2 sm:px-0',
+        'w-full group/form-container shrink-0 mx-auto max-w-2xl px-2 md:px-0',
         messages.length > 0
-          ? 'sticky bottom-0 pb-4 sm:pb-4 px-2'
-          : 'px-2 sm:px-0'
+          ? 'sticky bottom-0 pb-4 sm:pb-4'
+          : 'px-0 sm:px-0'
       )}
     >
-      {/* <div className='w-full'>
-        <Image
-          src="/cluezy-logo.png"
-          alt="Cluezy Logo"
-          width={50}
-          height={20}
-          className="mx-auto"
-        />
-      </div> */}
       {messages.length === 0 && (
-        <div className="flex flex-col items-center mb-4">
-          <h1 className='text-4xl md:text-5xl tracking-tight mb-2 font-medium bg-clip-text text-transparent bg-gradient-to-tr from-foreground to-foreground/60'>ask a question</h1>
+        <div className="flex flex-col items-start mb-4 ml-4">
+          <h1 className='text-2xl md:text-3xl tracking-tight mb-2 font-medium bg-clip-text text-transparent bg-gradient-to-tr from-foreground to-foreground/60'>Hello Vivek!</h1>
+          <h1 className='text-3xl md:text-4xl tracking-tight mb-2 font-medium bg-clip-text text-transparent bg-gradient-to-tr from-foreground to-foreground/60'>How can i help you today?</h1>
         </div>
       )}
+
+
 
       {/* Display attached files */}
       {(attachedFiles.length > 0 || isFileUploading) && (
@@ -225,7 +219,7 @@ export function ChatPanel({
                   }
                 }}
                 className={cn(
-                  "text-red-500 hover:text-red-700 text-xs",
+                  "text-destructive hover:text-destructive/80 text-xs",
                   isFileUploading && "opacity-50 cursor-not-allowed"
                 )}
                 title={isFileUploading ? "Wait for upload to complete" : "Remove file"}
@@ -250,7 +244,7 @@ export function ChatPanel({
 
       <form
         onSubmit={handleFormSubmit}
-        className={cn('w-full mx-auto relative max-w-4xl')}
+        className={cn('w-full mx-auto relative max-w-3xl')}
       >
         {/* Hidden file input */}
         <input
@@ -269,130 +263,158 @@ export function ChatPanel({
             type="button"
             variant="outline"
             size="icon"
-            className="absolute -top-10 border border-border right-2 sm:right-4 z-20 size-7 sm:size-8 rounded-full bg-gradient-to-tr from-card/55 via-card/70 to-card/45 backdrop-blur-sm drop-shadow-sm"
+            className="absolute -top-12 border border-border right-4 z-20 size-8 rounded-full bg-background/80 backdrop-blur-sm shadow-sm hover:bg-background transition-all"
             onClick={handleScrollToBottom}
             title="Scroll to bottom"
           >
-            <ChevronDown size={14} className="sm:size-4" />
+            <ChevronDown size={16} />
           </Button>
         )}
 
         <div className={cn(
-          'bg-background',
-          isMobile ? (input.length > 30 ? "rounded-3xl" : "rounded-full") : (input.length > 66 ? "rounded-3xl" : "rounded-full")
+          "relative flex flex-col w-full p-2.5 transition-all duration-300",
+          "bg-card/80 backdrop-blur-xl",
+          "border border-border",
+          "ring-1 ring-border",
+          "shadow-sm",
+          isMobile ? (input.length > 30 ? "rounded-[24px]" : "rounded-[26px]") : "rounded-[12px]"
         )}>
-          <div className={cn(
-            "relative flex flex-row items-start gap-3 px-3 py-[10px] w-full bg-card border border-border/80 transition-colors drop-shadow-sm",
-            isMobile ? (input.length > 30 ? "rounded-3xl" : "rounded-full") : (input.length > 66 ? "rounded-3xl" : "rounded-full")
-          )}>
-            {/* Icon */}
-            <div className="flex justify-center items-center pt-[6px] rounded-xl">
-              <Search className='text-foreground/70' size={18} />
-            </div>
-            <div className="flex-1 flex flex-row items-center gap-3">
-              <Textarea
-                ref={inputRef}
-                name="input"
-                rows={1}
-                maxRows={12}
-                tabIndex={0}
-                onCompositionStart={handleCompositionStart}
-                onCompositionEnd={handleCompositionEnd}
-                placeholder="Ask anything, find anything..."
-                spellCheck={true}
-                autoFocus={true}
-                value={input}
-                disabled={isToolInvocationInProgress()}
-                className="flex-1 resize-none HiddenScrollbar bg-transparent text-foreground/90 placeholder:text-neutral-500 outline-none text-sm disabled:cursor-not-allowed disabled:opacity-50 min-h-6"
-                onChange={e => {
-                  handleInputChange(e)
-                }}
-                onKeyDown={e => {
-                  // Only handle Enter key, ignore all other keys including spacebar
-                  if (e.key === 'Enter') {
-                    if (
-                      !e.shiftKey &&
-                      !isComposing &&
-                      !enterDisabled
-                    ) {
-                      if (input.trim().length === 0 && attachedFiles.length === 0) {
-                        e.preventDefault()
-                        return
-                      }
-                      e.preventDefault()
-                      const textarea = e.target as HTMLTextAreaElement
-                      textarea.form?.requestSubmit()
-                    }
-                  }
-                }}
-                onFocus={() => setShowEmptyScreen(true)}
-                onBlur={() => setShowEmptyScreen(true)}
-              />
-
-              <div className="flex items-center gap-1">
-                {/* File upload button */}
-                <Button
-                  type='button'
-                  size={'icon'}
-                  variant={'ghost'}
-                  className={cn(
-                    'flex-shrink-0 text-foreground/70 hover:bg-transparent hover:text-forground disabled:opacity-50 transition-colors rounded-full size-8',
-                    isFileUploading && 'opacity-50 cursor-not-allowed'
-                  )}
-                  onClick={handleFileButtonClick}
-                  disabled={isFileUploading}
-                  title={isFileUploading ? "Uploading file..." : "Attach files"}
-                >
-                  <Paperclip size={18} className='hover:text-foreground' />
-                </Button>
-
-                {/* Enhance prompt button */}
-                {input.length !== 0 && (
+          {/* Textarea Area */}
+          <div className="flex items-start gap-2 min-h-[44px]">
+            {/* Left Actions: Attach & Model Selector */}
+            <div className="flex flex-col gap-1.5 shrink-0 pt-0.5 pl-0.5">
+              <Tooltip>
+                <TooltipTrigger asChild>
                   <Button
                     type='button'
                     size={'icon'}
                     variant={'ghost'}
                     className={cn(
-                      'flex-shrink-0 text-foreground/70 hover:bg-transparent hover:text-forground disabled:opacity-50 transition-colors rounded-full size-8',
-                      (isEnhancePromptLoading || isFileUploading) && 'animate-pulse bg-transparent opacity-50 cursor-not-allowed'
+                      'size-8 rounded-full text-muted-foreground/80 hover:text-foreground hover:bg-secondary/40 transition-colors',
+                      isFileUploading && 'opacity-50 cursor-not-allowed'
                     )}
-                    onClick={handleEnhancePrompt}
-                    disabled={isEnhancePromptLoading || isFileUploading}
-                    title={isFileUploading ? "Wait for file upload" : "Enhance prompt"}
+                    onClick={handleFileButtonClick}
+                    disabled={isFileUploading}
+                    title={isFileUploading ? "Uploading file..." : "Attach files"}
                   >
-                    <WandSparkles size={18} className='hover:text-foreground' />
+                    <Paperclip size={18} />
                   </Button>
-                )}
+                </TooltipTrigger>
+                <TooltipContent side="top">Attach files</TooltipContent>
+              </Tooltip>
+            </div>
 
-                {/* Send button */}
-                <Button
-                  type={isLoading ? 'button' : 'submit'}
-                  size={'icon'}
-                  variant={'ghost'}
-                  className={cn(
-                    'flex-shrink-0 text-foreground/70 hover:text-forground hover:bg-transparent disabled:opacity-50 transition-colors rounded-full size-8',
-                    isLoading && 'animate-pulse'
-                  )}
-                  disabled={
-                    (input.length === 0 && attachedFiles.length === 0 && !isLoading) ||
-                    isToolInvocationInProgress() ||
-                    isFileUploading
+            <Textarea
+              ref={inputRef}
+              name="input"
+              rows={1}
+              maxRows={12}
+              tabIndex={0}
+              onCompositionStart={handleCompositionStart}
+              onCompositionEnd={handleCompositionEnd}
+              placeholder={messages.length === 0 ? "Ask anything..." : "Ask follow up questions..."}
+              spellCheck={true}
+              autoFocus={true}
+              value={input}
+              disabled={isToolInvocationInProgress()}
+              className="flex-1 resize-none HiddenScrollbar bg-transparent text-foreground placeholder:text-muted-foreground/60 outline-none text-[15px] leading-relaxed py-2 disabled:cursor-not-allowed disabled:opacity-50 min-h-[40px]"
+              onChange={e => {
+                handleInputChange(e)
+              }}
+              onKeyDown={e => {
+                // Only handle Enter key, ignore all other keys including spacebar
+                if (e.key === 'Enter') {
+                  if (
+                    !e.shiftKey &&
+                    !isComposing &&
+                    !enterDisabled
+                  ) {
+                    if (input.trim().length === 0 && attachedFiles.length === 0) {
+                      e.preventDefault()
+                      return
+                    }
+                    e.preventDefault()
+                    const textarea = e.target as HTMLTextAreaElement
+                    textarea.form?.requestSubmit()
                   }
-                  onClick={isLoading ? stop : undefined}
-                  title={isFileUploading ? "Wait for file upload" : (isLoading ? "Stop generating" : "Send message")}
-                >
-                  {isLoading ? (
-                    <Square size={18} className='hover:text-foreground' />
-                  ) : (
-                    <ArrowUp size={18} className='hover:text-foreground' />
-                  )}
-                </Button>
-              </div>
+                }
+              }}
+              onFocus={() => setShowEmptyScreen(true)}
+              onBlur={() => setShowEmptyScreen(true)}
+            />
+
+            {/* Right Actions: Send & Enhance */}
+            <div className="flex flex-col gap-1.5 shrink-0 pt-0.5 pr-0.5">
+              {/* Send button (always visible or condition based on your preference? Originally was mostly bottom right) */}
+              {/* Let's put Enhance and Send stacked if needed, or side-by-side? Side-by-side seems better for height. */}
+              {/* Actually, let's keep them in the bottom row if we want a big text area, OR right aligned.
+                   The new standard is typically bottom right corner of the box. */}
+            </div>
+          </div>
+
+          {/* Bottom Toolbar: Model Selector & Actions */}
+          <div className="flex justify-between items-center pt-2 mt-1 border-t border-border pl-1 pr-1">
+            <div className="flex items-center gap-2">
+              <ModelSelector models={models ?? []} />
+            </div>
+
+            <div className="flex items-center gap-1.5">
+              {/* Enhance prompt button */}
+              {input.length !== 0 && (
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <Button
+                      type='button'
+                      size={'icon'}
+                      variant={'ghost'}
+                      className={cn(
+                        'size-8 rounded-full text-muted-foreground/80 hover:text-foreground hover:bg-secondary/40 transition-colors',
+                        (isEnhancePromptLoading || isFileUploading) && 'animate-pulse bg-transparent opacity-50 cursor-not-allowed'
+                      )}
+                      onClick={handleEnhancePrompt}
+                      disabled={isEnhancePromptLoading || isFileUploading}
+                      title={isFileUploading ? "Wait for file upload" : "Enhance prompt"}
+                    >
+                      <WandSparkles size={16} />
+                    </Button>
+                  </TooltipTrigger>
+                  <TooltipContent side="top">Enhance prompt</TooltipContent>
+                </Tooltip>
+              )}
+
+              {/* Send button */}
+              <Button
+                type={isLoading ? 'button' : 'submit'}
+                size={'icon'}
+                variant={'ghost'}
+                className={cn(
+                  'size-8 rounded-2xl transition-all duration-200',
+                  isLoading || input.length > 0
+                    ? 'bg-primary text-primary-foreground hover:bg-primary/90 hover:text-primary-foreground'
+                    : 'bg-secondary/50 text-muted-foreground hover:bg-secondary hover:text-foreground',
+                  isLoading && 'animate-pulse'
+                )}
+                disabled={
+                  (input.length === 0 && attachedFiles.length === 0 && !isLoading) ||
+                  isToolInvocationInProgress() ||
+                  isFileUploading
+                }
+                onClick={isLoading ? stop : undefined}
+                title={isFileUploading ? "Wait for file upload" : (isLoading ? "Stop generating" : "Send message")}
+              >
+                {isLoading ? (
+                  <Square size={14} className='fill-current' />
+                ) : (
+                  <ArrowUp size={16} />
+                )}
+              </Button>
             </div>
           </div>
         </div>
+      </form>
 
-        {messages.length === 0 && (
+      {messages.length === 0 && (
+        <div className="mb-8 px-4">
           <EmptyScreen
             submitMessage={message => {
               handleInputChange({
@@ -401,21 +423,8 @@ export function ChatPanel({
             }}
             className={cn(showEmptyScreen ? 'visible' : 'invisible')}
           />
-        )}
-
-        {
-          messages.length === 0 && (
-            <div
-              className={cn(
-                "items-center mt-4 justify-center h-10",
-                messages.length === 0 ? "flex" : "hidden sm:flex"
-              )}
-            >
-              {/* <ModelSelector models={models ?? []} /> */}
-            </div>
-          )
-        }
-      </form>
+        </div>
+      )}
     </div>
   )
 }

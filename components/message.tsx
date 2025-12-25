@@ -7,9 +7,9 @@ import remarkMath from 'remark-math'
 
 import { cn } from '@/lib/utils'
 
+import { Citing } from './custom-link'
 import { CodeBlock } from './ui/codeblock'
 import { MemoizedReactMarkdown } from './ui/markdown'
-import { Citing } from './custom-link'
 
 import 'katex/dist/katex.min.css'
 

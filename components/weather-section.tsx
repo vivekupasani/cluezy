@@ -107,7 +107,7 @@ const CustomTooltip = ({ active, payload, label }: any) => {
 // Skeleton Loader Component
 const WeatherSkeleton = () => {
     return (
-        <div className="flex flex-col w-full max-w-5xl mx-auto px-6 py-5 rounded-2xl">
+        <div className="flex flex-col w-full max-w-5xl mx-auto px-6 md:px-0 py-5 rounded-2xl">
             {/* Header Skeleton */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pb-6 mb-6 border-b border-border/50">
                 <div className="flex flex-col justify-center">
@@ -303,7 +303,7 @@ export const WeatherSection = ({ tool }: WeatherSectionProps) => {
     })).slice(0, 5) // Show 5 days
 
     return (
-        <div className="flex flex-col w-full max-w-5xl mx-auto px-6 pt-5 rounded-2xl">
+        <div className="flex flex-col w-full max-w-5xl mx-auto px-6 md:px-0 pt-5 rounded-2xl">
             {/* Current Weather - Hero Section */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pb-6 mb-6 border-b border-border/50">
                 {/* Left: Main Info */}

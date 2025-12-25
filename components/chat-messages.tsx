@@ -6,9 +6,9 @@ import { ChatRequestOptions, JSONValue, Message } from 'ai'
 
 import { cn } from '@/lib/utils'
 
-import { Spinner } from './ui/spinner'
 import { RenderMessage } from './render-message'
 import { ToolSection } from './tool-section'
+import { Spinner } from './ui/spinner'
 
 // Import section structure interface
 interface ChatSection {
@@ -139,7 +139,7 @@ export function ChatMessages({
             }
           >
             {/* User message */}
-            <div className="flex flex-col gap-4 px-2" >
+            <div className="flex flex-col gap-4" >
               <RenderMessage
                 message={section.userMessage}
                 messageId={section.userMessage.id}
@@ -156,7 +156,7 @@ export function ChatMessages({
 
             {/* Assistant messages */}
             {section.assistantMessages.map(assistantMessage => (
-              <div key={assistantMessage.id} className="flex flex-col gap-4">
+              <div key={assistantMessage.id} className="flex flex-col gap-4 -px-1">
                 <RenderMessage
                   message={assistantMessage}
                   messageId={assistantMessage.id}

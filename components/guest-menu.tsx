@@ -6,7 +6,7 @@ import {
   Link2,
   LogIn,
   Palette,
-  Settings2 // Or EllipsisVertical, etc.
+  Settings
 } from 'lucide-react'
 
 import {
@@ -28,7 +28,7 @@ export default function GuestMenu() {
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <button className='group bg-card hover:bg-muted rounded-full px-2 py-2 cursor-pointer items-center border border-border'>
-          <Settings2 size={14} className=' text-foreground/80' /> {/* Choose an icon */}
+          <Settings size={16} className=' text-foreground/80' />
         </button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56 bg-card border-b border-primary/8" align="end" forceMount>

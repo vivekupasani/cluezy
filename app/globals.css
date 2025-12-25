@@ -4,38 +4,38 @@
 
 @layer base {
   :root {
-    --background: 0 0% 98.8235%;
-    --foreground: 0 0% 12.549%;
-    --card: 0 0% 97.6471%;
-    --card-foreground: 0 0% 12.549%;
-    --popover: 0 0% 98.8235%;
-    --popover-foreground: 0 0% 12.549%;
-    --primary: 0 0% 32.1569%;
+    --background: 40 18% 95%;
+    --foreground: 0 0% 20%;
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 20%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 20%;
+    --primary: 15 55% 50%;
     --primary-foreground: 0 0% 100%;
-    --secondary: 0 0% 85.4902%;
-    --secondary-foreground: 0 0% 23.1373%;
-    --muted: 0 0% 93.7255%;
-    --muted-foreground: 0 0% 39.2157%;
-    --accent: 0 0% 90.9804%;
-    --accent-foreground: 0 0% 12.549%;
-    --destructive: 0 0% 54.1176%;
+    --secondary: 40 10% 90%;
+    --secondary-foreground: 0 0% 20%;
+    --muted: 40 10% 94%;
+    --muted-foreground: 0 0% 40%;
+    --accent: 40 10% 88%;
+    --accent-foreground: 0 0% 20%;
+    --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
-    --border: 0 0% 84.7059%;
-    --input: 0 0% 84.7059%;
-    --ring: 0 0% 32.1569%;
-    --chart-1: 0 0% 32.1569%;
-    --chart-2: 0 0% 85.4902%;
-    --chart-3: 0 0% 90.9804%;
-    --chart-4: 0 0% 88.6275%;
-    --chart-5: 0 0% 32.1569%;
-    --sidebar: 0 0% 98.4314%;
-    --sidebar-foreground: 0 0% 14.5098%;
-    --sidebar-primary: 0 0% 20.3922%;
-    --sidebar-primary-foreground: 0 0% 98.4314%;
-    --sidebar-accent: 0 0% 96.8627%;
-    --sidebar-accent-foreground: 0 0% 20.3922%;
-    --sidebar-border: 0 0% 92.1569%;
-    --sidebar-ring: 0 0% 70.9804%;
+    --border: 40 10% 88%;
+    --input: 40 10% 88%;
+    --ring: 15 55% 50%;
+    --chart-1: 15 55% 50%;
+    --chart-2: 40 10% 60%;
+    --chart-3: 40 10% 70%;
+    --chart-4: 40 10% 80%;
+    --chart-5: 40 10% 90%;
+    --sidebar: 40 18% 94%;
+    --sidebar-foreground: 0 0% 20%;
+    --sidebar-primary: 15 55% 50%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 40 10% 90%;
+    --sidebar-accent-foreground: 0 0% 20%;
+    --sidebar-border: 40 10% 88%;
+    --sidebar-ring: 15 55% 50%;
     --font-sans:
       ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI',
       Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif,
@@ -70,38 +70,38 @@
   }
 
   .dark {
-    --background: 0 0% 6.6667%;
-    --foreground: 0 0% 93.3333%;
-    --card: 0 0% 9.8039%;
-    --card-foreground: 0 0% 93.3333%;
-    --popover: 0 0% 9.8039%;
-    --popover-foreground: 0 0% 93.3333%;
-    --primary: 0 0% 88.2353%;
-    --primary-foreground: 0 0% 10.1961%;
-    --secondary: 0 0% 19.2157%;
-    --secondary-foreground: 0 0% 88.2353%;
-    --muted: 0 0% 13.3333%;
-    --muted-foreground: 0 0% 70.5882%;
-    --accent: 0 0% 16.4706%;
-    --accent-foreground: 0 0% 93.3333%;
-    --destructive: 0 0% 54.1176%;
+    --background: 0 0% 13%;
+    --foreground: 0 0% 93%;
+    --card: 0 0% 16%;
+    --card-foreground: 0 0% 93%;
+    --popover: 0 0% 16%;
+    --popover-foreground: 0 0% 93%;
+    --primary: 15 55% 60%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 0 0% 20%;
+    --secondary-foreground: 0 0% 93%;
+    --muted: 0 0% 20%;
+    --muted-foreground: 0 0% 70%;
+    --accent: 0 0% 25%;
+    --accent-foreground: 0 0% 93%;
+    --destructive: 0 62% 30%;
     --destructive-foreground: 0 0% 100%;
-    --border: 0 0% 10.9804%;
-    --input: 0 0% 28.2353%;
-    --ring: 0 0% 88.2353%;
-    --chart-1: 0 0% 88.2353%;
-    --chart-2: 0 0% 19.2157%;
-    --chart-3: 0 0% 16.4706%;
-    --chart-4: 0 0% 21.9608%;
-    --chart-5: 0 0% 87.8431%;
-    --sidebar: 0 0% 10.1961%;
-    --sidebar-foreground: 0 0% 96.0784%;
-    --sidebar-primary: 0 0% 48.2353%;
+    --border: 0 0% 20%;
+    --input: 0 0% 20%;
+    --ring: 15 55% 60%;
+    --chart-1: 15 55% 60%;
+    --chart-2: 0 0% 30%;
+    --chart-3: 0 0% 40%;
+    --chart-4: 0 0% 50%;
+    --chart-5: 0 0% 60%;
+    --sidebar: 0 0% 11%;
+    --sidebar-foreground: 0 0% 96%;
+    --sidebar-primary: 15 55% 60%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 0 0% 16.0784%;
-    --sidebar-accent-foreground: 0 0% 96.0784%;
-    --sidebar-border: 0 0% 16.0784%;
-    --sidebar-ring: 0 0% 83.9216%;
+    --sidebar-accent: 0 0% 20%;
+    --sidebar-accent-foreground: 0 0% 96%;
+    --sidebar-border: 0 0% 20%;
+    --sidebar-ring: 15 55% 60%;
     --font-sans:
       ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI',
       Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif,
@@ -131,6 +131,8 @@
     --shadow-xl:
       0 1px 3px 0px hsl(0 0% 0% / 0.1), 0 8px 10px -1px hsl(0 0% 0% / 0.1);
     --shadow-2xl: 0 1px 3px 0px hsl(0 0% 0% / 0.25);
+    --tracking-normal: 0em;
+    --spacing: 0.25rem;
   }
 }
 

@@ -3,12 +3,12 @@ import { Separator } from '@radix-ui/react-separator'
 
 import { cn } from '@/lib/utils'
 
+import { CurrentUserAvatar } from './current-user-avatar'
 import {
   Collapsible,
   CollapsibleContent
 } from './ui/collapsible'
 import { IconLogo } from './ui/icons'
-import { CurrentUserAvatar } from './current-user-avatar'
 
 interface CollapsibleMessageProps {
   children: React.ReactNode
@@ -34,7 +34,7 @@ export function CollapsibleMessage({
   const content = <div className="flex-1">{children}</div>
 
   return (
-    <div className="flex max-w-2xl px-2">
+    <div className="flex max-w-2xl px-2 md:px-0">
       {showIcon && (
         <div className="relative flex flex-col items-center">
           <div className="w-5">
@@ -50,7 +50,7 @@ export function CollapsibleMessage({
       {isCollapsible ? (
         <div
           className={cn(
-            'flex-1 rounded-2xl px-4',
+            'flex-1 rounded-2xl px-4 md:px-0',
           )}
         >
           <Collapsible
