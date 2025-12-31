@@ -5,7 +5,7 @@ import { ChatHistoryClient } from "./sidebar/chat-history-client"
 
 export const HistoryDialogContext = createContext<{
     isHistoryDialogOpen: boolean
-    setHistoryDialogIsOpen: (open: boolean) => void
+    setHistoryDialogIsOpen: React.Dispatch<React.SetStateAction<boolean>>
 } | null>(null)
 
 export const HistoryDialogProvider = ({ children }: { children: React.ReactNode }) => {
