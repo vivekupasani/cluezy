@@ -12,9 +12,7 @@ import { Model } from '@/lib/types/models';
 import { cn } from '@/lib/utils';
 
 import { useAuth } from './context/auth-context';
-import GuestMenu from './guest-menu'; // Import the new GuestMenu component
 import { useHistoryDialog } from './history-dialog';
-import UserMenu from './user-menu';
 
 interface HeaderProps {
   // user: User;
@@ -59,7 +57,7 @@ export const Header: React.FC<HeaderProps> = ({ models }) => {
       <div className="flex items-center gap-2" suppressHydrationWarning>
         {/* <SearchModeToggle /> */}
         <span onClick={() => setHistoryDialogIsOpen(true)} className='group hover:cursor-pointer rounded-full px-2 py-2 bg-card hover:bg-muted border border-border'><TextSearch size={14} className=' text-foreground/80' /></span>
-        {user ? <UserMenu user={user} /> : <GuestMenu />}
+        {/* {user ? <UserMenu user={user} /> : <GuestMenu />} */}
       </div>
     </header>
   )
