@@ -60,32 +60,34 @@ export function SearchSection({
   )
 
   return (
-    <CollapsibleMessage
-      role="assistant"
-      isCollapsible={true}
-      header={header}
-      isOpen={isOpen}
-      onOpenChange={onOpenChange}
-      showIcon={false}
-    >
-      {isLoading && isToolLoading ? (
-        <SearchSkeleton />
-      ) : searchResults?.results ? (
-        <Section title="Sources">
-          <SearchResults results={searchResults.results} />
-        </Section>
-      ) : null}
-
-      {searchResults &&
-        searchResults.images &&
-        searchResults.images.length > 0 && (
-          <Section title='Images'>
-            <SearchResultsImageSection
-              images={searchResults.images}
-              query={query}
-            />
+    <div className='mt-4'>
+      <CollapsibleMessage
+        role="assistant"
+        isCollapsible={true}
+        header={header}
+        isOpen={isOpen}
+        onOpenChange={onOpenChange}
+        showIcon={false}
+      >
+        {isLoading && isToolLoading ? (
+          <SearchSkeleton />
+        ) : searchResults?.results ? (
+          <Section title="Sources">
+            <SearchResults results={searchResults.results} />
           </Section>
-        )}
-    </CollapsibleMessage>
+        ) : null}
+
+        {searchResults &&
+          searchResults.images &&
+          searchResults.images.length > 0 && (
+            <Section title='Images'>
+              <SearchResultsImageSection
+                images={searchResults.images}
+                query={query}
+              />
+            </Section>
+          )}
+      </CollapsibleMessage>
+    </div>
   )
 }

@@ -199,7 +199,7 @@ export function createToolCallingStreamResponse(config: BaseStreamConfig) {
               chatId,
               dataStream,
               userId,
-              skipRelatedQuestions: shouldSkipRelatedQuestions
+              skipRelatedQuestions: true
             })
           }
         })

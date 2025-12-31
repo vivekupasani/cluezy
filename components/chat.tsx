@@ -12,6 +12,7 @@ import { createClient } from '@/lib/supabase/client'
 import { Model } from '@/lib/types/models'
 import { cn } from '@/lib/utils'
 
+import { CircleDollarSign } from 'lucide-react'
 import { ChatMessages } from './chat-messages'
 import { ChatPanel } from './chat-panel'
 import { HistoryDialog, useHistoryDialog } from './history-dialog'
@@ -182,6 +183,9 @@ export function Chat({
       const allowedTypes = [
         'application/pdf',
         'image/jpeg',
+        'image/png',
+        'image/gif',
+        'image/webp',
       ]
 
       if (!allowedTypes.includes(file.type)) {
@@ -236,7 +240,7 @@ export function Chat({
   // function for file upload to storage
   const uploadFileToStorage = async (file: File): Promise<string> => {
     try {
-      console.log("Uploading file:", file.name, file.type, file.size)
+      // console.log("Uploading file:", file.name, file.type, file.size)
 
       const formData = new FormData()
       formData.append("file", file)
@@ -252,7 +256,7 @@ export function Chat({
       }
 
       const data = await res.json()
-      console.log("Upload response:", data)
+      // console.log("Upload response:", data)
 
       if (!data.url) {
         throw new Error('No URL returned from upload')
@@ -448,6 +452,12 @@ export function Chat({
       data-testid="full-chat"
     >
       {/* <Header /> */}
+
+      {/* Upgrade button */}
+      <div className='opacity-0 absolute top-2 right-2 flex items-center border border-primary bg-sidebar-accent drop-shadow-sm shadow-primary gap-2 px-3 py-1.5 rounded-lg cursor-pointer'>
+        <CircleDollarSign size={14} className='text-primary' />
+        <p className='text-xs'>Upgrade</p>
+      </div>
 
       <ChatMessages
         sections={sections}

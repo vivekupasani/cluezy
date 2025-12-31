@@ -6,7 +6,6 @@ import {
   BookCheck,
   Check,
   File,
-  FileText,
   Film,
   Image,
   MessageCircleMore,
@@ -17,10 +16,10 @@ import {
 
 import { cn } from '@/lib/utils'
 
+import { ToolBadge } from './tool-badge'
 import { Badge } from './ui/badge'
 import { Separator } from './ui/separator'
 import { StatusIndicator } from './ui/status-indicator'
-import { ToolBadge } from './tool-badge'
 
 type SectionProps = {
   children: React.ReactNode
@@ -38,20 +37,22 @@ export const Section: React.FC<SectionProps> = ({
   separator = false
 }) => {
   const iconSize = 16
-  const iconClassName = 'mr-1.5 text-foreground/70'
+  const iconClassName = 'mr-1.5 text-muted-foreground'
   let icon: React.ReactNode
   let type: 'text' | 'badge' = 'text'
   switch (title) {
     case 'Images':
       // eslint-disable-next-line jsx-a11y/alt-text
       icon = <Image size={iconSize} className={iconClassName} />
+      type = 'badge'
       break
     case 'Videos':
       icon = <Film size={iconSize} className={iconClassName} />
-      // type = 'badge'
+      type = 'badge'
       break
     case 'Sources':
       icon = <Newspaper size={iconSize} className={iconClassName} />
+      type = 'badge'
       break
     case 'Answer':
       icon = <BookCheck size={iconSize} className={iconClassName} />
@@ -65,11 +66,6 @@ export const Section: React.FC<SectionProps> = ({
     case 'Content':
       icon = <File size={iconSize} className={iconClassName} />
       type = 'badge'
-      break
-    case 'PDFs':
-    case 'Documents':
-    case 'Presentations':
-      icon = <FileText size={iconSize} className={iconClassName} />
       break
     default:
       icon = <Search size={iconSize} className={iconClassName} />
@@ -85,13 +81,13 @@ export const Section: React.FC<SectionProps> = ({
         )}
       >
         {title && type === 'text' && (
-          <h2 className="flex items-center leading-none py-2 txt-grad">
+          <h2 className="flex items-center leading-none py-2">
             {icon}
             {title}
           </h2>
         )}
         {title && type === 'badge' && (
-          <Badge variant="secondary" className="mb-2 txt-grad">
+          <Badge variant="secondary" className="mb-2">
             {icon}
             {title}
           </Badge>
@@ -114,7 +110,7 @@ export function ToolArgsSection({
   return (
     <Section
       size="sm"
-      className="py-0 flex items-center justify-between w-full"
+      className="py-0 flex items-center justify-between w-full gap-2"
     >
       <ToolBadge tool={tool}>{children}</ToolBadge>
       {number && number > 0 && (

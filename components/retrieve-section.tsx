@@ -32,7 +32,7 @@ export function RetrieveSection({
     <button
       type="button"
       onClick={() => open({ type: 'tool-invocation', toolInvocation: tool })}
-      className="flex items-center justify-between w-full text-left rounded-md p-1 -ml-1"
+      className="flex items-center justify-between w-full text-left rounded-md p-1"
       title="Open details"
     >
       <ToolArgsSection tool="retrieve" number={data?.results?.length}>

@@ -159,8 +159,8 @@ export function ChatMenuItem({ chat }: ChatMenuItemProps) {
 
   /* DEFAULT VIEW */
   return (
-    <SidebarMenuItem>
-      <div className="h-auto flex gap-0.5 items-center justify-center px-4 py-1">
+    <div>
+      <div className="h-auto flex gap-0.5 items-center justify-center pl-2 py-1">
         <Link
           href={chat.path}
           onClick={() => {
@@ -197,6 +197,6 @@ export function ChatMenuItem({ chat }: ChatMenuItemProps) {
           </button>
         </div>
       </div>
-    </SidebarMenuItem>
+    </div>
   )
 }

@@ -36,8 +36,25 @@ export const academicSearchTool = tool({
                 return acc;
             }, []);
 
+            const imageRes = await fetch("https://google.serper.dev/images", {
+                method: "POST",
+                headers: {
+                    "X-API-KEY": process.env.SERPER_API_KEY || "",
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ q: query }),
+            });
+
+            const imageData = await imageRes.json();
+            const images =
+                imageData?.images?.map((img: any, idx: number) => ({
+                    url: img.imageUrl,
+                    description: img.title || `Image ${idx + 1}`,
+                })) || [];
+
             return {
                 results: processedResults,
+                images: images,
             };
         } catch (error) {
             console.error('Academic search error:', error);

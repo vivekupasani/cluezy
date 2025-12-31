@@ -29,6 +29,7 @@ export const useHistoryDialog = () => {
 }
 
 export const HistoryDialog = () => {
+
     return (
         <ChatHistoryClient />
     )

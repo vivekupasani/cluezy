@@ -1,9 +1,9 @@
 'use client'
 
-import { SiGithub, SiInstagram, SiLinkedin, SiX } from 'react-icons/si'
 import Link from 'next/link'
+import { SiGithub, SiInstagram, SiLinkedin, SiX } from 'react-icons/si'
 
-import { DropdownMenuItem } from '@/components/ui/dropdown-menu'
+import { DropdownMenuItem } from './ui/dropdown-menu'
 
 const externalLinks = [
   {
@@ -32,10 +32,10 @@ export function ExternalLinkItems() {
   return (
     <>
       {externalLinks.map(link => (
-        <DropdownMenuItem key={link.name} asChild className='cursor-pointer'>
+        <DropdownMenuItem key={link.name} asChild className='cursor-pointer px-3 py-2 rounded-lg'>
           <Link href={link.href} target="_blank" rel="noopener noreferrer">
             {link.icon}
-            <span className='txt-grad'>{link.name}</span>
+            <span className='txt-grad text-sm'>{link.name}</span>
           </Link>
         </DropdownMenuItem>
       ))}

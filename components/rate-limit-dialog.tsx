@@ -2,8 +2,8 @@
 
 import { Dialog, DialogContent, DialogDescription, DialogTitle } from "@radix-ui/react-dialog"
 
-import { DialogHeader } from "./ui/dialog"
 import { Button } from "./ui"
+import { DialogHeader } from "./ui/dialog"
 
 
 interface RateLimitDialogProps {

@@ -1,8 +1,8 @@
 "use client";
 
-import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 import { ArrowLeft, Info } from "lucide-react";
 
@@ -47,29 +47,18 @@ export default function SettingsSection() {
     return (
         <div>
             {/* Header */}
-            <div className="flex items-center justify-start mb-8">
+            <div className="sticky top-0 z-40 bg-background/50 backdrop-blur-sm flex items-center justify-start mb-8">
                 <Link
                     href="/"
-                    className="group flex items-center gap-1 txt-grad hover:bg-accent hover:text-foreground rounded-md px-2 py-1 transition-colors">
+                    className="group flex items-center pt-4 pb-4 gap-1 txt-grad hover:bg-accent hover:text-foreground rounded-md px-2 transition-colors">
                     <ArrowLeft size={18} className="text-foreground/70 group-hover:text-foreground" />
                     <span className="text-sm">Back</span>
                 </Link>
-                {/* <div className="flex items-center gap-3 bg-card px-3 py-2 rounded-full shadow-inner shadow-card-foreground/10 border border-border">
-                    <button className="p-1.5 rounded-full hover:bg-muted transition-colors">
-                        <Monitor size={16} className="text-card-foreground/80" />
-                    </button>
-                    <button className="p-1.5 rounded-full hover:bg-muted transition-colors">
-                        <Sun size={16} className="text-card-foreground/80" />
-                    </button>
-                    <button className="p-1.5 rounded-full hover:bg-muted transition-colors">
-                        <Moon size={16} className="text-card-foreground/80" />
-                    </button>
-                </div> */}
             </div>
 
             <div className="flex gap-8">
                 {/* Left Sidebar */}
-                <div className="hidden md:block w-80 flex-shrink-0">
+                <div className="hidden lg:block w-80 flex-shrink-0">
                     <div className="flex flex-col items-center gap-3 mb-6">
                         <CurrentUserAvatar className="w-36 h-36 rounded-full bg-muted overflow-hidden" />
                         <h2 className="text-xl font-semibold">{useCurrentUserName()}</h2>
@@ -80,7 +69,7 @@ export default function SettingsSection() {
                     </div>
 
                     {/* Message Usage */}
-                    <div className="bg-gradient-to-br from-card via-card/95 to-card/90 backdrop-blur-sm shadow-inner shadow-card-foreground/20 border-b border-border rounded-lg p-4 mb-6">
+                    <div className="bg-card/60 backdrop-blur-sm rounded-lg p-4 mb-6">
                         <div className="flex items-center justify-between mb-2">
                             <span className="text-sm font-medium">Message Usage</span>
                             <span className="text-xs text-muted-foreground">
@@ -107,14 +96,13 @@ export default function SettingsSection() {
                                 className="flex-shrink-0 mt-0.5 text-muted-foreground"
                             />
                             <p className="text-xs text-muted-foreground italic leading-relaxed">
-                                Each tool call (e.g. search grounding) used in a reply consumes
-                                an additional standard credit.
+                                Each tool call (e.g. web search) takes one credit.
                             </p>
                         </div>
                     </div>
 
                     {/* ✅ Keyboard Shortcuts (restored) */}
-                    <div className="bg-gradient-to-br from-card via-card/95 to-card/90 backdrop-blur-sm shadow-inner shadow-card-foreground/20 border border-border rounded-lg p-4">
+                    <div className="bg-card/60 backdrop-blur-sm rounded-lg p-4 mb-6">
                         <h3 className="text-sm font-semibold mb-3">Keyboard Shortcuts</h3>
                         <div className="space-y-2">
                             <ShortcutItem label="Search" keys={["Ctrl", "K"]} />

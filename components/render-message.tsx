@@ -146,16 +146,18 @@ export function RenderMessage({
           case 'text':
             // Only show actions if this is the last part and it's a text part
             return (
-              <AnswerSection
-                key={`${messageId}-text-${index}`}
-                content={part.text}
-                isOpen={getIsOpen(messageId)}
-                onOpenChange={open => onOpenChange(messageId, open)}
-                chatId={chatId}
-                showActions={isLastPart}
-                messageId={messageId}
-                reload={reload}
-              />
+              <div key={`${messageId}-text-${index}`} className='-mt-0.5'>
+                <AnswerSection
+                  key={`${messageId}-text-${index}`}
+                  content={part.text}
+                  isOpen={getIsOpen(messageId)}
+                  onOpenChange={open => onOpenChange(messageId, open)}
+                  chatId={chatId}
+                  showActions={isLastPart}
+                  messageId={messageId}
+                  reload={reload}
+                />
+              </div>
             )
           case 'reasoning':
             return (

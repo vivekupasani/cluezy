@@ -78,7 +78,6 @@ export function SearchResults({
                     <span className="underline">
                       {new URL(result.url).hostname}
                     </span>{' '}
-                    - {index + 1}
                   </div>
                 </div>
               </CardContent>
@@ -91,7 +90,7 @@ export function SearchResults({
 
   // --- Grid Mode Rendering (Existing Logic) ---
   return (
-    <div className="flex flex-wrap -m-1">
+    <div className="flex flex-wrap">
       {displayedGridResults.map((result, index) => (
         <div className="w-1/2 md:w-1/4 p-1" key={index}>
           <Link href={result.url} passHref target="_blank">

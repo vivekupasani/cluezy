@@ -96,7 +96,7 @@ export function ModelSelector({ models }: ModelSelectorProps) {
         <Button
           role="combobox"
           aria-expanded={open}
-          className="h-8 px-2 flex items-center justify-center gap-1.5 rounded-lg bg-secondary/30 hover:bg-secondary/60 text-muted-foreground hover:text-foreground transition-all duration-200 border-0"
+          className="h-8 px-2 flex items-center justify-center gap-1.5 rounded-lg bg-secondary/30 hover:bg-secondary/60 border border-border text-muted-foreground hover:text-foreground transition-all duration-200 border-0"
         >
           {selectedModel ? (
             <Image

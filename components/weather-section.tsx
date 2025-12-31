@@ -1,10 +1,7 @@
 "use client"
 
-import { useEffect, useState } from "react"
-
 import { ToolInvocation } from "ai"
 import {
-    Calendar,
     Cloud,
     CloudDrizzle,
     CloudFog,
@@ -20,8 +17,7 @@ import {
     Sunset,
     Wind
 } from "lucide-react"
-import { Area, AreaChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts"
-
+import { useEffect, useState } from "react"
 import { Skeleton } from "./ui/skeleton"
 
 interface WeatherSectionProps {
@@ -80,100 +76,50 @@ interface WeatherData {
     };
 }
 
-// Custom tooltip for the chart
-const CustomTooltip = ({ active, payload, label }: any) => {
-    if (active && payload && payload.length) {
-        return (
-            <div className="bg-card border border-border rounded-lg p-3 shadow-lg backdrop-blur-sm">
-                <p className="text-xs font-medium text-muted-foreground mb-1">{payload[0].payload.time}</p>
-                <p className="text-lg font-bold text-foreground">
-                    {payload[0].value}°C
-                </p>
-                <p className="text-xs text-muted-foreground capitalize mt-1">
-                    {payload[0].payload.description}
-                </p>
-                <div className="flex items-center gap-3 mt-2 text-xs">
-                    <span className="flex items-center gap-1">
-                        <Droplets className="h-3 w-3" />
-                        {payload[0].payload.humidity}%
-                    </span>
-                </div>
-            </div>
-        )
-    }
-    return null
-}
-
 // Skeleton Loader Component
 const WeatherSkeleton = () => {
     return (
-        <div className="flex flex-col w-full max-w-5xl mx-auto px-6 md:px-0 py-5 rounded-2xl">
+        <div className="w-full px-3 sm:px-4 py-4">
             {/* Header Skeleton */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pb-6 mb-6 border-b border-border/50">
-                <div className="flex flex-col justify-center">
-                    <div className="flex items-center gap-3 mb-3">
-                        <Skeleton className="h-5 w-5 rounded-full" />
-                        <div className="space-y-2">
-                            <Skeleton className="h-7 w-32" />
-                            <Skeleton className="h-4 w-20" />
-                        </div>
+            <div className="border border-border rounded-2xl p-4 sm:p-5 mb-3 sm:mb-4">
+                <div className="flex items-center justify-between mb-3 sm:mb-4">
+                    <div className="space-y-2">
+                        <Skeleton className="h-4 sm:h-5 w-24 sm:w-32" />
+                        <Skeleton className="h-10 sm:h-12 w-20 sm:w-24" />
                     </div>
-                    <Skeleton className="h-14 w-24 mb-2" />
-                    <Skeleton className="h-5 w-36 mb-3" />
-                    <div className="flex items-center gap-4">
-                        <Skeleton className="h-4 w-24" />
-                        <Skeleton className="h-4 w-4 rounded-full" />
-                        <Skeleton className="h-4 w-28" />
-                    </div>
+                    <Skeleton className="h-12 w-12 sm:h-16 sm:w-16 rounded-xl" />
                 </div>
-                <div className="hidden sm:flex flex-col items-center justify-center">
-                    <Skeleton className="h-32 w-32 rounded-full mb-6" />
-                    <div className="grid grid-cols-2 gap-4 w-full">
-                        <Skeleton className="h-16 rounded-lg" />
-                        <Skeleton className="h-16 rounded-lg" />
-                    </div>
-                </div>
+                <Skeleton className="h-3 sm:h-4 w-36 sm:w-48" />
             </div>
 
-            {/* Chart Skeleton */}
-            <div className="pb-6 mb-6 border-b border-border/50">
-                <div className="flex items-center gap-2 mb-4">
-                    <Skeleton className="h-4 w-4 rounded-full" />
-                    <Skeleton className="h-5 w-32" />
+            {/* Hourly Forecast Skeleton */}
+            <div className="border border-border rounded-2xl p-4 sm:p-5 mb-3 sm:mb-4">
+                <Skeleton className="h-3 sm:h-4 w-20 sm:w-24 mb-3 sm:mb-4" />
+                <div className="flex gap-2 sm:gap-3 overflow-x-auto pb-2">
+                    {Array.from({ length: 6 }).map((_, i) => (
+                        <Skeleton key={i} className="h-16 w-12 sm:h-20 sm:w-14 rounded-xl flex-shrink-0" />
+                    ))}
                 </div>
-                <Skeleton className="h-56 w-full rounded-lg" />
             </div>
 
             {/* Stats Grid Skeleton */}
-            <div className="pb-6 mb-6 border-b border-border/50">
-                <div className="flex items-center gap-2 mb-4">
-                    <Skeleton className="h-4 w-4 rounded-full" />
-                    <Skeleton className="h-5 w-40" />
-                </div>
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <div className="border border-border rounded-2xl p-4 sm:p-5 mb-3 sm:mb-4">
+                <Skeleton className="h-3 sm:h-4 w-16 sm:w-20 mb-3 sm:mb-4" />
+                <div className="grid grid-cols-2 gap-2 sm:gap-3">
                     {Array.from({ length: 4 }).map((_, i) => (
-                        <Skeleton key={i} className="h-24 rounded-xl" />
+                        <Skeleton key={i} className="h-14 sm:h-16 rounded-xl" />
                     ))}
                 </div>
             </div>
 
-            {/* 5-Day Forecast Skeleton */}
-            <div className="pb-6">
-                <div className="flex items-center gap-2 mb-4">
-                    <Skeleton className="h-4 w-4 rounded-full" />
-                    <Skeleton className="h-5 w-32" />
-                </div>
-                <div className="grid grid-cols-2 md:grid-cols-5 gap-3">
+            {/* Daily Forecast Skeleton */}
+            <div className="border border-border rounded-2xl p-4 sm:p-5">
+                <Skeleton className="h-3 sm:h-4 w-24 sm:w-28 mb-3 sm:mb-4" />
+                <div className="space-y-2">
                     {Array.from({ length: 5 }).map((_, i) => (
-                        <Skeleton key={i} className="h-40 rounded-xl" />
+                        <Skeleton key={i} className="h-10 sm:h-12 rounded-xl" />
                     ))}
                 </div>
-            </div>
-
-            {/* Footer Skeleton */}
-            <div className="flex items-center justify-between pt-2">
-                <Skeleton className="h-4 w-32" />
-                <Skeleton className="h-4 w-24" />
             </div>
         </div>
     )
@@ -197,34 +143,35 @@ export const WeatherSection = ({ tool }: WeatherSectionProps) => {
     const city = data.geocoding || data.city
 
     // Enhanced weather icon selection with more variety
-    const getWeatherIcon = (weatherId?: number, size = 24) => {
-        if (!weatherId) return <Cloud size={size} className="text-muted-foreground" />
+    const getWeatherIcon = (weatherId?: number, size?: number) => {
+        const iconSize = size || 20
+        if (!weatherId) return <Cloud size={iconSize} className="text-muted-foreground" />
 
         // Thunderstorm
         if (weatherId >= 200 && weatherId < 300)
-            return <CloudRain size={size} className="text-blue-400 animate-pulse" />
+            return <CloudRain size={iconSize} className="text-blue-400" />
         // Drizzle
         if (weatherId >= 300 && weatherId < 400)
-            return <CloudDrizzle size={size} className="text-blue-300" />
+            return <CloudDrizzle size={iconSize} className="text-blue-300" />
         // Rain
         if (weatherId >= 500 && weatherId < 600)
-            return <CloudRain size={size} className="text-blue-500" />
+            return <CloudRain size={iconSize} className="text-blue-500" />
         // Snow
         if (weatherId >= 600 && weatherId < 700)
-            return <CloudSnow size={size} className="text-cyan-300" />
+            return <CloudSnow size={iconSize} className="text-cyan-300" />
         // Atmosphere (fog, mist, etc.)
         if (weatherId >= 700 && weatherId < 800)
-            return <CloudFog size={size} className="text-gray-400" />
+            return <CloudFog size={iconSize} className="text-gray-400" />
         // Clear
         if (weatherId === 800)
-            return <Sun size={size} className="text-yellow-400" />
+            return <Sun size={iconSize} className="text-yellow-400" />
         // Clouds
         if (weatherId === 801)
-            return <CloudSun size={size} className="text-yellow-300" />
+            return <CloudSun size={iconSize} className="text-yellow-300" />
         if (weatherId > 801)
-            return <Cloud size={size} className="text-gray-400" />
+            return <Cloud size={iconSize} className="text-gray-400" />
 
-        return <Cloud size={size} className="text-muted-foreground" />
+        return <Cloud size={iconSize} className="text-muted-foreground" />
     }
 
     // Temperature conversion
@@ -243,7 +190,8 @@ export const WeatherSection = ({ tool }: WeatherSectionProps) => {
         return new Date(timestamp * 1000).toLocaleTimeString("en-US", {
             hour: "2-digit",
             minute: "2-digit",
-        })
+            hour12: false
+        }).replace(':00', '')
     }
 
     // Wind direction
@@ -254,12 +202,14 @@ export const WeatherSection = ({ tool }: WeatherSectionProps) => {
         return directions[index]
     }
 
-    // Chart data - next 24 hours (8 data points at 3-hour intervals)
-    const chartData = data.list.slice(0, 8).map((forecast) => ({
+    // Chart data - next 24 hours (6 data points for mobile, 8 for desktop)
+    const isMobile = typeof window !== 'undefined' && window.innerWidth < 768
+    const chartDataPoints = isMobile ? 6 : 8
+    const chartData = data.list.slice(0, chartDataPoints).map((forecast) => ({
         name: new Date(forecast.dt * 1000).toLocaleTimeString('en-US', {
             hour: 'numeric',
             hour12: true
-        }),
+        }).replace(' ', '').toLowerCase(),
         time: new Date(forecast.dt * 1000).toLocaleTimeString('en-US', {
             hour: '2-digit',
             minute: '2-digit'
@@ -298,219 +248,151 @@ export const WeatherSection = ({ tool }: WeatherSectionProps) => {
         temp: Math.round(day.temps.reduce((a: number, b: number) => a + b, 0) / day.temps.length),
         minTemp: Math.min(...day.temps),
         maxTemp: Math.max(...day.temps),
-        description: day.descriptions[0], // Use first description of the day
-        icon: day.icons[0], // Use first icon of the day
-    })).slice(0, 5) // Show 5 days
+        description: day.descriptions[0],
+        icon: day.icons[0],
+    })).slice(0, 5)
 
     return (
-        <div className="flex flex-col w-full max-w-5xl mx-auto px-6 md:px-0 pt-5 rounded-2xl">
-            {/* Current Weather - Hero Section */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pb-6 mb-6 border-b border-border/50">
-                {/* Left: Main Info */}
-                <div className="flex flex-col justify-center">
-                    <div className="flex items-center gap-3 mb-3">
-                        <MapPin className="h-5 w-5 text-primary" />
-                        <div>
-                            <h2 className="text-2xl font-bold txt-grad">{city?.name}</h2>
-                            <p className="text-sm txt-mut">{city?.country}</p>
+        <div className="w-[95%] md:w-full mx-auto px-3 sm:px-4 md:px-6 py-4 md:py-6 border border-border rounded-2xl bg-background mt-4">
+            {/* Current Weather - Hero Card */}
+            <div className="bg-muted border border-border rounded-2xl p-4 sm:p-5 md:p-6 mb-3 sm:mb-4">
+                <div className="flex items-start justify-between mb-3 sm:mb-4">
+                    <div className="flex-1 min-w-0">
+                        <div className="flex items-center gap-1.5 sm:gap-2 mb-1.5 sm:mb-2">
+                            <MapPin className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-muted-foreground flex-shrink-0" />
+                            <span className="text-xs sm:text-sm font-medium text-muted-foreground truncate">
+                                {city?.name}, {city?.country}
+                            </span>
+                        </div>
+                        <div className="flex items-baseline gap-1">
+                            <span className="text-4xl sm:text-5xl md:text-6xl font-light tracking-tight">
+                                {kelvinToCelsius(currentWeather.main.temp)}°
+                            </span>
                         </div>
                     </div>
 
-                    <div className="flex items-baseline gap-2 mb-2">
-                        <span className="text-6xl font-bold txt-grad">
-                            {kelvinToCelsius(currentWeather.main.temp)}°
-                        </span>
-                        <span className="text-2xl txt-mut">C</span>
-                    </div>
-
-                    <p className="text-lg capitalize text-muted-foreground mb-3">
-                        {currentWeather.weather[0]?.description}
-                    </p>
-
-                    <div className="flex items-center gap-4 text-sm">
-                        <span className="flex items-center gap-1">
-                            <span className="text-muted-foreground">Feels like</span>
-                            <span className="font-semibold txt-grad">{formatTempForDisplay(currentWeather.main.feels_like)}</span>
-                        </span>
-                        <span className="text-muted-foreground">•</span>
-                        <span className="flex items-center gap-1">
-                            <span className="text-muted-foreground">H:</span>
-                            <span className="font-semibold txt-grad">{formatTempForDisplay(currentWeather.main.temp_max)}</span>
-                            <span className="text-muted-foreground">L:</span>
-                            <span className="font-semibold txt-grad">{formatTempForDisplay(currentWeather.main.temp_min)}</span>
-                        </span>
+                    <div className="flex items-center justify-center w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 rounded-xl bg-muted/30 border border-border ml-3 flex-shrink-0">
+                        {getWeatherIcon(currentWeather.weather[0]?.id, 32)}
                     </div>
                 </div>
 
-                {/* Right: Weather Icon & Quick Stats */}
-                <div className="hidden sm:flex flex-col items-center justify-center">
-                    <div className="relative">
-                        <div className="absolute inset-0 bg-primary/20 blur-3xl rounded-full"></div>
-                        <div className="relative">
-                            {getWeatherIcon(currentWeather.weather[0]?.id, 120)}
+                <p className="text-sm text-muted-foreground capitalize mb-1.5 sm:mb-2 line-clamp-1">
+                    {currentWeather.weather[0]?.description}
+                </p>
+                <div className="flex flex-wrap items-center gap-1.5 sm:gap-2 text-xs text-muted-foreground">
+                    <span className="whitespace-nowrap">Feels like {formatTempForDisplay(currentWeather.main.feels_like)}</span>
+                    <span className="hidden sm:inline">•</span>
+                    <span className="whitespace-nowrap">H: {formatTempForDisplay(currentWeather.main.temp_max)}</span>
+                    <span className="hidden sm:inline">•</span>
+                    <span className="whitespace-nowrap">L: {formatTempForDisplay(currentWeather.main.temp_min)}</span>
+                </div>
+            </div>
+
+            {/* Hourly Forecast - Horizontal Scroll Card */}
+            <div className="bg-muted border border-border rounded-2xl p-4 sm:p-5 md:p-6 mb-3 sm:mb-4">
+                <h3 className="text-xs font-semibold tracking-wide text-muted-foreground uppercase mb-3 sm:mb-4">Hourly</h3>
+                <div className="flex gap-2 sm:gap-3 flex-wrap overflow-x-auto pb-2 -mx-1 px-1 scrollbar-hide">
+                    {chartData.map((hour, index) => (
+                        <div
+                            key={index}
+                            className="flex flex-col items-center gap-1.5 sm:gap-2 min-w-[52px] sm:min-w-[56px] p-2 rounded-xl bg-muted/20 border border-border/50 flex-shrink-0"
+                        >
+                            <span className="text-xs text-muted-foreground whitespace-nowrap">{hour.name}</span>
+                            {getWeatherIcon(hour.icon, 18)}
+                            <span className="text-sm font-medium">{hour.temp}°</span>
                         </div>
+                    ))}
+                </div>
+            </div>
+
+            {/* Weather Details - Compact Grid Card */}
+            <div className="bg-muted border border-border rounded-2xl p-4 sm:p-5 md:p-6 mb-3 sm:mb-4">
+                <h3 className="text-xs font-semibold tracking-wide text-muted-foreground uppercase mb-3 sm:mb-4">Details</h3>
+                <div className="grid grid-cols-2 gap-2 sm:gap-3">
+                    <div className="p-3 rounded-xl bg-muted/20 border border-border/50">
+                        <div className="flex items-center gap-1.5 sm:gap-2 mb-1">
+                            <Wind className="h-3 w-3 sm:h-3.5 sm:w-3.5 text-muted-foreground flex-shrink-0" />
+                            <span className="text-xs text-muted-foreground truncate">Wind</span>
+                        </div>
+                        <p className="text-base sm:text-lg font-semibold truncate">{(currentWeather.wind.speed * 3.6).toFixed(1)}</p>
+                        <p className="text-xs text-muted-foreground truncate">km/h {getWindDirection(currentWeather.wind.deg)}</p>
                     </div>
-                    <div className="mt-6 grid grid-cols-2 gap-4 w-full">
-                        <div className="bg-muted/50 rounded-lg p-3 text-center backdrop-blur-sm">
-                            <Droplets className="h-4 w-4 mx-auto mb-1 text-blue-400" />
-                            <p className="text-xs text-muted-foreground">Humidity</p>
-                            <p className="text-lg font-bold txt-grad">{currentWeather.main.humidity}%</p>
+
+                    <div className="p-3 rounded-xl bg-muted/20 border border-border/50">
+                        <div className="flex items-center gap-1.5 sm:gap-2 mb-1">
+                            <Droplets className="h-3 w-3 sm:h-3.5 sm:w-3.5 text-muted-foreground flex-shrink-0" />
+                            <span className="text-xs text-muted-foreground truncate">Humidity</span>
                         </div>
-                        <div className="bg-muted/50 rounded-lg p-3 text-center backdrop-blur-sm">
-                            <Wind className="h-4 w-4 mx-auto mb-1 text-cyan-400" />
-                            <p className="text-xs text-muted-foreground">Wind</p>
-                            <p className="text-lg font-bold txt-grad">{(currentWeather.wind.speed * 3.6).toFixed(1)}</p>
-                            <p className="text-xs text-muted-foreground">km/h</p>
+                        <p className="text-base sm:text-lg font-semibold truncate">{currentWeather.main.humidity}%</p>
+                        <p className="text-xs text-muted-foreground truncate">Relative</p>
+                    </div>
+
+                    <div className="p-3 rounded-xl bg-muted/20 border border-border/50">
+                        <div className="flex items-center gap-1.5 sm:gap-2 mb-1">
+                            <Eye className="h-3 w-3 sm:h-3.5 sm:w-3.5 text-muted-foreground flex-shrink-0" />
+                            <span className="text-xs text-muted-foreground truncate">Visibility</span>
                         </div>
+                        <p className="text-base sm:text-lg font-semibold truncate">{(currentWeather.visibility / 1000).toFixed(1)}</p>
+                        <p className="text-xs text-muted-foreground truncate">km</p>
+                    </div>
+
+                    <div className="p-3 rounded-xl bg-muted/20 border border-border/50">
+                        <div className="flex items-center gap-1.5 sm:gap-2 mb-1">
+                            <Gauge className="h-3 w-3 sm:h-3.5 sm:w-3.5 text-muted-foreground flex-shrink-0" />
+                            <span className="text-xs text-muted-foreground truncate">Pressure</span>
+                        </div>
+                        <p className="text-base sm:text-lg font-semibold truncate">{currentWeather.main.pressure}</p>
+                        <p className="text-xs text-muted-foreground truncate">hPa</p>
                     </div>
                 </div>
             </div>
 
-            {/* Temperature Chart - 24 Hour Forecast */}
-            <div className="pb-6 mb-6 border-b border-border/50">
-                <div className="flex items-center gap-2 mb-4">
-                    <Calendar className="h-4 w-4 text-primary" />
-                    <h3 className="text-sm font-semibold tracking-wide txt-grad">24-HOUR FORECAST</h3>
-                </div>
-                <div className="h-56 bg-muted/20 rounded-lg p-4">
-                    <ResponsiveContainer width="100%" height="100%">
-                        <AreaChart data={chartData} margin={{ top: 10, right: 10, left: 0, bottom: 0 }}>
-                            <defs>
-                                <linearGradient id="tempGradient" x1="0" y1="0" x2="0" y2="1">
-                                    <stop offset="5%" stopColor="hsl(var(--primary))" stopOpacity={0.4} />
-                                    <stop offset="95%" stopColor="hsl(var(--primary))" stopOpacity={0.05} />
-                                </linearGradient>
-                            </defs>
-                            <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" opacity={0.3} />
-                            <XAxis
-                                dataKey="name"
-                                stroke="hsl(var(--muted-foreground))"
-                                fontSize={11}
-                                tickLine={false}
-                                axisLine={{ stroke: "hsl(var(--border))" }}
-                            />
-                            <YAxis
-                                stroke="hsl(var(--muted-foreground))"
-                                fontSize={11}
-                                tickLine={false}
-                                axisLine={{ stroke: "hsl(var(--border))" }}
-                                tickFormatter={(value) => `${value}°`}
-                                domain={['dataMin - 2', 'dataMax + 2']}
-                            />
-                            <Tooltip content={<CustomTooltip />} />
-                            <Area
-                                type="monotone"
-                                dataKey="temp"
-                                stroke="hsl(var(--primary))"
-                                fillOpacity={1}
-                                fill="url(#tempGradient)"
-                                strokeWidth={2.5}
-                            />
-                        </AreaChart>
-                    </ResponsiveContainer>
-                </div>
-            </div>
-
-            {/* Weather Statistics Grid */}
-            <div className="pb-6 mb-6 border-b border-border/50">
-                <div className="flex items-center gap-2 mb-4">
-                    <Gauge className="h-4 w-4 text-primary" />
-                    <h3 className="text-sm font-semibold tracking-wide txt-grad">CURRENT CONDITIONS</h3>
-                </div>
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                    <div className="bg-muted/30 rounded-xl p-4 backdrop-blur-sm transition-colors border border-border">
-                        <div className="flex items-center gap-2 mb-2">
-                            <Wind className="h-4 w-4 text-cyan-400" />
-                            <span className="text-xs font-medium text-muted-foreground">WIND</span>
-                        </div>
-                        <p className="text-2xl font-bold txt-grad">{(currentWeather.wind.speed * 3.6).toFixed(1)}</p>
-                        <p className="text-xs text-muted-foreground mt-1">
-                            km/h {getWindDirection(currentWeather.wind.deg)}
-                        </p>
-                    </div>
-
-                    <div className="bg-muted/30 rounded-xl p-4 backdrop-blur-sm transition-colors border border-border">
-                        <div className="flex items-center gap-2 mb-2">
-                            <Eye className="h-4 w-4 text-purple-400" />
-                            <span className="text-xs font-medium text-muted-foreground">VISIBILITY</span>
-                        </div>
-                        <p className="text-2xl font-bold txt-grad">
-                            {(currentWeather.visibility / 1000).toFixed(1)}
-                        </p>
-                        <p className="text-xs text-muted-foreground mt-1">kilometers</p>
-                    </div>
-
-                    <div className="bg-muted/30 rounded-xl p-4 backdrop-blur-sm transition-colors border border-border">
-                        <div className="flex items-center gap-2 mb-2">
-                            <Droplets className="h-4 w-4 text-blue-400" />
-                            <span className="text-xs font-medium text-muted-foreground">HUMIDITY</span>
-                        </div>
-                        <p className="text-2xl font-bold txt-grad">{currentWeather.main.humidity}</p>
-                        <p className="text-xs text-muted-foreground mt-1">percent</p>
-                    </div>
-
-                    <div className="bg-muted/30 rounded-xl p-4 backdrop-blur-sm transition-colors border border-border">
-                        <div className="flex items-center gap-2 mb-2">
-                            <Gauge className="h-4 w-4 text-orange-400" />
-                            <span className="text-xs font-medium text-muted-foreground">PRESSURE</span>
-                        </div>
-                        <p className="text-2xl font-bold txt-grad">{currentWeather.main.pressure}</p>
-                        <p className="text-xs text-muted-foreground mt-1">hPa</p>
-                    </div>
-                </div>
-            </div>
-
-            {/* 5-Day Forecast */}
-            <div className="pb-6">
-                <div className="flex items-center gap-2 mb-4">
-                    <Calendar className="h-4 w-4 text-primary" />
-                    <h3 className="text-sm font-semibold tracking-wide txt-grad">5-DAY FORECAST</h3>
-                </div>
-                <div className="grid grid-cols-2 md:grid-cols-5 gap-3">
+            {/* 5-Day Forecast - List Style Card */}
+            <div className="bg-muted border border-border rounded-2xl p-4 sm:p-5 md:p-6 mb-3 sm:mb-4">
+                <h3 className="text-xs font-semibold tracking-wide text-muted-foreground uppercase mb-3 sm:mb-4">5-Day Forecast</h3>
+                <div className="space-y-1.5 sm:space-y-2">
                     {dailyForecast.map((day, index) => (
                         <div
                             key={day.date}
-                            className="bg-muted/30 border border-border rounded-xl p-4 backdrop-blur-sm transition-all duration-200"
+                            className="flex items-center justify-between p-2.5 sm:p-3 rounded-xl bg-muted/20 border border-border/50 hover:bg-muted/30 transition-colors"
                         >
-                            <p className="text-sm font-semibold mb-3 text-center txt-grad">
+                            <span className="text-xs sm:text-sm font-medium w-12 sm:w-14 md:w-16 flex-shrink-0">
                                 {index === 0 ? 'Today' : day.day}
-                            </p>
-                            <div className="flex justify-center mb-3">
-                                {getWeatherIcon(day.icon, 40)}
-                            </div>
-                            <div className="text-center">
-                                <p className="text-2xl font-bold mb-1 txt-grad">
-                                    {day.temp}°
-                                </p>
-                                <p className="text-xs text-muted-foreground capitalize mb-2 line-clamp-2">
+                            </span>
+
+                            <div className="flex items-center gap-1.5 sm:gap-2 flex-1 min-w-0 mx-1.5 sm:mx-2">
+                                {getWeatherIcon(day.icon, 18)}
+                                <span className="text-xs text-muted-foreground capitalize truncate hidden xs:inline">
                                     {day.description}
-                                </p>
-                                <div className="flex justify-center gap-2 text-xs">
-                                    <span className="text-muted-foreground">H: {day.maxTemp}°</span>
-                                    <span className="text-muted-foreground">L: {day.minTemp}°</span>
-                                </div>
+                                </span>
+                            </div>
+
+                            <div className="flex items-center gap-1.5 sm:gap-2 md:gap-3 text-xs sm:text-sm ml-1 flex-shrink-0">
+                                <span className="text-muted-foreground min-w-[24px] sm:min-w-[28px] text-right">{day.minTemp}°</span>
+                                <div className="w-10 sm:w-12 md:w-16 h-1 bg-gradient-to-r from-blue-400 to-orange-400 rounded-full"></div>
+                                <span className="font-semibold min-w-[24px] sm:min-w-[28px]">{day.maxTemp}°</span>
                             </div>
                         </div>
                     ))}
                 </div>
             </div>
 
-            {/* Sun Times */}
+            {/* Sun Times Card */}
             {data.city?.sunrise && data.city?.sunset && (
-                <div className="pb-4 mb-4 border-b border-border/50">
-                    <div className="grid grid-cols-2 gap-4">
-                        <div className="flex items-center gap-3 bg-gradient-to-r from-orange-500/10 to-transparent rounded-lg p-3">
-                            <Sunrise className="h-5 w-5 text-orange-400" />
-                            <div>
+                <div className="bg-muted border border-border rounded-2xl p-4 sm:p-5 md:p-6 mb-3 sm:mb-4">
+                    <div className="grid grid-cols-2 gap-2 sm:gap-3">
+                        <div className="flex items-center gap-2 p-3 rounded-xl bg-muted/20 border border-border/50">
+                            <Sunrise className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-orange-400 flex-shrink-0" />
+                            <div className="min-w-0">
                                 <p className="text-xs text-muted-foreground">Sunrise</p>
-                                <p className="text-sm font-semibold txt-grad">{formatTime(data.city.sunrise)}</p>
+                                <p className="text-sm font-medium truncate">{formatTime(data.city.sunrise)}</p>
                             </div>
                         </div>
-                        <div className="flex items-center gap-3 bg-gradient-to-r from-purple-500/10 to-transparent rounded-lg p-3">
-                            <Sunset className="h-5 w-5 text-purple-400" />
-                            <div>
+                        <div className="flex items-center gap-2 p-3 rounded-xl bg-muted/20 border border-border/50">
+                            <Sunset className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-purple-400 flex-shrink-0" />
+                            <div className="min-w-0">
                                 <p className="text-xs text-muted-foreground">Sunset</p>
-                                <p className="text-sm font-semibold txt-grad">{formatTime(data.city.sunset)}</p>
+                                <p className="text-sm font-medium truncate">{formatTime(data.city.sunset)}</p>
                             </div>
                         </div>
                     </div>
@@ -518,11 +400,8 @@ export const WeatherSection = ({ tool }: WeatherSectionProps) => {
             )}
 
             {/* Footer */}
-            <div className="flex items-center justify-between text-xs text-muted-foreground pt-2">
-                <span>Last updated: {currentTime.toLocaleTimeString()}</span>
-                <span className="flex items-center gap-1">
-                    provided by open weather
-                </span>
+            <div className="text-center text-xs text-muted-foreground pt-2">
+                <span>Updated {currentTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
             </div>
         </div>
     )

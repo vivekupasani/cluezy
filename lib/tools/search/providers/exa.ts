@@ -23,7 +23,6 @@ export class ExaSearchProvider extends BaseSearchProvider {
       excludeDomains,
     });
 
-    // --- Serper Image Search ---
     const imageRes = await fetch("https://google.serper.dev/images", {
       method: "POST",
       headers: {
@@ -38,17 +37,13 @@ export class ExaSearchProvider extends BaseSearchProvider {
     }
 
     const imageData = await imageRes.json();
-    // console.log("IMAGE RESPONSE:", imageData);
-
+    console.log("Image data: ", imageData)
     const images =
       imageData?.images?.map((img: any, idx: number) => ({
         url: img.imageUrl,
         description: img.title || `Image ${idx + 1}`,
       })) || [];
 
-    // console.log("Extracted Images:", images);
-
-    // --- Return Results ---
     return {
       results: exaResults.results.map((result: any) => ({
         title: result.title,
@@ -56,7 +51,7 @@ export class ExaSearchProvider extends BaseSearchProvider {
         content: result.highlight || result.text,
       })),
       query,
-      images, // ← FIXED
+      images,
       number_of_results: exaResults.results.length,
     };
   }

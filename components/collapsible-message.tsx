@@ -1,14 +1,13 @@
-
-import { Separator } from '@radix-ui/react-separator'
+import { ChevronDown } from 'lucide-react'
 
 import { cn } from '@/lib/utils'
 
-import { CurrentUserAvatar } from './current-user-avatar'
 import {
   Collapsible,
-  CollapsibleContent
+  CollapsibleContent,
+  CollapsibleTrigger
 } from './ui/collapsible'
-import { IconLogo } from './ui/icons'
+import { Separator } from './ui/separator'
 
 interface CollapsibleMessageProps {
   children: React.ReactNode
@@ -34,23 +33,24 @@ export function CollapsibleMessage({
   const content = <div className="flex-1">{children}</div>
 
   return (
-    <div className="flex max-w-2xl px-2 md:px-0">
-      {showIcon && (
+    <div className="flex px-2 sm:px-0">
+      {/* {showIcon && (
         <div className="relative flex flex-col items-center">
           <div className="w-5">
             {role === 'assistant' ? (
-              <IconLogo className="size-6" />
+              <IconLogo className="size-5" />
             ) : (
               <CurrentUserAvatar />
             )}
           </div>
         </div>
-      )}
+      )} */}
 
       {isCollapsible ? (
         <div
           className={cn(
-            'flex-1 rounded-2xl px-4 md:px-0',
+            'flex-1 rounded-2xl p-4',
+            showBorder && 'border border-border/50'
           )}
         >
           <Collapsible
@@ -58,7 +58,7 @@ export function CollapsibleMessage({
             onOpenChange={onOpenChange}
             className="w-full"
           >
-            {/* <div className="flex items-center justify-between w-full gap-2">
+            <div className="flex items-center justify-between w-full gap-2">
               {header && <div className="text-sm w-full">{header}</div>}
               <CollapsibleTrigger asChild>
                 <button
@@ -69,10 +69,10 @@ export function CollapsibleMessage({
                   <ChevronDown className="h-4 w-4 text-muted-foreground transition-transform duration-200 group-data-[state=open]:rotate-180" />
                 </button>
               </CollapsibleTrigger>
-            </div> */}
+            </div>
             <CollapsibleContent className="data-[state=closed]:animate-collapse-up data-[state=open]:animate-collapse-down">
-              {content}
               <Separator className="my-4 border-border/50" />
+              {content}
             </CollapsibleContent>
           </Collapsible>
         </div>
@@ -80,7 +80,7 @@ export function CollapsibleMessage({
         <div
           className={cn(
             'flex-1 rounded-2xl',
-            role === 'assistant' ? 'px-0' : 'px-3'
+            role === 'assistant' ? 'px-0' : 'px-0'
           )}
         >
           {content}

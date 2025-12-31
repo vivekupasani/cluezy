@@ -1,15 +1,16 @@
 'use client'
 
+import Link from 'next/link'
 import React, { useState } from 'react'
 import TextareaAutosize from 'react-textarea-autosize'
-import Link from 'next/link'
 
-import { Pencil } from 'lucide-react'
+import { Copy, Pencil } from 'lucide-react'
 
 import { cn } from '@/lib/utils'
 
-import { Button } from './ui/button'
+import { toast } from 'sonner'
 import { CollapsibleMessage } from './collapsible-message'
+import { Button } from './ui/button'
 
 type UserMessageProps = {
   message: string
@@ -46,6 +47,11 @@ export const UserMessage: React.FC<UserMessageProps> = ({
     setIsEditing(false)
   }
 
+  const handleCopyClick = async () => {
+    await navigator.clipboard.writeText(message)
+    toast.success('Message copied to clipboard')
+  }
+
   const handleSaveClick = async () => {
     if (!onUpdateMessage || !messageId) return
 
@@ -61,16 +67,16 @@ export const UserMessage: React.FC<UserMessageProps> = ({
   return (
     <CollapsibleMessage role="user">
       <div
-        className="flex-1 break-words w-full group outline-none relative"
+        className="flex-1 break-words flex flex-col items-end w-full group outline-none"
         tabIndex={0}
       >
         {isEditing ? (
-          <div className="flex flex-col gap-2">
+          <div className="flex flex-col gap-2 w-full max-w-xs md:max-w-lg">
             <TextareaAutosize
               value={editedContent}
               onChange={e => setEditedContent(e.target.value)}
               autoFocus
-              className="resize-none flex w-full rounded-lg border border-input bg-background p-2 placeholder:text-muted-foreground focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50"
+              className="resize-none flex w-full bg-secondary rounded-2xl rounded-tr-sm border border-input px-4 py-2.5 placeholder:text-muted-foreground focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50"
               minRows={1}
               maxRows={10}
             />
@@ -84,34 +90,41 @@ export const UserMessage: React.FC<UserMessageProps> = ({
             </div>
           </div>
         ) : (
-          <div className="flex flex-col justify-between items-start bg-gradient-to-r from-card/45 via-card/40 to-card/5 backdrop-blur-sm drop-shadow-sm border border-border/30 p-2 rounded-lg">
-            <div className="max-w-2xl txt-grad">{message}</div>
-            <div className='mr-5'>
-              {parts.map((item: UserMessageFileTypeProps, index: number) =>
-                item.type === "file" && (
-                  <div key={index} className="flex items-center gap-2 bg-secondary/50 px-1 py-1 rounded-lg border">
-                    <span className="text-xs text-foreground/80"><Link href={item.url} target='_blank'>📎{item.name}</Link></span>
-                  </div>
-                  // <div key={index} className="mt-2 p-2 border rounded-md bg-muted/30">
-                  //   <div className="font-medium"> {item.name}</div>
-                  //   <div className="text-xs opacity-75">
-                  //     {item.mimeType?.split('/')[1]?.toUpperCase()} • {(item.size / 1024).toFixed(1)} KB
-                  //   </div>
-                  //   <a
-                  //     href={item.url}
-                  //     target="_blank"
-                  //     rel="noopener noreferrer"
-                  //     className="text-blue-500 underline text-sm"
-                  //   >
-                  //     View / Download
-                  //   </a>
-                  // </div>
-                )
-              )}
-            </div>
+          <div className="relative flex flex-col max-w-xs md:max-w-lg bg-secondary text-secondary-foreground px-4 py-2.5 rounded-2xl rounded-tr-sm">
+            <div className="">{message}</div>
+            {parts && parts.length > 0 && (
+              <div className="flex flex-col gap-2 mt-1">
+                {parts.map(
+                  (item: UserMessageFileTypeProps, index: number) =>
+                    item.type === 'file' && (
+                      <Link
+                        key={index}
+                        href={item.url}
+                        target="_blank"
+                        className="flex items-center gap-2 p-2 rounded-lg bg-background/50 hover:bg-background/80 transition-colors border border-border/50 max-w-sm"
+                      >
+                        <div className="size-8 rounded-full bg-muted flex items-center justify-center shrink-0">
+                          📎
+                        </div>
+                        <div className="flex flex-col overflow-hidden">
+                          <span className="text-sm font-medium truncate">
+                            {item.name}
+                          </span>
+                          <span className="text-xs text-muted-foreground">
+                            {item.size
+                              ? `${(item.size / 1024).toFixed(1)} KB`
+                              : 'File'}
+                          </span>
+                        </div>
+                      </Link>
+                    )
+                )}
+              </div>
+            )}
+
             <div
               className={cn(
-                'absolute top-1 right-1 transition-opacity ml-2',
+                'absolute top-0 right-full mr-2 transition-opacity',
                 'opacity-0',
                 'group-focus-within:opacity-100',
                 'md:opacity-0',
@@ -125,6 +138,15 @@ export const UserMessage: React.FC<UserMessageProps> = ({
                 onClick={handleEditClick}
               >
                 <Pencil className="size-3.5" />
+              </Button>
+
+              <Button
+                variant="ghost"
+                size="icon"
+                className="rounded-full h-7 w-7"
+                onClick={handleCopyClick}
+              >
+                <Copy className="size-3.5" />
               </Button>
             </div>
           </div>

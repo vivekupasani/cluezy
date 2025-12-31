@@ -80,7 +80,7 @@ export function ChatShare({ chatId, className }: ChatShareProps) {
             <Share size={14} className='text-foreground/70 hover:text-foreground' />
           </Button>
         </DialogTrigger>
-        <DialogContent>
+        <DialogContent className='w-[90%] bg-gradient-to-br from-card/75 via-card/55 to-card/65 rounded-2xl backdrop-blur-sm'>
           <DialogHeader>
             <DialogTitle className='txt-grad'>Share link to search result</DialogTitle>
             <DialogDescription className='txt-mut'>

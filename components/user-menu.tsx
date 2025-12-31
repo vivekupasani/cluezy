@@ -1,59 +1,56 @@
 'use client'
 
-import { useRouter } from 'next/navigation'
-
-import { AvatarImage } from '@radix-ui/react-avatar'
 import { User } from '@supabase/supabase-js'
-import { Link2, LogOut, Palette } from 'lucide-react'
+import { Link2, LogOut, LucideBadgeAlert, Palette } from 'lucide-react'
+import { useRouter } from 'next/navigation'
 import { toast } from 'sonner'
 
-import { createClient } from '@/lib/supabase/client'
-
-import { Avatar, AvatarFallback } from '@/components/ui/avatar'
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuSub,
   DropdownMenuSubContent,
   DropdownMenuSubTrigger,
-  DropdownMenuTrigger
+  DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 
-import { cn } from '@/lib/utils'
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
+import { createClient } from '@/lib/supabase/client'
 import { useAuth } from './context/auth-context'
-import { ExternalLinkItems } from './external-link-items'
 import { clearChatHistoryCache } from './sidebar/chat-history-client'
+
+import { CompanyInfoItems } from './company-info'
+import { ExternalLinkItems } from './external-link-items'
 import { ThemeMenuItems } from './theme-menu-items'
-import { Button } from './ui/button'
 
 interface UserMenuProps {
   user: User
-  showLabel?: boolean
+  state: 'expanded' | 'collapsed'
 }
 
-export default function UserMenu({ user, showLabel = false }: UserMenuProps) {
+export default function UserMenu({ user, state }: UserMenuProps) {
   const router = useRouter()
   const { setUser } = useAuth()
-  const userName =
-    user.user_metadata?.full_name || user.user_metadata?.name || 'User'
-  const avatarUrl =
-    user.user_metadata?.avatar_url || user.user_metadata?.picture
 
-  const getInitials = (name: string, email: string | undefined) => {
+  const userName =
+    user.user_metadata?.full_name ||
+    user.user_metadata?.name ||
+    'User'
+
+  const avatarUrl =
+    user.user_metadata?.avatar_url ||
+    user.user_metadata?.picture
+
+  const getInitials = (name: string, email?: string) => {
     if (name && name !== 'User') {
-      const names = name.split(' ')
-      if (names.length > 1) {
-        return `${names[0][0]}${names[names.length - 1][0]}`.toUpperCase()
-      }
-      return name.substring(0, 2).toUpperCase()
+      const parts = name.split(' ')
+      return parts.length > 1
+        ? `${parts[0][0]}${parts[1][0]}`
+        : name.slice(0, 2).toUpperCase()
     }
-    if (email) {
-      return email.split('@')[0].substring(0, 2).toUpperCase()
-    }
-    return 'U'
+    return email?.slice(0, 2).toUpperCase() || 'U'
   }
 
   const handleLogout = async () => {
@@ -69,45 +66,42 @@ export default function UserMenu({ user, showLabel = false }: UserMenuProps) {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button
-          variant="ghost"
-          className={cn(
-            "relative text-foreground/70 hover:bg-muted rounded-full p-0 focus:ring-0 transition-all",
-            showLabel ? "w-full justify-start px-2 gap-2 h-10 rounded-md" : "h-[33px] w-[33px]"
-          )}
+        <button
+          className={`group flex items-center gap-2 w-full px-2 py-2 rounded-lg hover:bg-sidebar-accent transition ${state === 'collapsed' ? 'justify-center' : ''
+            }`}
         >
-          <Avatar className="h-[32px] w-[31px]">
-            <AvatarImage className='h-[32px] w-[31px]' src={avatarUrl} alt={userName} />
-            <AvatarFallback className='text-xs pt-[0px] text-foreground/70 bg-card border border-border/80'>
+          <Avatar className="h-7 w-7">
+            <AvatarImage src={avatarUrl} />
+            <AvatarFallback className="text-xs">
               {getInitials(userName, user.email)}
             </AvatarFallback>
           </Avatar>
-          {showLabel && (
-            <div className="flex flex-col items-start truncate text-sm">
-              <span className="font-medium truncate">{userName}</span>
+
+          {state === 'expanded' && (
+            <div className="flex flex-col text-left truncate">
+              <span className="text-sm font-medium truncate">
+                {userName}
+              </span>
+              <span className="text-xs text-muted-foreground truncate">
+                {user.email}
+              </span>
             </div>
           )}
-        </Button>
+        </button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="w-60 bg-card border-b border-primary/8" align="end" forceMount>
-        <DropdownMenuLabel className="font-normal">
-          <div className="flex flex-col space-y-1">
-            <p className="text-sm pb-[1.2px] font-medium txt-grad leading-none truncate">
-              {userName}
-            </p>
-            <p className="text-xs pb-[1.2px] leading-none txt-mut truncate">
-              {user.email}
-            </p>
-          </div>
-        </DropdownMenuLabel>
+
+      <DropdownMenuContent className="w-56 ml-6" align="end">
+        {/* Profile */}
+        <DropdownMenuItem className="flex flex-col justify-center items-start">
+          <span className="truncate txt-grad">{userName}</span>
+          <span className="truncate text-xs text-muted-foreground">{user.email}</span>
+        </DropdownMenuItem>
+
         <DropdownMenuSeparator />
-        {/* <div className='w-full h-[2px] bg-background rounded-full' /> */}
-        {/* <Link href="/settings" className='flex gap-1 items-center pl-2 py-2 cursor-pointer hover:bg-accent hover:text-accent-foreground rounded-md'>
-          <Settings size={18} />
-          <p className='text-sm'>Settings</p>
-        </Link> */}
+
+        {/* Theme */}
         <DropdownMenuSub>
-          <DropdownMenuSubTrigger className='cursor-pointer'>
+          <DropdownMenuSubTrigger>
             <Palette className="mr-2 h-4 w-4 text-foreground/70" />
             <span className='txt-grad'>Theme</span>
           </DropdownMenuSubTrigger>
@@ -115,8 +109,10 @@ export default function UserMenu({ user, showLabel = false }: UserMenuProps) {
             <ThemeMenuItems />
           </DropdownMenuSubContent>
         </DropdownMenuSub>
+
+        {/* Links */}
         <DropdownMenuSub>
-          <DropdownMenuSubTrigger className='cursor-pointer'>
+          <DropdownMenuSubTrigger>
             <Link2 className="mr-2 h-4 w-4 text-foreground/70" />
             <span className='txt-grad'>Links</span>
           </DropdownMenuSubTrigger>
@@ -124,19 +120,27 @@ export default function UserMenu({ user, showLabel = false }: UserMenuProps) {
             <ExternalLinkItems />
           </DropdownMenuSubContent>
         </DropdownMenuSub>
-        {/* <DropdownMenuSub>
-          <DropdownMenuSubTrigger className='cursor-pointer'>
+
+        {/* Company */}
+        <DropdownMenuSub>
+          <DropdownMenuSubTrigger>
             <LucideBadgeAlert className="mr-2 h-4 w-4 text-foreground/70" />
             <span className='txt-grad'>Company Info</span>
           </DropdownMenuSubTrigger>
           <DropdownMenuSubContent>
             <CompanyInfoItems />
           </DropdownMenuSubContent>
-        </DropdownMenuSub> */}
+        </DropdownMenuSub>
+
         <DropdownMenuSeparator />
-        <DropdownMenuItem onClick={handleLogout} className='cursor-pointer'>
-          <LogOut className="mr-2 h-4 w-4 text-foreground/70" />
-          <span className='txt-grad'>Logout</span>
+
+        {/* Logout */}
+        <DropdownMenuItem
+          onClick={handleLogout}
+          className="text-destructive focus:text-destructive"
+        >
+          <LogOut className="mr-2 h-4 w-4" />
+          Logout
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

@@ -15,13 +15,13 @@ export const YoutubeVideoAnalysisSection = ({
     // console.log("youtube data :", data)
 
     return (
-        <div className="p-1 flex items-center justify-center w-full max-w-2xl mt-2">
+        <div className="py-1 flex items-center justify-center w-full max-w-2xl mt-2">
             {isToolLoading && (
-                <Skeleton className="w-[95%] h-80 rounded-lg" />
+                <Skeleton className="w-[95%] md:w-[100%] h-80 rounded-lg" />
             )}
 
             {!isToolLoading && data?.videoId && (
-                <div className="w-[95%] h-80 rounded-lg overflow-hidden">
+                <div className="w-[95%] md:w-[100%] h-80 rounded-lg overflow-hidden">
                     <iframe
                         src={`https://www.youtube.com/embed/${data.videoId}?enablejsapi=1`}
                         className="w-full h-full rounded-lg"

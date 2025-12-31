@@ -48,7 +48,7 @@ export async function POST(req: Request) {
       // const identifier = getClientIdentifier(req);
       const { success, limit, reset, remaining } = await authenticatedRateLimit.limit(userId);
       console.log("Remaining credits for the day : ", remaining)
-      // Rate limit check for unauthenticated users
+      // Rate limit check for authenticated users
       if (!success) {
         const resetDate = new Date(reset);
         return new Response(
@@ -97,18 +97,6 @@ export async function POST(req: Request) {
     }
 
     const supportsToolCalling = selectedModel.toolCallType === 'native'
-
-    // return createManualToolStreamResponse({
-    //   messages,
-    //   model: selectedModel,
-    //   chatId,
-    //   searchMode,
-    //   userId
-    // })
-
-    console.log("====================")
-    console.log("Messages: ", messages)
-    console.log("====================")
 
     return supportsToolCalling
       ? createToolCallingStreamResponse({

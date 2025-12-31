@@ -66,7 +66,7 @@ export function ToolSection({
   switch (tool.toolName) {
     case 'search':
       return (
-        <div className='-mb-8'>
+        <div className='mt-3'>
           <SearchSection
             tool={tool}
             isOpen={isOpen}
@@ -78,7 +78,7 @@ export function ToolSection({
 
     case 'acadamicSearch':
       return (
-        <div className='-mb-6'>
+        <div className='mt-3'>
           <SearchSection
             tool={tool}
             isOpen={isOpen}
@@ -90,7 +90,7 @@ export function ToolSection({
 
     case 'videoSearch':
       return (
-        <div className='-mb-10 mt-1'>
+        <div className='mt-3'>
           <VideoSearchSection
             tool={tool}
             isOpen={isOpen}
@@ -101,13 +101,13 @@ export function ToolSection({
       )
     case 'youtubeVideoAnalysis':
       return (
-        <div className='-mb-5 mx-2'>
+        <div className='mt-3'>
           <YoutubeVideoAnalysisSection tool={tool} />
         </div>
       )
     case 'retrieve':
       return (
-        <div className='-mb-10'>
+        <div className='mt-3'>
           <RetrieveSection
             tool={tool}
             isOpen={isOpen}
@@ -127,8 +127,8 @@ export function ToolSection({
     case 'pptSearch':
     case 'docSearch':
       return (
-        <div className='-mb-6 mt-1'>
-          <DocumentSection tool={tool} />
+        <div className='mt-3'>
+          <DocumentSection tool={tool} isOpen={isOpen} onOpenChange={onOpenChange} />
         </div>
       )
     default:

@@ -1,5 +1,5 @@
-import { SiInstagram, SiLinkedin, SiX } from "react-icons/si";
 import Link from "next/link";
+import { SiInstagram, SiLinkedin, SiX } from "react-icons/si";
 
 import { ArrowLeft } from "lucide-react";
 
@@ -121,13 +121,13 @@ export default async function TermsPage() {
 
                 <div className="flex flex-col gap-2 mb-10 justify-center items-center">
                     <div className="flex gap-4">
-                        <Link href="" className="hover:cursor-pointer">
+                        <Link href="https://x.com/v1vekupasani" className="hover:cursor-pointer">
                             <SiX />
                         </Link>
-                        <Link href="https://www.linkedin.com/company/cluezy" className="hover:cursor-pointer">
+                        <Link href="https://www.linkedin.com/company/cluezy/" className="hover:cursor-pointer">
                             <SiLinkedin />
                         </Link>
-                        <Link href="" className="hover:cursor-pointer">
+                        <Link href="https://www.instagram.com/v1vekupasani/" className="hover:cursor-pointer">
                             <SiInstagram />
                         </Link>
                     </div>

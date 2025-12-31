@@ -4,7 +4,7 @@ import * as React from 'react'
 
 import { Slot } from '@radix-ui/react-slot'
 import { cva, VariantProps } from 'class-variance-authority'
-import { PanelLeft } from 'lucide-react'
+import { PanelLeftClose, PanelRightClose } from 'lucide-react'
 
 import { cn } from '@/lib/utils/index'
 
@@ -27,6 +27,7 @@ import {
   TooltipProvider,
   TooltipTrigger
 } from '@/components/ui/tooltip'
+import { usePathname } from 'next/navigation'
 
 const SIDEBAR_COOKIE_NAME = 'sidebar_state'
 const SIDEBAR_COOKIE_MAX_AGE = 60 * 60 * 24 * 7
@@ -303,7 +304,13 @@ const SidebarTrigger = React.forwardRef<
   React.ElementRef<typeof Button>,
   React.ComponentProps<typeof Button>
 >(({ className, onClick, ...props }, ref) => {
-  const { toggleSidebar } = useSidebar()
+  const { toggleSidebar, state } = useSidebar()
+  const pathName = usePathname()
+
+  if (pathName.startsWith("/auth/") || pathName.startsWith("/settings")) {
+    return null;
+  }
+
 
   return (
     <Button
@@ -311,14 +318,16 @@ const SidebarTrigger = React.forwardRef<
       data-sidebar="trigger"
       variant="ghost"
       size="icon"
-      className={cn('size-4', className)}
+      className={cn('size-6 md:size-4', className)}
       onClick={event => {
         onClick?.(event)
         toggleSidebar()
       }}
       {...props}
     >
-      <PanelLeft size={18} />
+      {
+        state === 'collapsed' ? <PanelRightClose size={18} /> : <PanelLeftClose size={18} />
+      }
       <span className="sr-only">Toggle Sidebar</span>
     </Button>
   )

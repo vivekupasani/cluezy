@@ -24,18 +24,18 @@ const fontSans = FontSans({
 
 const title = {
   default: 'Cluezy - Agentic Research Engine',
-  template: '%s | Cluezy AI',
+  template: '%s - Cluezy',
 }
 const description =
   'Cluezy is an Agentic Research Engine that searches, analyzes, and cites information from the live web to deliver clear, trustworthy answers.'
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://www.cluezy.site'),
+  metadataBase: new URL('https://beta.cluezy.site'),
   title,
   description,
   openGraph: {
-    url: "https://www.cluezy.site",
-    siteName: "Cluezy AI",
+    url: "https://beta.cluezy.site",
+    siteName: "Cluezy",
     title,
     description,
   },
@@ -145,8 +145,12 @@ export default async function RootLayout({
               enableSystem
               disableTransitionOnChange
             >
-              <SidebarProvider defaultOpen>
-                <div className="flex flex-col flex-1">
+              <SidebarProvider defaultOpen={false}>
+                <div className="relative flex flex-col flex-1">
+                  {/* feedback button */}
+                  {/* <div className="absolute top-0 right-0 z-50 border border-border m-4 px-2 py-1 rounded-md bg-primary text-primary-foreground text-sm cursor-pointer hover:bg-primary/80">
+                    Feedback
+                  </div> */}
                   <AppSidebar />
                   <main className="flex flex-1 min-h-0">
                     <ArtifactRoot>{children}</ArtifactRoot>
