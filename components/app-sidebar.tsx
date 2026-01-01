@@ -131,7 +131,7 @@ export function AppSidebar() {
         </SidebarGroup>
       </SidebarContent>
 
-      <SidebarFooter className='pl-2'>
+      <SidebarFooter className='pl-2 pb-4 md:pb-2'>
         <SidebarMenuItem className="flex flex-col gap-2 items-start w-full">
           {user ? (
             <Tooltip>

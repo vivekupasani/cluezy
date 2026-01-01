@@ -7,10 +7,7 @@ import { useState, useTransition } from 'react'
 import { Check, Edit, Trash2, X } from 'lucide-react'
 import { toast } from 'sonner'
 
-import { Chat } from '@/lib/types'
-
-import { SidebarMenuItem } from '@/components/ui/sidebar'
-
+import { cn } from '@/lib/utils'
 import { useHistoryDialog } from '../history-dialog'
 import { Spinner } from '../ui/spinner'
 
@@ -34,7 +31,7 @@ const formatDateWithTime = (date: Date | string) => {
 }
 
 interface ChatMenuItemProps {
-  chat: Chat
+  chat: any
 }
 
 export function ChatMenuItem({ chat }: ChatMenuItemProps) {
@@ -75,7 +72,6 @@ export function ChatMenuItem({ chat }: ChatMenuItemProps) {
       return
     }
 
-
     startRenameTransition(async () => {
       try {
         const res = await fetch(`/api/chat/${chat.id}`, {
@@ -98,105 +94,126 @@ export function ChatMenuItem({ chat }: ChatMenuItemProps) {
   /* ✏️ RENAME MODE */
   if (isRenameClicked) {
     return (
-      <SidebarMenuItem>
-        <div className="h-auto flex gap-2 items-center bg-card border border-muted rounded-xl px-4 py-1">
+      <div className="px-1.5 py-0.5">
+        <div className="flex gap-2 items-center bg-accent/30 border border-border/40 rounded-xl px-3 py-1.5 transition-all duration-200 ring-1 ring-primary/10">
           <input
             type="text"
             value={newTitle}
             onChange={(e) => setNewTitle(e.target.value)}
             autoFocus
-            className="flex-1 focus:outline-none bg-transparent text-sm placeholder:text-muted-foreground"
+            onKeyDown={(e) => {
+              if (e.key === 'Enter') onRename()
+              if (e.key === 'Escape') setIsRenameClicked(false)
+            }}
+            className="flex-1 focus:outline-none bg-transparent text-sm placeholder:text-muted-foreground/50"
             disabled={isRenaming}
           />
-
-          <button
-            onClick={() => setIsRenameClicked(false)}
-            className="size-7 p-1 hover:bg-accent rounded-sm"
-          >
-            <X size={16} />
-          </button>
-
-          <button
-            onClick={onRename}
-            disabled={isRenaming}
-            className="size-7 p-1 hover:bg-accent rounded-sm"
-          >
-            {isRenaming ? <Spinner /> : <Check size={16} />}
-          </button>
+          <div className="flex items-center gap-1.5 shrink-0">
+            <button
+              onClick={() => setIsRenameClicked(false)}
+              className="p-1 hover:bg-background/80 rounded-lg transition-colors text-muted-foreground/60"
+            >
+              <X size={14} />
+            </button>
+            <button
+              onClick={onRename}
+              disabled={isRenaming}
+              className="p-1 hover:bg-primary/10 rounded-lg transition-colors text-primary"
+            >
+              {isRenaming ? <Spinner className="size-3" /> : <Check size={14} />}
+            </button>
+          </div>
         </div>
-      </SidebarMenuItem>
+      </div>
     )
   }
 
   /* 🗑️ DELETE CONFIRM INLINE */
   if (isDeleteClicked) {
     return (
-      <SidebarMenuItem>
-        <div className="h-auto flex gap-2 items-center bg-red-500/10 border border-red-500/50 rounded-xl px-4 py-1">
-          <div className="text-sm text-red-500 flex-1">
-            Delete &quot;{chat.title}&quot;?
+      <div className="px-1.5 py-0.5">
+        <div className="flex gap-2 items-center bg-destructive/5 border border-destructive/20 rounded-xl px-3 py-1.5 transition-all duration-200">
+          <div className="text-xs text-destructive/70 font-medium flex-1 truncate">
+            Delete conversation?
           </div>
-
-          <button
-            onClick={() => setIsDeleteClicked(false)}
-            className="size-7 p-1 hover:bg-red-600/20 rounded-sm"
-            disabled={isDeleting}
-          >
-            <X size={16} />
-          </button>
-
-          <button
-            onClick={onDelete}
-            disabled={isDeleting}
-            className="size-7 p-1 hover:bg-red-600/20 rounded-sm"
-          >
-            {isDeleting ? <Spinner /> : <Check size={16} />}
-          </button>
+          <div className="flex items-center gap-1.5 shrink-0">
+            <button
+              onClick={() => setIsDeleteClicked(false)}
+              className="p-1 hover:bg-destructive/10 rounded-lg transition-colors text-destructive/40 hover:text-destructive/60"
+              disabled={isDeleting}
+            >
+              <X size={14} />
+            </button>
+            <button
+              onClick={onDelete}
+              disabled={isDeleting}
+              className="p-1 hover:bg-destructive/10 rounded-lg transition-colors text-destructive"
+            >
+              {isDeleting ? <Spinner className="size-3" /> : <Check size={14} />}
+            </button>
+          </div>
         </div>
-      </SidebarMenuItem>
+      </div>
     )
   }
 
   /* DEFAULT VIEW */
   return (
-    <div>
-      <div className="h-auto flex gap-0.5 items-center justify-center pl-2 py-1">
+    <div className="group px-1.5 py-0.5">
+      <div
+        className={cn(
+          "flex items-center gap-2 px-3 py-2 rounded-xl transition-all duration-300 border border-transparent select-none",
+          isActive
+            ? "bg-accent/60 border-border/40 shadow-[0_2px_8px_-2px_rgba(0,0,0,0.05)]"
+            : "hover:bg-muted/50 hover:border-border/20"
+        )}
+      >
         <Link
           href={chat.path}
-          onClick={() => {
-            setHistoryDialogIsOpen(false)
-            toast.message(`Opening conversation "${chat.title}"`)
-          }}
-          className="flex-1">
-          <div className="flex items-center justify-between pr-2 w-full">
-            <div className="flex items-center gap-2 flex-1 min-w-0">
-              <div className="text-sm text-foreground/80 w-48 font-medium truncate select-none flex-1">
-                {chat.title}
-              </div>
-            </div>
-            <div className="text-xs text-muted-foreground whitespace-nowrap ml-2 shrink-0">
+          onClick={() => setHistoryDialogIsOpen(false)}
+          className="flex-1 min-w-0"
+        >
+          <div className="flex flex-col gap-0.5 overflow-hidden">
+            <span className={cn(
+              "text-sm font-medium truncate leading-tight transition-colors",
+              isActive ? "text-foreground" : "text-foreground/80 group-hover:text-foreground"
+            )}>
+              {chat.title || "Untitled conversation"}
+            </span>
+            <span className="text-[10px] text-muted-foreground/50 font-medium tracking-tight">
               {formatDateWithTime(chat.createdAt)}
-            </div>
+            </span>
           </div>
         </Link>
 
-        {/* Action buttons */}
-        <div className="flex items-center gap-1">
+        {/* Action buttons - Hover reveal */}
+        <div className={cn(
+          "flex items-center gap-1 opacity-100 md:opacity-0 group-hover:opacity-100 transition-all duration-300 translate-x-1 group-hover:translate-x-0 shrink-0",
+          (isRenameClicked || isDeleteClicked || isActive) && "opacity-100 translate-x-0"
+        )}>
           <button
-            onClick={() => setIsRenameClicked(true)}
-            className="size-7 p-1 text-foreground/70 hover:bg-accent rounded-sm"
+            onClick={(e) => {
+              e.preventDefault()
+              setIsRenameClicked(true)
+            }}
+            className="p-1.5 text-muted-foreground/80 hover:text-foreground hover:bg-background rounded-lg transition-all"
+            title="Rename"
           >
-            <Edit size={16} />
+            <Edit size={14} />
           </button>
-
           <button
-            onClick={() => setIsDeleteClicked(true)}
-            className="size-7 p-1 text-foreground/70 hover:bg-accent rounded-sm"
+            onClick={(e) => {
+              e.preventDefault()
+              setIsDeleteClicked(true)
+            }}
+            className="p-1.5 text-muted-foreground/80 hover:text-destructive hover:bg-destructive/5 rounded-lg transition-all"
+            title="Delete"
           >
-            <Trash2 size={16} />
+            <Trash2 size={14} />
           </button>
         </div>
       </div>
     </div>
   )
 }
+

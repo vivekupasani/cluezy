@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState, useTransition } from 'react'
 
-import { History, MessageCircle, RefreshCcw, Search } from 'lucide-react'
+import { MessageCircle, RefreshCcw, Search } from 'lucide-react'
 import { toast } from 'sonner'
 
 import { Chat } from '@/lib/types'
@@ -79,67 +79,33 @@ function ChatHistoryList({
     )
   }
 
+  const renderGroup = (label: string, chats: Chat[]) => {
+    if (chats.length === 0) return null
+
+    return (
+      <div key={label} className="mb-6 last:mb-0">
+        {!compact && (
+          <div className="px-4 mb-2">
+            <h3 className="text-[11px] font-semibold text-muted-foreground/50 uppercase tracking-wider">
+              {label}
+            </h3>
+          </div>
+        )}
+        <div className="space-y-0.5">
+          {chats.map((chat) => (
+            <ChatMenuItem key={chat.id} chat={chat} />
+          ))}
+        </div>
+      </div>
+    )
+  }
+
   return (
     <>
-      {groups.thisWeek.length > 0 && (
-        <div className="mb-2">
-          {!compact && (
-            <h3 className="text-xs font-semibold text-foreground px-3 py-2 bg-primary/10 rounded-lg flex items-center gap-2">
-              <History size={16} /> This Week
-            </h3>
-          )}
-          <div className={`space-y-1 ${!compact ? 'mt-2' : ''}`}>
-            {groups.thisWeek.map((chat) => (
-              <ChatMenuItem key={chat.id} chat={chat} />
-            ))}
-          </div>
-        </div>
-      )}
-
-      {groups.lastWeek.length > 0 && (
-        <div className="mb-2">
-          {!compact && (
-            <h3 className="text-xs font-semibold text-foreground px-3 py-2 bg-primary/10 rounded-lg flex items-center gap-2">
-              <History size={16} /> Last Week
-            </h3>
-          )}
-          <div className={`space-y-1 ${!compact ? 'mt-2' : ''}`}>
-            {groups.lastWeek.map((chat) => (
-              <ChatMenuItem key={chat.id} chat={chat} />
-            ))}
-          </div>
-        </div>
-      )}
-
-      {groups.thisMonth.length > 0 && (
-        <div className="mb-2">
-          {!compact && (
-            <h3 className="text-xs font-semibold text-foreground px-3 py-2 bg-primary/10 rounded-lg flex items-center gap-2">
-              <History size={16} /> This Month
-            </h3>
-          )}
-          <div className={`space-y-1 ${!compact ? 'mt-2' : ''}`}>
-            {groups.thisMonth.map((chat) => (
-              <ChatMenuItem key={chat.id} chat={chat} />
-            ))}
-          </div>
-        </div>
-      )}
-
-      {groups.older.length > 0 && (
-        <div className="mb-2">
-          {!compact && (
-            <h3 className="text-xs font-semibold text-foreground px-3 py-2 bg-primary/10 rounded-lg flex items-center gap-2">
-              <History size={16} /> Older
-            </h3>
-          )}
-          <div className={`space-y-1 ${!compact ? 'mt-2' : ''}`}>
-            {groups.older.map((chat) => (
-              <ChatMenuItem key={chat.id} chat={chat} />
-            ))}
-          </div>
-        </div>
-      )}
+      {renderGroup('This Week', groups.thisWeek)}
+      {renderGroup('Last Week', groups.lastWeek)}
+      {renderGroup('This Month', groups.thisMonth)}
+      {renderGroup('Older', groups.older)}
 
       {/* Loading skeleton for infinite scroll - only show when loading more */}
       {(isLoadingMore || isPending) && (
@@ -389,7 +355,7 @@ export function ChatHistoryClient() {
   return (
     <Dialog open={isHistoryDialogOpen} onOpenChange={() => setHistoryDialogIsOpen(false)}>
       <DialogTitle></DialogTitle>
-      <DialogContent className="w-[95%] md:w-full max-w-2xl h-[60vh] sm:h-[80vh] p-0 bg-background backdrop-blur-sm text-popover-foreground border border-border rounded-2xl overflow-hidden flex flex-col gap-0 cosmic-glass HiddenScrollbar">
+      <DialogContent className="w-[95%] md:w-full max-w-2xl h-[70vh] sm:h-[70vh] p-0 bg-background/95 backdrop-blur-sm text-popover-foreground border border-border rounded-2xl overflow-hidden flex flex-col gap-0 cosmic-glass HiddenScrollbar">
         <div className="flex-shrink-0 py-2 px-4">
           <div className="flex items-center gap-3 mb-1">
             <Search size={16} className="text-muted-foreground" />
@@ -421,6 +387,18 @@ export function ChatHistoryClient() {
             searchQuery={searchQuery}
             loadMoreRef={loadMoreRef}
           />
+        </div>
+
+        <div className="flex-none border-t border-border/50 bg-background/50 px-4 md:px-6 py-3">
+          <div className="flex items-center justify-between text-xs">
+            <span className="text-muted-foreground/50 font-medium">
+              {hasChats ? `${groups.thisWeek.length + groups.lastWeek.length + groups.thisMonth.length + groups.older.length} conversations` : 'No conversations'}
+            </span>
+            <kbd className="hidden md:inline-flex items-center gap-1 px-2 py-1 bg-muted/30 border border-border/40 rounded-md text-[10px] text-muted-foreground/60 font-mono">
+              <span>⌘</span>
+              <span>K</span>
+            </kbd>
+          </div>
         </div>
       </DialogContent>
     </Dialog>
