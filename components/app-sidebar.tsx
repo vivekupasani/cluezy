@@ -20,6 +20,7 @@ import {
   useSidebar
 } from '@/components/ui/sidebar'
 import UserMenu from '@/components/user-menu'
+import { useIsMobile } from '@/hooks/use-mobile'
 import Image from 'next/image'
 import { useEffect } from 'react'
 import { Tooltip, TooltipContent, TooltipTrigger } from './ui/tooltip'
@@ -28,9 +29,9 @@ export function AppSidebar() {
   const router = useRouter()
   const { setHistoryDialogIsOpen } = useHistoryDialog()
   const { user } = useAuth()
-  const { toggleSidebar, state } = useSidebar()
+  const { toggleSidebar, setOpenMobile, state } = useSidebar()
   const pathName = usePathname()
-
+  const isMobile = useIsMobile()
   const pages = [
     '/about',
     '/privacy',
@@ -61,12 +62,10 @@ export function AppSidebar() {
   return (
     <Sidebar collapsible="icon" className='border-r-0'>
       <SidebarHeader className="flex flex-row items-center justify-between pt-4 pb-2 px-4 gap-0">
-        <Tooltip>
-          <TooltipTrigger asChild>
-            {
-              state == "expanded" &&
+        <SidebarMenuButton>
+          <Tooltip>
+            <TooltipTrigger asChild>
               <div className='flex justify-between w-full items-center'>
-
                 <div className='opacity-0 flex gap-2 justify-between items-center'>
                   <div className="flex h-7 w-7 items-center object-cover justify-center rounded-full overflow-hidden bg-primary text-primary-foreground">
                     <Image src="/cluezy-logo.png" alt="Cluezy" width={28} height={28} className='' />
@@ -77,15 +76,15 @@ export function AppSidebar() {
                 </div>
                 <SidebarTrigger className='dark:text-neutral-400' />
               </div>
-            }
-          </TooltipTrigger>
-          <TooltipContent side="right">
-            <p>Toggle Sidebar</p>
-          </TooltipContent>
-        </Tooltip>
+            </TooltipTrigger>
+            <TooltipContent side="right">
+              <p className='text-xs'>Toggle Sidebar</p>
+            </TooltipContent>
+          </Tooltip>
+        </SidebarMenuButton>
       </SidebarHeader>
 
-      <SidebarContent className="mt-2">
+      <SidebarContent className="">
         <SidebarGroup>
           <SidebarMenu>
             <SidebarMenuItem>
@@ -95,6 +94,9 @@ export function AppSidebar() {
                     onClick={() => {
                       router.push('/')
                       // Optional: Refresh or reset chat state if needed
+                      if (isMobile) {
+                        setOpenMobile(false)
+                      }
                     }}
                     className="justify-start gap-2 data-[state=open]:px-2"
                   >
@@ -102,7 +104,7 @@ export function AppSidebar() {
                     <span>New Chat</span>
                   </SidebarMenuButton>
                 </TooltipTrigger>
-                <TooltipContent side="right">New Chat</TooltipContent>
+                <TooltipContent side="right" className='text-xs'>New Chat</TooltipContent>
               </Tooltip>
             </SidebarMenuItem>
 
@@ -110,14 +112,19 @@ export function AppSidebar() {
               <Tooltip>
                 <TooltipTrigger asChild>
                   <SidebarMenuButton
-                    onClick={() => setHistoryDialogIsOpen(true)}
+                    onClick={() => {
+                      setHistoryDialogIsOpen(true)
+                      if (isMobile) {
+                        setOpenMobile(false)
+                      }
+                    }}
                     className="justify-start gap-2 data-[state=open]:px-2"
                   >
                     <Search className="size-5" />
                     <span>Search chats</span>
                   </SidebarMenuButton>
                 </TooltipTrigger>
-                <TooltipContent side="right">Search chats</TooltipContent>
+                <TooltipContent side="right" className='text-xs'>Search chats</TooltipContent>
               </Tooltip>
             </SidebarMenuItem>
           </SidebarMenu>
@@ -125,18 +132,18 @@ export function AppSidebar() {
       </SidebarContent>
 
       <SidebarFooter className='pl-2'>
-        <div className="flex flex-col gap-2 items-start w-full">
+        <SidebarMenuItem className="flex flex-col gap-2 items-start w-full">
           {user ? (
             <Tooltip>
               <TooltipTrigger asChild>
                 <UserMenu user={user} state={state} />
               </TooltipTrigger>
-              <TooltipContent side="right">User Menu</TooltipContent>
+              <TooltipContent side="right" className='text-xs'>User Menu</TooltipContent>
             </Tooltip>
           ) : (
             <GuestMenu state={state} />
           )}
-        </div>
+        </SidebarMenuItem>
       </SidebarFooter>
     </Sidebar>
   )

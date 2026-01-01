@@ -384,7 +384,7 @@ export function ChatPanel({
                       </Button>
                     )}
                   </TooltipTrigger>
-                  <TooltipContent>
+                  <TooltipContent className='text-xs'>
                     <p>New chat</p>
                   </TooltipContent>
                 </Tooltip>
@@ -405,7 +405,7 @@ export function ChatPanel({
                       <Paperclip size={18} />
                     </Button>
                   </TooltipTrigger>
-                  <TooltipContent side="top">Attach files</TooltipContent>
+                  <TooltipContent side="top" className='text-xs'>Attach files</TooltipContent>
                 </Tooltip>
 
                 {/* Enhance prompt button */}
@@ -429,7 +429,7 @@ export function ChatPanel({
                         }
                       </Button>
                     </TooltipTrigger>
-                    <TooltipContent side="top">Enhance prompt</TooltipContent>
+                    <TooltipContent side="top" className='text-xs'>Enhance prompt</TooltipContent>
                   </Tooltip>
                 )}
 
@@ -516,7 +516,7 @@ export function ChatPanel({
                       )}
                     </Button>
                   </TooltipTrigger>
-                  <TooltipContent side="top">{isLoading ? "Stop generating" : "Send message"}</TooltipContent>
+                  <TooltipContent side="top" className='text-xs'>{isLoading ? "Stop generating" : "Send message"}</TooltipContent>
                 </Tooltip>
               </div>
             </div>

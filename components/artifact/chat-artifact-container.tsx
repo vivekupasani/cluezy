@@ -15,6 +15,7 @@ import { SidebarTrigger, useSidebar } from '@/components/ui/sidebar'
 import { InspectorDrawer } from '@/components/inspector/inspector-drawer'
 import { InspectorPanel } from '@/components/inspector/inspector-panel'
 
+import { Tooltip, TooltipContent, TooltipTrigger } from '../ui'
 import { useArtifact } from './artifact-context'
 export function ChatArtifactContainer({
   children
@@ -38,7 +39,14 @@ export function ChatArtifactContainer({
     <div className="flex-1 min-h-0 h-screen flex">
       <div className="absolute p-2 md:p-4 z-50 bg-background/50 backdrop-blur-lg md:bg-transparent md:backdrop-blur-none w-full">
         {(!open || isMobileSidebar) && (
-          <SidebarTrigger />
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <SidebarTrigger />
+            </TooltipTrigger>
+            <TooltipContent side="right" className='text-xs'>
+              Toggle Sidebar
+            </TooltipContent>
+          </Tooltip>
         )}
       </div>
 

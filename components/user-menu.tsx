@@ -67,8 +67,7 @@ export default function UserMenu({ user, state }: UserMenuProps) {
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <button
-          className={`group flex items-center gap-2 w-full px-2 py-2 rounded-lg hover:bg-sidebar-accent transition ${state === 'collapsed' ? 'justify-center' : ''
-            }`}
+          className={`group flex items-center gap-2 w-full rounded-lg hover:bg-sidebar-accent transition`}
         >
           <Avatar className="h-7 w-7">
             <AvatarImage src={avatarUrl} />
@@ -77,16 +76,15 @@ export default function UserMenu({ user, state }: UserMenuProps) {
             </AvatarFallback>
           </Avatar>
 
-          {state === 'expanded' && (
-            <div className="flex flex-col text-left truncate">
-              <span className="text-sm font-medium truncate">
-                {userName}
-              </span>
-              <span className="text-xs text-muted-foreground truncate">
-                {user.email}
-              </span>
-            </div>
-          )}
+          <div className="flex flex-col text-left truncate">
+            <span className="text-sm font-medium truncate">
+              {userName}
+            </span>
+            <span className="text-xs text-muted-foreground truncate">
+              {user.email}
+            </span>
+            {/* <ChevronsUpDown className="ml-auto h-4 w-4" /> */}
+          </div>
         </button>
       </DropdownMenuTrigger>
 

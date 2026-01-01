@@ -22,20 +22,43 @@ import {
 } from '@/components/ui/dropdown-menu'
 
 import { CompanyInfoItems } from './company-info'
+import { useAuth } from './context/auth-context'
 import { ExternalLinkItems } from './external-link-items'
 import { ThemeMenuItems } from './theme-menu-items'
 
 export default function GuestMenu({ state }: { state: "expanded" | "collapsed" }) {
+  const { user } = useAuth()
+  const userName =
+    user?.user_metadata?.full_name ||
+    user?.user_metadata?.name ||
+    'User'
+
+  const avatarUrl =
+    user?.user_metadata?.avatar_url ||
+    user?.user_metadata?.picture
+
+  const getInitials = (name: string, email?: string) => {
+    if (name && name !== 'User') {
+      const parts = name.split(' ')
+      return parts.length > 1
+        ? `${parts[0][0]}${parts[1][0]}`
+        : name.slice(0, 2).toUpperCase()
+    }
+    return email?.slice(0, 2).toUpperCase() || 'U'
+  }
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <button className={`group flex items-center gap-2 w-full px-2 py-2 rounded-lg hover:bg-sidebar-accent transition ${state === 'collapsed' ? 'justify-center' : ''
-          }`}
+        <button
+          className={`group flex items-center gap-2 w-full px-2 py-2 rounded-lg hover:bg-sidebar-accent transition`}
         >
-          <Settings size={16} className=' text-foreground/80' />
-          {state === 'expanded' && (
-            <div className='text-sm txt-grad'>Settings & Help center</div>
-          )}
+          <div className="relative flex shrink-0 overflow-hidden">
+            <Settings size={16} />
+          </div>
+
+          <div className="flex flex-col text-left truncate text-sm">
+            Settings & Help center
+          </div>
         </button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56 border-b border-primary/8 ml-6" align="end" forceMount>
