@@ -9,6 +9,7 @@ import { shareChat } from '@/lib/actions/chat'
 import { useCopyToClipboard } from '@/lib/hooks/use-copy-to-clipboard'
 import { cn } from '@/lib/utils'
 
+import { Tooltip, TooltipContent, TooltipTrigger } from './ui'
 import { Button } from './ui/button'
 import {
   Dialog,
@@ -70,17 +71,24 @@ export function ChatShare({ chatId, className }: ChatShareProps) {
         aria-labelledby="share-dialog-title"
         aria-describedby="share-dialog-description"
       >
-        <DialogTrigger asChild>
-          <Button
-            className={cn('rounded-full')}
-            size="icon"
-            variant={'ghost'}
-            onClick={() => setOpen(true)}
-          >
-            <Share size={14} className='text-foreground/70 hover:text-foreground' />
-          </Button>
+        <DialogTrigger asChild className='ring-0'>
+          <Tooltip>
+            <TooltipTrigger>
+              <Button
+                className={cn('rounded-full h-8 w-8')}
+                size="icon"
+                variant={'ghost'}
+                onClick={() => setOpen(true)}
+              >
+                <Share size={14} className='text-foreground/70 hover:text-foreground transition-colors' />
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent side="bottom" className='text-xs'>
+              Share
+            </TooltipContent>
+          </Tooltip>
         </DialogTrigger>
-        <DialogContent className='w-[90%] bg-gradient-to-br from-card/75 via-card/55 to-card/65 rounded-2xl backdrop-blur-sm'>
+        <DialogContent className='w-[90%] bg-gradient-to-br from-card/75 via-card/55 to-card/65 rounded-2xl backdrop-blur-sm ring-0'>
           <DialogHeader>
             <DialogTitle className='txt-grad'>Share link to search result</DialogTitle>
             <DialogDescription className='txt-mut'>

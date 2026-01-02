@@ -1,14 +1,14 @@
 'use client'
 
-import { useChat } from '@ai-sdk/react'
-import { Copy } from 'lucide-react'
-import { toast } from 'sonner'
+import { useChat } from '@ai-sdk/react';
 
-import { cn } from '@/lib/utils'
 
-import { ChatShare } from './chat-share'
-import { RetryButton } from './retry-button'
-import { Button } from './ui/button'
+import { cn } from '@/lib/utils';
+
+import { ChatShare } from './chat-share';
+import { CopyButton } from './copy-button';
+import { DownloadResponse } from './download-response';
+import { RetryButton } from './retry-button';
 
 interface MessageActionsProps {
   message: string
@@ -32,29 +32,18 @@ export function MessageActions({
   })
   const isLoading = status === 'submitted' || status === 'streaming'
 
-  async function handleCopy() {
-    await navigator.clipboard.writeText(message)
-    toast.success('Message copied to clipboard')
-  }
-
   return (
     <div
       className={cn(
-        'flex items-center gap-0.5 self-end transition-opacity duration-200',
+        'flex items-center self-end transition-opacity duration-200',
         isLoading ? 'opacity-0' : 'opacity-100',
         className
       )}
     >
       {reload && <RetryButton reload={reload} messageId={messageId} />}
-      <Button
-        variant="ghost"
-        size="icon"
-        onClick={handleCopy}
-        className="rounded-full"
-      >
-        <Copy size={14} className='text-foreground/70 hover:text-foreground transition-colors' />
-      </Button>
       {enableShare && chatId && <ChatShare chatId={chatId} />}
+      <CopyButton message={message} />
+      <DownloadResponse message={message} chatId={chatId} />
     </div>
   )
 }

@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState, useTransition } from 'react'
 
-import { MessageCircle, RefreshCcw, Search } from 'lucide-react'
+import { MessageCircle, Search } from 'lucide-react'
 import { toast } from 'sonner'
 
 import { Chat } from '@/lib/types'
@@ -318,7 +318,8 @@ export function useChatHistory() {
     searchQuery,
     setSearchQuery,
     loadMoreRef,
-    handleRefresh
+    handleRefresh,
+    fetchMoreChats
   }
 }
 
@@ -333,7 +334,7 @@ export function ChatHistoryClient() {
     searchQuery,
     setSearchQuery,
     loadMoreRef,
-    handleRefresh
+    fetchMoreChats
   } = useChatHistory()
 
   //handle keydown event
@@ -366,12 +367,12 @@ export function ChatHistoryClient() {
               autoFocus={false}
               className="border-none bg-transparent focus:outline-none text-sm h-8 flex-1 placeholder-txt-mut text-foreground/90"
             />
-            <button
+            {/* <button
               onClick={handleRefresh}
               className="p-1 mr-5 rounded-full hover:bg-muted transition-colors"
             >
               <RefreshCcw size={14} />
-            </button>
+            </button> */}
           </div>
 
           <div className='w-full h-[1px] bg-border' />
@@ -387,6 +388,18 @@ export function ChatHistoryClient() {
             searchQuery={searchQuery}
             loadMoreRef={loadMoreRef}
           />
+
+          {!isLoadingMore && !isPending && hasChats && (
+            <div className="flex justify-center py-3">
+              <button
+                onClick={fetchMoreChats}
+                className="text-xs px-4 py-1.5 rounded-md border border-border bg-muted/30 hover:bg-muted transition"
+              >
+                Load more
+              </button>
+            </div>
+          )}
+
         </div>
 
         <div className="flex-none border-t border-border/50 bg-background/50 px-4 md:px-6 py-3">

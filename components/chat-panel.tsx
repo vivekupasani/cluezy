@@ -214,7 +214,7 @@ export function ChatPanel({
       className={cn(
         'w-full group/form-container shrink-0 mx-auto max-w-2xl px-2 md:px-0',
         messages.length > 0
-          ? 'sticky bottom-0 pb-4 sm:pb-2'
+          ? 'sticky bottom-0 pb-4 sm:pb-2.5'
           : 'px-2 sm:px-0'
       )}
     >

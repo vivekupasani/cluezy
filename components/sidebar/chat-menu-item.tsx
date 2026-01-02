@@ -170,7 +170,10 @@ export function ChatMenuItem({ chat }: ChatMenuItemProps) {
       >
         <Link
           href={chat.path}
-          onClick={() => setHistoryDialogIsOpen(false)}
+          onClick={() => {
+            setHistoryDialogIsOpen(false)
+            toast.message(`Opening conversation "${chat.title}"`)
+          }}
           className="flex-1 min-w-0"
         >
           <div className="flex flex-col gap-0.5 overflow-hidden">

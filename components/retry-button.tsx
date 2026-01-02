@@ -2,6 +2,7 @@
 
 import { RotateCcw } from 'lucide-react'
 
+import { Tooltip, TooltipContent, TooltipTrigger } from './ui'
 import { Button } from './ui/button'
 
 interface RetryButtonProps {
@@ -14,16 +15,23 @@ export const RetryButton: React.FC<RetryButtonProps> = ({
   messageId
 }) => {
   return (
-    <Button
-      className="rounded-full h-8 w-8"
-      type="button"
-      variant="ghost"
-      size="icon"
-      onClick={() => reload()}
-      aria-label={`Retry from message ${messageId}`}
-    >
-      <RotateCcw className="w-4 h-4 text-foreground/70 hover:text-foreground" />
-      <span className="sr-only">Retry</span>
-    </Button>
+    <Tooltip>
+      <TooltipTrigger asChild>
+        <Button
+          className="rounded-full h-8 w-8 ring-0"
+          type="button"
+          variant="ghost"
+          size="icon"
+          onClick={() => reload()}
+          aria-label={`Retry from message ${messageId}`}
+        >
+          <RotateCcw size={14} className="text-foreground/70 hover:text-foreground transition-colors" />
+          <span className="sr-only">Try again</span>
+        </Button>
+      </TooltipTrigger>
+      <TooltipContent side="bottom" className='text-xs'>
+        Try again
+      </TooltipContent>
+    </Tooltip>
   )
 }
