@@ -18,30 +18,121 @@ import {
 export const DownloadResponse = ({ message, chatId }: { message: string; chatId: string }) => {
 
     const downloadAsPdf = async () => {
-        const html = marked.parse(message);
-        const container = document.createElement("div");
+        const html = marked.parse(message)
 
-        container.innerHTML = await html;
-        container.style.width = "800px";
-        container.style.padding = "24px";
-        container.style.background = "white";
-        container.style.position = "fixed";
-        container.style.left = "-9999px";
+        const container = document.createElement("div")
+        container.id = "pdf-export-root"
 
-        document.body.appendChild(container);
+        container.innerHTML = await html
 
-        const canvas = await html2canvas(container, { scale: 2 });
-        const imgData = canvas.toDataURL("image/png");
+        /* ===== FORCE LIGHT THEME ===== */
+        Object.assign(container.style, {
+            background: "#ffffff",
+            color: "#111827",
+            width: "800px",
+            padding: "32px",
+            position: "fixed",
+            left: "-9999px",
+            top: "0",
+            fontFamily:
+                "Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
+            lineHeight: "1.7",
+            fontSize: "14px",
+        })
 
-        const pdf = new jsPDF("p", "mm", "a4");
-        const pdfWidth = pdf.internal.pageSize.getWidth();
-        const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
+        /* ===== SCOPED STYLES (NO GLOBAL EFFECTS) ===== */
+        const style = document.createElement("style")
+        style.innerHTML = `
+    #pdf-export-root h1 {
+      font-size: 28px;
+      font-weight: 700;
+      margin: 24px 0 12px;
+    }
 
-        pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, pdfHeight);
-        pdf.save(`${chatId}.pdf`);
+    #pdf-export-root h2 {
+      font-size: 22px;
+      font-weight: 600;
+      margin: 20px 0 10px;
+    }
 
-        document.body.removeChild(container);
-    };
+    #pdf-export-root h3 {
+      font-size: 18px;
+      font-weight: 600;
+      margin: 18px 0 8px;
+    }
+
+    #pdf-export-root p {
+      margin: 10px 0;
+    }
+
+    #pdf-export-root ul,
+    #pdf-export-root ol {
+      padding-left: 20px;
+      margin: 10px 0;
+    }
+
+    #pdf-export-root li {
+      margin: 6px 0;
+    }
+
+    #pdf-export-root blockquote {
+      border-left: 4px solid #e5e7eb;
+      padding-left: 12px;
+      margin: 12px 0;
+      color: #374151;
+      font-style: italic;
+    }
+
+    #pdf-export-root code {
+      background: #f3f4f6;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 13px;
+      font-family: monospace;
+    }
+
+    #pdf-export-root pre {
+      background: #f3f4f6;
+      padding: 14px;
+      border-radius: 8px;
+      overflow-x: auto;
+      margin: 16px 0;
+      font-size: 13px;
+    }
+
+    #pdf-export-root pre code {
+      background: transparent;
+      padding: 0;
+    }
+
+    #pdf-export-root hr {
+      border: none;
+      border-top: 1px solid #e5e7eb;
+      margin: 24px 0;
+    }
+  `
+
+        container.appendChild(style)
+        document.body.appendChild(container)
+
+        /* ===== RENDER ===== */
+        const canvas = await html2canvas(container, {
+            scale: 2,
+            backgroundColor: "#ffffff",
+            useCORS: true,
+        })
+
+        const imgData = canvas.toDataURL("image/png")
+
+        const pdf = new jsPDF("p", "mm", "a4")
+        const pdfWidth = pdf.internal.pageSize.getWidth()
+        const pdfHeight = (canvas.height * pdfWidth) / canvas.width
+
+        pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, pdfHeight)
+        pdf.save(`${chatId}.pdf`)
+
+        document.body.removeChild(container)
+    }
 
     const downloadAsMarkdown = () => {
         const blob = new Blob([message], { type: "text/markdown" });

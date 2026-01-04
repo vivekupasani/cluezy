@@ -65,14 +65,14 @@ export default function GuestMenu({ state }: { state: "expanded" | "collapsed" }
         <DropdownMenuItem asChild>
           <Link href="/auth/login" className='cursor-pointer'>
             <LogIn className="mr-2 h-4 w-4 text-foreground/70" />
-            <span className='txt-grad text-sm'>Sign In</span>
+            <span className='text-foreground/70 font-medium text-sm'>Sign In</span>
           </Link>
         </DropdownMenuItem>
         <DropdownMenuSeparator />
         <DropdownMenuSub>
           <DropdownMenuSubTrigger className='cursor-pointer'>
             <Palette className="mr-2 h-4 w-4 text-foreground/70" />
-            <span className='txt-grad'>Theme</span>
+            <span className='text-foreground/70 font-medium'>Theme</span>
           </DropdownMenuSubTrigger>
           <DropdownMenuSubContent>
             <ThemeMenuItems />
@@ -81,7 +81,7 @@ export default function GuestMenu({ state }: { state: "expanded" | "collapsed" }
         <DropdownMenuSub>
           <DropdownMenuSubTrigger className='cursor-pointer'>
             <Link2 className="mr-2 h-4 w-4 text-foreground/70" />
-            <span className='txt-grad'>Links</span>
+            <span className='text-foreground/70 font-medium'>Links</span>
           </DropdownMenuSubTrigger>
           <DropdownMenuSubContent>
             <ExternalLinkItems />
@@ -90,7 +90,7 @@ export default function GuestMenu({ state }: { state: "expanded" | "collapsed" }
         <DropdownMenuSub>
           <DropdownMenuSubTrigger className='cursor-pointer'>
             <LucideBadgeAlert className="mr-2 h-4 w-4 text-foreground/70" />
-            <span className='txt-grad'>Company Info</span>
+            <span className='text-foreground/70 font-medium'>Company Info</span>
           </DropdownMenuSubTrigger>
           <DropdownMenuSubContent>
             <CompanyInfoItems />

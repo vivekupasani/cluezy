@@ -35,7 +35,7 @@ export function ExternalLinkItems() {
         <DropdownMenuItem key={link.name} asChild className='cursor-pointer px-3 py-2 rounded-lg'>
           <Link href={link.href} target="_blank" rel="noopener noreferrer">
             {link.icon}
-            <span className='txt-grad text-sm'>{link.name}</span>
+            <span className='text-foreground/70 font-medium text-sm'>{link.name}</span>
           </Link>
         </DropdownMenuItem>
       ))}

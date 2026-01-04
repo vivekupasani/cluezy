@@ -77,7 +77,7 @@ export default function UserMenu({ user, state }: UserMenuProps) {
           </Avatar>
 
           <div className="flex flex-col text-left truncate">
-            <span className="text-sm font-medium truncate">
+            <span className="text-sm font-medium truncate text-foreground/70">
               {userName}
             </span>
             <span className="text-xs text-muted-foreground truncate">
@@ -101,7 +101,7 @@ export default function UserMenu({ user, state }: UserMenuProps) {
         <DropdownMenuSub>
           <DropdownMenuSubTrigger>
             <Palette className="mr-2 h-4 w-4 text-foreground/70" />
-            <span className='txt-grad'>Theme</span>
+            <span className='text-foreground/70 font-medium'>Theme</span>
           </DropdownMenuSubTrigger>
           <DropdownMenuSubContent>
             <ThemeMenuItems />
@@ -112,7 +112,7 @@ export default function UserMenu({ user, state }: UserMenuProps) {
         <DropdownMenuSub>
           <DropdownMenuSubTrigger>
             <Link2 className="mr-2 h-4 w-4 text-foreground/70" />
-            <span className='txt-grad'>Links</span>
+            <span className='text-foreground/70 font-medium'>Links</span>
           </DropdownMenuSubTrigger>
           <DropdownMenuSubContent>
             <ExternalLinkItems />
@@ -123,7 +123,7 @@ export default function UserMenu({ user, state }: UserMenuProps) {
         <DropdownMenuSub>
           <DropdownMenuSubTrigger>
             <LucideBadgeAlert className="mr-2 h-4 w-4 text-foreground/70" />
-            <span className='txt-grad'>Company Info</span>
+            <span className='text-foreground/70 font-medium'>Company Info</span>
           </DropdownMenuSubTrigger>
           <DropdownMenuSubContent>
             <CompanyInfoItems />
@@ -135,7 +135,7 @@ export default function UserMenu({ user, state }: UserMenuProps) {
         {/* Logout */}
         <DropdownMenuItem
           onClick={handleLogout}
-          className="text-destructive focus:text-destructive"
+          className="text-destructive focus:text-destructive cursor-pointer"
         >
           <LogOut className="mr-2 h-4 w-4" />
           Logout

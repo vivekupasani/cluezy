@@ -214,7 +214,7 @@ export function ChatPanel({
       className={cn(
         'w-full group/form-container shrink-0 mx-auto max-w-2xl px-2 md:px-0',
         messages.length > 0
-          ? 'sticky bottom-0 pb-4 sm:pb-2.5'
+          ? 'sticky bottom-0 pb-4 sm:pb-2'
           : 'px-2 sm:px-0'
       )}
     >
@@ -259,7 +259,7 @@ export function ChatPanel({
           <div className={cn(
             "relative flex flex-col w-full p-2.5 transition-all duration-300",
             "bg-card/80 backdrop-blur-xl",
-            "border border-border",
+            // "border border-border",
             "ring-1 ring-border",
             "shadow-sm",
             isMobile ? (input.length > 30 ? "rounded-[18px]" : "rounded-[18px]") : "rounded-[18px]"

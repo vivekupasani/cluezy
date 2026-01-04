@@ -36,7 +36,8 @@ export function AppSidebar() {
     '/about',
     '/privacy',
     '/terms',
-    '/settings'
+    '/settings',
+    '/pricing'
   ]
 
   useEffect(() => {
