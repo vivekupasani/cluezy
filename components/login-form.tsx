@@ -1,8 +1,8 @@
 'use client'
 
-import { useState } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
+import { useState } from 'react'
 
 import { toast } from 'sonner'
 
@@ -106,6 +106,7 @@ export function LoginForm({
                     placeholder="you@example.com"
                     required
                     value={email}
+                    autoFocus
                     onChange={e => setEmail(e.target.value)}
                   />
                 </div>
@@ -119,6 +120,7 @@ export function LoginForm({
                     placeholder="********"
                     required
                     value={password}
+                    autoFocus
                     onChange={e => setPassword(e.target.value)}
                   />
                   <Link

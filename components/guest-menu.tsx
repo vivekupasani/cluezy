@@ -53,10 +53,10 @@ export default function GuestMenu({ state }: { state: "expanded" | "collapsed" }
           className={`group flex items-center gap-2 w-full px-2 py-2 rounded-lg hover:bg-sidebar-accent transition`}
         >
           <div className="relative flex shrink-0 overflow-hidden">
-            <Settings size={16} />
+            <Settings size={16} className='text-muted-foreground' />
           </div>
 
-          <div className="flex flex-col text-left truncate text-sm">
+          <div className="flex flex-col text-foreground/80 text-left truncate text-sm">
             Settings & Help center
           </div>
         </button>

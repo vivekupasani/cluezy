@@ -96,7 +96,7 @@ export function ModelSelector({ models }: ModelSelectorProps) {
         <Button
           role="combobox"
           aria-expanded={open}
-          className="h-8 px-2 flex items-center justify-center gap-1.5 rounded-lg bg-secondary/30 hover:bg-secondary/60  border-border text-muted-foreground hover:text-foreground transition-all duration-200 border-0"
+          className="h-8 px-2 flex items-center justify-center gap-1.5 rounded-xl bg-muted/30 hover:bg-muted/60  border-border text-muted-foreground hover:text-foreground transition-all duration-200 border-0"
         >
           {selectedModel ? (
             <Image
@@ -115,7 +115,7 @@ export function ModelSelector({ models }: ModelSelectorProps) {
           <ChevronDown size={12} className="opacity-50" />
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-[300px] p-0 mx-2 HiddenScrollbar border-border/50 shadow-xl rounded-xl" align="start">
+      <PopoverContent className="w-[300px] p-0 mx-2 HiddenScrollbar border-border/50 rounded-xl" align="start">
         <Command className='bg-background/95 backdrop-blur-sm'>
           <CommandInput placeholder="Search models..." className="h-10 text-sm" />
           <CommandList className="max-h-[300px] overflow-y-auto CustomScrollbar p-1">

@@ -126,9 +126,25 @@ export const DownloadResponse = ({ message, chatId }: { message: string; chatId:
 
         const pdf = new jsPDF("p", "mm", "a4")
         const pdfWidth = pdf.internal.pageSize.getWidth()
-        const pdfHeight = (canvas.height * pdfWidth) / canvas.width
+        const pageHeight = pdf.internal.pageSize.getHeight()
+        const imgWidth = pdfWidth
+        const imgHeight = (canvas.height * pdfWidth) / canvas.width
 
-        pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, pdfHeight)
+        let heightLeft = imgHeight
+        let position = 0
+
+        // Add first page
+        pdf.addImage(imgData, "PNG", 0, position, imgWidth, imgHeight)
+        heightLeft -= pageHeight
+
+        // Add additional pages if needed
+        while (heightLeft > 0) {
+            position = heightLeft - imgHeight // This creates a negative offset to "scroll" the image
+            pdf.addPage()
+            pdf.addImage(imgData, "PNG", 0, position, imgWidth, imgHeight)
+            heightLeft -= pageHeight
+        }
+
         pdf.save(`${chatId}.pdf`)
 
         document.body.removeChild(container)
@@ -159,12 +175,19 @@ export const DownloadResponse = ({ message, chatId }: { message: string; chatId:
                                 : token.depth === 2
                                     ? HeadingLevel.HEADING_2
                                     : HeadingLevel.HEADING_3,
+                        spacing: {
+                            before: 240,
+                            after: 120,
+                        },
                     })
                 );
             } else if (token.type === "paragraph") {
                 children.push(
                     new Paragraph({
                         children: [new TextRun(token.text)],
+                        spacing: {
+                            after: 200,
+                        },
                     })
                 );
             } else if (token.type === "list") {
@@ -173,13 +196,30 @@ export const DownloadResponse = ({ message, chatId }: { message: string; chatId:
                         new Paragraph({
                             text: item.text,
                             bullet: { level: 0 },
+                            spacing: {
+                                after: 100,
+                            },
                         })
                     );
                 });
             }
         });
 
-        const doc = new Document({ sections: [{ children }] });
+        const doc = new Document({
+            sections: [{
+                properties: {
+                    page: {
+                        margin: {
+                            top: 1440,    // 1 inch
+                            right: 1440,
+                            bottom: 1440,
+                            left: 1440,
+                        },
+                    },
+                },
+                children
+            }]
+        });
         const blob = await Packer.toBlob(doc);
 
         const url = URL.createObjectURL(blob);

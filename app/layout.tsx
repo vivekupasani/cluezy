@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from 'next'
-import { Inter as FontSans } from 'next/font/google'
+import { Baumans } from 'next/font/google'
 
 import { Analytics } from '@vercel/analytics/next'
 
@@ -17,9 +17,12 @@ import { ThemeProvider } from '@/components/theme-provider'
 
 import './globals.css'
 
-const fontSans = FontSans({
+const fontSans = Baumans({
   subsets: ['latin'],
-  variable: '--font-sans'
+  variable: '--font-baumans',
+  preload: true,
+  display: 'swap',
+  weight: ['400'],
 })
 
 const title = {

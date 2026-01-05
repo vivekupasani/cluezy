@@ -66,7 +66,7 @@ export function ToolSection({
   switch (tool.toolName) {
     case 'search':
       return (
-        <div className='mt-3'>
+        <div className='mt-0'>
           <SearchSection
             tool={tool}
             isOpen={isOpen}
@@ -78,7 +78,7 @@ export function ToolSection({
 
     case 'acadamicSearch':
       return (
-        <div className='mt-3'>
+        <div className='mt-0'>
           <SearchSection
             tool={tool}
             isOpen={isOpen}
@@ -90,7 +90,7 @@ export function ToolSection({
 
     case 'videoSearch':
       return (
-        <div className='mt-3'>
+        <div className='mt-0'>
           <VideoSearchSection
             tool={tool}
             isOpen={isOpen}
@@ -101,13 +101,13 @@ export function ToolSection({
       )
     case 'youtubeVideoAnalysis':
       return (
-        <div className='mt-3'>
+        <div className='mt-0'>
           <YoutubeVideoAnalysisSection tool={tool} />
         </div>
       )
     case 'retrieve':
       return (
-        <div className='mt-3'>
+        <div className='mt-0'>
           <RetrieveSection
             tool={tool}
             isOpen={isOpen}

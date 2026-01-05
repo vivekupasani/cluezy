@@ -34,20 +34,20 @@ export default function PricingPage() {
                 { icon: ChartLine, label: "Advanced analytics" },
             ],
         },
-        {
-            id: "enterprise",
-            name: "Enterprise",
-            price: "",
-            popular: false,
-            description: "Built for teams and businesses that need full control.",
-            features: [
-                { icon: Search, label: "Unlimited searches" },
-                { icon: Cpu, label: "Custom AI models" },
-                { icon: History, label: "Team-wide history" },
-                { icon: Users, label: "Dedicated support" },
-                { icon: ChartLine, label: "Enterprise analytics" },
-            ],
-        },
+        // {
+        //     id: "enterprise",
+        //     name: "Enterprise",
+        //     price: "",
+        //     popular: false,
+        //     description: "Built for teams and businesses that need full control.",
+        //     features: [
+        //         { icon: Search, label: "Unlimited searches" },
+        //         { icon: Cpu, label: "Custom AI models" },
+        //         { icon: History, label: "Team-wide history" },
+        //         { icon: Users, label: "Dedicated support" },
+        //         { icon: ChartLine, label: "Enterprise analytics" },
+        //     ],
+        // },
     ]
 
     return (
@@ -100,8 +100,8 @@ const PricingTile = ({ plan }: { plan: any }) => {
                 <div>
                     <div className="flex flex-col gap-3 mt-2">
                         {
-                            plan.features.map((feature: any) => (
-                                <div className="flex items-center gap-2">
+                            plan.features.map((feature: any, idx: number) => (
+                                <div className="flex items-center gap-2" key={idx}>
                                     <feature.icon className="w-4 h-4 text-foreground/70" />
                                     <span className="text-sm text-foreground/70 font-semibold">{feature.label}</span>
                                 </div>

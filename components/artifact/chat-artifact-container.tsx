@@ -41,7 +41,7 @@ export function ChatArtifactContainer({
         {(!open || isMobileSidebar) && (
           <Tooltip>
             <TooltipTrigger asChild>
-              <SidebarTrigger />
+              <SidebarTrigger className='mt-2 text-muted-foreground' />
             </TooltipTrigger>
             <TooltipContent side="right" className='text-xs'>
               Toggle Sidebar

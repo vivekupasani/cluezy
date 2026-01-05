@@ -2,7 +2,7 @@
 
 import { usePathname, useRouter } from 'next/navigation'
 
-import { Search, SquarePen } from 'lucide-react'
+import { PanelLeftClose, PanelRightClose, Search, SquarePen } from 'lucide-react'
 
 import { useAuth } from '@/components/context/auth-context'
 import GuestMenu from '@/components/guest-menu'
@@ -16,7 +16,6 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-  SidebarTrigger,
   useSidebar
 } from '@/components/ui/sidebar'
 import UserMenu from '@/components/user-menu'
@@ -62,8 +61,8 @@ export function AppSidebar() {
 
   return (
     <Sidebar collapsible="icon" className='border-r-0'>
-      <SidebarHeader className="flex flex-row items-center justify-between pt-4 pb-2 px-4 gap-0">
-        <SidebarMenuButton>
+      <SidebarHeader className="flex flex-row items-center justify-between pt-4 pb-2 gap-0">
+        <SidebarMenuButton onClick={toggleSidebar}>
           <Tooltip>
             <TooltipTrigger asChild>
               <div className='flex justify-between w-full items-center'>
@@ -75,7 +74,9 @@ export function AppSidebar() {
                     <span className="truncate font-medium">CLUEZY</span>
                   </div>
                 </div>
-                <SidebarTrigger className='dark:text-neutral-400' />
+                {
+                  state === 'collapsed' ? <PanelRightClose size={16} className='text-muted-foreground' /> : <PanelLeftClose size={16} className='text-muted-foreground' />
+                }
               </div>
             </TooltipTrigger>
             <TooltipContent side="right">
@@ -101,8 +102,8 @@ export function AppSidebar() {
                     }}
                     className="justify-start gap-2 data-[state=open]:px-2"
                   >
-                    <SquarePen className="size-5" />
-                    <span>New Chat</span>
+                    <SquarePen className="size-5 text-muted-foreground" />
+                    <span className='text-foreground/80'>New Chat</span>
                   </SidebarMenuButton>
                 </TooltipTrigger>
                 <TooltipContent side="right" className='text-xs'>New Chat</TooltipContent>
@@ -121,8 +122,8 @@ export function AppSidebar() {
                     }}
                     className="justify-start gap-2 data-[state=open]:px-2"
                   >
-                    <Search className="size-5" />
-                    <span>Search chats</span>
+                    <Search className="size-5 text-muted-foreground" />
+                    <span className='text-foreground/80'>Search chats</span>
                   </SidebarMenuButton>
                 </TooltipTrigger>
                 <TooltipContent side="right" className='text-xs'>Search chats</TooltipContent>

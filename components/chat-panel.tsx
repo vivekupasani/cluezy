@@ -219,9 +219,9 @@ export function ChatPanel({
       )}
     >
       {messages.length === 0 && (
-        <div className="flex flex-col items-center mb-4">
-          <h1 className='text-2xl md:text-4xl tracking-tight mb-2 font-medium bg-clip-text text-transparent bg-gradient-to-tr from-foreground to-foreground/60'>
-            How can i help you, {user?.user_metadata?.name?.split(' ')[0] || 'User'}?
+        <div className="flex flex-col items-center mb-2">
+          <h1 className='text-2xl md:text-3xl tracking-tight pb-2 font-medium bg-clip-text text-transparent bg-gradient-to-tr from-foreground to-foreground/60'>
+            How can i help you today?
           </h1>
         </div>
       )}
@@ -247,7 +247,7 @@ export function ChatPanel({
             type="button"
             variant="outline"
             size="icon"
-            className="absolute -top-12 border border-border right-4 z-20 size-8 rounded-full bg-background/80 backdrop-blur-sm shadow-sm hover:bg-background transition-all"
+            className="absolute -top-12 border border-border right-4 z-20 size-8 rounded-full bg-background backdrop-blur-sm shadow-sm hover:bg-background transition-all"
             onClick={handleScrollToBottom}
             title="Scroll to bottom"
           >
@@ -377,7 +377,7 @@ export function ChatPanel({
                         size={'icon'}
                         variant={'ghost'}
                         onClick={handleNewChat}
-                        className="size-8 rounded-full text-muted-foreground/80 hover:text-foreground hover:bg-secondary/40 transition-colors"
+                        className="size-8 rounded-full bg-muted/30 hover:bg-muted/60 border-border text-muted-foreground hover:text-foreground transition-all duration-200 border-0"
                         disabled={isLoading || isToolInvocationInProgress()}
                       >
                         <MessageCirclePlus size={18} />
@@ -395,7 +395,7 @@ export function ChatPanel({
                       size={'icon'}
                       variant={'ghost'}
                       className={cn(
-                        'size-8 rounded-full text-muted-foreground/80 hover:text-foreground hover:bg-secondary/40 transition-colors',
+                        'size-8 rounded-full bg-muted/30 hover:bg-muted/60 border-border text-muted-foreground hover:text-foreground transition-all duration-200 border-0',
                         isFileUploading && 'opacity-50 cursor-not-allowed'
                       )}
                       onClick={handleFileButtonClick}
@@ -417,8 +417,8 @@ export function ChatPanel({
                         size={'icon'}
                         variant={'ghost'}
                         className={cn(
-                          'size-8 rounded-full text-muted-foreground/80 hover:text-foreground hover:bg-secondary/40 transition-colors',
-                          (isEnhancePromptLoading || isFileUploading) && 'animate-pulse bg-transparent opacity-50 cursor-not-allowed'
+                          'size-8 rounded-full bg-muted/30 hover:bg-muted/60  border-border text-muted-foreground hover:text-foreground transition-all duration-200 border-0',
+                          (isEnhancePromptLoading || isFileUploading) && 'animate-pulse duration-1000 bg-transparent opacity-50 cursor-not-allowed'
                         )}
                         onClick={handleEnhancePrompt}
                         disabled={isEnhancePromptLoading || isFileUploading}
@@ -505,7 +505,7 @@ export function ChatPanel({
                       className={cn(
                         'size-8 transition-all duration-200 rounded-full',
                         'bg-primary text-primary-foreground hover:bg-primary/80 hover:text-primary-foreground',
-                        isLoading && 'animate-pulse duration-1000'
+                        isLoading && 'bg-destructive text-destructive-foreground hover:bg-destructive/80 hover:text-destructive-foreground'
                       )}
                       onClick={isLoading ? stop : undefined}
                     >
