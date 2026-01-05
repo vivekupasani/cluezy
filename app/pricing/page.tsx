@@ -34,20 +34,20 @@ export default function PricingPage() {
                 { icon: ChartLine, label: "Advanced analytics" },
             ],
         },
-        // {
-        //     id: "enterprise",
-        //     name: "Enterprise",
-        //     price: "",
-        //     popular: false,
-        //     description: "Built for teams and businesses that need full control.",
-        //     features: [
-        //         { icon: Search, label: "Unlimited searches" },
-        //         { icon: Cpu, label: "Custom AI models" },
-        //         { icon: History, label: "Team-wide history" },
-        //         { icon: Users, label: "Dedicated support" },
-        //         { icon: ChartLine, label: "Enterprise analytics" },
-        //     ],
-        // },
+        {
+            id: "enterprise",
+            name: "Enterprise",
+            price: "",
+            popular: false,
+            description: "Built for teams and businesses that need full control.",
+            features: [
+                { icon: Search, label: "Unlimited searches" },
+                { icon: Cpu, label: "Custom AI models" },
+                { icon: History, label: "Team-wide history" },
+                { icon: Users, label: "Dedicated support" },
+                { icon: ChartLine, label: "Enterprise analytics" },
+            ],
+        },
     ]
 
     return (
