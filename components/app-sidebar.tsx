@@ -80,7 +80,7 @@ export function AppSidebar() {
               </div>
             </TooltipTrigger>
             <TooltipContent side="right">
-              <p className='text-xs'>Toggle Sidebar</p>
+              <p className='text-xs'>Close Sidebar</p>
             </TooltipContent>
           </Tooltip>
         </SidebarMenuButton>
@@ -106,7 +106,9 @@ export function AppSidebar() {
                     <span className='text-foreground/80'>New Chat</span>
                   </SidebarMenuButton>
                 </TooltipTrigger>
-                <TooltipContent side="right" className='text-xs'>New Chat</TooltipContent>
+                <TooltipContent side="right" className='text-xs'>
+                  New Chat
+                </TooltipContent>
               </Tooltip>
             </SidebarMenuItem>
 

@@ -138,21 +138,23 @@
 
 @layer utilities {
   .txt-grad {
-    @apply bg-clip-text text-transparent bg-gradient-to-tr from-foreground to-foreground/60;
+    @apply text-foreground/80 no-underline;
   }
 
   .txt-mut {
-    @apply bg-clip-text text-transparent bg-gradient-to-tr from-muted-foreground to-muted-foreground/60;
+    @apply text-muted-foreground/80 no-underline;
   }
 
   .txt-act {
-    @apply bg-clip-text text-transparent bg-gradient-to-tr from-accent-foreground to-accent-foreground/60;
+    @apply text-accent-foreground/80 no-underline;
   }
 }
+
 @layer base {
   * {
     @apply border-border;
   }
+
   body {
     @apply bg-background text-foreground;
   }

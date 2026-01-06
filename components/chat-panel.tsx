@@ -220,7 +220,7 @@ export function ChatPanel({
     >
       {messages.length === 0 && (
         <div className="flex flex-col items-center mb-2">
-          <h1 className='text-2xl md:text-3xl tracking-tight pb-2 font-medium bg-clip-text text-transparent bg-gradient-to-tr from-foreground to-foreground/60'>
+          <h1 className='text-2xl md:text-3xl tracking-tight pb-2 font-medium txt-grad'>
             How can i help you today?
           </h1>
         </div>
@@ -259,8 +259,7 @@ export function ChatPanel({
           <div className={cn(
             "relative flex flex-col w-full p-2.5 transition-all duration-300",
             "bg-card/80 backdrop-blur-xl",
-            // "border border-border",
-            "ring-1 ring-border",
+            "ring-1 ring-border/30",
             "shadow-sm",
             isMobile ? (input.length > 30 ? "rounded-[18px]" : "rounded-[18px]") : "rounded-[18px]"
           )}>

@@ -76,7 +76,7 @@ export const UserMessage: React.FC<UserMessageProps> = ({
               value={editedContent}
               onChange={e => setEditedContent(e.target.value)}
               autoFocus
-              className="resize-none flex w-full bg-secondary rounded-2xl rounded-tr-sm border border-input px-4 py-2.5 placeholder:text-muted-foreground focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50"
+              className="resize-none flex w-full bg-secondary dark:bg-muted rounded-2xl rounded-tr-sm border border-input px-4 py-2.5 placeholder:text-muted-foreground focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50"
               minRows={1}
               maxRows={10}
             />

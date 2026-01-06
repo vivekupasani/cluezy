@@ -4,5 +4,8 @@
   "cSpell.words": ["openai", "Tavily"],
   "editor.codeActionsOnSave": {
     "source.organizeImports": "always"
+  },
+  "[css]": {
+    "editor.defaultFormatter": "vscode.css-language-features"
   }
 }

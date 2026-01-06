@@ -443,6 +443,8 @@ export function Chat({
     return await reload(options)
   }
 
+  // console.log("messgaes", messages)
+
   return (
     <div
       className={cn(

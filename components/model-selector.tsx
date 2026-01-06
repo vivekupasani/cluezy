@@ -115,10 +115,10 @@ export function ModelSelector({ models }: ModelSelectorProps) {
           <ChevronDown size={12} className="opacity-50" />
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-[300px] p-0 mx-2 HiddenScrollbar border-border/50 rounded-xl" align="start">
+      <PopoverContent className="w-[260px] p-0 mx-2 HiddenScrollbar border-border/50 rounded-xl" align="start">
         <Command className='bg-background/95 backdrop-blur-sm'>
-          <CommandInput placeholder="Search models..." className="h-10 text-sm" />
-          <CommandList className="max-h-[300px] overflow-y-auto CustomScrollbar p-1">
+          <CommandInput placeholder="Search models..." className="h-9 text-sm" />
+          <CommandList className="max-h-[250px] overflow-y-auto CustomScrollbar p-1">
             <CommandEmpty className='txt-grad text-sm text-center py-4'>No model found.</CommandEmpty>
             {Object.entries(groupedModels).map(([provider, models]) => (
               <CommandGroup key={provider} heading={provider} className="text-muted-foreground/70 font-medium">
@@ -130,19 +130,19 @@ export function ModelSelector({ models }: ModelSelectorProps) {
                       key={modelId}
                       value={modelId}
                       onSelect={handleModelSelect}
-                      className={`flex justify-between items-center px-3 py-2 rounded-lg mb-0.5 cursor-pointer aria-selected:bg-accent/50 ${isSelected ? 'bg-accent/50' : ''}`}
+                      className={`flex justify-between items-center px-2 py-1.5 rounded-lg mb-0.5 cursor-pointer aria-selected:bg-accent/50 ${isSelected ? 'bg-accent/50' : ''}`}
                     >
                       <div className="flex items-center space-x-2.5 overflow-hidden">
                         <div className="shrink-0 rounded-full border border-border/40 p-0.5 bg-background">
                           <Image
                             src={`/providers/logos/${model.providerId}.svg`}
                             alt={model.provider}
-                            width={16}
-                            height={16}
+                            width={14}
+                            height={14}
                             className="rounded-full"
                           />
                         </div>
-                        <span className={`text-sm font-medium truncate ${isSelected ? 'text-foreground' : 'text-muted-foreground group-hover:text-foreground'}`}>
+                        <span className={`text-[13px] font-medium truncate ${isSelected ? 'text-foreground' : 'text-muted-foreground group-hover:text-foreground'}`}>
                           {model.name}
                         </span>
                       </div>
