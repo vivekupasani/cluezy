@@ -5,7 +5,6 @@ import { academicSearchTool } from '../tools/acadamic-search'
 import { datetimeTool } from '../tools/datetime'
 import { createFileSearchTool } from '../tools/pdf-search'
 import { productSearchTool } from '../tools/product-search'
-import { createQuestionTool } from '../tools/question'
 import { retrieveTool } from '../tools/retrieve'
 import { createSearchTool } from '../tools/search'
 import { createVideoSearchTool } from '../tools/video-search'
@@ -30,7 +29,6 @@ export function researcher({
     // Create model-specific tools
     const searchTool = createSearchTool(model)
     const videoSearchTool = createVideoSearchTool(model)
-    const askQuestionTool = createQuestionTool(model)
     const pdfSearchTool = createFileSearchTool("pdf")
     const docSearchTool = createFileSearchTool("doc")
     const pptSearchTool = createFileSearchTool("ppt")
@@ -44,7 +42,6 @@ export function researcher({
         acadamicSearch: academicSearchTool,
         retrieve: retrieveTool,
         videoSearch: videoSearchTool,
-        ask_question: askQuestionTool,
         weather: weatherTool,
         youtubeVideoAnalysis: youtubeVideoAnalysisTool,
         datetime: datetimeTool,
@@ -54,7 +51,7 @@ export function researcher({
         pptSearch: pptSearchTool
       },
       experimental_activeTools: searchMode
-        ? ['search', 'acadamicSearch', 'retrieve', 'videoSearch', 'ask_question', 'weather', 'datetime', 'youtubeVideoAnalysis', 'productSearch', 'pdfSearch', 'docSearch', 'pptSearch']
+        ? ['search', 'acadamicSearch', 'retrieve', 'videoSearch', 'weather', 'datetime', 'youtubeVideoAnalysis', 'productSearch', 'pdfSearch', 'docSearch', 'pptSearch']
         : [],
       maxSteps: searchMode ? 5 : 1,
       experimental_transform: smoothStream()
