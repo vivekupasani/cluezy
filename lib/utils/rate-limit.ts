@@ -4,7 +4,7 @@ import { Redis } from '@upstash/redis';
 // Create a new ratelimiter that allows 3 requests per day for unauthenticated users
 export const unauthenticatedRateLimit = new Ratelimit({
     redis: Redis.fromEnv(),
-    limiter: Ratelimit.slidingWindow(1, '1 d'), // 1 requests per 1 day
+    limiter: Ratelimit.slidingWindow(3, '1 d'), // 3 requests per 1 day
     analytics: true,
     prefix: '@upstash/ratelimit:unauth',
 });

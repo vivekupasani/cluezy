@@ -96,7 +96,7 @@ export function Chat({
     onError: async (error) => {
       console.log(error)
       const message = error?.message || "Something went wrong."
-      if (message.includes("limit of") && message.includes("wait until")) {
+      if (message.includes("You've") && (message.includes("used") || message.includes("reached"))) {
         if (message.includes("unauthenticated")) {
           try {
             setRateLimitMessage(message)
@@ -492,36 +492,66 @@ export function Chat({
         onRemoveFile={handleRemoveFile}
       />
 
-      {/* {messages.length === 0 && (
-        <div className='absolute bottom-2 flex gap-1 justify-center items-center'>
-          <div className='flex gap-2 bg-clip-text text-transparent bg-gradient-to-tr from-foreground/90 to-foreground/60'>
-            <Link href="/terms" className='text-xs hover:text-foreground transition-colors'>Terms</Link>
-            <Link href="/privacy" className='text-xs hover:text-foreground transition-colors'>Privacy</Link>
-            <Link href="/contact" className='text-xs hover:text-foreground transition-colors'>Contact</Link>
-            <Link href="/about" className='text-xs hover:text-foreground transition-colors'>About</Link>
-          </div>
-        </div>
-      )} */}
-
+      {/* Rate Limit Dialog */}
       <Dialog open={isRateLimitDialogOpen} onOpenChange={setisRateLimitDialogOpen}>
-        <DialogContent className='w-[90%] bg-gradient-to-br from-card/75 via-card/55 to-card/65 rounded-2xl backdrop-blur-sm'>
-          <DialogHeader>
-            <DialogTitle className='txt-grad'>Daily Limit Reached</DialogTitle>
-            <DialogDescription className='txt-mut'>
-              {rateLimitMessage ||
-                "You've reached the daily limit. Please log in for unlimited access."}
+        <DialogContent className='w-[95%] max-w-md bg-gradient-to-br from-card via-card/95 to-card/90 rounded-3xl backdrop-blur-md border-2 border-border/50 shadow-2xl'>
+          <DialogHeader className='space-y-3'>
+            <DialogTitle className='text-2xl font-bold text-center bg-gradient-to-r from-orange-500 via-yellow-500 to-orange-600 bg-clip-text text-transparent'>
+              {isRateLimitDialogControlVisible ? 'Daily Limit Reached' : 'Rate Limit Exceeded'}
+            </DialogTitle>
+            <DialogDescription className='text-center text-muted-foreground text-sm leading-relaxed px-2'>
+              {isRateLimitDialogControlVisible ? (
+                <>
+                  {
+                    rateLimitMessage || "You've used all your free searches for today. Sign in to unlock unlimited access and premium features!"
+                  }
+                </>
+              ) : (
+                <>
+                  {
+                    rateLimitMessage || "You've reached your usage limit for now. Take a short break and come back after some time to continue your research!"
+                  }
+                </>
+              )}
             </DialogDescription>
           </DialogHeader>
-          {isRateLimitDialogControlVisible &&
-            <div className="flex justify-end gap-2 mt-4">
-              <Button variant="outline" className='txt-grad' onClick={() => setisRateLimitDialogOpen(false)}>
-                Close
+
+          {/* Action Buttons */}
+          {isRateLimitDialogControlVisible ? (
+            <div className="flex flex-col gap-2.5 mt-6">
+              <Button
+                onClick={() => {
+                  (window.location.href = '/auth/login')
+                  setisRateLimitDialogOpen(false)
+                }}
+                className='w-full font-semibold py-5 rounded-xl shadow-lg hover:shadow-xl transition-all duration-200 hover:scale-[1.02]'
+              >
+                Sign In to Continue
               </Button>
-              <Button onClick={() => (window.location.href = '/auth/login')}>
-                Login
+              <Button
+                variant="ghost"
+                className='w-full text-muted-foreground hover:text-foreground py-5 rounded-xl'
+                onClick={() => setisRateLimitDialogOpen(false)}
+              >
+                Maybe Later
               </Button>
             </div>
-          }
+          ) : (
+            <div className="flex flex-col gap-2.5 mt-6">
+              <div className='p-4 rounded-xl bg-muted/50 border border-border/50'>
+                <p className='text-xs text-muted-foreground text-center leading-relaxed'>
+                  {rateLimitMessage || "You're doing great! Take a moment to review your research, and you'll be able to continue shortly."}
+                </p>
+              </div>
+              <Button
+                variant="default"
+                className='w-full py-5 rounded-xl font-semibold'
+                onClick={() => setisRateLimitDialogOpen(false)}
+              >
+                Got It
+              </Button>
+            </div>
+          )}
         </DialogContent>
       </Dialog>
 

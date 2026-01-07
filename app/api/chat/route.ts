@@ -4,7 +4,7 @@ import { getCurrentUserId } from '@/lib/auth/get-current-user'
 import { createManualToolStreamResponse } from '@/lib/streaming/create-manual-tool-stream'
 import { createToolCallingStreamResponse } from '@/lib/streaming/create-tool-calling-stream'
 import { Model } from '@/lib/types/models'
-import { getClientIdentifier, unauthenticatedRateLimit } from '@/lib/utils/rate-limit'
+import { authenticatedRateLimit, getClientIdentifier, unauthenticatedRateLimit } from '@/lib/utils/rate-limit'
 import { isProviderEnabled } from '@/lib/utils/registry'
 
 export const maxDuration = 30
@@ -36,7 +36,7 @@ export async function POST(req: Request) {
       if (!success) {
         const resetDate = new Date(reset);
         return new Response(
-          `You've reached the limit of ${limit} searches per day for unauthenticated users. Sign in for more searches or wait until ${resetDate.toLocaleString()}.`,
+          `You've used all your free ${limit} searches for today. Sign in to unlock unlimited access and premium features!`,
           {
             status: 429,
             statusText: 'Too Many Requests',
@@ -44,25 +44,25 @@ export async function POST(req: Request) {
         );
       }
     }
-    // else {
-    //   // const identifier = getClientIdentifier(req);
-    //   const { success, limit, reset, remaining } = await authenticatedRateLimit.limit(userId);
-    //   console.log("Remaining credits for the day : ", remaining)
-    //   // Rate limit check for authenticated users
-    //   if (!success) {
-    //     const resetDate = new Date(reset);
-    //     return new Response(
-    //       `You've reached your daily limit of ${limit} searches for authenticated users. Premium will be available soon. Until then, you can wait until ${resetDate.toLocaleString()} to continue searching.`,
-    //       {
-    //         status: 429,
-    //         statusText: 'Too Many Requests',
-    //       }
-    //     );
-    //   }
-    // }
+    else {
+      // const identifier = getClientIdentifier(req);
+      const { success, reset, remaining } = await authenticatedRateLimit.limit(userId);
+      console.log("Remaining credits for the day : ", remaining)
+      // Rate limit check for authenticated users
+      if (!success) {
+        const resetDate = new Date(reset);
+        return new Response(
+          `You've reached your usage limit for now. Take a short break and come back at ${resetDate} to continue your research!`,
+          {
+            status: 429,
+            statusText: 'Too Many Requests',
+          }
+        );
+      }
+    }
 
     if (isSharePage) {
-      return new Response('Chat API is not available on share pages', {
+      return new Response('Chatting is disabled on shared links. Start a new conversation to continue.', {
         status: 403,
         statusText: 'Forbidden'
       })

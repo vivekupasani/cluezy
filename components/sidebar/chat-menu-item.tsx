@@ -9,7 +9,7 @@ import { toast } from 'sonner'
 
 import { cn } from '@/lib/utils'
 import { useHistoryDialog } from '../history-dialog'
-import { Spinner } from '../ui/spinner'
+import { LoadingSpinner, Spinner } from '../ui/spinner'
 
 const formatDateWithTime = (date: Date | string) => {
   const parsedDate = new Date(date)
@@ -149,7 +149,7 @@ export function ChatMenuItem({ chat }: ChatMenuItemProps) {
               disabled={isDeleting}
               className="p-1 hover:bg-destructive/10 rounded-lg transition-colors text-destructive"
             >
-              {isDeleting ? <Spinner className="size-3" /> : <Check size={14} />}
+              {isDeleting ? <LoadingSpinner className="size-3" /> : <Check size={14} />}
             </button>
           </div>
         </div>
