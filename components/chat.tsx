@@ -97,7 +97,7 @@ export function Chat({
       console.log(error)
       const message = error?.message || "Something went wrong."
       if (message.includes("You've") && (message.includes("used") || message.includes("reached"))) {
-        if (message.includes("unauthenticated")) {
+        if (message.includes("Sign in")) {
           try {
             setRateLimitMessage(message)
             setisRateLimitDialogOpen(true)
