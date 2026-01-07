@@ -2,7 +2,7 @@
 
 import { usePathname, useRouter } from 'next/navigation'
 
-import { PanelLeftClose, PanelRightClose, Search, SquarePen } from 'lucide-react'
+import { BookOpen, FileText, Info, PanelLeftClose, PanelRightClose, Search, ShieldCheck, SquarePen } from 'lucide-react'
 
 import { useAuth } from '@/components/context/auth-context'
 import GuestMenu from '@/components/guest-menu'
@@ -36,7 +36,8 @@ export function AppSidebar() {
     '/privacy',
     '/terms',
     '/settings',
-    '/pricing'
+    '/pricing',
+    '/playbook'
   ]
 
   useEffect(() => {
@@ -131,6 +132,99 @@ export function AppSidebar() {
                 <TooltipContent side="right" className='text-xs'>Search chats</TooltipContent>
               </Tooltip>
             </SidebarMenuItem>
+
+            <SidebarMenuItem>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <SidebarMenuButton
+                    onClick={() => {
+                      router.push('/playbook')
+                      // Optional: Refresh or reset chat state if needed
+                      if (isMobile) {
+                        setOpenMobile(false)
+                      }
+                    }}
+                    className="justify-start gap-2 data-[state=open]:px-2"
+                  >
+                    <BookOpen className="size-5 text-muted-foreground" />
+                    <span className='text-foreground/80'>Playbook</span>
+                  </SidebarMenuButton>
+                </TooltipTrigger>
+                <TooltipContent side="right" className='text-xs'>
+                  Playbook
+                </TooltipContent>
+              </Tooltip>
+            </SidebarMenuItem>
+
+            <SidebarMenuItem>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <SidebarMenuButton
+                    onClick={() => {
+                      router.push('/about')
+                      // Optional: Refresh or reset chat state if needed
+                      if (isMobile) {
+                        setOpenMobile(false)
+                      }
+                    }}
+                    className="justify-start gap-2 data-[state=open]:px-2"
+                  >
+                    <Info className="size-5 text-muted-foreground" />
+                    <span className='text-foreground/80'>About Us</span>
+                  </SidebarMenuButton>
+                </TooltipTrigger>
+                <TooltipContent side="right" className='text-xs'>
+                  About
+                </TooltipContent>
+              </Tooltip>
+            </SidebarMenuItem>
+
+            <SidebarMenuItem>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <SidebarMenuButton
+                    onClick={() => {
+                      router.push('/privacy')
+                      // Optional: Refresh or reset chat state if needed
+                      if (isMobile) {
+                        setOpenMobile(false)
+                      }
+                    }}
+                    className="justify-start gap-2 data-[state=open]:px-2"
+                  >
+                    <ShieldCheck className="size-5 text-muted-foreground" />
+                    <span className='text-foreground/80'>Privacy Policy</span>
+                  </SidebarMenuButton>
+                </TooltipTrigger>
+                <TooltipContent side="right" className='text-xs'>
+                  Privacy Policy
+                </TooltipContent>
+              </Tooltip>
+            </SidebarMenuItem>
+
+            <SidebarMenuItem>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <SidebarMenuButton
+                    onClick={() => {
+                      router.push('/terms')
+                      // Optional: Refresh or reset chat state if needed
+                      if (isMobile) {
+                        setOpenMobile(false)
+                      }
+                    }}
+                    className="justify-start gap-2 data-[state=open]:px-2"
+                  >
+                    <FileText className="size-5 text-muted-foreground" />
+                    <span className='text-foreground/80'>Terms of Service</span>
+                  </SidebarMenuButton>
+                </TooltipTrigger>
+                <TooltipContent side="right" className='text-xs'>
+                  Terms of Service
+                </TooltipContent>
+              </Tooltip>
+            </SidebarMenuItem>
+
           </SidebarMenu>
         </SidebarGroup>
       </SidebarContent>
