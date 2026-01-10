@@ -38,10 +38,6 @@ export function ChatArtifactContainer({
   }, [state.isOpen])
 
   const pages = [
-    '/about',
-    '/privacy',
-    '/terms',
-    '/settings',
     '/pricing',
     '/playbook'
   ]

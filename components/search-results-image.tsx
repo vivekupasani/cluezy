@@ -3,7 +3,7 @@
 
 import { useEffect, useState } from 'react'
 
-import { PlusCircle } from 'lucide-react'
+import { PlusCircle, Search } from 'lucide-react'
 
 import { SearchResultImage } from '@/lib/types'
 
@@ -122,88 +122,126 @@ export const SearchResultsImageSection: React.FC<
 
         return (
           <Dialog key={actualIndex}>
-
             {/* main images grid */}
             <DialogTrigger asChild>
               <div
-                className="aspect-video cursor-pointer relative"
+                className="group relative aspect-video cursor-pointer overflow-hidden rounded-xl border border-border/50 bg-muted/50 transition-all duration-300 hover:scale-[1.02] hover:shadow-xl hover:shadow-primary/5 active:scale-[0.98]"
                 onClick={() => setSelectedIndex(actualIndex)}
               >
-                <div className="flex-1 h-full">
-                  <div className="h-full w-full">
-                    {image ? (
-                      <img
-                        src={image.url}
-                        alt={`Image ${actualIndex + 1}`}
-                        // Apply specific or default rounding
-                        className={`h-full w-full object-cover shadow ${cornerClasses}`}
-                        onError={e =>
-                        (e.currentTarget.src =
-                          '/images/placeholder-image.png')
-                        }
-                      />
-                    ) : (
-                      <div className="w-full h-full bg-muted animate-pulse rounded-sm" />
-                    )}
+                <div className="h-full w-full">
+                  {image ? (
+                    <img
+                      src={image.url}
+                      alt={`Image ${actualIndex + 1}`}
+                      // Apply specific or default rounding
+                      className={`h-full w-full object-cover transition-transform duration-500 group-hover:scale-105 ${cornerClasses}`}
+                      onError={e =>
+                      (e.currentTarget.src =
+                        '/images/placeholder-image.png')
+                      }
+                    />
+                  ) : (
+                    <div className="w-full h-full animate-pulse bg-muted" />
+                  )}
+                </div>
+
+                {/* Hover overlay hint */}
+                <div className="absolute inset-0 flex items-center justify-center bg-black/0 transition-colors duration-300 group-hover:bg-black/20">
+                  <div className="scale-0 opacity-0 transition-all duration-300 group-hover:scale-100 group-hover:opacity-100">
+                    <div className="rounded-full bg-white/20 p-2 backdrop-blur-md">
+                      <Search className="h-5 w-5 text-white" />
+                    </div>
                   </div>
                 </div>
+
                 {displayMode === 'preview' &&
                   actualIndex === 3 &&
                   convertedImages.length > 4 && (
-                    <div className="absolute inset-0 bg-black/30 rounded-md flex items-center justify-center text-white/80 text-sm">
-                      <PlusCircle size={24} />
+                    <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/40 text-white backdrop-blur-[2px] transition-colors group-hover:bg-black/50">
+                      <PlusCircle className="mb-1 h-6 w-6" />
+                      <span className="text-xs font-medium uppercase tracking-wider">
+                        +{convertedImages.length - 4} More
+                      </span>
                     </div>
                   )}
               </div>
             </DialogTrigger>
 
             {/* full image preview mode */}
-            <DialogContent className="w-[95%] sm:w-full sm:max-w-2xl max-h-[80vh] overflow-hidden CustomScrollbar bg-gradient-to-br from-background/95 via-background to-background/90 backdrop-blur-sm">
-              <DialogHeader>
-                <DialogTitle className='txt-grad'>Search Images</DialogTitle>
-                <DialogDescription className="text-sm txt-mut">
-                  {query}
-                </DialogDescription>
-              </DialogHeader>
-              <div className="py-4">
-                <Carousel
-                  setApi={setApi}
-                  opts={{
-                    startIndex: selectedIndex,
-                    loop: convertedImages.length > 1
-                  }}
-                  className="w-full bg-muted max-h-[60vh]"
-                >
-                  <CarouselContent>
-                    {convertedImages.map((img, idx) => (
-                      <CarouselItem key={idx}>
-                        <div className="p-1 flex items-center justify-center h-full">
-                          <img
-                            src={img.url}
-                            alt={`Image ${idx + 1}`}
-                            className="h-auto w-full object-contain max-h-[60vh]"
-                            onError={e =>
-                            (e.currentTarget.src =
-                              '/images/placeholder-image.png')
-                            }
-                          />
-                        </div>
-                      </CarouselItem>
-                    ))}
-                  </CarouselContent>
-                  {convertedImages.length > 1 && (
-                    <div className="absolute inset-8 flex items-center justify-between p-4">
-                      <CarouselPrevious className="w-10 h-10 rounded-full text-foreground/70 focus:outline-none bg-gradient-to-br from-card/95 via-card to-card/90 backdrop-blur-sm border-none">
-                        <span className="sr-only">Previous</span>
-                      </CarouselPrevious>
-                      <CarouselNext className="w-10 h-10 rounded-full text-foreground/70 focus:outline-none bg-gradient-to-br from-card/95 via-card to-card/90 backdrop-blur-sm border-none">
-                        <span className="sr-only">Next</span>
-                      </CarouselNext>
+            <DialogContent className="max-h-[90vh] w-[95%] border-border/50 bg-background/80 p-0 backdrop-blur-2xl sm:w-full sm:max-w-4xl overflow-hidden shadow-2xl">
+              <div className="flex flex-col h-full max-h-[90vh]">
+                <DialogHeader className="p-6 pb-2">
+                  <div className="flex items-center justify-between gap-4">
+                    <div className="space-y-1">
+                      <DialogTitle className="text-xl text-start font-semibold tracking-tight">
+                        Image Preview
+                      </DialogTitle>
+                      <DialogDescription className="line-clamp-1 text-sm text-start text-muted-foreground">
+                        {query}
+                      </DialogDescription>
                     </div>
-                  )}
-                </Carousel>
-                <div className="py-2 text-center text-sm text-muted-foreground">
-                  {current} of {count}
+                    <div className="flex items-center gap-2 rounded-full bg-muted/50 px-3 py-1 text-xs font-medium tabular-nums text-muted-foreground border border-border/50">
+                      <span className="text-foreground">{current}</span>
+                      <span className="opacity-50">/</span>
+                      <span>{count}</span>
+                    </div>
+                  </div>
+                </DialogHeader>
+
+                <div className="relative flex flex-1 items-center justify-center p-4 min-h-0 bg-black/5">
+                  <Carousel
+                    setApi={setApi}
+                    opts={{
+                      startIndex: selectedIndex,
+                      loop: convertedImages.length > 1
+                    }}
+                    className="w-full h-full max-w-3xl"
+                  >
+                    <CarouselContent className="h-full">
+                      {convertedImages.map((img, idx) => (
+                        <CarouselItem key={idx} className="flex items-center justify-center h-[50vh] sm:h-[60vh]">
+                          <div className="relative h-full w-full p-2 group">
+                            <img
+                              src={img.url}
+                              alt={img.description || `Image ${idx + 1}`}
+                              className="h-full w-full rounded-lg object-contain drop-shadow-2xl transition-all duration-500"
+                              onError={e =>
+                              (e.currentTarget.src =
+                                '/images/placeholder-image.png')
+                              }
+                            />
+                            {img.description && (
+                              <div className="absolute bottom-6 left-1/2 -translate-x-1/2 max-w-[80%] rounded-full bg-black/60 px-4 py-2 text-center text-xs text-white backdrop-blur-md opacity-0 transition-opacity group-hover:opacity-100">
+                                {img.description}
+                              </div>
+                            )}
+                          </div>
+                        </CarouselItem>
+                      ))}
+                    </CarouselContent>
+
+                    {convertedImages.length > 1 && (
+                      <div className="absolute inset-0 pointer-events-none flex items-center justify-between p-4">
+                        <CarouselPrevious className="pointer-events-auto h-12 w-12 rounded-full border-none bg-background/20 text-foreground backdrop-blur-xl transition-all hover:bg-background/40 active:scale-95 disabled:hidden sm:-left-16" />
+                        <CarouselNext className="pointer-events-auto h-12 w-12 rounded-full border-none bg-background/20 text-foreground backdrop-blur-xl transition-all hover:bg-background/40 active:scale-95 disabled:hidden sm:-right-16" />
+                      </div>
+                    )}
+                  </Carousel>
+                </div>
+
+                {/* Thumbnail strip or additional controls could go here */}
+                <div className="p-4 bg-muted/20 border-t border-border/50">
+                  <div className="flex justify-center gap-1">
+                    {convertedImages.slice(0, 10).map((_, idx) => (
+                      <button
+                        key={idx}
+                        onClick={() => api?.scrollTo(idx)}
+                        className={`h-1 rounded-full transition-all duration-300 ${current === idx + 1 ? "w-8 bg-primary" : "w-2 bg-muted-foreground/30 hover:bg-muted-foreground/50"
+                          }`}
+                      />
+                    ))}
+                    {convertedImages.length > 10 && <span className="text-[10px] text-muted-foreground px-1">...</span>}
+                  </div>
                 </div>
               </div>
             </DialogContent>

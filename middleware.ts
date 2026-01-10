@@ -17,14 +17,28 @@ export async function middleware(request: NextRequest) {
   // Create a response
   let response: NextResponse
 
-  // Handle Supabase session if configured
+  // Define public paths that don't require authentication
+  const publicPaths = [
+    '/', // Root path
+    '/auth', // Auth-related pages
+    '/share', // Share pages
+    '/api', // API routes
+    '/playbook' // Playbook page
+  ]
+
+  const pathname = request.nextUrl.pathname
+  const isPublicPath = publicPaths.some(path =>
+    pathname === path || pathname.startsWith(`${path}/`)
+  )
+
+  // Handle Supabase session if configured and not a public path
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
   const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
 
-  if (supabaseUrl && supabaseAnonKey) {
+  if (!isPublicPath && supabaseUrl && supabaseAnonKey) {
     response = await updateSession(request)
   } else {
-    // If Supabase is not configured, just pass the request through
+    // If Supabase is not configured or it's a public path, just pass the request through
     response = NextResponse.next({
       request
     })

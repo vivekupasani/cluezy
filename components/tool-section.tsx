@@ -2,6 +2,7 @@
 
 import { ToolInvocation } from 'ai'
 
+import { ConnectorSearchSection } from './connector-search-section'
 import { DateTimeSection } from './datetime-section'
 import { DocumentSection } from './doument-section'
 import { QuestionConfirmation } from './question-confirmation'
@@ -86,6 +87,11 @@ export function ToolSection({
             chatId={chatId || ''}
           />
         </div>
+      )
+
+    case 'connectorSearch':
+      return (
+        <ConnectorSearchSection tool={tool} />
       )
 
     case 'videoSearch':

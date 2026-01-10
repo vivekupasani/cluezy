@@ -13,19 +13,18 @@ export async function GET() {
     const client = new OllamaClient(ollamaUrl)
     const ollamaModels = await client.getModels()
 
-    const models = []
-    for (const ollamaModel of ollamaModels) {
-      try {
-        const capabilities = await client.getModelCapabilities(ollamaModel.name)
-        const transformedModel = transformOllamaModel(ollamaModel, capabilities)
-        if (transformedModel) {
-          models.push(transformedModel)
-        }
-      } catch {
-        // Skip models that fail capability detection
-        continue
-      }
-    }
+    const models = (
+      await Promise.all(
+        ollamaModels.map(async ollamaModel => {
+          try {
+            const capabilities = await client.getModelCapabilities(ollamaModel.name)
+            return transformOllamaModel(ollamaModel, capabilities)
+          } catch {
+            return null
+          }
+        })
+      )
+    ).filter((model): model is NonNullable<typeof model> => model !== null)
 
     return NextResponse.json({ models })
   } catch {

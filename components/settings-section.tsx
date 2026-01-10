@@ -1,10 +1,9 @@
 "use client";
 
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
-import { ArrowLeft, Info } from "lucide-react";
+import { Info } from "lucide-react";
 
 import { createClient } from "@/lib/supabase/client";
 import { cn } from "@/lib/utils";
@@ -33,6 +32,7 @@ export default function SettingsSection() {
         switch (currentTab) {
             case "preferences":
                 return <PreferencesTab />;
+
             case "models":
                 return <ModelsTab />;
             case "community":
@@ -46,17 +46,7 @@ export default function SettingsSection() {
 
     return (
         <div>
-            {/* Header */}
-            <div className="sticky top-0 z-40 bg-background/50 backdrop-blur-sm flex items-center justify-start mb-8">
-                <Link
-                    href="/"
-                    className="group flex items-center pt-4 pb-4 gap-1 txt-grad hover:bg-accent hover:text-foreground rounded-md px-2 transition-colors">
-                    <ArrowLeft size={18} className="text-foreground/70 group-hover:text-foreground" />
-                    <span className="text-sm">Back</span>
-                </Link>
-            </div>
-
-            <div className="flex gap-8">
+            <div className="flex gap-8 mt-10">
                 {/* Left Sidebar */}
                 <div className="hidden lg:block w-80 flex-shrink-0">
                     <div className="flex flex-col items-center gap-3 mb-6">
@@ -114,7 +104,6 @@ export default function SettingsSection() {
 
                 {/* Main Content */}
                 <div className="flex-1 max-w-[870px]">
-                    {/* Tabs */}
                     <div className="flex gap-6 border-b border-border mb-6">
                         {["preferences", "models", "community", "contact"].map((tab) => (
                             <button

@@ -12,7 +12,7 @@ import { Toaster } from '@/components/ui/sonner'
 import { AppSidebar } from '@/components/app-sidebar'
 import ArtifactRoot from '@/components/artifact/artifact-root'
 import { AuthProvider } from '@/components/context/auth-context'
-import { HistoryDialogProvider } from '@/components/history-dialog'
+import { HistoryDialog, HistoryDialogProvider } from '@/components/history-dialog'
 import { ThemeProvider } from '@/components/theme-provider'
 
 import './globals.css'
@@ -139,6 +139,7 @@ export default async function RootLayout({
           'h-full flex flex-col font-sans antialiased',
           fontSans.variable
         )}
+        suppressHydrationWarning
       >
         <AuthProvider>
           <HistoryDialogProvider>
@@ -150,14 +151,11 @@ export default async function RootLayout({
             >
               <SidebarProvider defaultOpen={false}>
                 <div className="relative flex flex-col flex-1">
-                  {/* feedback button */}
-                  {/* <div className="absolute top-0 right-0 z-50 border border-border m-4 px-2 py-1 rounded-md bg-primary text-primary-foreground text-sm cursor-pointer hover:bg-primary/80">
-                    Feedback
-                  </div> */}
                   <AppSidebar />
                   <main className="flex flex-1 min-h-0">
                     <ArtifactRoot>{children}</ArtifactRoot>
                   </main>
+                  <HistoryDialog />
                 </div>
               </SidebarProvider>
               <Toaster />

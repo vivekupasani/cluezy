@@ -2,14 +2,14 @@
 
 import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
-import { useState, useTransition } from 'react'
+import { useEffect, useState, useTransition } from 'react'
 
 import { Check, Edit, Trash2, X } from 'lucide-react'
 import { toast } from 'sonner'
 
 import { cn } from '@/lib/utils'
 import { useHistoryDialog } from '../history-dialog'
-import { LoadingSpinner, Spinner } from '../ui/spinner'
+import { LoadingSpinner } from '../ui/spinner'
 
 const formatDateWithTime = (date: Date | string) => {
   const parsedDate = new Date(date)
@@ -49,6 +49,19 @@ export function ChatMenuItem({ chat }: ChatMenuItemProps) {
 
   const [newTitle, setNewTitle] = useState(chat.title)
 
+  useEffect(() => {
+    const handleKeyDown = (e: globalThis.KeyboardEvent) => {
+      if (e.key === 'Enter') {
+        if (isRenameClicked) onRename()
+        if (isDeleteClicked) onDelete()
+      }
+    }
+
+    document.addEventListener("keydown", handleKeyDown)
+    return () => document.removeEventListener("keydown", handleKeyDown)
+  }, [])
+
+
   /* ---------------- DELETE ---------------- */
   const onDelete = () => {
     startDeleteTransition(async () => {
@@ -58,7 +71,9 @@ export function ChatMenuItem({ chat }: ChatMenuItemProps) {
 
         toast.success('Chat deleted')
         if (isActive) router.push('/')
-        window.dispatchEvent(new CustomEvent('chat-history-updated'))
+        window.dispatchEvent(new CustomEvent('chat-history-updated', {
+          detail: { type: 'delete', chatId: chat.id }
+        }))
       } catch (err) {
         toast.error('Failed to delete chat')
       }
@@ -81,7 +96,9 @@ export function ChatMenuItem({ chat }: ChatMenuItemProps) {
 
         if (!res.ok) throw new Error('Failed to rename chat')
 
-        window.dispatchEvent(new CustomEvent('chat-history-updated'))
+        window.dispatchEvent(new CustomEvent('chat-history-updated', {
+          detail: { type: 'rename', chatId: chat.id, title: newTitle }
+        }))
         setIsRenameClicked(false)
       } catch {
         toast.error('Failed to rename chat')
@@ -120,7 +137,7 @@ export function ChatMenuItem({ chat }: ChatMenuItemProps) {
               disabled={isRenaming}
               className="p-1 hover:bg-primary/10 rounded-lg transition-colors text-primary"
             >
-              {isRenaming ? <Spinner className="size-3" /> : <Check size={14} />}
+              {isRenaming ? <LoadingSpinner className="size-3" /> : <Check size={14} />}
             </button>
           </div>
         </div>

@@ -15,7 +15,7 @@ import { cn } from '@/lib/utils'
 import { CircleDollarSign } from 'lucide-react'
 import { ChatMessages } from './chat-messages'
 import { ChatPanel } from './chat-panel'
-import { HistoryDialog, useHistoryDialog } from './history-dialog'
+import { useHistoryDialog } from './history-dialog'
 import { Button } from './ui'
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from './ui/dialog'
 
@@ -494,7 +494,7 @@ export function Chat({
 
       {/* Rate Limit Dialog */}
       <Dialog open={isRateLimitDialogOpen} onOpenChange={setisRateLimitDialogOpen}>
-        <DialogContent className='w-[95%] max-w-md bg-gradient-to-br from-card via-card/95 to-card/90 rounded-3xl backdrop-blur-md border-2 border-border/50 shadow-2xl'>
+        <DialogContent className='w-[95%] max-w-md bg-background/95 rounded-3xl backdrop-blur-md border-2 border-border/50 shadow-2xl'>
           <DialogHeader className='space-y-3'>
             <DialogTitle className='text-2xl font-bold text-center bg-gradient-to-r from-orange-500 via-yellow-500 to-orange-600 bg-clip-text text-transparent'>
               {isRateLimitDialogControlVisible ? 'Daily Limit Reached' : 'Rate Limit Exceeded'}
@@ -555,7 +555,7 @@ export function Chat({
         </DialogContent>
       </Dialog>
 
-      <HistoryDialog />
+
     </div>
   )
 }

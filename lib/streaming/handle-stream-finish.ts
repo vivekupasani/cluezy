@@ -67,6 +67,33 @@ export async function handleStreamFinish({
       ...responseMessages.slice(-1)
     ] as ExtendedCoreMessage[]
 
+    // Helper to sanitize content by removing AI SDK protocol artifacts
+    const sanitizeContent = (content: any): any => {
+      // Regex to match AI SDK protocol markers like {"type":"step-start"}, {"type":"step-finish"}, etc.
+      const protocolPattern = /\{"type":"step-(?:start|finish)"\}/g;
+
+      if (typeof content === 'string') {
+        return content.replace(protocolPattern, '').trim();
+      }
+
+      if (Array.isArray(content)) {
+        return content.map(part => {
+          if (part && typeof part === 'object' && part.type === 'text' && typeof part.text === 'string') {
+            return { ...part, text: part.text.replace(protocolPattern, '').trim() };
+          }
+          return part;
+        });
+      }
+
+      return content;
+    };
+
+    // Sanitize messages to remove protocol artifacts
+    const sanitizedMessages = generatedMessages.map(msg => ({
+      ...msg,
+      content: sanitizeContent(msg.content)
+    }));
+
     if (process.env.ENABLE_SAVE_CHAT_HISTORY !== 'true') {
       return
     }
@@ -90,7 +117,7 @@ export async function handleStreamFinish({
     await saveChat(
       {
         ...savedChat,
-        messages: generatedMessages
+        messages: sanitizedMessages
       },
       userId
     ).catch(error => {

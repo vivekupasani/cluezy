@@ -2,11 +2,12 @@ import Link from 'next/link'
 
 import { ArrowLeft } from 'lucide-react'
 
+
 import { LoginForm } from '@/components/login-form'
 
 export default function Page() {
   return (
-    <div className="min-h-svh w-screen flex flex-col">
+    <div className="flex-1 min-h-svh w-screen flex flex-col">
       {/* Header */}
       <header className="h-14 flex items-center px-5">
         <Link

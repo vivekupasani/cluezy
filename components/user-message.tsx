@@ -76,7 +76,7 @@ export const UserMessage: React.FC<UserMessageProps> = ({
               value={editedContent}
               onChange={e => setEditedContent(e.target.value)}
               autoFocus
-              className="resize-none flex w-full bg-secondary dark:bg-muted rounded-2xl rounded-tr-sm border border-input px-4 py-2.5 placeholder:text-muted-foreground focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50"
+              className="resize-none flex w-full bg-secondary dark:bg-muted rounded-2xl rounded-br-sm border border-input px-4 py-2.5 placeholder:text-muted-foreground focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50"
               minRows={1}
               maxRows={10}
             />
@@ -124,7 +124,7 @@ export const UserMessage: React.FC<UserMessageProps> = ({
 
             <div
               className={cn(
-                'absolute top-0 right-full mr-2 transition-opacity',
+                'absolute top-0 right-full mr-2 transition-opacity flex',
                 'opacity-0',
                 'group-focus-within:opacity-100',
                 'md:opacity-0',
@@ -137,7 +137,7 @@ export const UserMessage: React.FC<UserMessageProps> = ({
                 className="rounded-full h-7 w-7"
                 onClick={handleEditClick}
               >
-                <Pencil className="size-3.5" />
+                <Pencil className="size-3.5 text-foreground/70" />
               </Button>
 
               <Button
@@ -146,7 +146,7 @@ export const UserMessage: React.FC<UserMessageProps> = ({
                 className="rounded-full h-7 w-7"
                 onClick={handleCopyClick}
               >
-                <Copy className="size-3.5" />
+                <Copy className="size-3.5 text-foreground/70" />
               </Button>
             </div>
           </div>

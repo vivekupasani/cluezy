@@ -187,7 +187,7 @@ export function ChatPanel({
   }, [query])
 
   useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
+    const handleKeyDown = (e: globalThis.KeyboardEvent) => {
       if (e.key === 'O' && e.ctrlKey && e.shiftKey) {
         e.preventDefault()
         handleNewChat()

@@ -130,8 +130,8 @@ export function useChatHistory() {
   const loadMoreRef = useRef<HTMLDivElement>(null)
   const [isPending, startTransition] = useTransition()
 
-  const fetchInitialChats = useCallback(async () => {
-    setIsLoading(true)
+  const fetchInitialChats = useCallback(async (silent = false) => {
+    if (!silent) setIsLoading(true)
     try {
       const response = await fetch(`/api/chats?offset=0&limit=20`)
       if (!response.ok) {
@@ -152,7 +152,7 @@ export function useChatHistory() {
       toast.error('Failed to load chat history.')
       setNextOffset(null)
     } finally {
-      setIsLoading(false)
+      if (!silent) setIsLoading(false)
     }
   }, [])
 
@@ -164,10 +164,29 @@ export function useChatHistory() {
   }, [fetchInitialChats])
 
   useEffect(() => {
-    const handleHistoryUpdate = () => {
-      startTransition(() => {
-        fetchInitialChats()
-      })
+    const handleHistoryUpdate = (event: any) => {
+      const detail = event.detail
+
+      if (detail && detail.type === 'delete') {
+        const { chatId } = detail
+        setChats(prev => {
+          const updated = prev.filter(c => c.id !== chatId)
+          cachedChats = updated
+          return updated
+        })
+      } else if (detail && detail.type === 'rename') {
+        const { chatId, title } = detail
+        setChats(prev => {
+          const updated = prev.map(c => c.id === chatId ? { ...c, title } : c)
+          cachedChats = updated
+          return updated
+        })
+      } else {
+        // Fallback for generic updates
+        startTransition(() => {
+          fetchInitialChats(true)
+        })
+      }
     }
     window.addEventListener('chat-history-updated', handleHistoryUpdate)
     return () => {
@@ -339,7 +358,7 @@ export function ChatHistoryClient() {
 
   //handle keydown event
   useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
+    const handleKeyDown = (e: globalThis.KeyboardEvent) => {
       if (e.key === 'k' && (e.metaKey || e.ctrlKey)) {
         e.preventDefault()
         setHistoryDialogIsOpen((current: boolean) => !current)

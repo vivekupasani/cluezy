@@ -1,5 +1,5 @@
 import { Model } from '@/lib/types/models'
-import { getBaseUrl } from '@/lib/utils/url'
+import { unstable_cache } from 'next/cache'
 
 import defaultModels from './default-models.json'
 
@@ -16,59 +16,19 @@ export function validateModel(model: any): model is Model {
   )
 }
 
-export async function getModels(): Promise<Model[]> {
+/**
+ * Internal function to fetch models, separated from cache to allow passing baseUrl
+ */
+async function fetchModelsInternal(baseUrlObj: URL): Promise<Model[]> {
   try {
-    // Get the base URL using the centralized utility function
-    const baseUrlObj = await getBaseUrl()
-
-    // Construct the models.json URL
-    const modelUrl = new URL('/config/models.json', baseUrlObj)
-    console.log('Attempting to fetch models from:', modelUrl.toString())
-
     let staticModels: Model[] = []
 
-    try {
-      const response = await fetch(modelUrl, {
-        cache: 'no-store',
-        headers: {
-          Accept: 'application/json'
-        }
-      })
-
-      if (!response.ok) {
-        console.warn(
-          `HTTP error when fetching models: ${response.status} ${response.statusText}`
-        )
-        throw new Error(`HTTP error! status: ${response.status}`)
-      }
-
-      const text = await response.text()
-
-      // Check if the response starts with HTML doctype
-      if (text.trim().toLowerCase().startsWith('<!doctype')) {
-        console.warn('Received HTML instead of JSON when fetching models')
-        throw new Error('Received HTML instead of JSON')
-      }
-
-      const config = JSON.parse(text)
-      if (Array.isArray(config.models) && config.models.every(validateModel)) {
-        console.log('Successfully loaded models from URL')
-        staticModels = config.models
-      }
-    } catch (error: any) {
-      // Fallback to default models if fetch fails
-      console.warn(
-        'Fetch failed, falling back to default models:',
-        error.message || 'Unknown error'
-      )
-
-      if (
-        Array.isArray(defaultModels.models) &&
-        defaultModels.models.every(validateModel)
-      ) {
-        console.log('Successfully loaded default models')
-        staticModels = defaultModels.models
-      }
+    // Try to load default models first as it's the fastest
+    if (
+      Array.isArray(defaultModels.models) &&
+      defaultModels.models.every(validateModel)
+    ) {
+      staticModels = defaultModels.models as Model[]
     }
 
     // Fetch Ollama models
@@ -85,9 +45,32 @@ export async function getModels(): Promise<Model[]> {
     console.warn('Failed to load models:', error)
   }
 
-  // Last resort: return empty array
-  console.warn('All attempts to load models failed, returning empty array')
-  return []
+  // Last resort: return default models
+  return (defaultModels.models as Model[]) || []
+}
+
+/**
+ * Cached version of model fetching
+ * We pass baseUrl as a parameter so it can be used as part of the cache key and
+ * because we can't call headers() (which getBaseUrl uses) inside unstable_cache
+ */
+const getCachedModels = unstable_cache(
+  async (baseUrl: string): Promise<Model[]> => {
+    return fetchModelsInternal(new URL(baseUrl))
+  },
+  ['models-cache'],
+  { revalidate: 3600, tags: ['models'] }
+)
+
+/**
+ * Public function to get models.
+ * It resolves the base URL outside of the cache (since it uses headers)
+ * and then calls the cached function.
+ */
+export async function getModels(): Promise<Model[]> {
+  const { getBaseUrlString } = await import('@/lib/utils/url')
+  const baseUrl = await getBaseUrlString()
+  return getCachedModels(baseUrl)
 }
 
 /**

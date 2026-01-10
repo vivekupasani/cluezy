@@ -2,6 +2,7 @@ import { CoreMessage, smoothStream, streamText } from 'ai'
 
 import { RESEARCHER_SYSTEM_PROMPT } from '../prompts/researcher-sys-prompt'
 import { academicSearchTool } from '../tools/acadamic-search'
+import { connectorSearchTool } from '../tools/connector-search'
 import { datetimeTool } from '../tools/datetime'
 import { createFileSearchTool } from '../tools/pdf-search'
 import { productSearchTool } from '../tools/product-search'
@@ -48,10 +49,11 @@ export function researcher({
         productSearch: productSearchTool,
         pdfSearch: pdfSearchTool,
         docSearch: docSearchTool,
-        pptSearch: pptSearchTool
+        pptSearch: pptSearchTool,
+        connectorSearch: connectorSearchTool
       },
       experimental_activeTools: searchMode
-        ? ['search', 'acadamicSearch', 'retrieve', 'videoSearch', 'weather', 'datetime', 'youtubeVideoAnalysis', 'productSearch', 'pdfSearch', 'docSearch', 'pptSearch']
+        ? ['search', 'acadamicSearch', 'retrieve', 'videoSearch', 'weather', 'datetime', 'youtubeVideoAnalysis', 'productSearch', 'pdfSearch', 'docSearch', 'pptSearch', 'connectorSearch']
         : [],
       maxSteps: searchMode ? 5 : 1,
       experimental_transform: smoothStream()

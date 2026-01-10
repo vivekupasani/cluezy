@@ -151,7 +151,7 @@ export function ChatMessages({
                 onUpdateMessage={onUpdateMessage}
                 reload={reload}
               />
-              {showLoading && <Spinner className='ml-2' />}
+              {showLoading && sectionIndex === sections.length - 1 && <Spinner className='ml-2' />}
             </div>
 
             {/* Assistant messages */}
