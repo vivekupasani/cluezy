@@ -54,7 +54,6 @@ export const connectorSearchTool = tool({
                 limit: 10,
                 containerTags: [userId],
                 rerank: true,
-                includeFullDocs: false
             });
 
             console.log(`📊 Found ${searchResults?.results?.length || 0} results`);
