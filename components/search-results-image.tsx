@@ -222,8 +222,8 @@ export const SearchResultsImageSection: React.FC<
 
                     {convertedImages.length > 1 && (
                       <div className="absolute inset-0 pointer-events-none flex items-center justify-between p-4">
-                        <CarouselPrevious className="pointer-events-auto h-12 w-12 rounded-full border-none bg-background/20 text-foreground backdrop-blur-xl transition-all hover:bg-background/40 active:scale-95 disabled:hidden sm:-left-16" />
-                        <CarouselNext className="pointer-events-auto h-12 w-12 rounded-full border-none bg-background/20 text-foreground backdrop-blur-xl transition-all hover:bg-background/40 active:scale-95 disabled:hidden sm:-right-16" />
+                        <CarouselPrevious className="pointer-events-auto mx-2 h-12 w-12 rounded-full border-none bg-background/20 text-foreground backdrop-blur-xl transition-all hover:bg-background/40 active:scale-95 disabled:hidden sm:-left-16" />
+                        <CarouselNext className="pointer-events-auto mx-2 h-12 w-12 rounded-full border-none bg-background/20 text-foreground backdrop-blur-xl transition-all hover:bg-background/40 active:scale-95 disabled:hidden sm:-right-16" />
                       </div>
                     )}
                   </Carousel>

@@ -16,6 +16,22 @@
       "enabled": true,
       "toolCallType": "native",
       "toolCallModel": "gemini-2.0-flash"
+    },
+    {
+      "id": "mistralai/mistral-7b-instruct:free",
+      "name": "Mistral 7B Instruct (Free)",
+      "provider": "OpenRouter",
+      "providerId": "openrouter",
+      "enabled": true,
+      "toolCallType": "native"
+    },
+    {
+      "id": "mistralai/codestral-2501:free",
+      "name": "Mistral Codestral 2501 (Free)",
+      "provider": "OpenRouter",
+      "providerId": "openrouter",
+      "enabled": true,
+      "toolCallType": "native"
     }
   ]
 }

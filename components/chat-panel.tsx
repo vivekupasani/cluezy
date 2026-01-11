@@ -258,7 +258,7 @@ export function ChatPanel({
         <div className='bg-background'>
           <div className={cn(
             "relative flex flex-col w-full p-2.5 transition-all duration-300",
-            "bg-card/80 backdrop-blur-xl",
+            "bg-card/80 backdrop-blur-xl border border-border/25",
             "ring-1 ring-border/30",
             "shadow-sm",
             isMobile ? (input.length > 30 ? "rounded-[18px]" : "rounded-[18px]") : "rounded-[18px]"
