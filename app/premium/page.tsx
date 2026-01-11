@@ -54,7 +54,7 @@ export default function PricingPage() {
         <div className="min-h-screen w-full flex flex-col items-center justify-center px-6 py-20">
             {/* Header */}
             <div className="text-center max-w-xl mb-14">
-                <h1 className="text-4xl font-bold tracking-tight">Simple pricing</h1>
+                <h1 className="text-4xl font-bold tracking-tight">cluezy premium</h1>
                 <p className="mt-3 text-muted-foreground">
                     Choose the plan that fits your needs. Upgrade or downgrade anytime.
                 </p>
@@ -88,11 +88,11 @@ const PricingTile = ({ plan }: { plan: any }) => {
                 </div>
                 <div className="w-full h-[2px] bg-border" />
                 <div className="text-foreground/70 text-sm">
-                    <span className="text-4xl font-bold text-foreground">${plan.price} </span> /month
+                    <span className="text-4xl font-bold text-foreground">${plan.price} </span>/month
                 </div>
                 <Button
                     onClick={handleSubmit}
-                    className="w-full rounded-full bg-foreground hover:bg-foreground/80 text-background">Get Started <ChevronRight size={16} className="ml-2" /></Button>
+                    className="w-full rounded-full bg-primary hover:bg-primary/80 text-primary-foreground">Get Started <ChevronRight size={16} className="ml-2" /></Button>
             </div>
 
             <div className="w-full p-5 max-w-[400px] gap-4 flex flex-col items-start justify-center">

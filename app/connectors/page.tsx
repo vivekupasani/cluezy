@@ -4,9 +4,9 @@ import Link from 'next/link';
 
 export default function ConnectorsPage() {
     return (
-        <div className="flex-1 overflow-auto h-full mt-10 lg:mt-0 p-4 lg:p-8">
-            <header className="max-w-2xl mx-auto mb-8">
-                <h1 className="text-3xl font-bold tracking-tight">
+        <div className="flex-1 overflow-auto CustomScrollbar h-full mt-10 lg:mt-0 p-4 lg:p-8">
+            <header className="max-w-2xl mx-auto mb-2">
+                <h1 className="text-3xl font-medium tracking-normal">
                     Connectors
                 </h1>
 

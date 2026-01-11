@@ -4,6 +4,7 @@ import * as React from 'react'
 
 import { Slot } from '@radix-ui/react-slot'
 import { cva, VariantProps } from 'class-variance-authority'
+import { AnimatePresence, motion } from 'framer-motion'
 import { PanelLeftClose, PanelRightClose } from 'lucide-react'
 
 import { cn } from '@/lib/utils/index'
@@ -325,9 +326,17 @@ const SidebarTrigger = React.forwardRef<
       }}
       {...props}
     >
-      {
-        state === 'collapsed' ? <PanelRightClose size={18} /> : <PanelLeftClose size={18} />
-      }
+      <AnimatePresence mode="wait" initial={false}>
+        <motion.div
+          key={state}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.2, ease: "easeInOut" }}
+        >
+          {state === 'collapsed' ? <PanelRightClose size={18} /> : <PanelLeftClose size={18} />}
+        </motion.div>
+      </AnimatePresence>
       <span className="sr-only">Toggle Sidebar</span>
     </Button>
   )

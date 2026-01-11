@@ -1,8 +1,8 @@
 'use client'
 
-import { usePathname, useRouter } from 'next/navigation'
-
+import { AnimatePresence, motion } from 'framer-motion'
 import { FileText, Info, PanelLeftClose, PanelRightClose, Search, ShieldCheck, SquarePen, Unplug } from 'lucide-react'
+import { usePathname, useRouter } from 'next/navigation'
 
 import { useAuth } from '@/components/context/auth-context'
 import GuestMenu from '@/components/guest-menu'
@@ -12,10 +12,12 @@ import {
   SidebarContent,
   SidebarFooter,
   SidebarGroup,
+  SidebarGroupLabel,
   SidebarHeader,
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
+  SidebarSeparator,
   useSidebar
 } from '@/components/ui/sidebar'
 import UserMenu from '@/components/user-menu'
@@ -38,7 +40,7 @@ export function AppSidebar() {
 
   useEffect(() => {
     const handleKeyDown = (e: globalThis.KeyboardEvent) => {
-      if (e.key === 'o' && e.shiftKey) {
+      if (e.key === 'o' && e.shiftKey && e.ctrlKey) {
         e.preventDefault()
         router.push('/')
       }
@@ -57,7 +59,7 @@ export function AppSidebar() {
   }
 
   return (
-    <Sidebar collapsible="icon" variant='sidebar'>
+    <Sidebar collapsible="icon" variant='sidebar' className='dark:border-none'>
       <SidebarHeader className="flex flex-row items-center justify-between pt-4 pb-2 gap-0">
         <SidebarMenuButton onClick={toggleSidebar}>
           <Tooltip>
@@ -71,9 +73,14 @@ export function AppSidebar() {
                     <span className="truncate font-medium">CLUEZY</span>
                   </div>
                 </div>
-                {
-                  state === 'collapsed' ? <PanelRightClose size={16} className='text-muted-foreground' /> : <PanelLeftClose size={16} className='text-muted-foreground' />
-                }
+                <AnimatePresence mode="wait" initial={false}>
+                  <motion.div
+                    key={state}
+                    transition={{ duration: 0.2, ease: "easeInOut" }}
+                  >
+                    {state === 'collapsed' ? <PanelRightClose size={16} className='text-muted-foreground' /> : <PanelLeftClose size={16} className='text-muted-foreground' />}
+                  </motion.div>
+                </AnimatePresence>
               </div>
             </TooltipTrigger>
             <TooltipContent side="right">
@@ -85,6 +92,7 @@ export function AppSidebar() {
 
       <SidebarContent className="">
         <SidebarGroup>
+          <SidebarGroupLabel>Platform</SidebarGroupLabel>
           <SidebarMenu>
             <SidebarMenuItem>
               <Tooltip>
@@ -128,7 +136,14 @@ export function AppSidebar() {
                 <TooltipContent side="right" className='text-xs'>Search chats</TooltipContent>
               </Tooltip>
             </SidebarMenuItem>
+          </SidebarMenu>
+        </SidebarGroup>
 
+        <SidebarSeparator />
+
+        <SidebarGroup>
+          <SidebarGroupLabel>Connect</SidebarGroupLabel>
+          <SidebarMenu>
             <SidebarMenuItem>
               <Tooltip>
                 <TooltipTrigger asChild>
@@ -148,30 +163,14 @@ export function AppSidebar() {
                 <TooltipContent side="right" className='text-xs'>Connectors</TooltipContent>
               </Tooltip>
             </SidebarMenuItem>
+          </SidebarMenu>
+        </SidebarGroup>
 
-            {/* <SidebarMenuItem>
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <SidebarMenuButton
-                    onClick={() => {
-                      router.push('/playbook')
-                      // Optional: Refresh or reset chat state if needed
-                      if (isMobile) {
-                        setOpenMobile(false)
-                      }
-                    }}
-                    className="justify-start gap-2 data-[state=open]:px-2"
-                  >
-                    <BookOpen className="size-5 text-muted-foreground" />
-                    <span className='text-foreground/80'>Playbook</span>
-                  </SidebarMenuButton>
-                </TooltipTrigger>
-                <TooltipContent side="right" className='text-xs'>
-                  Playbook
-                </TooltipContent>
-              </Tooltip>
-            </SidebarMenuItem> */}
+        <SidebarSeparator />
 
+        <SidebarGroup>
+          <SidebarGroupLabel>Support</SidebarGroupLabel>
+          <SidebarMenu>
             <SidebarMenuItem>
               <Tooltip>
                 <TooltipTrigger asChild>
@@ -240,7 +239,6 @@ export function AppSidebar() {
                 </TooltipContent>
               </Tooltip>
             </SidebarMenuItem>
-
           </SidebarMenu>
         </SidebarGroup>
       </SidebarContent>

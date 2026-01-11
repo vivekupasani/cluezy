@@ -309,14 +309,14 @@ export default function ConnectorsPageContent() {
                     placeholder="Search connectors..."
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
-                    className="pl-9 bg-card border-0 h-10"
+                    className="pl-9 bg-card border-0 h-10 focus:ring-0 focus-visible:ring-0 focus-visible:ring-offset-0"
                 />
             </div>
 
             {loading ? (
                 <div className="space-y-4">
                     <div className="">
-                        <Skeleton className="h-5 w-32" />
+                        <Skeleton className="h-5 w-32 mb-2" />
                         <div className="grid gap-2">
                             {[1, 2, 3].map((i) => (
                                 <div key={i} className="flex flex-col sm:flex-row sm:items-center justify-between p-4 rounded-lg bg-card/40 border gap-4">
