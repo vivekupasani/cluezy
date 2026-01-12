@@ -197,6 +197,14 @@
       "providerId": "openai-compatible",
       "enabled": true,
       "toolCallType": "native"
+    },
+    {
+      "id": "gpt-4.1-nano",
+      "name": "GPT-4.1 nano",
+      "provider": "OpenRouter",
+      "providerId": "openrouter",
+      "enabled": true,
+      "toolCallType": "native"
     }
   ]
 }

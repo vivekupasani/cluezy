@@ -1,7 +1,7 @@
 import { CoreMessage, smoothStream, streamText } from 'ai'
 
 import { RESEARCHER_SYSTEM_PROMPT } from '../prompts/researcher-sys-prompt'
-import { academicSearchTool } from '../tools/acadamic-search'
+import { createAcademicSearchTool } from '../tools/acadamic-search'
 import { connectorSearchTool } from '../tools/connector-search'
 import { datetimeTool } from '../tools/datetime'
 import { createFileSearchTool } from '../tools/pdf-search'
@@ -18,25 +18,30 @@ type ResearcherReturn = Parameters<typeof streamText>[0]
 export function researcher({
   messages,
   model,
-  searchMode
+  searchMode,
+  excludeDomains
 }: {
   messages: CoreMessage[]
   model: string
   searchMode: boolean
+  excludeDomains?: string[]
 }): ResearcherReturn {
   try {
     const currentDate = new Date().toLocaleString()
 
     // Create model-specific tools
-    const searchTool = createSearchTool(model)
+    const searchTool = createSearchTool(model, excludeDomains)
     const videoSearchTool = createVideoSearchTool(model)
     const pdfSearchTool = createFileSearchTool("pdf")
     const docSearchTool = createFileSearchTool("doc")
     const pptSearchTool = createFileSearchTool("ppt")
+    const academicSearchTool = createAcademicSearchTool(excludeDomains)
+
+    const systemPrompt = `Current date and time: ${currentDate}\n${RESEARCHER_SYSTEM_PROMPT}`
 
     return {
       model: getModel(model),
-      system: `Current date and time: ${currentDate}\n${RESEARCHER_SYSTEM_PROMPT}`,
+      system: systemPrompt,
       messages,
       tools: {
         search: searchTool,

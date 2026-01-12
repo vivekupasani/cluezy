@@ -13,7 +13,10 @@ import {
 /**
  * Creates a search tool with the appropriate schema for the given model.
  */
-export function createSearchTool(fullModel: string) {
+export function createSearchTool(
+  fullModel: string,
+  globalExcludeDomains: string[] = []
+) {
   return tool({
     description: 'Search the web for information',
     parameters: getSearchSchemaForModel(fullModel),
@@ -24,6 +27,11 @@ export function createSearchTool(fullModel: string) {
       include_domains = [],
       exclude_domains = []
     }) => {
+      // Merge global exclusions with request-specific exclusions
+      // Remove duplicates using Set
+      const mergedExcludeDomains = [
+        ...new Set([...exclude_domains, ...globalExcludeDomains])
+      ]
       // Ensure max_results is at least 10
       const minResults = 10
       const effectiveMaxResults = Math.max(
@@ -66,7 +74,7 @@ export function createSearchTool(fullModel: string) {
               maxResults: effectiveMaxResults,
               searchDepth: effectiveSearchDepthForAPI,
               includeDomains: include_domains,
-              excludeDomains: exclude_domains
+              excludeDomains: mergedExcludeDomains
             })
           })
           if (!response.ok) {
@@ -83,7 +91,7 @@ export function createSearchTool(fullModel: string) {
             effectiveMaxResults,
             effectiveSearchDepthForAPI,
             include_domains,
-            exclude_domains
+            mergedExcludeDomains
           )
         }
       } catch (error) {

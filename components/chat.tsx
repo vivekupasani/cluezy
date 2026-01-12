@@ -68,6 +68,30 @@ export function Chat({
   const [isRateLimitDialogControlVisible, setIsRateLimitDialogControlVisible] = useState(true)
   const [attachedFiles, setAttachedFiles] = useState<FileAttachment[]>([])
   const [isFileUploading, setIsFileUploading] = useState(false)
+  const [excludedDomains, setExcludedDomains] = useState<string[]>([])
+
+  useEffect(() => {
+    // Initial load
+    const saved = localStorage.getItem("excluded-domains")
+    if (saved) {
+      try {
+        setExcludedDomains(JSON.parse(saved))
+      } catch (e) {
+        console.error("Failed to parse excluded domains", e)
+      }
+    }
+
+    // Listen for updates
+    const handleUpdate = (e: CustomEvent<string[]>) => {
+      setExcludedDomains(e.detail)
+    }
+
+    window.addEventListener('excluded-domains-updated', handleUpdate as EventListener)
+    return () => {
+      window.removeEventListener('excluded-domains-updated', handleUpdate as EventListener)
+    }
+  }, [])
+
   const {
     messages,
     input,
@@ -85,7 +109,8 @@ export function Chat({
     initialMessages: savedMessages,
     id: id,
     body: {
-      id
+      id,
+      excludeDomains: excludedDomains
     },
     onFinish: () => {
       if (window.location.pathname === '/') {

@@ -20,7 +20,7 @@ const DEFAULT_MODEL: Model = {
 
 export async function POST(req: Request) {
   try {
-    const { messages, id: chatId } = await req.json()
+    const { messages, id: chatId, excludeDomains } = await req.json()
     const referer = req.headers.get('referer')
     const isSharePage = referer?.includes('/share/')
     const userId = await getCurrentUserId()
@@ -104,7 +104,8 @@ export async function POST(req: Request) {
         model: selectedModel,
         chatId,
         searchMode,
-        userId
+        userId,
+        excludeDomains
       })
       : createManualToolStreamResponse({
         messages,

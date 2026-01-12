@@ -88,7 +88,7 @@ export default function UserMenu({ user, state }: UserMenuProps) {
         </button>
       </DropdownMenuTrigger>
 
-      <DropdownMenuContent className="w-56 ml-6" align="end">
+      <DropdownMenuContent className="w-56 ml-6 border dark:border-border/50" align="end">
         {/* Profile */}
         <DropdownMenuItem className="flex flex-col justify-center items-start">
           <span className="truncate txt-grad">{userName}</span>

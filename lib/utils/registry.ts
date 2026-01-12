@@ -37,7 +37,11 @@ export const registry = createProviderRegistry({
     apiKey: process.env.OPENAI_COMPATIBLE_API_KEY,
     baseURL: process.env.OPENAI_COMPATIBLE_API_BASE_URL
   }),
-  xai
+  xai,
+  openrouter: createOpenAI({
+    apiKey: process.env.OPENROUTER_API_KEY,
+    baseURL: 'https://openrouter.ai/api/v1'
+  })
 })
 
 export function getModel(model: string) {
@@ -91,6 +95,8 @@ export function getModel(model: string) {
 
 export function isProviderEnabled(providerId: string): boolean {
   switch (providerId) {
+    case 'openrouter':
+      return !!process.env.OPENROUTER_API_KEY
     case 'openai':
       return !!process.env.OPENAI_API_KEY
     case 'anthropic':
@@ -137,6 +143,8 @@ export function getToolCallModel(model?: string) {
       return getModel(`ollama:${ollamaModel}`)
     case 'google':
       return getModel('google:gemini-2.5-flash')
+    case 'openrouter':
+      return getModel('openrouter:google/gemini-2.0-flash-exp:free')
     default:
       return getModel('openai:gpt-4o-mini')
   }
@@ -152,6 +160,10 @@ export function isToolCallSupported(model?: string) {
   }
 
   if (provider === 'google') {
+    return true
+  }
+
+  if (provider === 'openrouter') {
     return true
   }
 

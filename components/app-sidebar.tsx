@@ -1,7 +1,7 @@
 'use client'
 
 import { AnimatePresence, motion } from 'framer-motion'
-import { FileText, Info, PanelLeftClose, PanelRightClose, Search, ShieldCheck, SquarePen, Unplug } from 'lucide-react'
+import { FileText, GlobeLock, Info, PanelLeftClose, PanelRightClose, Search, ShieldCheck, SquarePen, Unplug } from 'lucide-react'
 import { usePathname, useRouter } from 'next/navigation'
 
 import { useAuth } from '@/components/context/auth-context'
@@ -24,6 +24,7 @@ import UserMenu from '@/components/user-menu'
 import { useIsMobile } from '@/hooks/use-mobile'
 import Image from 'next/image'
 import { useEffect } from 'react'
+import { ExcludedDomainsDialog } from './excluded-domains-dialog'
 import { Tooltip, TooltipContent, TooltipTrigger } from './ui/tooltip'
 
 export function AppSidebar() {
@@ -135,6 +136,18 @@ export function AppSidebar() {
                 </TooltipTrigger>
                 <TooltipContent side="right" className='text-xs'>Search chats</TooltipContent>
               </Tooltip>
+            </SidebarMenuItem>
+
+            <SidebarMenuItem>
+              <ExcludedDomainsDialog
+                trigger={
+                  <SidebarMenuButton
+                    className="justify-start gap-2 data-[state=open]:px-2">
+                    <GlobeLock className="size-5 text-muted-foreground" />
+                    <span className='text-foreground/80'>Exclude Domains</span>
+                  </SidebarMenuButton>
+                }
+              />
             </SidebarMenuItem>
           </SidebarMenu>
         </SidebarGroup>
@@ -256,6 +269,10 @@ export function AppSidebar() {
             <GuestMenu state={state} />
           )}
         </SidebarMenuItem>
+
+        {state !== 'collapsed' && (
+          <div className="hidden" />
+        )}
       </SidebarFooter>
     </Sidebar>
   )

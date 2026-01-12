@@ -61,7 +61,7 @@ export default function GuestMenu({ state }: { state: "expanded" | "collapsed" }
           </div>
         </button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="w-56 border-b border-primary/8 ml-6" align="end" forceMount>
+      <DropdownMenuContent className="w-56 dark:border-border/50 ml-6" align="end" forceMount>
         <DropdownMenuItem asChild>
           <Link href="/auth/login" className='cursor-pointer'>
             <LogIn className="mr-2 h-4 w-4 text-foreground/70" />

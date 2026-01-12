@@ -8,4 +8,5 @@ export interface BaseStreamConfig {
   chatId: string
   searchMode: boolean
   userId: string
+  excludeDomains?: string[]
 }
