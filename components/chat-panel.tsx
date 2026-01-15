@@ -432,68 +432,31 @@ export function ChatPanel({
                   </Tooltip>
                 )}
 
-                {/* {
-                  input.length === 0 && attachedFiles.length === 0 ?
-                    (
-                      <Tooltip>
-                        <TooltipTrigger asChild>
-                          <Button
-                            type="button"
-                            size={'icon'}
-                            variant={'ghost'}
-                            className={cn(
-                              'size-8 transition-all duration-200 rounded-full',
-                              isLoading || !input.length || !attachedFiles.length
-                                ? 'bg-primary text-primary-foreground hover:bg-primary/80 hover:text-primary-foreground'
-                                : 'bg-secondary/50 text-muted-foreground hover:bg-secondary hover:text-foreground',
-                              isLoading && 'animate-pulse duration-1000'
-                            )}
-                            onClick={isLoading ? stop : undefined}
-                            title={isFileUploading ? "Wait for file upload" : (isLoading ? "Stop recording" : "Start recording")}
-                          >
-                            {isLoading ? (
-                              <Square size={14} className='fill-current' />
-                            ) : (
-                              <AudioLines size={16} />
-                            )}
-                          </Button>
-                        </TooltipTrigger>
-                        <TooltipContent side="top">{isLoading ? "Stop recording" : "Start recording"}</TooltipContent>
-                      </Tooltip>
-                    )
-                    :
-                    (
-                      <Tooltip>
-                        <TooltipTrigger asChild>
-                          <Button
-                            type={isLoading ? 'button' : 'submit'}
-                            size={'icon'}
-                            variant={'ghost'}
-                            className={cn(
-                              'size-8 transition-all duration-200 rounded-full',
-                              isLoading || input.length > 0
-                                ? 'bg-primary text-primary-foreground hover:bg-primary/80 hover:text-primary-foreground'
-                                : 'bg-secondary/50 text-muted-foreground hover:bg-secondary hover:text-foreground',
-                              isLoading && 'animate-pulse duration-1000'
-                            )}
-                            disabled={
-                              (input.length === 0 && attachedFiles.length === 0 && !isLoading) ||
-                              isToolInvocationInProgress() ||
-                              isFileUploading
-                            }
-                            onClick={isLoading ? stop : undefined}
-                          >
-                            {isLoading ? (
-                              <Square size={14} className='fill-current' />
-                            ) : (
-                              <ArrowUp size={16} />
-                            )}
-                          </Button>
-                        </TooltipTrigger>
-                        <TooltipContent side="top">{isLoading ? "Stop generating" : "Send message"}</TooltipContent>
-                      </Tooltip>
-                    )
-                } */}
+                {/* <Tooltip>
+                  <TooltipTrigger asChild>
+                    <Button
+                      type="button"
+                      size={'icon'}
+                      variant={'ghost'}
+                      className={cn(
+                        'size-8 transition-all duration-200 rounded-full',
+                        isLoading || !input.length || !attachedFiles.length
+                          ? 'bg-primary text-primary-foreground hover:bg-primary/80 hover:text-primary-foreground'
+                          : 'bg-secondary/50 text-muted-foreground hover:bg-secondary hover:text-foreground',
+                        isLoading && 'animate-pulse duration-1000'
+                      )}
+                      onClick={isLoading ? stop : undefined}
+                      title={isFileUploading ? "Wait for file upload" : (isLoading ? "Stop recording" : "Start recording")}
+                    >
+                      {isLoading ? (
+                        <Square size={14} className='fill-current' />
+                      ) : (
+                        <AudioLines size={16} />
+                      )}
+                    </Button>
+                  </TooltipTrigger>
+                  <TooltipContent side="top">{isLoading ? "Stop recording" : "Start recording"}</TooltipContent>
+                </Tooltip> */}
 
                 <Tooltip>
                   <TooltipTrigger asChild>

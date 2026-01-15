@@ -8,11 +8,13 @@ import { createClient } from "@/lib/supabase/client";
 export const AuthContext = React.createContext<{
     user: User | null;
     setUser: React.Dispatch<React.SetStateAction<User | null>>;
+    isLoading: boolean;
     getUserData: () => Promise<void>;
 } | null>(null)
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     const [user, setUser] = React.useState<User | null>(null);
+    const [isLoading, setIsLoading] = React.useState(true);
 
     React.useEffect(() => {
         if (!user) {
@@ -31,10 +33,11 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
             } = await supabase.auth.getUser()
             setUser(supabaseUser ?? null)
         }
+        setIsLoading(false)
     }
 
     return (
-        <AuthContext.Provider value={{ user, setUser, getUserData }}>
+        <AuthContext.Provider value={{ user, setUser, isLoading, getUserData }}>
             {children}
         </AuthContext.Provider>
     )

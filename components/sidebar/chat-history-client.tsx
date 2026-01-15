@@ -10,6 +10,7 @@ import { Chat } from '@/lib/types'
 import { useHistoryDialog } from '../history-dialog'
 import { Dialog, DialogContent, DialogTitle } from '../ui/dialog'
 
+import { useAuth } from '@/components/context/auth-context'
 import { ChatHistorySkeleton } from './chat-history-skeleton'
 import { ChatMenuItem } from './chat-menu-item'
 
@@ -67,14 +68,18 @@ function ChatHistoryList({
 
   if (!hasChats) {
     return (
-      <div className="flex flex-col items-center justify-center py-32 text-center">
-        <MessageCircle size={48} className="text-muted-foreground/40 mb-3" />
-        <p className="text-sm text-muted-foreground">
-          {searchQuery ? 'No chats found' : 'No chat history'}
+      <div className="flex flex-col items-center justify-center h-[50vh] text-center px-4">
+        <div className="bg-muted/30 p-4 rounded-full mb-3 ring-1 ring-border/50">
+          <MessageCircle size={24} className="text-muted-foreground/50" />
+        </div>
+        <p className="text-sm font-medium text-foreground/80 mb-1">
+          {searchQuery ? 'No results found' : 'No chat history'}
         </p>
-        {searchQuery && (
-          <p className="text-xs text-muted-foreground/60 mt-1">Try a different search term</p>
-        )}
+        <p className="text-xs text-muted-foreground max-w-[240px] leading-relaxed">
+          {searchQuery
+            ? 'We couldn\'t find any conversations matching your search.'
+            : 'Your conversation history will appear here once you start chatting.'}
+        </p>
       </div>
     )
   }
@@ -122,6 +127,7 @@ function ChatHistoryList({
 
 // Hook to manage chat history state
 export function useChatHistory() {
+  const { user, isLoading: isAuthLoading } = useAuth()
   const [chats, setChats] = useState<Chat[]>(cachedChats || [])
   const [nextOffset, setNextOffset] = useState<number | null>(cachedNextOffset)
   const [isLoading, setIsLoading] = useState(!hasFetchedOnce)
@@ -131,6 +137,11 @@ export function useChatHistory() {
   const [isPending, startTransition] = useTransition()
 
   const fetchInitialChats = useCallback(async (silent = false) => {
+    if (isAuthLoading) return
+    if (!user) {
+      if (!silent) setIsLoading(false)
+      return
+    }
     if (!silent) setIsLoading(true)
     try {
       const response = await fetch(`/api/chats?offset=0&limit=20`)
@@ -154,7 +165,7 @@ export function useChatHistory() {
     } finally {
       if (!silent) setIsLoading(false)
     }
-  }, [])
+  }, [user, isAuthLoading])
 
   // 🧠 Only fetch when cache is empty
   useEffect(() => {
@@ -195,7 +206,7 @@ export function useChatHistory() {
   }, [fetchInitialChats])
 
   const fetchMoreChats = useCallback(async () => {
-    if (isLoadingMore || nextOffset === null) return
+    if (isLoadingMore || nextOffset === null || !user || isAuthLoading) return
 
     setIsLoadingMore(true)
     try {
@@ -221,7 +232,7 @@ export function useChatHistory() {
     } finally {
       setIsLoadingMore(false)
     }
-  }, [nextOffset, isLoadingMore, chats])
+  }, [nextOffset, isLoadingMore, chats, user, isAuthLoading])
 
   // Infinite scroll logic
   useEffect(() => {

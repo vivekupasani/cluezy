@@ -25,7 +25,6 @@ export async function POST(req: Request) {
     const isSharePage = referer?.includes('/share/')
     const userId = await getCurrentUserId()
     console.log("user id : ", userId)
-    // console.log("Messages from server : ", JSON.stringify(messages, null, 2))
 
     if (userId == "anonymous") {
       const identifier = getClientIdentifier(req);

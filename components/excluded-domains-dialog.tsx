@@ -175,7 +175,7 @@ export function ExcludedDomainsDialog({
                                     </div>
                                     <button
                                         onClick={() => removeDomain(domain)}
-                                        className="opacity-0 group-hover:opacity-100 p-1.5 rounded-md hover:bg-destructive/10 hover:text-destructive text-muted-foreground transition-all duration-200"
+                                        className="opacity-100 md:opacity-0 group-hover:opacity-100 px-1.5 rounded-md hover:bg-destructive/10 hover:text-destructive text-muted-foreground transition-all duration-200"
                                     >
                                         <X className="w-3.5 h-3.5" />
                                     </button>
