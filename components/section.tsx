@@ -110,7 +110,7 @@ export function ToolArgsSection({
   return (
     <Section
       size="sm"
-      className="py-0 flex items-center justify-between w-full gap-2"
+      className="py-0 flex flex-col sm:flex-row items-start sm:items-center justify-between w-full gap-2"
     >
       <ToolBadge tool={tool}>{children}</ToolBadge>
       {number && number > 0 && (

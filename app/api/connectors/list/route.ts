@@ -3,6 +3,9 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getCurrentUserId } from '@/lib/auth/get-current-user';
 import { listUserConnections } from '@/lib/connectors';
 
+// Cache the response for 60 seconds to reduce API calls
+export const revalidate = 60;
+
 export async function GET(request: NextRequest) {
     try {
         // Get current user

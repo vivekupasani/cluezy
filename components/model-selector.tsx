@@ -92,27 +92,36 @@ export function ModelSelector({ models }: ModelSelectorProps) {
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
-      <PopoverTrigger asChild >
+      <PopoverTrigger asChild>
         <Button
+          variant="ghost"
+          size="sm"
           role="combobox"
           aria-expanded={open}
-          className="h-8 px-2 flex items-center justify-center gap-1.5 rounded-xl bg-muted/30 hover:bg-muted/60  border-border text-muted-foreground hover:text-foreground transition-all duration-200 border-0"
+          className="h-8 rounded-full border border-border/50 bg-muted/20 px-2 hover:bg-muted/40 hover:text-foreground transition-all duration-200"
         >
           {selectedModel ? (
-            <Image
-              src={`/providers/logos/${selectedModel.providerId}.svg`}
-              alt={selectedModel.provider}
-              width={14}
-              height={14}
-              className="rounded-full shrink-0"
-            />
+            <div className="flex items-center gap-2">
+              <div className="flex items-center justify-center rounded-full bg-background/50 border border-border/20 p-0.5">
+                <Image
+                  src={`/providers/logos/${selectedModel.providerId}.svg`}
+                  alt={selectedModel.provider}
+                  width={14}
+                  height={14}
+                  className="rounded-full shrink-0"
+                />
+              </div>
+              <span className="text-xs font-medium text-muted-foreground/80 group-hover:text-foreground transition-colors">
+                {selectedModel.name}
+              </span>
+            </div>
           ) : (
-            <Bot size={14} className='shrink-0' />
+            <div className="flex items-center gap-2">
+              <Bot size={14} className='shrink-0 text-muted-foreground' />
+              <span className="text-xs font-medium text-muted-foreground">Select model</span>
+            </div>
           )}
-          <span className="text-xs font-medium truncate max-w-[100px] hidden sm:block">
-            {selectedModel?.name || 'Select model'}
-          </span>
-          <ChevronDown size={12} className="opacity-50" />
+          <ChevronDown size={12} className="ml-1 opacity-50" />
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-[260px] p-0 mx-2 HiddenScrollbar border-border/50 rounded-xl" align="start">

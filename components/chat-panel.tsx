@@ -261,7 +261,7 @@ export function ChatPanel({
             "bg-card/80 backdrop-blur-xl border border-border/25",
             "ring-1 ring-border/30",
             "shadow-sm",
-            isMobile ? (input.length > 30 ? "rounded-[18px]" : "rounded-[18px]") : "rounded-[18px]"
+            "rounded-[20px]"
           )}>
 
             {/* Display attached files within the container */}

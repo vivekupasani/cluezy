@@ -5,7 +5,7 @@ import {
     RefreshCw,
     Search
 } from 'lucide-react';
-import { SVGProps, useEffect, useState } from 'react';
+import { SVGProps, useEffect, useRef, useState } from 'react';
 import { toast } from 'sonner';
 
 import { useAuth } from '@/components/context/auth-context';
@@ -20,6 +20,8 @@ import {
 import { Input } from '@/components/ui/input';
 import { Skeleton } from '@/components/ui/skeleton';
 import { CONNECTOR_CONFIGS, ConnectorProvider } from '@/lib/connectors';
+import { motion } from 'framer-motion';
+import Link from 'next/link';
 import { Tooltip, TooltipContent, TooltipTrigger } from './ui';
 
 // --- Icons ---
@@ -176,13 +178,6 @@ const DUMMY_CONNECTORS: DummyConnector[] = [
         icon: Slack,
         enabled: false,
     },
-    {
-        id: 'trello',
-        name: 'Trello',
-        description: 'Manage tasks and projects in Trello boards',
-        icon: Trello,
-        enabled: false,
-    },
 ];
 
 export default function ConnectorsPageContent() {
@@ -195,6 +190,7 @@ export default function ConnectorsPageContent() {
     const [selectedProvider, setSelectedProvider] = useState<ConnectorProvider | null>(null);
     const [dialogOpen, setDialogOpen] = useState(false);
     const { user } = useAuth();
+    const fetchInProgressRef = useRef(false);
 
     const activeProviders: ConnectorProvider[] = ['google-drive', 'notion', 'onedrive'];
 
@@ -203,7 +199,14 @@ export default function ConnectorsPageContent() {
     }, []);
 
     const fetchConnections = async () => {
+        // Prevent redundant fetches
+        if (fetchInProgressRef.current) {
+            console.log('Fetch already in progress, skipping...');
+            return;
+        }
+
         try {
+            fetchInProgressRef.current = true;
             setLoading(true);
             const response = await fetch('/api/connectors/list');
             const data = await response.json();
@@ -213,6 +216,7 @@ export default function ConnectorsPageContent() {
             toast.error('Failed to load connections');
         } finally {
             setLoading(false);
+            fetchInProgressRef.current = false;
         }
     };
 
@@ -302,73 +306,92 @@ export default function ConnectorsPageContent() {
     const connectedProviders = new Set(connections.map(c => c.provider));
 
     return (
-        <div className="w-full max-w-2xl mx-auto space-y-8 pt-6">
+        <div className="w-full max-w-5xl mx-auto overflow-y-auto space-y-8">
+            <header className="text-center space-y-3">
+                <h1 className="text-4xl font-bold tracking-tight">
+                    Connectors
+                </h1>
+
+                <p className="text-muted-foreground text-base max-w-2xl mx-auto">
+                    Connect your tools to search across them and take action.
+                    <span className="block text-muted-foreground/80 mt-1.5 text-sm">
+                        Powered by <Link href="https://supermemory.ai" target="_blank" className="font-medium hover:text-primary transition-colors underline-offset-4 hover:underline">Supermemory</Link>
+                    </span>
+                </p>
+            </header>
             <div className="relative">
                 <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                 <Input
                     placeholder="Search connectors..."
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
-                    className="pl-9 bg-card border-0 h-10 focus:ring-0 focus-visible:ring-0 focus-visible:ring-offset-0"
+                    className="pl-9 bg-card border-0 h-11 focus:ring-0 focus-visible:ring-0 focus-visible:ring-offset-0"
                 />
             </div>
 
             {loading ? (
-                <div className="space-y-4">
-                    <div className="">
-                        <Skeleton className="h-5 w-32 mb-2" />
-                        <div className="grid gap-2">
-                            {[1, 2, 3].map((i) => (
-                                <div key={i} className="flex flex-col sm:flex-row sm:items-center justify-between p-4 rounded-lg bg-card/40 border gap-4">
-                                    <div className="flex items-center gap-4 min-w-0 flex-1">
-                                        <Skeleton className="h-10 w-10 rounded-md shrink-0" />
-                                        <div className="space-y-2 flex-1 min-w-0">
-                                            <Skeleton className="h-4 w-32" />
-                                            <Skeleton className="h-3 w-48" />
+                <>
+                    <div className="space-y-4">
+                        <div>
+                            <Skeleton className="h-5 w-32 mb-4" />
+                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+                                {[1, 2, 3].map((i) => (
+                                    <div key={i} className="flex flex-col p-4 rounded-xl bg-card/40 border gap-3">
+                                        <div className="flex items-center gap-3">
+                                            <Skeleton className="h-10 w-10 rounded-lg shrink-0" />
+                                            <div className="space-y-2 flex-1">
+                                                <Skeleton className="h-4 w-24" />
+                                                <Skeleton className="h-3 w-32" />
+                                            </div>
                                         </div>
+                                        <Skeleton className="h-8 w-full rounded-lg" />
                                     </div>
-                                    <Skeleton className="h-9 w-20 rounded-md sm:w-24" />
-                                </div>
-                            ))}
+                                ))}
+                            </div>
                         </div>
                     </div>
-                </div>
+                </>
             ) : (
                 <>
                     {/* Installed Connectors */}
                     {connections.length > 0 && (
                         <div className="space-y-4">
-                            <h3 className="text-sm font-medium text-muted-foreground pl-1">Installed Connectors</h3>
-                            <div className="grid gap-2">
+                            <h3 className="text-sm font-semibold text-foreground pl-1">Installed Connectors</h3>
+                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
                                 {connections.map((connection) => {
                                     const config = CONNECTOR_CONFIGS[connection.provider];
                                     const Icon = PROVDIER_ICONS[config.icon];
 
                                     return (
-                                        <div key={connection.id} className="flex flex-col sm:flex-row sm:items-center justify-between p-4 rounded-lg bg-card/40 border hover:bg-card/60 transition-colors gap-4">
-                                            <div className="flex items-center gap-4 min-w-0 flex-1">
-                                                <div className="text-2xl p-2 bg-background rounded-md shrink-0">
+                                        <motion.div
+                                            layoutId={connection.id}
+                                            key={connection.id} className="group relative flex flex-col p-4 rounded-xl bg-card/60 border hover:bg-card/80 hover:border-primary/20 transition-all duration-200 gap-3">
+                                            <div className="flex items-start gap-3">
+                                                <div className="text-2xl p-2.5 bg-gradient-to-br from-primary/10 to-primary/5 rounded-lg shrink-0 group-hover:from-primary/15 group-hover:to-primary/10 transition-colors">
                                                     <Icon />
                                                 </div>
-                                                <div className="min-w-0 flex-1">
-                                                    <h4 className="font-medium text-sm truncate">{config.name}</h4>
-                                                    <p className="text-xs text-muted-foreground truncate">{connection.email}</p>
+                                                <div className="flex-1 min-w-0">
+                                                    <h4 className="font-semibold text-sm truncate">{config.name}</h4>
+                                                    <p className="text-xs text-muted-foreground truncate mt-0.5">{connection.email}</p>
                                                 </div>
                                             </div>
-                                            <div className="flex items-center justify-between sm:justify-end gap-3 w-full sm:w-auto">
-                                                <span className="text-xs text-green-500 font-medium whitespace-nowrap">Connected</span>
+                                            <div className="flex items-center justify-between gap-2">
+                                                <span className="text-xs text-emerald-500 font-medium flex items-center gap-1.5">
+                                                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                                                    Connected
+                                                </span>
                                                 <div className="flex items-center gap-1">
                                                     <Tooltip>
                                                         <TooltipTrigger>
                                                             <Button
                                                                 variant="ghost"
                                                                 size="icon"
-                                                                className="h-8 w-8 text-muted-foreground hover:text-primary shrink-0"
+                                                                className="h-7 w-7 text-muted-foreground hover:text-primary shrink-0"
                                                                 onClick={() => handleSync(connection.provider)}
                                                                 disabled={syncingProvider === connection.provider}
                                                             >
                                                                 <span className="sr-only">Sync</span>
-                                                                <RefreshCw className={`h-4 w-4 ${syncingProvider === connection.provider ? 'animate-spin' : ''}`} />
+                                                                <RefreshCw className={`h-3.5 w-3.5 ${syncingProvider === connection.provider ? 'animate-spin' : ''}`} />
                                                             </Button>
                                                             <TooltipContent>
                                                                 Sync
@@ -380,14 +403,14 @@ export default function ConnectorsPageContent() {
                                                             <Button
                                                                 variant="ghost"
                                                                 size="icon"
-                                                                className="h-8 w-8 text-muted-foreground hover:text-destructive shrink-0"
+                                                                className="h-7 w-7 text-muted-foreground hover:text-destructive shrink-0"
                                                                 onClick={() => handleDisconnect(connection.id)}
                                                             >
                                                                 <span className="sr-only">Disconnect</span>
                                                                 {deletingId === connection.id ? (
-                                                                    <Loader2 className="h-4 w-4 animate-spin" />
+                                                                    <Loader2 className="h-3.5 w-3.5 animate-spin" />
                                                                 ) : (
-                                                                    <span aria-hidden="true">✕</span>
+                                                                    <span aria-hidden="true" className="text-sm">✕</span>
                                                                 )}
                                                             </Button>
                                                         </TooltipTrigger>
@@ -397,7 +420,7 @@ export default function ConnectorsPageContent() {
                                                     </Tooltip>
                                                 </div>
                                             </div>
-                                        </div>
+                                        </motion.div>
                                     );
                                 })}
                             </div>
@@ -406,8 +429,8 @@ export default function ConnectorsPageContent() {
 
                     {/* Available Connectors */}
                     <div className="space-y-4">
-                        <h3 className="text-sm font-medium text-muted-foreground pl-1">Available Connectors</h3>
-                        <div className="grid gap-2">
+                        <h3 className="text-sm font-semibold text-foreground pl-1">Available Connectors</h3>
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
                             {/* Active connectors that are NOT connected */}
                             {filteredActive.map((provider) => {
                                 if (connectedProviders.has(provider)) return null;
@@ -417,23 +440,23 @@ export default function ConnectorsPageContent() {
                                 const isConnecting = connectingProvider === provider;
 
                                 return (
-                                    <div key={provider} className="flex flex-col sm:flex-row sm:items-center justify-between p-4 rounded-lg bg-card/40 border hover:bg-card/60 transition-colors gap-4">
-                                        <div className="flex items-center gap-4 min-w-0 flex-1">
-                                            <div className="text-2xl p-2 bg-background rounded-md shrink-0">
+                                    <div key={provider} className="group relative flex flex-col p-4 rounded-xl bg-card/40 border hover:bg-card/60 transition-all duration-200 gap-3">
+                                        <div className="flex items-start gap-3">
+                                            <div className="text-2xl p-2.5 bg-gradient-to-br from-muted/50 to-muted/30 rounded-lg shrink-0 group-hover:from-muted/60 group-hover:to-muted/40 transition-colors">
                                                 <Icon />
                                             </div>
-                                            <div className="min-w-0 flex-1">
-                                                <h4 className="font-medium text-sm truncate">{config.name}</h4>
-                                                <p className="text-xs text-muted-foreground line-clamp-1">{config.description}</p>
+                                            <div className="flex-1 min-w-0">
+                                                <h4 className="font-semibold text-sm truncate">{config.name}</h4>
+                                                <p className="text-xs text-muted-foreground line-clamp-2 mt-0.5">{config.description}</p>
                                             </div>
                                         </div>
                                         <Tooltip>
                                             <TooltipTrigger asChild>
-                                                <div className="w-full sm:w-auto">
+                                                <div className="w-full">
                                                     <Button
                                                         variant="secondary"
                                                         size="sm"
-                                                        className="w-full sm:w-auto min-w-[80px]"
+                                                        className="w-full"
                                                         disabled={isConnecting || !user}
                                                         onClick={() => openConnectDialog(provider)}
                                                     >
@@ -453,26 +476,26 @@ export default function ConnectorsPageContent() {
 
                             {/* Dummy connectors */}
                             {filteredDummy.map((connector) => (
-                                <div key={connector.id} className="flex flex-col sm:flex-row sm:items-center justify-between p-4 rounded-lg bg-card/40 border hover:bg-card/60 transition-colors gap-4">
-                                    <div className="flex items-center gap-4 min-w-0 flex-1">
-                                        <div className="text-2xl p-2 bg-background rounded-md shrink-0">
+                                <div key={connector.id} className="group relative flex flex-col p-4 rounded-xl bg-card/30 border border-dashed hover:bg-card/40 transition-all duration-200 gap-3 opacity-60">
+                                    <div className="flex items-start gap-3">
+                                        <div className="text-2xl p-2.5 bg-gradient-to-br from-muted/30 to-muted/20 rounded-lg shrink-0">
                                             <connector.icon className="h-[1em] w-[1em]" />
                                         </div>
-                                        <div className="min-w-0 flex-1">
-                                            <h4 className="font-medium text-sm text-foreground/80 truncate">{connector.name}</h4>
-                                            <p className="text-xs text-muted-foreground line-clamp-1">{connector.description}</p>
+                                        <div className="flex-1 min-w-0">
+                                            <h4 className="font-semibold text-sm text-foreground/70 truncate">{connector.name}</h4>
+                                            <p className="text-xs text-muted-foreground line-clamp-2 mt-0.5">{connector.description}</p>
                                         </div>
                                     </div>
                                     <Tooltip>
                                         <TooltipTrigger asChild>
-                                            <div className="w-full sm:w-auto">
+                                            <div className="w-full">
                                                 <Button
                                                     variant="secondary"
                                                     size="sm"
-                                                    className="w-full sm:w-auto min-w-[80px] opacity-50"
+                                                    className="w-full opacity-50"
                                                     disabled
                                                 >
-                                                    Enable
+                                                    Coming Soon
                                                 </Button>
                                             </div>
                                         </TooltipTrigger>

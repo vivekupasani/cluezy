@@ -28,7 +28,7 @@ export function EmptyScreen({
           <Button
             key={index}
             variant="outline"
-            className="h-auto px-2 py-1 flex flex-col rounded-xl items-start gap-2 whitespace-normal text-left hover:bg-secondary/50 transition-colors border-border/60"
+            className="h-auto px-2 py-1 flex flex-col rounded-lg items-start gap-2 whitespace-normal text-left hover:bg-secondary/50 transition-colors border-border/60"
             onClick={() => submitMessage(example.message)}
           >
             <div className="flex items-center gap-2 txt-act font-medium text-xs">

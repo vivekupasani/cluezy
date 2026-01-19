@@ -67,9 +67,9 @@ export default function UserMenu({ user, state }: UserMenuProps) {
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <button
-          className={`group flex items-center gap-2 w-full rounded-lg hover:bg-sidebar-accent transition`}
+          className={`group flex items-center mb-2 gap-2 w-full rounded-lg hover:bg-sidebar-accent transition`}
         >
-          <Avatar className="h-7 w-7">
+          <Avatar className="h-8 w-8">
             <AvatarImage src={avatarUrl} />
             <AvatarFallback className="text-xs">
               {getInitials(userName, user.email)}
