@@ -98,27 +98,18 @@ export function ModelSelector({ models }: ModelSelectorProps) {
           size="sm"
           role="combobox"
           aria-expanded={open}
-          className="h-8 rounded-full border border-border/50 bg-muted/20 px-2 hover:bg-muted/40 hover:text-foreground transition-all duration-200"
+          className="h-8 rounded-full bg-transparent px-2 hover:bg-muted/50 text-muted-foreground hover:text-foreground transition-all duration-200"
         >
           {selectedModel ? (
             <div className="flex items-center gap-2">
-              <div className="flex items-center justify-center rounded-full bg-background/50 border border-border/20 p-0.5">
-                <Image
-                  src={`/providers/logos/${selectedModel.providerId}.svg`}
-                  alt={selectedModel.provider}
-                  width={14}
-                  height={14}
-                  className="rounded-full shrink-0"
-                />
-              </div>
-              <span className="text-xs font-medium text-muted-foreground/80 group-hover:text-foreground transition-colors">
+              <span className="text-xs font-medium">
                 {selectedModel.name}
               </span>
             </div>
           ) : (
             <div className="flex items-center gap-2">
-              <Bot size={14} className='shrink-0 text-muted-foreground' />
-              <span className="text-xs font-medium text-muted-foreground">Select model</span>
+              <Bot size={14} className='shrink-0' />
+              <span className="text-xs font-medium">Select model</span>
             </div>
           )}
           <ChevronDown size={12} className="ml-1 opacity-50" />

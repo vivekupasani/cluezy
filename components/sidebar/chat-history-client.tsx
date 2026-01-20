@@ -167,6 +167,15 @@ export function useChatHistory() {
     }
   }, [user, isAuthLoading])
 
+  // 🧹 Clear state and cache on logout
+  useEffect(() => {
+    if (!isAuthLoading && !user) {
+      setChats([])
+      setNextOffset(null)
+      clearChatHistoryCache()
+    }
+  }, [user, isAuthLoading])
+
   // 🧠 Only fetch when cache is empty
   useEffect(() => {
     if (!hasFetchedOnce) {

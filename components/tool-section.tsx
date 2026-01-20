@@ -113,7 +113,7 @@ export function ToolSection({
       )
     case 'retrieve':
       return (
-        <div className='mt-0'>
+        <div className='mt-4'>
           <RetrieveSection
             tool={tool}
             isOpen={isOpen}
