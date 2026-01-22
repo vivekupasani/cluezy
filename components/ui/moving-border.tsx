@@ -1,6 +1,5 @@
 "use client";
-import React from "react";
-import { useRef } from "react";
+import React, { useRef } from "react";
 
 import {
   motion,
@@ -84,7 +83,7 @@ export const MovingBorder = ({
   ry?: string;
   [key: string]: any;
 }) => {
-  const pathRef = useRef<any>();
+  const pathRef = useRef<any>(null);
   const progress = useMotionValue<number>(0);
 
   useAnimationFrame((time) => {

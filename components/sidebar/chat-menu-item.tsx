@@ -12,6 +12,7 @@ import { useHistoryDialog } from '../history-dialog'
 import { LoadingSpinner } from '../ui/spinner'
 
 const formatDateWithTime = (date: Date | string) => {
+  if (typeof window === 'undefined') return null
   const parsedDate = new Date(date)
   const now = new Date()
   const seconds = Math.floor((now.getTime() - parsedDate.getTime()) / 1000)

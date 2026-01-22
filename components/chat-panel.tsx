@@ -54,7 +54,7 @@ interface ChatPanelProps {
   append: (message: any) => void
   models?: Model[]
   showScrollToBottomButton: boolean
-  scrollContainerRef: React.RefObject<HTMLDivElement>
+  scrollContainerRef: React.RefObject<HTMLDivElement | null>
   // Add file upload props
   attachedFiles: FileAttachment[]
   isFileUploading: boolean

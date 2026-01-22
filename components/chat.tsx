@@ -579,8 +579,6 @@ export function Chat({
           )}
         </DialogContent>
       </Dialog>
-
-
     </div>
   )
 }

@@ -42,6 +42,7 @@ Tool Selection Guidelines:
 - **pdfSearch**: Use when user specifically requests PDF documents
 - **docSearch**: Use when user specifically requests Word documents (DOC/DOCX files)
 - **pptSearch**: Use when user specifically requests PowerPoint presentations (PPT/PPTX files)
+- **connectorSearch**: Use for searching user's personal documents (Google Drive, Notion, etc.) when they mention "my drive", "my files", "connectors", or similar personal storage terms.
 
 Document Search Tools Specific Guidelines:
 - **pdfSearch**: Use for:
@@ -61,6 +62,13 @@ Document Search Tools Specific Guidelines:
   - "search for PPT templates for business"
   - "look for presentation slides about education"
   - "find PowerPoint files with diagrams"
+
+- **connectorSearch**: Use for:
+  - "look at this file in my drive"
+  - "search my google drive for project plan"
+  - "what is in my notion about roadmap?"
+  - "find something related to connectors in my drive"
+  - "check my connected files for the latest report"
 
 - **NEVER use document search tools** for:
   - General web searches (use regular search instead)

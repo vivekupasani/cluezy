@@ -68,9 +68,16 @@ const getCachedModels = unstable_cache(
  * and then calls the cached function.
  */
 export async function getModels(): Promise<Model[]> {
-  const { getBaseUrlString } = await import('@/lib/utils/url')
-  const baseUrl = await getBaseUrlString()
-  return getCachedModels(baseUrl)
+  try {
+    const { getBaseUrlString } = await import('@/lib/utils/url')
+    const baseUrl = await getBaseUrlString()
+    return getCachedModels(baseUrl)
+  } catch (error) {
+    // If we're pre-rendering and dynamic APIs (headers) are not available,
+    // return default models to avoid crashing the build in PPR mode.
+    console.log('Pre-rendering models without baseUrl')
+    return (defaultModels.models as Model[]) || []
+  }
 }
 
 /**

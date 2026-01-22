@@ -15,12 +15,11 @@ import {
   Dialog,
   DialogContent,
   DialogDescription,
-  DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger
 } from './ui/dialog'
-import { Spinner } from './ui/spinner'
+import { LoadingSpinner } from './ui/spinner'
 
 interface ChatShareProps {
   chatId: string
@@ -88,25 +87,42 @@ export function ChatShare({ chatId, className }: ChatShareProps) {
             </TooltipContent>
           </Tooltip>
         </DialogTrigger>
-        <DialogContent className='w-[90%] bg-gradient-to-br from-card/75 via-card/55 to-card/65 rounded-2xl backdrop-blur-sm ring-0'>
-          <DialogHeader>
-            <DialogTitle className='txt-grad'>Share link to search result</DialogTitle>
-            <DialogDescription className='txt-mut'>
+        <DialogContent className='w-[95%] max-w-md bg-background/95 rounded-3xl backdrop-blur-md border-2 border-border/50 shadow-2xl'>
+          <DialogHeader className='space-y-3'>
+            <DialogTitle className='text-2xl font-bold text-center bg-gradient-to-r from-orange-500 via-yellow-500 to-orange-600 bg-clip-text text-transparent'>
+              Share link to search result
+            </DialogTitle>
+            <DialogDescription className='text-center text-muted-foreground text-sm leading-relaxed px-2'>
               Anyone with the link will be able to view this search result.
             </DialogDescription>
           </DialogHeader>
-          <DialogFooter className="items-center">
+          <div className="flex flex-col gap-2.5 mt-6">
             {!shareUrl && (
-              <Button onClick={handleShare} disabled={pending} size="sm">
-                {pending ? <Spinner /> : 'Get link'}
+              <Button
+                onClick={handleShare}
+                disabled={pending}
+                className='w-full font-semibold py-5 rounded-xl shadow-lg hover:shadow-xl transition-all duration-200 hover:scale-[1.02]'
+              >
+                {pending ? <LoadingSpinner /> : 'Get link'}
               </Button>
             )}
             {shareUrl && (
-              <Button onClick={handleCopy} disabled={pending} size="sm">
+              <Button
+                onClick={handleCopy}
+                disabled={pending}
+                className='w-full font-semibold py-5 rounded-xl shadow-lg hover:shadow-xl transition-all duration-200 hover:scale-[1.02]'
+              >
                 {'Copy link'}
               </Button>
             )}
-          </DialogFooter>
+            <Button
+              variant="ghost"
+              className='w-full text-muted-foreground hover:text-foreground py-5 rounded-xl'
+              onClick={() => setOpen(false)}
+            >
+              Cancel
+            </Button>
+          </div>
         </DialogContent>
       </Dialog>
     </div>

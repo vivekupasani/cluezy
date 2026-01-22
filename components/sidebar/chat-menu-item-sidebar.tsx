@@ -11,6 +11,7 @@ import { Chat } from '@/lib/types'
 import { useHistoryDialog } from '../history-dialog'
 
 const formatDateWithTime = (date: Date | string) => {
+    if (typeof window === 'undefined') return null
     const parsedDate = new Date(date)
     const now = new Date()
     const seconds = Math.floor((now.getTime() - parsedDate.getTime()) / 1000)

@@ -18,7 +18,7 @@ export const RetryButton: React.FC<RetryButtonProps> = ({
     <Tooltip>
       <TooltipTrigger asChild>
         <Button
-          className="rounded-full h-8 w-8 ring-0"
+          className="rounded-full h-8 w-8 ring-0 focus:ring-0 focus:ring-offset-0"
           type="button"
           variant="ghost"
           size="icon"

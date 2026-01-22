@@ -35,7 +35,7 @@ export function MessageActions({
   return (
     <div
       className={cn(
-        'flex items-center self-end transition-opacity duration-200',
+        'flex items-center self-end transition-opacity duration-200 mt-2',
         isLoading ? 'opacity-0' : 'opacity-100',
         className
       )}

@@ -1,7 +1,6 @@
-import { NextRequest, NextResponse } from 'next/server';
-
 import { getCurrentUserId } from '@/lib/auth/get-current-user';
 import { ConnectorProvider, getSyncStatus } from '@/lib/connectors';
+import { NextRequest, NextResponse } from 'next/server';
 
 export async function GET(request: NextRequest) {
     try {
@@ -33,6 +32,16 @@ export async function GET(request: NextRequest) {
 
         return NextResponse.json(status);
     } catch (error: any) {
+        // Suppress pre-render bailout logs from Next.js internal errors
+        const isBailout =
+            error.digest === 'NEXT_PRERENDER_INTERRUPTED' ||
+            error.message?.includes('bail out of prerendering') ||
+            error.message?.includes('Dynamic server usage') ||
+            error.message?.includes('During prerendering') ||
+            error.message?.includes('used request.url');
+
+        if (isBailout) throw error;
+
         console.error('Error getting sync status:', error);
         return NextResponse.json(
             { error: error.message || 'Failed to get sync status' },

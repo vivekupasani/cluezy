@@ -1,6 +1,6 @@
 'use client'
 
-import { useCallback, useEffect, useRef, useState, useTransition } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState, useTransition } from 'react'
 
 import { MessageCircle, Search } from 'lucide-react'
 import { toast } from 'sonner'
@@ -44,7 +44,7 @@ interface ChatHistoryListProps {
   isPending: boolean
   hasChats: boolean
   searchQuery: string
-  loadMoreRef: React.RefObject<HTMLDivElement>
+  loadMoreRef: React.RefObject<HTMLDivElement | null>
   compact?: boolean
 }
 
@@ -302,7 +302,18 @@ export function useChatHistory() {
   }
 
   // Group chats by date
-  const groupChatsByDate = () => {
+  const groups = useMemo(() => {
+    // Return empty groups if no filtered chats or during SSR/Pre-rendering
+    // to avoid "new Date()" hydration mismatches in Next.js 16 PPR
+    if (typeof window === 'undefined' || filteredChats.length === 0) {
+      return {
+        thisWeek: [] as Chat[],
+        lastWeek: [] as Chat[],
+        thisMonth: [] as Chat[],
+        older: [] as Chat[]
+      }
+    }
+
     const now = new Date()
     const startOfThisWeek = new Date(now)
     startOfThisWeek.setDate(now.getDate() - now.getDay())
@@ -341,9 +352,8 @@ export function useChatHistory() {
     })
 
     return groups
-  }
+  }, [filteredChats])
 
-  const groups = groupChatsByDate()
   const hasChats = groups.thisWeek.length > 0 || groups.lastWeek.length > 0 ||
     groups.thisMonth.length > 0 || groups.older.length > 0
 

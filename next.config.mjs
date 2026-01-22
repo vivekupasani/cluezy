@@ -3,6 +3,7 @@ import withPWA from 'next-pwa'
 const nextConfig = {
   reactStrictMode: true,
   turbopack: {},
+  cacheComponents: true,
   images: {
     remotePatterns: [
       {
@@ -30,10 +31,6 @@ const nextConfig = {
         pathname: '/images/**'
       }
     ]
-  },
-  eslint: {
-    // ✅ Prevent build from failing due to lint errors
-    ignoreDuringBuilds: true
   }
 }
 

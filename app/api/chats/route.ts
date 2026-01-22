@@ -1,8 +1,7 @@
-import { NextRequest, NextResponse } from 'next/server'
-
 import { getChatsPage } from '@/lib/actions/chat'
 import { getCurrentUserId } from '@/lib/auth/get-current-user'
 import { type Chat } from '@/lib/types'
+import { NextRequest, NextResponse } from 'next/server'
 
 interface ChatPageResponse {
   chats: Chat[]
@@ -24,7 +23,18 @@ export async function GET(request: NextRequest) {
   try {
     const result = await getChatsPage(userId, limit, offset)
     return NextResponse.json<ChatPageResponse>(result)
-  } catch (error) {
+  } catch (error: any) {
+    // Suppress pre-render bailout logs from Next.js internal errors
+    const isBailout =
+      error.digest === 'NEXT_PRERENDER_INTERRUPTED' ||
+      error.message?.includes('bail out of prerendering') ||
+      error.message?.includes('Dynamic server usage') ||
+      error.message?.includes('During prerendering') ||
+      error.message?.includes('used request.url') ||
+      error.message?.includes('used cookies');
+
+    if (isBailout) throw error;
+
     console.error('API route error fetching chats:', error)
     return NextResponse.json<ChatPageResponse>(
       { chats: [], nextOffset: null },

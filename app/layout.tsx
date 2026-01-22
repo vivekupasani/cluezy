@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from 'next'
 import { Baumans } from 'next/font/google'
+import React from 'react'
 
 import { Analytics } from '@vercel/analytics/next'
 
@@ -151,11 +152,15 @@ export default async function RootLayout({
             >
               <SidebarProvider defaultOpen={false}>
                 <div className="relative flex flex-col flex-1">
-                  <AppSidebar />
+                  <React.Suspense fallback={null}>
+                    <AppSidebar />
+                  </React.Suspense>
                   <main className="flex flex-1 min-h-0">
                     <ArtifactRoot>{children}</ArtifactRoot>
                   </main>
-                  <HistoryDialog />
+                  <React.Suspense fallback={null}>
+                    <HistoryDialog />
+                  </React.Suspense>
                 </div>
               </SidebarProvider>
               <Toaster />

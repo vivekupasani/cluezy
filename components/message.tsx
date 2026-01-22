@@ -25,7 +25,7 @@ export function BotMessage({
 
   const baseComponents = {
     p: (props: any) => (
-      <p className="text-sm leading-relaxed text-foreground/80 my-2" {...props} />
+      <p className="text-sm leading-relaxed text-foreground/80 dark:text-foreground/90 my-2" {...props} />
     ),
     h1: (props: any) => (
       <h1 className="text-xl font-bold txt-grad mt-4 mb-2 underline" {...props} />
@@ -37,18 +37,18 @@ export function BotMessage({
       <h3 className="text-base font-semibold txt-grad mt-2 mb-1" {...props} />
     ),
     ul: (props: any) => (
-      <ul className="list-disc pl-6 space-y-1 text-sm text-foreground/80" {...props} />
+      <ul className="list-disc pl-6 space-y-1 text-sm text-foreground/80 dark:text-foreground/90" {...props} />
     ),
     ol: (props: any) => (
-      <ol className="list-decimal pl-6 space-y-1 text-sm text-foreground/80" {...props} />
+      <ol className="list-decimal pl-6 space-y-1 text-sm text-foreground/80 dark:text-foreground/90" {...props} />
     ),
     li: ({ node, ordered, index, checked, ...props }: any) => (
       <li className="my-1" {...props} />
     ),
     strong: (props: any) => <strong className="font-semibold text-foreground/85" {...props} />,
-    em: (props: any) => <em className="italic text-foreground/80" {...props} />,
+    em: (props: any) => <em className="italic text-foreground/80 dark:text-foreground/90" {...props} />,
     blockquote: (props: any) => (
-      <blockquote className="border-l-4 border-accent pl-4 italic text-foreground/80" {...props} />
+      <blockquote className="border-l-4 border-accent pl-4 italic text-foreground/80 dark:text-foreground/90" {...props} />
     ),
     a: Citing,
     // Table components
