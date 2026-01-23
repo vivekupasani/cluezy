@@ -58,6 +58,7 @@ interface ChatPanelProps {
   // Add file upload props
   attachedFiles: FileAttachment[]
   isFileUploading: boolean
+  uploadingCount?: number
   onFileUpload: (files: FileList | null) => void
   onRemoveFile: (fileId: string) => void
 }
@@ -78,6 +79,7 @@ export function ChatPanel({
   // Add file upload props
   attachedFiles,
   isFileUploading,
+  uploadingCount = 0,
   onFileUpload,
   onRemoveFile
 }: ChatPanelProps) {
@@ -93,6 +95,7 @@ export function ChatPanel({
   const isMobile = useIsMobile()
   const { user } = useAuth()
   const pathName = usePathname()
+  const [isDragging, setIsDragging] = useState(false)
 
   if (pathName.startsWith("/share/")) {
     return null;
@@ -161,6 +164,28 @@ export function ChatPanel({
 
   const handleFileButtonClick = () => {
     fileInputRef.current?.click()
+  }
+
+  const handleDragOver = (e: React.DragEvent) => {
+    e.preventDefault()
+    e.stopPropagation()
+    setIsDragging(true)
+  }
+
+  const handleDragLeave = (e: React.DragEvent) => {
+    e.preventDefault()
+    e.stopPropagation()
+    setIsDragging(false)
+  }
+
+  const handleDrop = (e: React.DragEvent) => {
+    e.preventDefault()
+    e.stopPropagation()
+    setIsDragging(false)
+
+    if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
+      onFileUpload(e.dataTransfer.files)
+    }
   }
 
   const isToolInvocationInProgress = () => {
@@ -261,12 +286,17 @@ export function ChatPanel({
             "bg-card/80 backdrop-blur-xl border border-border/25",
             "ring-1 ring-border/30",
             "shadow-sm",
-            "rounded-[20px]"
-          )}>
+            "rounded-[20px]",
+            isDragging && "ring-2 ring-primary bg-primary/5 border-primary/50"
+          )}
+            onDragOver={handleDragOver}
+            onDragLeave={handleDragLeave}
+            onDrop={handleDrop}
+          >
 
             {/* Display attached files within the container */}
             {(attachedFiles.length > 0 || isFileUploading) && (
-              <div className="flex flex-wrap gap-2 px-3 pt-3">
+              <div className="flex flex-wrap gap-2 px-2 pt-2">
                 {attachedFiles.map(file => (
                   <div key={file.id} className="group relative flex items-center gap-2 bg-muted/40 hover:bg-muted/60 pl-2 pr-1 py-1.5 rounded-lg border border-border/40 transition-colors max-w-[200px]">
                     <div className="shrink-0 flex items-center justify-center size-8 rounded-md bg-background border border-border/50">
@@ -303,7 +333,11 @@ export function ChatPanel({
                   <div className="flex items-center gap-2 bg-muted/40 px-3 py-2 rounded-lg border border-border/40 animate-pulse">
                     <Loader2 size={14} className="text-primary animate-spin" />
                     <span className="text-xs text-muted-foreground">
-                      Uploading...
+                      {uploadingCount > 1
+                        ? `Uploading ${uploadingCount} files...`
+                        : uploadingCount === 1
+                          ? "Uploading file..."
+                          : "Uploading..."}
                     </span>
                   </div>
                 )}

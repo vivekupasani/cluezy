@@ -68,6 +68,7 @@ export function Chat({
   const [isRateLimitDialogControlVisible, setIsRateLimitDialogControlVisible] = useState(true)
   const [attachedFiles, setAttachedFiles] = useState<FileAttachment[]>([])
   const [isFileUploading, setIsFileUploading] = useState(false)
+  const [uploadingCount, setUploadingCount] = useState(0)
   const [excludedDomains, setExcludedDomains] = useState<string[]>([])
 
   useEffect(() => {
@@ -193,6 +194,7 @@ export function Chat({
 
     console.log("Starting file upload...", files.length, "files")
     setIsFileUploading(true)
+    setUploadingCount(files.length)
 
     const newAttachments: FileAttachment[] = []
     const uploadPromises: Promise<void>[] = []
@@ -258,6 +260,7 @@ export function Chat({
     } finally {
       // Always set loading to false when done
       setIsFileUploading(false)
+      setUploadingCount(0)
       console.log("File upload loading state set to false")
     }
   }
@@ -513,6 +516,7 @@ export function Chat({
         scrollContainerRef={scrollContainerRef}
         attachedFiles={attachedFiles}
         isFileUploading={isFileUploading}
+        uploadingCount={uploadingCount}
         onFileUpload={handleFileUpload}
         onRemoveFile={handleRemoveFile}
       />
