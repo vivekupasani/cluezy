@@ -31,7 +31,7 @@ export function AppSidebar() {
   const router = useRouter()
   const { setHistoryDialogIsOpen } = useHistoryDialog()
   const { user } = useAuth()
-  const { toggleSidebar, setOpenMobile, state } = useSidebar()
+  const { toggleSidebar, setOpenMobile, setOpen, state } = useSidebar()
   const pathName = usePathname()
   const isMobile = useIsMobile()
   const pages = [
@@ -165,6 +165,7 @@ export function AppSidebar() {
                       router.push('/connectors')
                       if (isMobile) {
                         setOpenMobile(false)
+                        toggleSidebar()
                       }
                     }}
                     className="justify-start gap-2 data-[state=open]:px-2"
