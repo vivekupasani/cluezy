@@ -25,7 +25,7 @@ export function BotMessage({
 
   const baseComponents = {
     p: (props: any) => (
-      <p className="text-sm leading-relaxed text-foreground/80 dark:text-foreground/90 my-2" {...props} />
+      <p className="text-base leading-relaxed text-foreground/80 dark:text-foreground/90 my-2" {...props} />
     ),
     h1: (props: any) => (
       <h1 className="text-xl font-bold txt-grad mt-4 mb-2 underline" {...props} />
@@ -37,10 +37,10 @@ export function BotMessage({
       <h3 className="text-base font-semibold txt-grad mt-2 mb-1" {...props} />
     ),
     ul: (props: any) => (
-      <ul className="list-disc pl-6 space-y-1 text-sm text-foreground/80 dark:text-foreground/90" {...props} />
+      <ul className="list-disc pl-6 space-y-1 text-base text-foreground/80 dark:text-foreground/90" {...props} />
     ),
     ol: (props: any) => (
-      <ol className="list-decimal pl-6 space-y-1 text-sm text-foreground/80 dark:text-foreground/90" {...props} />
+      <ol className="list-decimal pl-6 space-y-1 text-base text-foreground/80 dark:text-foreground/90" {...props} />
     ),
     li: ({ node, ordered, index, checked, ...props }: any) => (
       <li className="my-1" {...props} />
@@ -68,13 +68,13 @@ export function BotMessage({
     ),
     th: (props: any) => (
       <th
-        className="border border-border px-4 py-2 text-center font-semibold text-sm bg-muted/30"
+        className="border border-border px-4 py-2 text-center font-semibold text-base bg-muted/30"
         {...props}
       />
     ),
     td: (props: any) => (
       <td
-        className="border border-border px-4 py-2 text-center text-sm text-foreground/80"
+        className="border border-border px-4 py-2 text-center text-base text-foreground/80"
         {...props}
       />
     ),
@@ -93,7 +93,7 @@ export function BotMessage({
       }
 
       return (
-        <div className=' '>
+        <div>
           <CodeBlock
             key={Math.random()}
             language={(match && match[1]) || ''}
