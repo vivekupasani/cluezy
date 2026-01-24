@@ -6,7 +6,7 @@ export const searchSchema = z.object({
   max_results: z
     .number()
     .optional()
-    .describe('The maximum number of results to return. default is 20'),
+    .describe('The maximum number of results to return. default is 12'),
   search_depth: z
     .string()
     .optional()
@@ -32,7 +32,7 @@ export const strictSearchSchema = z.object({
   query: z.string().describe('The query to search for'),
   max_results: z
     .number()
-    .describe('The maximum number of results to return. default is 20'),
+    .describe('The maximum number of results to return. default is 12'),
   search_depth: z
     .enum(['basic', 'advanced'])
     .describe('The depth of the search'),

@@ -4,7 +4,7 @@ import { getCurrentUserId } from '@/lib/auth/get-current-user'
 import { createManualToolStreamResponse } from '@/lib/streaming/create-manual-tool-stream'
 import { createToolCallingStreamResponse } from '@/lib/streaming/create-tool-calling-stream'
 import { Model } from '@/lib/types/models'
-import { authenticatedRateLimit, getClientIdentifier, unauthenticatedRateLimit } from '@/lib/utils/rate-limit'
+import { getClientIdentifier, unauthenticatedRateLimit } from '@/lib/utils/rate-limit'
 import { isProviderEnabled } from '@/lib/utils/registry'
 
 export const maxDuration = 30
@@ -23,17 +23,20 @@ export async function POST(req: Request) {
     const { messages, id: chatId, excludeDomains } = await req.json()
     const referer = req.headers.get('referer')
     const isSharePage = referer?.includes('/share/')
-    const userId = await getCurrentUserId()
+
+    // Parallelize authentication and identifier fetching
+    const [userId, identifier] = await Promise.all([
+      getCurrentUserId(),
+      Promise.resolve(getClientIdentifier(req))
+    ])
+
     console.log("user id : ", userId)
 
-    if (userId == "anonymous") {
-      const identifier = getClientIdentifier(req);
-      const { success, limit, reset, remaining } = await unauthenticatedRateLimit.limit(identifier);
+    if (userId === "anonymous") {
+      const { success, limit, remaining } = await unauthenticatedRateLimit.limit(identifier);
       console.log("Remaining credits for the day : ", remaining)
 
-      // Rate limit check for unauthenticated users
       if (!success) {
-        const resetDate = new Date(reset);
         return new Response(
           `You've used all your free ${limit} searches for today. Sign in to unlock unlimited access and premium features!`,
           {
@@ -43,22 +46,21 @@ export async function POST(req: Request) {
         );
       }
     }
-    else {
-      // const identifier = getClientIdentifier(req);
-      const { success, reset, remaining } = await authenticatedRateLimit.limit(userId);
-      console.log("Remaining credits for the day : ", remaining)
-      // Rate limit check for authenticated users
-      if (!success) {
-        const resetDate = new Date(reset);
-        return new Response(
-          `You've reached your usage limit for now. Take a short break and come back at ${resetDate} to continue your research!`,
-          {
-            status: 429,
-            statusText: 'Too Many Requests',
-          }
-        );
-      }
-    }
+    // else {
+    //   const { success, reset, remaining } = await authenticatedRateLimit.limit(userId);
+    //   console.log("Remaining credits for the day : ", remaining)
+
+    //   if (!success) {
+    //     const resetDate = new Date(reset);
+    //     return new Response(
+    //       `You've reached your usage limit for now. Take a short break and come back at ${resetDate} to continue your research!`,
+    //       {
+    //         status: 429,
+    //         statusText: 'Too Many Requests',
+    //       }
+    //     );
+    //   }
+    // }
 
     if (isSharePage) {
       return new Response('Chatting is disabled on shared links. Start a new conversation to continue.', {
@@ -69,7 +71,6 @@ export async function POST(req: Request) {
 
     const cookieStore = await cookies()
     const modelJson = cookieStore.get('selectedModel')?.value
-    // const searchMode = cookieStore.get('search-mode')?.value === 'true'
     const searchMode = true
 
     let selectedModel = DEFAULT_MODEL

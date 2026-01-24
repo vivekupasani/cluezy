@@ -22,7 +22,7 @@ export function createSearchTool(
     parameters: getSearchSchemaForModel(fullModel),
     execute: async ({
       query,
-      max_results = 20,
+      max_results = 12,
       search_depth = 'basic', // Default for standard schema
       include_domains = [],
       exclude_domains = []
@@ -32,8 +32,8 @@ export function createSearchTool(
       const mergedExcludeDomains = [
         ...new Set([...exclude_domains, ...globalExcludeDomains])
       ]
-      // Ensure max_results is at least 10
-      const minResults = 10
+      // Ensure max_results is at least 6
+      const minResults = 6
       const effectiveMaxResults = Math.max(
         max_results || minResults,
         minResults
@@ -84,6 +84,7 @@ export function createSearchTool(
           }
           searchResult = await response.json()
         } else {
+          console.log("Using provider : ", searchAPI)
           // Use the provider factory to get the appropriate search provider
           const searchProvider = createSearchProvider(searchAPI)
           searchResult = await searchProvider.search(

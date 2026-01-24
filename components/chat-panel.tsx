@@ -244,7 +244,7 @@ export function ChatPanel({
       )}
     >
       {messages.length === 0 && (
-        <div className="flex flex-col items-center mb-2">
+        <div className="flex flex-col items-center mb-1">
           <h1 className='text-2xl md:text-3xl tracking-tight pb-2 font-medium txt-grad'>
             How can i help you today?
           </h1>
@@ -283,7 +283,7 @@ export function ChatPanel({
         <div className='bg-background'>
           <div className={cn(
             "relative flex flex-col w-full p-2.5 transition-all duration-300",
-            "bg-card/80 backdrop-blur-xl border border-border/25",
+            "bg-card/80 backdrop-blur-xl border border-border",
             "ring-1 ring-border/30",
             "shadow-sm",
             "rounded-[20px]",
@@ -494,6 +494,7 @@ export function ChatPanel({
         </div>
       </form>
 
+      {/* 28 */}
       {messages.length === 0 && (
         <div className="mb-8">
           <EmptyScreen

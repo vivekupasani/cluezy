@@ -13,6 +13,24 @@ export const DefaultSkeleton = () => {
 
 export function SearchSkeleton() {
   return (
+    <div className="flex flex-wrap">
+      {[...Array(4)].map((_, index) => (
+        <div key={index} className="w-1/2 md:w-1/4 p-1">
+          <div className="flex flex-col justify-between h-full min-h-[5rem] bg-card/40 backdrop-blur-sm border border-border/60 rounded-lg p-2 gap-2">
+            <Skeleton className="h-4 w-full" />
+            <div className="flex items-center gap-2 mt-auto">
+              <Skeleton className="h-4 w-4 rounded-full flex-shrink-0" />
+              <Skeleton className="h-3 w-16" />
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  )
+}
+
+export function ImageSkeleton() {
+  return (
     <div className="flex flex-wrap gap-2 pb-0.5 mt-3">
       {[...Array(4)].map((_, index) => (
         <div
@@ -20,6 +38,27 @@ export function SearchSkeleton() {
           className="w-[calc(50%-0.5rem)] md:w-[calc(25%-0.5rem)]"
         >
           <Skeleton className="h-20 w-full" />
+        </div>
+      ))}
+    </div>
+  )
+}
+
+export function VideoSearchSkeleton() {
+  return (
+    <div className="flex flex-wrap">
+      {[...Array(4)].map((_, index) => (
+        <div key={index} className="w-1/2 md:w-1/4 p-1">
+          <div className="flex flex-col h-full bg-card/40 backdrop-blur-sm border border-border/60 rounded-xl overflow-hidden">
+            <Skeleton className="w-full aspect-video" />
+            <div className="p-3 gap-2 flex flex-col">
+              <Skeleton className="h-4 w-full" />
+              <div className="flex items-center gap-2">
+                <Skeleton className="h-4 w-4 rounded-full flex-shrink-0" />
+                <Skeleton className="h-3 w-16" />
+              </div>
+            </div>
+          </div>
         </div>
       ))}
     </div>

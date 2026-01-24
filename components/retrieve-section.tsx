@@ -9,7 +9,7 @@ import { SearchResults } from '@/components/search-results'
 import { Section, ToolArgsSection } from '@/components/section'
 
 import { CollapsibleMessage } from './collapsible-message'
-import { DefaultSkeleton } from './default-skeleton'
+import { SearchSkeleton } from './default-skeleton'
 
 interface RetrieveSectionProps {
   tool: ToolInvocation
@@ -55,7 +55,11 @@ export function RetrieveSection({
           <SearchResults results={data.results} />
         </Section>
       ) : (
-        <DefaultSkeleton />
+        <div>
+          <Section title="Sources">
+            <SearchSkeleton />
+          </Section>
+        </div>
       )}
     </CollapsibleMessage>
   )

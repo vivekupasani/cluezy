@@ -19,17 +19,27 @@ export function createAcademicSearchTool(globalExcludeDomains: string[] = []) {
                     ...new Set([...excludeDomains, ...globalExcludeDomains])
                 ];
 
-                const result = await exa.searchAndContents(query, {
-                    type: 'auto',
-                    numResults: 20,
-                    category: 'research paper',
-                    summary: {
-                        query: 'Abstract of the Paper',
-                    },
-                    excludeDomains: mergedExcludeDomains,
-                });
+                const [exaResult, imageRes] = await Promise.all([
+                    exa.searchAndContents(query, {
+                        type: 'auto',
+                        numResults: 20,
+                        category: 'research paper',
+                        summary: {
+                            query: 'Abstract of the Paper',
+                        },
+                        excludeDomains: mergedExcludeDomains,
+                    }),
+                    fetch("https://google.serper.dev/images", {
+                        method: "POST",
+                        headers: {
+                            "X-API-KEY": process.env.SERPER_API_KEY || "",
+                            "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify({ q: query }),
+                    })
+                ]);
 
-                const processedResults = result.results.reduce<typeof result.results>((acc, paper) => {
+                const processedResults = exaResult.results.reduce<typeof exaResult.results>((acc, paper) => {
                     if (acc.some((p) => p.url === paper.url) || !paper.summary) return acc;
 
                     const cleanSummary = paper.summary.replace(/^Summary:\s*/i, '');
@@ -43,15 +53,6 @@ export function createAcademicSearchTool(globalExcludeDomains: string[] = []) {
 
                     return acc;
                 }, []);
-
-                const imageRes = await fetch("https://google.serper.dev/images", {
-                    method: "POST",
-                    headers: {
-                        "X-API-KEY": process.env.SERPER_API_KEY || "",
-                        "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify({ q: query }),
-                });
 
                 const imageData = await imageRes.json();
                 const images =

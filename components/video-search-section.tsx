@@ -8,7 +8,7 @@ import type { SerperSearchResults } from '@/lib/types'
 import { useArtifact } from '@/components/artifact/artifact-context'
 
 import { CollapsibleMessage } from './collapsible-message'
-import { SearchSkeleton } from './default-skeleton'
+import { VideoSearchSkeleton } from './default-skeleton'
 import { Section, ToolArgsSection } from './section'
 import { VideoSearchResults } from './video-search-results'
 
@@ -63,7 +63,11 @@ export function VideoSearchSection({
           <VideoSearchResults results={videoResults} />
         </Section>
       ) : (
-        <SearchSkeleton />
+        <div>
+          <Section title="Videos">
+            <VideoSearchSkeleton />
+          </Section>
+        </div>
       )}
     </CollapsibleMessage>
   )

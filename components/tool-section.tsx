@@ -96,7 +96,7 @@ export function ToolSection({
 
     case 'videoSearch':
       return (
-        <div className='mt-0'>
+        <div className='mt-4'>
           <VideoSearchSection
             tool={tool}
             isOpen={isOpen}

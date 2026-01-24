@@ -1,4 +1,4 @@
-import { BookOpen, CloudSun, FileSearch, Search } from 'lucide-react';
+import { BookOpen, FileSearch, Unplug, Youtube, Zap } from 'lucide-react';
 
 import { cn } from '@/lib/utils';
 
@@ -12,15 +12,51 @@ export function EmptyScreen({
   className?: string
 }) {
   const exampleMessages = [
-    { heading: 'Web Search', message: 'What’s trending on the web right now?', icon: Search },
-    { heading: 'Academic Research', message: 'Find recent papers on AI and machine learning.', icon: BookOpen },
-    { heading: 'Document Insights', message: 'Retrieve key points from https://en.wikipedia.org/wiki/Agentic_AI', icon: FileSearch },
-    { heading: 'Weather Update', message: 'What’s the weather like in Mumbai today?', icon: CloudSun },
+    {
+      heading: 'Research',
+      message: 'Deeply analyze the impact of room-temperature superconductors on global energy grids.',
+      icon: Zap
+    },
+    {
+      heading: 'YouTube',
+      message: 'Summarize the key points and timestamps from this video: https://youtu.be/Rni7Fz7208c?si=9RbVNY4latcHrxIP',
+      icon: Youtube
+    },
+    {
+      heading: 'Academic',
+      message: 'Find peer-reviewed papers on the evolution of Transformer architectures in LLMs.',
+      icon: BookOpen
+    },
+    {
+      heading: 'Connectors',
+      message: 'Search my Google Drive and Notion for any documents related to the 2025 Project Roadmap.',
+      icon: Unplug
+    },
+    {
+      heading: 'File Search',
+      message: 'Search for recent technical whitepapers about AI safety in PDF format.',
+      icon: FileSearch
+    },
+    // {
+    //   heading: 'Market Data',
+    //   message: 'What is NVIDIA\'s current stock price, market cap, and recent analyst ratings?',
+    //   icon: LineChart
+    // },
+    // {
+    //   heading: 'Product ID',
+    //   message: 'What product is this and where can I buy it? https://m.media-amazon.com/images/I/71K7602I-EL.jpg',
+    //   icon: ShoppingBag
+    // },
+    // {
+    //   heading: 'Weather',
+    //   message: 'What is the 5-day weather forecast for Mumbai including temperature and precipitation?',
+    //   icon: CloudSun
+    // }
   ]
 
   return (
     <div className={cn(
-      "w-full max-w-3xl",
+      "w-full max-w-3xl mt-5",
       className
     )}>
       <div className="flex flex-wrap mx-auto gap-3 mt-4 items-center justify-center">
@@ -28,7 +64,7 @@ export function EmptyScreen({
           <Button
             key={index}
             variant="outline"
-            className="h-auto px-2 py-1 flex flex-col rounded-lg items-start gap-2 whitespace-normal text-left hover:bg-secondary/50 transition-colors border-border/60"
+            className="h-auto py-1 flex flex-col rounded-lg items-start gap-2 whitespace-normal text-left hover:bg-secondary/50 transition-colors border-border/60"
             onClick={() => submitMessage(example.message)}
           >
             <div className="flex items-center gap-2 txt-act font-medium text-xs">

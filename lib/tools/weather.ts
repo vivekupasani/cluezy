@@ -83,25 +83,32 @@ export const weatherTool = tool({
             // console.log('Location:', locationName);
 
             const apiKey = process.env.OPENWEATHER_API_KEY;
-            const [weatherResponse, airPollutionResponse, dailyForecastResponse] = await Promise.all([
+            const [
+                weatherResponse,
+                airPollutionResponse,
+                dailyForecastResponse,
+                airPollutionForecastResponse
+            ] = await Promise.all([
                 fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lng}&appid=${apiKey}`),
                 fetch(`https://api.openweathermap.org/data/2.5/air_pollution?lat=${lat}&lon=${lng}&appid=${apiKey}`),
                 fetch(`https://api.openweathermap.org/data/2.5/forecast/daily?lat=${lat}&lon=${lng}&cnt=16&appid=${apiKey}`),
+                fetch(`https://api.openweathermap.org/data/2.5/air_pollution/forecast?lat=${lat}&lon=${lng}&appid=${apiKey}`),
             ]);
 
-            const [weatherData, airPollutionData, dailyForecastData] = await Promise.all([
+            const [
+                weatherData,
+                airPollutionData,
+                dailyForecastData,
+                airPollutionForecastData
+            ] = await Promise.all([
                 weatherResponse.json(),
                 airPollutionResponse.json(),
                 dailyForecastResponse.json().catch((error) => {
                     console.error('Daily forecast API error:', error);
                     return { list: [] };
                 }),
+                airPollutionForecastResponse.json(),
             ]);
-
-            const airPollutionForecastResponse = await fetch(
-                `https://api.openweathermap.org/data/2.5/air_pollution/forecast?lat=${lat}&lon=${lng}&appid=${apiKey}`,
-            );
-            const airPollutionForecastData = await airPollutionForecastResponse.json();
 
             const res = {
                 ...weatherData,
