@@ -306,7 +306,7 @@ export default function ConnectorsPageContent() {
     const connectedProviders = new Set(connections.map(c => c.provider));
 
     return (
-        <div className="w-full max-w-5xl mx-auto overflow-y-auto space-y-8">
+        <div className="w-full max-w-2xl mx-auto space-y-8">
             <header className="text-center space-y-3">
                 <h1 className="text-4xl font-bold tracking-tight">
                     Connectors
@@ -334,8 +334,8 @@ export default function ConnectorsPageContent() {
                     <div className="space-y-4">
                         <div>
                             <Skeleton className="h-5 w-32 mb-4" />
-                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
-                                {[1, 2, 3].map((i) => (
+                            <div className="flex flex-col gap-3">
+                                {[1, 2, 3, 4, 5, 6, 7, 8].map((i) => (
                                     <div key={i} className="flex flex-col p-4 rounded-xl bg-card/40 border gap-3">
                                         <div className="flex items-center gap-3">
                                             <Skeleton className="h-10 w-10 rounded-lg shrink-0" />
@@ -357,7 +357,7 @@ export default function ConnectorsPageContent() {
                     {connections.length > 0 && (
                         <div className="space-y-4">
                             <h3 className="text-sm font-semibold text-foreground pl-1">Installed Connectors</h3>
-                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+                            <div className="flex flex-col gap-3">
                                 {connections.map((connection) => {
                                     const config = CONNECTOR_CONFIGS[connection.provider];
                                     const Icon = PROVDIER_ICONS[config.icon];
@@ -430,7 +430,7 @@ export default function ConnectorsPageContent() {
                     {/* Available Connectors */}
                     <div className="space-y-4">
                         <h3 className="text-sm font-semibold text-foreground pl-1">Available Connectors</h3>
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+                        <div className="flex flex-col gap-3">
                             {/* Active connectors that are NOT connected */}
                             {filteredActive.map((provider) => {
                                 if (connectedProviders.has(provider)) return null;

@@ -111,25 +111,12 @@ export async function listUserConnections(userId: string) {
         console.log('listing user connections', userId);
         const client = getClient();
 
-        // Get all providers and their sync tags
-        const providers = Object.keys(CONNECTOR_CONFIGS) as ConnectorProvider[];
-
-        // Search for connections for each provider separately
-        const connectionPromises = providers.map(async (provider) => {
-            try {
-                const config = CONNECTOR_CONFIGS[provider];
-                const connections = await client.connections.list({
-                    containerTags: [userId, config.syncTag],
-                });
-                return connections || [];
-            } catch (error) {
-                console.error(`Error fetching connections for ${provider}:`, error);
-                return [];
-            }
+        // Efficiently list all connections for the user in a single request
+        const connections = await client.connections.list({
+            containerTags: [userId],
         });
 
-        const allConnections = await Promise.all(connectionPromises);
-        const flatConnections = allConnections.flat();
+        const flatConnections = connections || [];
 
         console.log('connections list', flatConnections);
         if (!flatConnections || flatConnections.length === 0) {

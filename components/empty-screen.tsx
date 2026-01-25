@@ -1,4 +1,4 @@
-import { BookOpen, FileSearch, Unplug, Youtube, Zap } from 'lucide-react';
+import { BookOpen, LineChart, Unplug, Youtube, Zap } from 'lucide-react';
 
 import { cn } from '@/lib/utils';
 
@@ -32,16 +32,16 @@ export function EmptyScreen({
       message: 'Search my Google Drive and Notion for any documents related to the 2025 Project Roadmap.',
       icon: Unplug
     },
-    {
-      heading: 'File Search',
-      message: 'Search for recent technical whitepapers about AI safety in PDF format.',
-      icon: FileSearch
-    },
     // {
-    //   heading: 'Market Data',
-    //   message: 'What is NVIDIA\'s current stock price, market cap, and recent analyst ratings?',
-    //   icon: LineChart
+    //   heading: 'File Search',
+    //   message: 'Search for recent technical whitepapers about AI safety in PDF format.',
+    //   icon: FileSearch
     // },
+    {
+      heading: 'Market Data',
+      message: 'What is NVIDIA\'s current stock price, market cap, and recent analyst ratings?',
+      icon: LineChart
+    },
     // {
     //   heading: 'Product ID',
     //   message: 'What product is this and where can I buy it? https://m.media-amazon.com/images/I/71K7602I-EL.jpg',

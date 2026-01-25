@@ -60,7 +60,13 @@ export const RelatedQuestions: React.FC<RelatedQuestionsProps> = ({
         onOpenChange={onOpenChange}
         showIcon={false}
       >
-        <Skeleton className="w-full h-6" />
+        <Section title="Related" className="pt-0 pb-2 px-4 md:px-0 md:-mt-6">
+          <div className="flex flex-col">
+            <Skeleton className="w-full h-6 my-2 ml-0.5" />
+            <Skeleton className="w-full h-6 my-2 ml-0.5" />
+            <Skeleton className="w-full h-6 my-2 ml-0.5" />
+          </div>
+        </Section>
       </CollapsibleMessage>
     )
   }

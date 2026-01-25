@@ -25,7 +25,7 @@ export function Citing({
 
   const linkClasses = isNumber
     ? cn(
-      'text-[10px] bg-muted text-muted-foreground rounded-full w-4 h-4 px-0.5 inline-flex items-center justify-center hover:bg-muted/50 duration-200 no-underline -translate-y-0.5',
+      'text-[10px] bg-muted text-muted-foreground border border-border/70 rounded-full w-4 h-4 px-0.5 inline-flex items-center justify-center hover:bg-muted/50 duration-200 no-underline -translate-y-0.5',
       className
     )
     : cn(
