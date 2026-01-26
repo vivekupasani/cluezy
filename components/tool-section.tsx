@@ -5,6 +5,7 @@ import { ToolInvocation } from 'ai'
 import { ConnectorSearchSection } from './connector-search-section'
 import { DateTimeSection } from './datetime-section'
 import { DocumentSection } from './doument-section'
+import { GithubSearchSection } from './github-search-section'
 import { QuestionConfirmation } from './question-confirmation'
 import RetrieveSection from './retrieve-section'
 import { SearchSection } from './search-section'
@@ -148,6 +149,17 @@ export function ToolSection({
       return (
         <div className='mt-3'>
           <DocumentSection tool={tool} isOpen={isOpen} onOpenChange={onOpenChange} />
+        </div>
+      )
+    case 'githubSearch':
+      return (
+        <div className='mt-0'>
+          <GithubSearchSection
+            tool={tool}
+            isOpen={isOpen}
+            onOpenChange={onOpenChange}
+            chatId={chatId || ''}
+          />
         </div>
       )
     default:

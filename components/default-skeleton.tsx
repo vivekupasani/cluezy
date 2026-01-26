@@ -67,6 +67,33 @@ export function VideoSearchSkeleton() {
 
 export function XSearchSkeleton() {
   return (
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+      {[...Array(4)].map((_, index) => (
+        <div key={index} className="w-full h-full">
+          <div className="flex flex-col h-full p-4 border border-border/50 rounded-lg bg-card text-card-foreground shadow-sm">
+            <div className="flex items-start space-x-3 mb-2">
+              <Skeleton className="h-8 w-8 rounded-full flex-shrink-0" />
+              <div className="flex-1 min-w-0 space-y-2">
+                <div className="flex items-center space-x-2">
+                  <Skeleton className="h-4 w-24" />
+                  <Skeleton className="h-3 w-16" />
+                </div>
+              </div>
+            </div>
+            <div className="space-y-1 mt-auto">
+              <Skeleton className="h-3 w-full" />
+              <Skeleton className="h-3 w-[90%]" />
+              <Skeleton className="h-3 w-[80%]" />
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  )
+}
+
+export function GithubSearchSkeleton() {
+  return (
     <div className="flex flex-col gap-2">
       {[...Array(3)].map((_, index) => (
         <div key={index} className="w-full">

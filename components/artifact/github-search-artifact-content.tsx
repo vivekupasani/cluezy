@@ -1,12 +1,12 @@
 'use client'
 
+import { GithubSearchResults } from '@/components/github-search-results'
 import { SearchResultsImageSection } from '@/components/search-results-image'
 import { Section } from '@/components/section'
-import { XSearchResults } from '@/components/x-search-results'
 import type { SearchResults as TypeSearchResults } from '@/lib/types'
 import type { ToolInvocation } from 'ai'
 
-export function XSearchArtifactContent({ tool }: { tool: ToolInvocation }) {
+export function GithubSearchArtifactContent({ tool }: { tool: ToolInvocation }) {
     const searchResults: TypeSearchResults =
         tool.state === 'result' ? tool.result : undefined
     const query = tool.args?.query as string | undefined
@@ -17,7 +17,7 @@ export function XSearchArtifactContent({ tool }: { tool: ToolInvocation }) {
 
     return (
         <div className="space-y-4">
-            {/* <ToolArgsSection tool="xSearch">{`${query}`}</ToolArgsSection> */}
+            {/* <ToolArgsSection tool="githubSearch">{`${query}`}</ToolArgsSection> */}
 
             {searchResults.images && searchResults.images.length > 0 && (
                 <SearchResultsImageSection
@@ -27,9 +27,9 @@ export function XSearchArtifactContent({ tool }: { tool: ToolInvocation }) {
                 />
             )}
 
-            <Section title="X (Twitter) Search Results">
+            <Section title="Github Search Results">
                 {/* @ts-ignore */}
-                <XSearchResults results={searchResults.results} isArtifect={true} />
+                <GithubSearchResults results={searchResults.results} isArtifect={true} />
             </Section>
         </div>
     )

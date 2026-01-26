@@ -7,11 +7,12 @@ import Link from 'next/link'
 
 interface XSearchResultsProps {
     results: ExaSearchResultItem[]
+    isArtifect?: boolean
 }
 
-export function XSearchResults({ results }: XSearchResultsProps) {
+export function XSearchResults({ results, isArtifect }: XSearchResultsProps) {
     return (
-        <div className="flex flex-col gap-2">
+        <div className={`flex flex-col gap-2 ${!isArtifect ? 'h-96 overflow-y-auto HiddenScrollbar' : 'h-full'}`}>
             {results.map((result) => (
                 <Link
                     key={result.id}
@@ -32,12 +33,12 @@ export function XSearchResults({ results }: XSearchResultsProps) {
                                 </Avatar>
                                 <div className="flex-1 min-w-0">
                                     <div className="flex items-center space-x-2 mb-1">
-                                        <span className="font-semibold text-sm truncate">{result.author}</span>
+                                        <span className="font-semibold text-xs truncate">{result.author}</span>
                                         <span className="text-xs text-muted-foreground whitespace-nowrap">
                                             {new Date(result.publishedDate).toLocaleDateString()}
                                         </span>
                                     </div>
-                                    <p className="text-sm text-foreground/90 whitespace-pre-wrap break-words line-clamp-4">
+                                    <p className="text-xs text-foreground/90 whitespace-pre-wrap break-words line-clamp-4">
                                         {result.text}
                                     </p>
                                 </div>

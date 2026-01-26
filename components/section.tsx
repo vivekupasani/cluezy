@@ -8,6 +8,7 @@ import {
   File,
   FileText,
   Film,
+  Github,
   Image,
   MessageCircleMore,
   MonitorPlay,
@@ -59,6 +60,10 @@ export const Section: React.FC<SectionProps> = ({
       break
     case 'X (Twitter) Search Results':
       icon = <Twitter size={iconSize} className={iconClassName} />
+      type = 'badge'
+      break
+    case 'Github Search Results':
+      icon = <Github size={iconSize} className={iconClassName} />
       type = 'badge'
       break
     case 'Answer':

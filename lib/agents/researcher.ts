@@ -4,6 +4,7 @@ import { RESEARCHER_SYSTEM_PROMPT } from '../prompts/researcher-sys-prompt'
 import { createAcademicSearchTool } from '../tools/acadamic-search'
 import { connectorSearchTool } from '../tools/connector-search'
 import { datetimeTool } from '../tools/datetime'
+import { createGithubSearchTool } from '../tools/github-search'
 import { createFileSearchTool } from '../tools/pdf-search'
 import { productSearchTool } from '../tools/product-search'
 import { retrieveTool } from '../tools/retrieve'
@@ -39,6 +40,7 @@ export function researcher({
 
     const academicSearchTool = createAcademicSearchTool(excludeDomains)
     const xSearchTool = createXSearchTool()
+    const githubSearchTool = createGithubSearchTool()
 
     const systemPrompt = `Current date and time: ${currentDate}\n${RESEARCHER_SYSTEM_PROMPT}`
 
@@ -59,10 +61,11 @@ export function researcher({
         docSearch: docSearchTool,
         pptSearch: pptSearchTool,
         connectorSearch: connectorSearchTool,
-        xSearch: xSearchTool
+        xSearch: xSearchTool,
+        githubSearch: githubSearchTool
       },
       experimental_activeTools: searchMode
-        ? ['search', 'acadamicSearch', 'retrieve', 'videoSearch', 'weather', 'datetime', 'youtubeVideoAnalysis', 'productSearch', 'pdfSearch', 'docSearch', 'pptSearch', 'connectorSearch', 'xSearch']
+        ? ['search', 'acadamicSearch', 'retrieve', 'videoSearch', 'weather', 'datetime', 'youtubeVideoAnalysis', 'productSearch', 'pdfSearch', 'docSearch', 'pptSearch', 'connectorSearch', 'xSearch', 'githubSearch']
         : [],
       maxSteps: searchMode ? 5 : 1,
       experimental_transform: smoothStream()
