@@ -13,7 +13,8 @@ import {
   MonitorPlay,
   Newspaper,
   Repeat2,
-  Search
+  Search,
+  Twitter
 } from 'lucide-react'
 
 import { cn } from '@/lib/utils'
@@ -54,6 +55,10 @@ export const Section: React.FC<SectionProps> = ({
       break
     case 'Sources':
       icon = <Newspaper size={iconSize} className={iconClassName} />
+      type = 'badge'
+      break
+    case 'X (Twitter) Search Results':
+      icon = <Twitter size={iconSize} className={iconClassName} />
       type = 'badge'
       break
     case 'Answer':

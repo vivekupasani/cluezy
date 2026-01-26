@@ -10,6 +10,7 @@ import { retrieveTool } from '../tools/retrieve'
 import { createSearchTool } from '../tools/search'
 import { createVideoSearchTool } from '../tools/video-search'
 import { weatherTool } from '../tools/weather'
+import { createXSearchTool } from '../tools/x-search'
 import { youtubeVideoAnalysisTool } from '../tools/youtube-video-analysis'
 import { getModel } from '../utils/registry'
 
@@ -35,7 +36,9 @@ export function researcher({
     const pdfSearchTool = createFileSearchTool("pdf")
     const docSearchTool = createFileSearchTool("doc")
     const pptSearchTool = createFileSearchTool("ppt")
+
     const academicSearchTool = createAcademicSearchTool(excludeDomains)
+    const xSearchTool = createXSearchTool()
 
     const systemPrompt = `Current date and time: ${currentDate}\n${RESEARCHER_SYSTEM_PROMPT}`
 
@@ -55,10 +58,11 @@ export function researcher({
         pdfSearch: pdfSearchTool,
         docSearch: docSearchTool,
         pptSearch: pptSearchTool,
-        connectorSearch: connectorSearchTool
+        connectorSearch: connectorSearchTool,
+        xSearch: xSearchTool
       },
       experimental_activeTools: searchMode
-        ? ['search', 'acadamicSearch', 'retrieve', 'videoSearch', 'weather', 'datetime', 'youtubeVideoAnalysis', 'productSearch', 'pdfSearch', 'docSearch', 'pptSearch', 'connectorSearch']
+        ? ['search', 'acadamicSearch', 'retrieve', 'videoSearch', 'weather', 'datetime', 'youtubeVideoAnalysis', 'productSearch', 'pdfSearch', 'docSearch', 'pptSearch', 'connectorSearch', 'xSearch']
         : [],
       maxSteps: searchMode ? 5 : 1,
       experimental_transform: smoothStream()

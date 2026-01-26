@@ -10,6 +10,7 @@ import RetrieveSection from './retrieve-section'
 import { SearchSection } from './search-section'
 import { VideoSearchSection } from './video-search-section'
 import { WeatherSection } from './weather-section'
+import { XSearchSection } from './x-search-section'
 import { YoutubeVideoAnalysisSection } from './youtube-video-analysis-section'
 
 interface ToolSectionProps {
@@ -81,6 +82,18 @@ export function ToolSection({
       return (
         <div className='mt-0'>
           <SearchSection
+            tool={tool}
+            isOpen={isOpen}
+            onOpenChange={onOpenChange}
+            chatId={chatId || ''}
+          />
+        </div>
+      )
+
+    case 'xSearch':
+      return (
+        <div className='mt-0'>
+          <XSearchSection
             tool={tool}
             isOpen={isOpen}
             onOpenChange={onOpenChange}

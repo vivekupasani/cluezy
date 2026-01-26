@@ -44,6 +44,7 @@ export type ExaSearchResultItem = {
   url: string
   publishedDate: Date
   author: string
+  text?: string
 }
 
 export type SerperSearchResultItem = {

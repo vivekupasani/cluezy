@@ -90,7 +90,7 @@ export const UserMessage: React.FC<UserMessageProps> = ({
             </div>
           </div>
         ) : (
-          <div className="relative flex flex-col max-w-xs md:max-w-lg bg-secondary dark:bg-card/70 text-secondary-foreground px-4 py-2.5 rounded-2xl rounded-br-sm">
+          <div className="relative flex flex-col max-w-xs md:max-w-lg bg-secondary dark:bg-card/70 text-secondary-foreground dark:text-foreground/90 px-4 py-2.5 rounded-2xl rounded-br-sm">
             <div className="">{message}</div>
             {parts && parts.length > 0 && (
               <div className="flex flex-col gap-2 mt-1">

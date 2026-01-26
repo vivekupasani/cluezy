@@ -14,6 +14,7 @@ import { ImageSkeleton, SearchSkeleton } from './default-skeleton'
 import { SearchResults } from './search-results'
 import { SearchResultsImageSection } from './search-results-image'
 import { Section, ToolArgsSection } from './section'
+// import { XSearchResults } from './x-search-results' // This line is removed as per instruction
 
 interface SearchSectionProps {
   tool: ToolInvocation
