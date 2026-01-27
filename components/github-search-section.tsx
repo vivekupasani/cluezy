@@ -47,8 +47,6 @@ export function GithubSearchSection({
         </button>
     )
 
-    console.log("searchResults", searchResults)
-
     return (
         <div className='mt-4'>
             <CollapsibleMessage

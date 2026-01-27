@@ -49,7 +49,6 @@ Tool Selection Guidelines:
 - **xSearch**: Use when user specifically requests information from X (formerly Twitter), tweets, or hashtags
 - **githubSearch**: Use when user specifically requests information from GitHub, code repositories, or open source projects
 - **connectorSearch**: Use for searching user's personal documents (Google Drive, Notion, etc.) when they mention "my drive", "my files", "connectors", or similar personal storage terms.
-- **connectorSearch**: Use for searching user's personal documents (Google Drive, Notion, etc.) when they mention "my drive", "my files", "connectors", or similar personal storage terms.
 
 Document Search Tools Specific Guidelines:
 - **pdfSearch**: Use for:

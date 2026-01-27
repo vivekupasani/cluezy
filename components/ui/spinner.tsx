@@ -10,7 +10,7 @@ interface SpinnerProps extends React.SVGProps<SVGSVGElement> { }
 export const Spinner = ({ className, ...props }: SpinnerProps) => (
   <div>
     <TextShimmer className='text-sm ml-4 md:ml-1 select-none'>
-      Working...
+      Thinking...
     </TextShimmer>
   </div>
 )

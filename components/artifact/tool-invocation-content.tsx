@@ -7,6 +7,8 @@ import { RetrieveArtifactContent } from '@/components/artifact/retrieve-artifact
 import { SearchArtifactContent } from '@/components/artifact/search-artifact-content'
 import { VideoSearchArtifactContent } from '@/components/artifact/video-search-artifact-content'
 import { XSearchArtifactContent } from '@/components/artifact/x-search-artifact-content'
+import { DocumentSearchArtifactContent } from './document-search-artifact-content'
+
 
 export function ToolInvocationContent({
   toolInvocation
@@ -26,6 +28,10 @@ export function ToolInvocationContent({
       return <XSearchArtifactContent tool={toolInvocation} />
     case 'githubSearch':
       return <GithubSearchArtifactContent tool={toolInvocation} />
+    case 'pdfSearch':
+    case 'docSearch':
+    case 'pptSearch':
+      return <DocumentSearchArtifactContent tool={toolInvocation} />
     default:
       return <div className="p-4">Details for this tool are not available</div>
   }
