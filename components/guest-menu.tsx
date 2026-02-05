@@ -50,7 +50,7 @@ export default function GuestMenu({ state }: { state: "expanded" | "collapsed" }
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <button
-          className={`group flex items-center gap-2 w-full px-2 py-2 rounded-lg hover:bg-sidebar-accent transition`}
+          className={`group flex items-center mb-2 gap-2 w-full px-2 py-2 rounded-lg hover:bg-sidebar-accent transition`}
         >
           <div className="relative flex shrink-0 overflow-hidden">
             <Settings size={16} className='text-muted-foreground' />

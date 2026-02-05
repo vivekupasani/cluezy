@@ -140,7 +140,6 @@ export function AppSidebar() {
                         router.push('/apps')
                         if (isMobile) {
                           setOpenMobile(false)
-                          toggleSidebar()
                         }
                       }}
                       className="justify-start gap-2 data-[state=open]:px-2"

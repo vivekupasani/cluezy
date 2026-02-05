@@ -48,7 +48,7 @@ export function AppsConnector({
 
     return (
         <div className="min-h-screen bg-background text-foreground mt-10 lg:mt-0">
-            <div className="max-w-2xl mx-auto px-1 pt-6 mt-5 mb-20 md:mb-0 md:mt-5">
+            <div className="max-w-2xl mx-auto md:px-8 pt-6 mt-5 mb-20 md:mb-0 md:mt-5">
 
                 {/* Back */}
                 <button

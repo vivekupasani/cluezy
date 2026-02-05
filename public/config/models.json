@@ -7,15 +7,6 @@
       "providerId": "google",
       "enabled": true,
       "toolCallType": "native"
-    },
-    {
-      "id": "gemini-2.0-flash-thinking-exp-01-21",
-      "name": "Gemini 2.0 Flash Thinking (Exp)",
-      "provider": "Google Generative AI",
-      "providerId": "google",
-      "enabled": true,
-      "toolCallType": "native",
-      "toolCallModel": "gemini-2.0-flash"
     }
   ]
 }
