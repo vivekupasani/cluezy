@@ -6,6 +6,7 @@ export function ConnectorSearchSection({
 }: {
     tool: ToolInvocation,
 }) {
+
     if (tool.state === 'result') return null
 
     return (

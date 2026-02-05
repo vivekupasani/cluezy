@@ -3,7 +3,7 @@ import { HistoryDialog } from '@/components/history-dialog';
 
 export default function ConnectorsPage() {
     return (
-        <div className="CustomScrollbar mt-10 lg:mt-0 p-4 lg:p-8 h-full overflow-y-auto">
+        <div className="CustomScrollbar max-w-2xl mx-auto p-4 lg:p-8 h-full overflow-y-auto HiddenScrollbar">
             <ConnectorsPageContent />
             <HistoryDialog />
         </div>

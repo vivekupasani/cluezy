@@ -1,7 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 
 import { getCurrentUserId } from '@/lib/auth/get-current-user';
-import { ConnectorProvider, createConnection } from '@/lib/connectors';
+import { createConnection } from '@/lib/connectors';
+import { ConnectorProvider } from '@/lib/connectors/types';
 
 export async function POST(request: NextRequest) {
     try {
@@ -12,8 +13,20 @@ export async function POST(request: NextRequest) {
         }
 
         // Validate provider
-        const validProviders: ConnectorProvider[] = ['google-drive', 'notion', 'onedrive'];
+        const validProviders: ConnectorProvider[] = [
+            'gmail',
+            'google-drive',
+            'notion',
+            'google-calendar',
+            'google-sheets',
+            'google-docs',
+            'linear',
+            'supabase',
+            'shopify',
+            'youtube',
+        ];
         if (!validProviders.includes(provider)) {
+
             return NextResponse.json({ error: 'Invalid provider' }, { status: 400 });
         }
 

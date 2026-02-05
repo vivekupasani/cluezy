@@ -79,7 +79,7 @@ interface WeatherData {
 // Skeleton Loader Component
 const WeatherSkeleton = () => {
     return (
-        <div className="w-full px-3 sm:px-4 py-4">
+        <div className="w-full px-3 sm:px-0 py-4">
             {/* Header Skeleton */}
             <div className="border border-border rounded-2xl p-4 sm:p-5 mb-3 sm:mb-4">
                 <div className="flex items-center justify-between mb-3 sm:mb-4">
@@ -253,7 +253,7 @@ export const WeatherSection = ({ tool }: WeatherSectionProps) => {
     })).slice(0, 5)
 
     return (
-        <div className="w-[95%] md:w-full mx-auto px-3 sm:px-4 md:px-6 py-4 md:py-6 border border-border rounded-2xl bg-background mt-4">
+        <div className="w-[95%] md:w-full mx-auto px-3 sm:px-0 md:px-6 py-4 md:py-6 border border-border rounded-2xl bg-background mt-4">
             {/* Current Weather - Hero Card */}
             <div className="bg-muted border border-border rounded-2xl p-4 sm:p-5 md:p-6 mb-3 sm:mb-4">
                 <div className="flex items-start justify-between mb-3 sm:mb-4">

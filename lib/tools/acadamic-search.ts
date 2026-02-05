@@ -4,7 +4,7 @@ import { z } from 'zod';
 
 export function createAcademicSearchTool(globalExcludeDomains: string[] = []) {
     return tool({
-        description: 'Search academic papers and research.',
+        description: 'Search acadamic papers and research.',
         parameters: z.object({
             query: z.string().describe('The search query'),
             excludeDomains: z.array(z.string()).describe('List of domains to exclude').optional(),

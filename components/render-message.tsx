@@ -101,6 +101,13 @@ export function RenderMessage({
     return 0
   }, [reasoningAnnotation])
 
+  const selectedApps = useMemo(() => {
+    const appsAnnotation = message.annotations?.find(
+      annotation => (annotation as any)?.type === 'selected-apps'
+    )
+    return (appsAnnotation as any)?.data as string[] | undefined
+  }, [message.annotations])
+  console.log(`RenderMessage [${message.role}]:`, selectedApps)
   if (message.role === 'user') {
     return (
       <UserMessage
@@ -108,6 +115,7 @@ export function RenderMessage({
         messageId={messageId}
         onUpdateMessage={onUpdateMessage}
         parts={message.parts}
+        selectedApps={selectedApps}
       />
     )
   }

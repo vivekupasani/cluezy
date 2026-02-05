@@ -1,4 +1,4 @@
-import { BookOpen, LineChart, Unplug, Youtube, Zap } from 'lucide-react';
+import { BookOpen, FileSearch, LineChart, Youtube, Zap } from 'lucide-react';
 
 import { cn } from '@/lib/utils';
 
@@ -24,24 +24,24 @@ export function EmptyScreen({
     },
     {
       heading: 'Academic',
-      message: 'Find peer-reviewed papers on the evolution of Transformer architectures in LLMs.',
+      message: 'Search for recent papers on the impact of microplastics on marine ecosystems.',
       icon: BookOpen
     },
     {
-      heading: 'Connectors',
-      message: 'Search my Google Drive and Notion for any documents related to the 2025 Project Roadmap.',
-      icon: Unplug
+      heading: 'File Search',
+      message: 'Search for recent technical whitepapers about AI safety in PDF format.',
+      icon: FileSearch
     },
-    // {
-    //   heading: 'File Search',
-    //   message: 'Search for recent technical whitepapers about AI safety in PDF format.',
-    //   icon: FileSearch
-    // },
     {
       heading: 'Market Data',
       message: 'What is NVIDIA\'s current stock price, market cap, and recent analyst ratings?',
       icon: LineChart
     },
+    // {
+    //   heading: 'Apps',
+    //   message: 'Search my Google Drive and Notion for any documents related to the 2025 Project Roadmap.',
+    //   icon: Unplug
+    // },
     // {
     //   heading: 'Product ID',
     //   message: 'What product is this and where can I buy it? https://m.media-amazon.com/images/I/71K7602I-EL.jpg',

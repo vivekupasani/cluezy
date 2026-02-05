@@ -1,6 +1,8 @@
+"use client"
+import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { SiInstagram, SiLinkedin, SiX } from "react-icons/si";
-
 
 interface TermSection {
     id: number;
@@ -85,50 +87,72 @@ const termsOfUse: TermSection[] = [
         id: 13,
         title: "Acknowledgment",
         content:
-            "By using Morphic, you acknowledge that you have read, understood, and agree to be bound by these Terms of Use. These Terms may be updated by Shironel from time to time, and continued use of the Service after such updates constitutes acceptance of the revised Terms."
+            "By using Cluezy, you acknowledge that you have read, understood, and agree to be bound by these Terms of Use. These Terms may be updated by Cluezy from time to time, and continued use of the Service after such updates constitutes acceptance of the revised Terms."
     }
 ];
 
 
 export default async function TermsPage() {
+    const router = useRouter();
     return (
-        <div className="h-screen overflow-y-auto CustomScrollbar">
-            <div className="max-w-2xl flex flex-col mx-auto px-4">
-                <div className="mt-10 md:mt-16 flex flex-col justify-center items-center text-center">
-                    <h1 className="text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-tr from-foreground to-foreground/60">
-                        Terms & Service
+        <div className="min-h-screen h-full overflow-y-auto CustomScrollbar selection:bg-primary/20">
+            <div className="max-w-3xl mx-auto px-6 py-20 md:py-24">
+                <header className="mb-16 md:mb-16 text-center space-y-4">
+                    <button
+                        onClick={() => router.push("/")}
+                        className="visible md:hidden group flex items-center mb-5 gap-1.5 text-muted-foreground hover:text-foreground text-[16px] transition-colors duration-200"
+                    >
+                        <ArrowLeft
+                            size={16}
+                            className="transition-transform duration-200"
+                        />
+                        Back
+                    </button>
+                    <h1 className="text-4xl md:text-5xl font-bold tracking-tight bg-clip-text text-transparent bg-gradient-to-b from-foreground to-foreground/70">
+                        Terms of Service
                     </h1>
-                    <h3 className="text-xs tracking-tighter bg-clip-text text-transparent bg-gradient-to-tr from-foreground/90 to-foreground/60">
-                        By using our service, you agree to our Terms of Service
-                    </h3>
-                </div>
+                    <p className="text-muted-foreground text-sm md:text-base max-w-md mx-auto leading-relaxed">
+                        By using our service, you agree to these terms and conditions.
+                    </p>
+                </header>
 
-                <div className="mt-10 pb-10">
-                    {termsOfUse.map((term) => (
-                        <div key={term.id} className="py-3">
-                            <h2 className="text-xl border-b border-border pb-2 font-semibold bg-clip-text text-transparent bg-gradient-to-tr from-foreground/95 to-foreground/85">{term.title}</h2>
-                            <p className="mt-2 text-sm text-foreground/80">{term.content}</p>
-                        </div>
-                    ))}
-                </div>
+                <main className="space-y-8">
+                    <section className="text-muted-foreground/90 text-sm md:text-base leading-relaxed border-b border-border/40">
+                        By accessing and using the Cluezy website and services ("Service"), you agree to be bound by these Terms of Use ("Terms"). These Terms constitute a legally binding agreement between you and Cluezy. If you do not agree to these Terms, please refrain from using the Service.
+                    </section>
 
-                <div className="flex flex-col gap-2 mb-10 justify-center items-center">
-                    <div className="flex gap-4">
-                        <Link href="https://x.com/v1vekupasani" className="hover:cursor-pointer">
-                            <SiX />
+                    <div className="space-y-8">
+                        {termsOfUse.map((term) => (
+                            <section key={term.id} className="space-y-4">
+                                <h2 className="text-xl md:text-2xl font-semibold text-foreground tracking-tight">
+                                    {term.title}
+                                </h2>
+                                <p className="text-muted-foreground/90 text-sm md:text-base leading-7">
+                                    {term.content}
+                                </p>
+                            </section>
+                        ))}
+                    </div>
+                </main>
+
+                <footer className="mt-20 md:mt-32 pt-12 border-t border-border/40 flex flex-col items-center gap-6">
+                    <div className="flex gap-6 items-center">
+                        <Link href="https://x.com/cluezyai" className="text-muted-foreground hover:text-foreground transition-colors duration-200">
+                            <SiX className="w-5 h-5" />
                         </Link>
-                        <Link href="https://www.linkedin.com/company/cluezy/" className="hover:cursor-pointer">
-                            <SiLinkedin />
+                        <Link href="https://www.linkedin.com/company/cluezy" className="text-muted-foreground hover:text-foreground transition-colors duration-200">
+                            <SiLinkedin className="w-5 h-5" />
                         </Link>
-                        <Link href="https://www.instagram.com/v1vekupasani/" className="hover:cursor-pointer">
-                            <SiInstagram />
+                        <Link href="https://www.instagram.com/cluezyai" className="text-muted-foreground hover:text-foreground transition-colors duration-200">
+                            <SiInstagram className="w-5 h-5" />
                         </Link>
                     </div>
-                    <span className="text-xs mt-2">
-                        © 2025 Cluezy. All rights reserved.
-                    </span>
-                </div>
+                    <p className="text-[10px] md:text-xs text-muted-foreground tracking-widest uppercase">
+                        © 2026 Cluezy. All rights reserved.
+                    </p>
+                </footer>
             </div>
-        </div >
+        </div>
     );
 }
+

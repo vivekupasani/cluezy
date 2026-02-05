@@ -20,7 +20,7 @@ const DEFAULT_MODEL: Model = {
 
 export async function POST(req: Request) {
   try {
-    const { messages, id: chatId, excludeDomains } = await req.json()
+    const { messages, id: chatId, excludeDomains, selectedApps } = await req.json()
     const referer = req.headers.get('referer')
     const isSharePage = referer?.includes('/share/')
 
@@ -98,6 +98,10 @@ export async function POST(req: Request) {
 
     const supportsToolCalling = selectedModel.toolCallType === 'native'
 
+    // Transform app names from kebab-case (e.g., 'google-drive') to connector format (e.g., 'googledrive')
+    const transformedApps = selectedApps.map((app: string) => app.replace(/-/g, ''))
+
+    // console.log("transformedApps : ", transformedApps)
     return supportsToolCalling
       ? createToolCallingStreamResponse({
         messages,
@@ -105,14 +109,16 @@ export async function POST(req: Request) {
         chatId,
         searchMode,
         userId,
-        excludeDomains
+        excludeDomains,
+        selectedApps: transformedApps
       })
       : createManualToolStreamResponse({
         messages,
         model: selectedModel,
         chatId,
         searchMode,
-        userId
+        userId,
+        selectedApps: transformedApps
       })
   } catch (error) {
     console.error('API route error:', error)

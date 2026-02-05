@@ -1,8 +1,8 @@
 import { CoreMessage, smoothStream, streamText } from 'ai'
-
+import { CONNECTOR_CONFIGS, ConnectorProvider } from '../connectors/types'
 import { RESEARCHER_SYSTEM_PROMPT } from '../prompts/researcher-sys-prompt'
+import { getVercelTools } from '../services/tools'
 import { createAcademicSearchTool } from '../tools/acadamic-search'
-import { connectorSearchTool } from '../tools/connector-search'
 import { datetimeTool } from '../tools/datetime'
 import { createGithubSearchTool } from '../tools/github-search'
 import { createFileSearchTool } from '../tools/pdf-search'
@@ -17,17 +17,21 @@ import { getModel } from '../utils/registry'
 
 type ResearcherReturn = Parameters<typeof streamText>[0]
 
-export function researcher({
+export async function researcher({
   messages,
   model,
   searchMode,
-  excludeDomains
+  userId,
+  excludeDomains,
+  selectedApps
 }: {
   messages: CoreMessage[]
   model: string
   searchMode: boolean
-  excludeDomains?: string[]
-}): ResearcherReturn {
+  userId?: string
+  excludeDomains?: string[],
+  selectedApps?: ConnectorProvider[]
+}): Promise<ResearcherReturn> {
   try {
     const currentDate = new Date().toLocaleString()
 
@@ -42,30 +46,52 @@ export function researcher({
     const xSearchTool = createXSearchTool()
     const githubSearchTool = createGithubSearchTool()
 
-    const systemPrompt = `Current date and time: ${currentDate}\n${RESEARCHER_SYSTEM_PROMPT}`
+    // Fetch Composio tools if userId is provided
+    let composioTools = {}
+    if (userId && userId !== 'anonymous') {
+      try {
+        if (selectedApps && selectedApps.length > 0) {
+          composioTools = await getVercelTools(userId, selectedApps)
+        }
+      } catch (error) {
+        console.error('Error fetching Composio tools:', error)
+      }
+    }
+
+    let systemPrompt = `Current date and time: ${currentDate}\n${RESEARCHER_SYSTEM_PROMPT}`
+
+    if (selectedApps && selectedApps.length > 0) {
+      const appNames = selectedApps.map(id => CONNECTOR_CONFIGS[id as ConnectorProvider]?.name || id).join(', ')
+      systemPrompt += `\n\nCONTEXT APPS: The user has specifically selected the following apps for this query: ${appNames}.
+- ALWAYS prioritize using tools from these apps to answer the query.
+- Directly use the appropriate tool (e.g., if Gmail is selected and user asks for drafts, use GMAIL_LSIT_DRAFTS).
+- DO NOT ask for clarification or "Which app?" if the request can be fulfilled using the selected context apps.`
+    }
+
+    const tools = {
+      search: searchTool,
+      acadamicSearch: academicSearchTool,
+      retrieve: retrieveTool,
+      videoSearch: videoSearchTool,
+      weather: weatherTool,
+      youtubeVideoAnalysis: youtubeVideoAnalysisTool,
+      datetime: datetimeTool,
+      productSearch: productSearchTool,
+      pdfSearch: pdfSearchTool,
+      docSearch: docSearchTool,
+      pptSearch: pptSearchTool,
+      xSearch: xSearchTool,
+      githubSearch: githubSearchTool,
+      ...composioTools
+    }
 
     return {
       model: getModel(model),
       system: systemPrompt,
       messages,
-      tools: {
-        search: searchTool,
-        acadamicSearch: academicSearchTool,
-        retrieve: retrieveTool,
-        videoSearch: videoSearchTool,
-        weather: weatherTool,
-        youtubeVideoAnalysis: youtubeVideoAnalysisTool,
-        datetime: datetimeTool,
-        productSearch: productSearchTool,
-        pdfSearch: pdfSearchTool,
-        docSearch: docSearchTool,
-        pptSearch: pptSearchTool,
-        connectorSearch: connectorSearchTool,
-        xSearch: xSearchTool,
-        githubSearch: githubSearchTool
-      },
+      tools: tools,
       experimental_activeTools: searchMode
-        ? ['search', 'acadamicSearch', 'retrieve', 'videoSearch', 'weather', 'datetime', 'youtubeVideoAnalysis', 'productSearch', 'pdfSearch', 'docSearch', 'pptSearch', 'connectorSearch', 'xSearch', 'githubSearch']
+        ? Object.keys(tools)
         : [],
       maxSteps: searchMode ? 5 : 1,
       experimental_transform: smoothStream()

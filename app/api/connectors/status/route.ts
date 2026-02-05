@@ -1,5 +1,6 @@
 import { getCurrentUserId } from '@/lib/auth/get-current-user';
-import { ConnectorProvider, getSyncStatus } from '@/lib/connectors';
+import { getSyncStatus } from '@/lib/connectors';
+import { ConnectorProvider } from '@/lib/connectors/types';
 import { NextRequest, NextResponse } from 'next/server';
 
 export async function GET(request: NextRequest) {
@@ -12,8 +13,20 @@ export async function GET(request: NextRequest) {
         }
 
         // Validate provider
-        const validProviders: ConnectorProvider[] = ['google-drive', 'notion', 'onedrive'];
+        const validProviders: ConnectorProvider[] = [
+            'gmail',
+            'google-drive',
+            'notion',
+            'google-calendar',
+            'google-sheets',
+            'google-docs',
+            'linear',
+            'supabase',
+            'shopify',
+            'youtube',
+        ];
         if (!validProviders.includes(provider)) {
+
             return NextResponse.json({ error: 'Invalid provider' }, { status: 400 });
         }
 

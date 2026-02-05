@@ -157,8 +157,16 @@ export function createToolCallingStreamResponse(config: BaseStreamConfig) {
 
   return createDataStreamResponse({
     execute: async (dataStream: DataStreamWriter) => {
-      const { messages, model, chatId, searchMode, userId } = config
+      const { messages, model, chatId, searchMode, userId, selectedApps } = config
       const modelId = `${model.providerId}:${model.id}`
+
+      // Write selected apps to data stream for live UI update
+      if (selectedApps && selectedApps.length > 0) {
+        dataStream.writeMessageAnnotation({
+          type: 'selected-apps',
+          data: selectedApps
+        })
+      }
 
       try {
         // ✅ Custom conversion that PRESERVES file attachments
@@ -176,7 +184,9 @@ export function createToolCallingStreamResponse(config: BaseStreamConfig) {
           messages: truncatedMessages,
           model: modelId,
           searchMode,
-          excludeDomains: config.excludeDomains
+          userId,
+          excludeDomains: config.excludeDomains,
+          selectedApps: config.selectedApps
         })
 
         const result = streamText({
@@ -200,7 +210,8 @@ export function createToolCallingStreamResponse(config: BaseStreamConfig) {
               chatId,
               dataStream,
               userId,
-              skipRelatedQuestions: true
+              skipRelatedQuestions: true,
+              selectedApps: config.selectedApps
             })
           }
         })

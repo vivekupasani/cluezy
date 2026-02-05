@@ -8,6 +8,8 @@ import { Copy, Pencil } from 'lucide-react'
 
 import { cn } from '@/lib/utils'
 
+import { PROVIDER_ICONS } from '@/lib/connectors/icons'
+import { CONNECTOR_CONFIGS, ConnectorProvider } from '@/lib/connectors/types'
 import { toast } from 'sonner'
 import { CollapsibleMessage } from './collapsible-message'
 import { Button } from './ui/button'
@@ -17,6 +19,7 @@ type UserMessageProps = {
   messageId?: string
   onUpdateMessage?: (messageId: string, newContent: string) => Promise<void>
   parts: any
+  selectedApps?: string[]
 }
 
 type UserMessageFileTypeProps = {
@@ -32,7 +35,8 @@ export const UserMessage: React.FC<UserMessageProps> = ({
   message,
   messageId,
   onUpdateMessage,
-  parts
+  parts,
+  selectedApps
 }) => {
   const [isEditing, setIsEditing] = useState(false)
   const [editedContent, setEditedContent] = useState(message)
@@ -63,7 +67,7 @@ export const UserMessage: React.FC<UserMessageProps> = ({
       console.error('Failed to save message:', error)
     }
   }
-
+  console.log("UserMessage [received]:", selectedApps)
   return (
     <CollapsibleMessage role="user">
       <div
@@ -90,8 +94,30 @@ export const UserMessage: React.FC<UserMessageProps> = ({
             </div>
           </div>
         ) : (
-          <div className="relative flex flex-col max-w-xs md:max-w-lg bg-secondary dark:bg-card/70 text-secondary-foreground dark:text-foreground/90 px-4 py-2.5 rounded-2xl rounded-br-sm">
-            <div className="">{message}</div>
+          <div className="relative flex flex-col max-w-xs md:max-w-lg bg-secondary dark:bg-card/70 text-secondary-foreground dark:text-foreground/90 px-4 py-2.5 rounded-2xl rounded-br-sm shadow-sm border border-border/20">
+            {selectedApps && selectedApps.length > 0 && (
+              <div className="flex flex-wrap gap-1.5 mb-2">
+                {selectedApps.map(app => {
+                  const config = CONNECTOR_CONFIGS[app as ConnectorProvider]
+                  const Icon = config ? PROVIDER_ICONS[config.icon] : null
+
+                  return (
+                    <div
+                      key={app}
+                      className="inline-flex items-center gap-1.5 bg-muted/80 px-2 py-1 rounded-lg border border-border/50 text-[11px] font-medium text-muted-foreground transition-colors hover:bg-muted"
+                    >
+                      <div className="shrink-0 flex items-center justify-center size-3.5">
+                        {Icon && <Icon className="size-full" />}
+                      </div>
+                      <span className="truncate">
+                        {config?.name || app}
+                      </span>
+                    </div>
+                  )
+                })}
+              </div>
+            )}
+            <div className="text-[15px] leading-relaxed">{message}</div>
             {parts && parts.length > 0 && (
               <div className="flex flex-col gap-2 mt-1">
                 {parts.map(
@@ -124,7 +150,7 @@ export const UserMessage: React.FC<UserMessageProps> = ({
 
             <div
               className={cn(
-                'absolute top-0 right-full mr-2 transition-opacity flex',
+                'absolute bottom-0 right-full mr-2 transition-opacity flex',
                 'opacity-0',
                 'group-focus-within:opacity-100',
                 'md:opacity-0',

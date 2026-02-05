@@ -18,7 +18,15 @@ export function createManualToolStreamResponse(config: BaseStreamConfig) {
   console.log("Menual tool calling")
   return createDataStreamResponse({
     execute: async (dataStream: DataStreamWriter) => {
-      const { messages, model, chatId, searchMode, userId } = config
+      const { messages, model, chatId, searchMode, userId, selectedApps } = config
+
+      // Write selected apps to data stream for live UI update
+      if (selectedApps && selectedApps.length > 0) {
+        dataStream.writeMessageAnnotation({
+          type: 'selected-apps',
+          data: selectedApps
+        })
+      }
       const modelId = `${model.providerId}:${model.id}`
       let toolCallModelId = model.toolCallModel
         ? `${model.providerId}:${model.toolCallModel}`
@@ -74,7 +82,8 @@ export function createManualToolStreamResponse(config: BaseStreamConfig) {
               dataStream,
               userId,
               skipRelatedQuestions: false, //true
-              annotations
+              annotations,
+              selectedApps: config.selectedApps
             })
           },
           onChunk(event) {

@@ -16,7 +16,7 @@ export function SearchSkeleton() {
     <div className="flex flex-wrap">
       {[...Array(4)].map((_, index) => (
         <div key={index} className="w-1/2 md:w-1/4 p-1">
-          <div className="flex flex-col justify-between h-full min-h-[5rem] bg-card/40 backdrop-blur-sm border border-border/60 rounded-lg p-2 gap-2">
+          <div className="flex flex-col justify-between h-full min-h-[4.5rem] bg-card/40 backdrop-blur-sm border border-border/60 rounded-lg p-2 gap-2">
             <Skeleton className="h-4 w-full" />
             <div className="flex items-center gap-2 mt-auto">
               <Skeleton className="h-4 w-4 rounded-full flex-shrink-0" />
@@ -67,8 +67,8 @@ export function VideoSearchSkeleton() {
 
 export function XSearchSkeleton() {
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
-      {[...Array(4)].map((_, index) => (
+    <div className="flex flex-col gap-2">
+      {[...Array(3)].map((_, index) => (
         <div key={index} className="w-full h-full">
           <div className="flex flex-col h-full p-4 border border-border/50 rounded-lg bg-card text-card-foreground shadow-sm">
             <div className="flex items-start space-x-3 mb-2">

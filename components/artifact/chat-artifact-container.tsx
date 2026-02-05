@@ -44,7 +44,7 @@ export function ChatArtifactContainer({
 
   return (
     <div className="flex-1 min-h-0 h-screen flex">
-      <div className="absolute p-2 md:p-4 z-50 bg-background/50 backdrop-blur-lg md:bg-transparent md:backdrop-blur-none w-full">
+      <div className="fixed p-2 md:p-4 z-50 bg-background/50 backdrop-blur-lg md:bg-transparent md:backdrop-blur-none w-full">
         {(!open || isMobileSidebar) && !pages.includes(pathName) && (
           <Tooltip>
             <TooltipTrigger asChild>

@@ -1,4 +1,7 @@
+"use client"
+import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { SiInstagram, SiLinkedin, SiX } from "react-icons/si";
 
 
@@ -66,47 +69,66 @@ const privacy: PrivacySection[] = [
 ];
 
 export default async function PrivacyPage() {
+    const router = useRouter();
     return (
-        <div className="h-screen overflow-y-auto CustomScrollbar">
-            <div className="max-w-2xl flex flex-col mx-auto px-4">
-                <div className="mt-10 md:mt-16 flex flex-col justify-center items-center text-center">
-                    <h1 className="text-4xl pb-1 tracking-wider font-bold bg-clip-text text-transparent bg-gradient-to-tr from-foreground to-foreground/60">
+        <div className="min-h-screen h-full overflow-y-auto CustomScrollbar selection:bg-primary/20">
+            <div className="max-w-3xl mx-auto px-6 py-20 md:py-24">
+                <header className="mb-16 md:mb-16 text-center space-y-4">
+                    <button
+                        onClick={() => router.push("/")}
+                        className="visible md:hidden group flex items-center mb-5 gap-1.5 text-muted-foreground hover:text-foreground text-[16px] transition-colors duration-200"
+                    >
+                        <ArrowLeft
+                            size={16}
+                            className="transition-transform duration-200"
+                        />
+                        Back
+                    </button>
+                    <h1 className="text-4xl md:text-5xl pb-2 font-bold tracking-tight bg-clip-text text-transparent bg-gradient-to-b from-foreground to-foreground/70">
                         Privacy Policy
                     </h1>
-                    <h3 className="text-xs bg-clip-text tracking-tight text-transparent bg-gradient-to-tr from-foreground/90 to-foreground/60">
-                        By using our service, you agree to our Privacy Policy
-                    </h3>
-                </div>
+                    <p className="text-muted-foreground text-sm md:text-base max-w-md mx-auto leading-relaxed">
+                        At Cluezy, we take your privacy seriously and are committed to protecting your personal information.
+                    </p>
+                </header>
 
-                <div className="mt-10 flex flex-col">
-                    <span className="text-sm text-foreground/80 mb-2 leading-relaxed">
-                        At Cluezy, we take your privacy seriously and are committed to protecting your personal information. This Privacy Policy explains how we collect, use, disclose, and safeguard your data when you access and use our AI-powered search and answer engine (collectively referred to as the “Service”). By using Cluezy, you agree to the collection and use of your information in accordance with this Privacy Policy.
-                    </span>
-                    {privacy.map((term) => (
-                        <div key={term.id} className="py-3">
-                            <h2 className="text-xl border-b border-border pb-2 font-semibold bg-clip-text text-transparent bg-gradient-to-tr from-foreground/95 to-foreground/85">{term.title}</h2>
-                            <p className="mt-2 text-sm text-foreground/80">{term.content}</p>
-                        </div>
-                    ))}
-                </div>
+                <main className="space-y-8">
+                    <section className="text-muted-foreground/90 text-sm md:text-base leading-relaxed border-b border-border/40 pb-10">
+                        This Privacy Policy explains how we collect, use, disclose, and safeguard your data when you access and use our AI-powered search and answer engine (collectively referred to as the “Service”). By using Cluezy, you agree to the collection and use of your information in accordance with this Privacy Policy.
+                    </section>
 
-                <div className="flex flex-col gap-2 mb-10 justify-center items-center">
-                    <div className="flex gap-4">
-                        <Link href="https://x.com/v1vekupasani" className="hover:cursor-pointer">
-                            <SiX />
+                    <div className="space-y-8">
+                        {privacy.map((section) => (
+                            <section key={section.id} className="space-y-4">
+                                <h2 className="text-xl md:text-2xl font-semibold text-foreground tracking-tight">
+                                    {section.title}
+                                </h2>
+                                <p className="text-muted-foreground/90 text-sm md:text-base leading-7">
+                                    {section.content}
+                                </p>
+                            </section>
+                        ))}
+                    </div>
+                </main>
+
+                <footer className="mt-20 md:mt-32 pt-12 border-t border-border/40 flex flex-col items-center gap-6">
+                    <div className="flex gap-6 items-center">
+                        <Link href="https://x.com/cluezyai" className="text-muted-foreground hover:text-foreground transition-colors duration-200">
+                            <SiX className="w-5 h-5" />
                         </Link>
-                        <Link href="https://www.linkedin.com/company/cluezy/" className="hover:cursor-pointer">
-                            <SiLinkedin />
+                        <Link href="https://www.linkedin.com/company/cluezy" className="text-muted-foreground hover:text-foreground transition-colors duration-200">
+                            <SiLinkedin className="w-5 h-5" />
                         </Link>
-                        <Link href="https://www.instagram.com/v1vekupasani/" className="hover:cursor-pointer">
-                            <SiInstagram />
+                        <Link href="https://www.instagram.com/cluezyai" className="text-muted-foreground hover:text-foreground transition-colors duration-200">
+                            <SiInstagram className="w-5 h-5" />
                         </Link>
                     </div>
-                    <span className="text-xs mt-2">
-                        © 2025 Cluezy. All rights reserved.
-                    </span>
-                </div>
+                    <p className="text-[10px] md:text-xs text-muted-foreground tracking-widest uppercase">
+                        © 2026 Cluezy. All rights reserved.
+                    </p>
+                </footer>
             </div>
-        </div >
+        </div>
     );
 }
+

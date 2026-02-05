@@ -21,7 +21,7 @@ export function XSearchResults({ results, isArtifect }: XSearchResultsProps) {
                     rel="noopener noreferrer"
                     className="block"
                 >
-                    <Card className="w-full hover:bg-muted/50 transition-colors border-border/50">
+                    <Card className="w-full bg-transparent hover:bg-muted/50 transition-colors border-b border-border/50">
                         <CardContent className="p-4">
                             <div className="flex items-start space-x-3">
                                 <Avatar className="h-8 w-8 flex-shrink-0">

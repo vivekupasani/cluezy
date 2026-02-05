@@ -118,7 +118,7 @@ export function ExcludedDomainsDialog({
 
             <DialogContent className="w-[95%] md:w-full max-w-2xl h-[50vh] sm:h-[60vh] p-0 bg-background/95 backdrop-blur-sm text-popover-foreground border border-border rounded-2xl overflow-hidden flex flex-col gap-0 cosmic-glass HiddenScrollbar">
                 <DialogHeader className="sr-only">
-                    <DialogTitle>Excluded Domains</DialogTitle>
+                    <DialogTitle>Excluded Sources</DialogTitle>
                     <DialogDescription>Manage domains to exclude from search results</DialogDescription>
                 </DialogHeader>
 
@@ -150,7 +150,7 @@ export function ExcludedDomainsDialog({
                     {excludedDomains.length === 0 ? (
                         <div className="flex flex-col items-center justify-center py-20 text-center select-none">
                             <GlobeLock className="w-12 h-12 text-muted-foreground/20 mb-4" />
-                            <p className="text-sm text-muted-foreground font-medium">No excluded domains</p>
+                            <p className="text-sm text-muted-foreground font-medium">No excluded sources</p>
                             <p className="text-xs text-muted-foreground/60 mt-1 max-w-[200px]">
                                 Add domains above to prevent them from appearing in search results.
                             </p>
@@ -189,7 +189,7 @@ export function ExcludedDomainsDialog({
                 <div className="flex-none border-t border-border/50 bg-background/50 px-4 md:px-6 py-3">
                     <div className="flex items-center justify-between text-xs">
                         <span className="text-muted-foreground/50 font-medium">
-                            {excludedDomains.length} domains excluded
+                            {excludedDomains.length} sources excluded
                         </span>
                         <div className="flex items-center gap-2 text-muted-foreground/40">
                             <Settings2 className="w-3 h-3" />

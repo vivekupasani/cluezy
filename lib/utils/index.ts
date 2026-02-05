@@ -213,25 +213,23 @@ export function convertToUIMessages(
       }
     }
 
-    // Rest of your function remains the same...
     let annotations: JSONValue[] | undefined = undefined
-    if (message.role === 'assistant') {
-      if (pendingAnnotations.length > 0 || pendingReasoning !== undefined) {
-        annotations = [
-          ...pendingAnnotations,
-          ...(pendingReasoning !== undefined
-            ? [
-              {
-                type: 'reasoning',
-                data: {
-                  reasoning: pendingReasoning,
-                  time: pendingReasoningTime ?? 0
-                }
-              } as JSONValue
-            ]
-            : [])
-        ]
-      }
+    if (pendingAnnotations.length > 0) {
+      annotations = [...pendingAnnotations]
+    }
+
+    // Add reasoning only for assistant
+    if (message.role === 'assistant' && pendingReasoning !== undefined) {
+      annotations = [
+        ...(annotations || []),
+        {
+          type: 'reasoning',
+          data: {
+            reasoning: pendingReasoning,
+            time: pendingReasoningTime ?? 0
+          }
+        } as JSONValue
+      ]
     }
 
     const newMessage: Message = {
@@ -258,11 +256,10 @@ export function convertToUIMessages(
 
     chatMessages.push(newMessage)
 
-    if (message.role === 'assistant') {
-      pendingAnnotations = []
-      pendingReasoning = undefined
-      pendingReasoningTime = undefined
-    }
+    // Clear pending items after they are attached to a message
+    pendingAnnotations = []
+    pendingReasoning = undefined
+    pendingReasoningTime = undefined
 
     return chatMessages
   }, [])

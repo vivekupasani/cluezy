@@ -12,10 +12,10 @@ export default function Page() {
       <header className="h-14 flex items-center px-5">
         <Link
           href="/"
-          className="group flex items-center gap-2 text-sm"
+          className="group flex items-center gap-1 text-sm"
         >
           <ArrowLeft
-            size={18}
+            size={16}
             className="text-foreground/70 group-hover:text-foreground"
           />
           <span className="txt-grad group-hover:text-foreground">

@@ -1,5 +1,6 @@
 import { Message } from 'ai'
 
+import { ConnectorProvider } from '../connectors/types'
 import { Model } from '../types/models'
 
 export interface BaseStreamConfig {
@@ -8,5 +9,6 @@ export interface BaseStreamConfig {
   chatId: string
   searchMode: boolean
   userId: string
-  excludeDomains?: string[]
+  excludeDomains?: string[],
+  selectedApps?: ConnectorProvider[]
 }

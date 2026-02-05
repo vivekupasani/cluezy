@@ -18,14 +18,17 @@ import {
   X
 } from 'lucide-react'
 
+import { CONNECTOR_CONFIGS, ConnectorProvider } from '@/lib/connectors/types'
 import { Model } from '@/lib/types/models'
 import { cn } from '@/lib/utils'
 
 import { useIsMobile } from '@/hooks/use-mobile'
 
+import { PROVIDER_ICONS } from '@/lib/connectors/icons'
 import { useArtifact } from './artifact/artifact-context'
 import { useAuth } from './context/auth-context'
 import { EmptyScreen } from './empty-screen'
+import { MentionPopover } from './mention-popover'
 import { ModelSelector } from './model-selector'
 import { SearchModeToggle } from './search-mode-toggle'
 import { clearChatHistoryCache } from './sidebar/chat-history-client'
@@ -61,6 +64,10 @@ interface ChatPanelProps {
   uploadingCount?: number
   onFileUpload: (files: FileList | null) => void
   onRemoveFile: (fileId: string) => void
+  // Add mention props
+  selectedApps: ConnectorProvider[]
+  onSelectApp: (app: ConnectorProvider) => void
+  onRemoveApp: (app: ConnectorProvider) => void
 }
 
 export function ChatPanel({
@@ -81,7 +88,11 @@ export function ChatPanel({
   isFileUploading,
   uploadingCount = 0,
   onFileUpload,
-  onRemoveFile
+  onRemoveFile,
+  // Add mention props
+  selectedApps,
+  onSelectApp,
+  onRemoveApp
 }: ChatPanelProps) {
   const [showEmptyScreen, setShowEmptyScreen] = useState(true)
   const router = useRouter()
@@ -96,6 +107,12 @@ export function ChatPanel({
   const { user } = useAuth()
   const pathName = usePathname()
   const [isDragging, setIsDragging] = useState(false)
+
+  // Mention Popover State
+  const [mentionOpen, setMentionOpen] = useState(false)
+  const [mentionSearch, setMentionSearch] = useState('')
+  const [mentionRect, setMentionRect] = useState<DOMRect | null>(null)
+  const [mentionStartIndex, setMentionStartIndex] = useState(-1)
 
   if (pathName.startsWith("/share/")) {
     return null;
@@ -285,7 +302,7 @@ export function ChatPanel({
             "relative flex flex-col w-full p-2.5 transition-all duration-300",
             "bg-card/80 backdrop-blur-xl border border-border",
             "ring-1 ring-border/30",
-            "shadow-sm",
+            // "shadow-sm",
             "rounded-[20px]",
             isDragging && "ring-2 ring-primary bg-primary/5 border-primary/50"
           )}
@@ -297,6 +314,7 @@ export function ChatPanel({
             {/* Display attached files within the container */}
             {(attachedFiles.length > 0 || isFileUploading) && (
               <div className="flex flex-wrap gap-2 px-2 pt-2">
+
                 {attachedFiles.map(file => (
                   <div key={file.id} className="group relative flex items-center gap-2 bg-muted/40 hover:bg-muted/60 pl-2 pr-1 py-1.5 rounded-lg border border-border/40 transition-colors max-w-[200px]">
                     <div className="shrink-0 flex items-center justify-center size-8 rounded-md bg-background border border-border/50">
@@ -345,7 +363,27 @@ export function ChatPanel({
             )}
 
             {/* Textarea Area */}
-            <div className="flex items-start gap-2 min-h-[44px] pl-2">
+            <div className="flex flex-wrap items-start gap-1.5 min-h-[44px] pl-2">
+              {/* Inline Selected Apps (Mentions) */}
+              {selectedApps.map(app => {
+                const config = CONNECTOR_CONFIGS[app]
+                const Icon = config ? PROVIDER_ICONS[config.icon] : null
+
+                return (
+                  <div
+                    key={app}
+                    className="inline-flex items-center gap-1.5 bg-muted/80 px-2 py-1 my-2 rounded-lg border border-border/50 text-[11px] font-medium text-muted-foreground transition-colors hover:bg-muted"
+                  >
+                    <div className="shrink-0 flex items-center justify-center size-3.5">
+                      {Icon && <Icon className="size-full" />}
+                    </div>
+                    <span className="truncate">
+                      {config?.name || app}
+                    </span>
+                  </div>
+                )
+              })}
+
               <Textarea
                 ref={inputRef}
                 name="input"
@@ -354,16 +392,59 @@ export function ChatPanel({
                 tabIndex={0}
                 onCompositionStart={handleCompositionStart}
                 onCompositionEnd={handleCompositionEnd}
-                placeholder={messages.length === 0 ? "Ask a question..." : "Ask follow up questions..."}
+                placeholder={selectedApps.length > 0 ? "" : messages.length === 0 ? "Ask a question or type @ to mention" : "Ask follow up questions or type @ to mention"}
                 spellCheck={true}
                 autoFocus={true}
                 value={input}
                 disabled={isToolInvocationInProgress()}
                 className="flex-1 resize-none HiddenScrollbar bg-transparent text-foreground placeholder:text-muted-foreground/60 outline-none text-[15px] leading-relaxed py-2 disabled:cursor-not-allowed disabled:opacity-50 min-h-[40px]"
                 onChange={e => {
+                  const newValue = e.target.value
+                  const selectionStart = e.target.selectionStart || 0
                   handleInputChange(e)
+
+                  // Check for @ mention
+                  const lastAtIndex = newValue.lastIndexOf('@', selectionStart - 1)
+                  if (lastAtIndex !== -1) {
+                    const charBefore = lastAtIndex > 0 ? newValue[lastAtIndex - 1] : null
+                    const isCorrectContext = lastAtIndex === 0 || charBefore === ' ' || charBefore === '\n'
+
+                    const textAfterAt = newValue.slice(lastAtIndex + 1, selectionStart)
+                    // Ensure it's not a multi-word or has spaces
+                    if (isCorrectContext && !textAfterAt.includes(' ')) {
+                      setMentionOpen(true)
+                      setMentionSearch(textAfterAt)
+                      setMentionStartIndex(lastAtIndex)
+
+                      // Calculate position
+                      if (inputRef.current) {
+                        const rect = inputRef.current.getBoundingClientRect()
+                        setMentionRect(rect)
+                      }
+                    } else {
+                      setMentionOpen(false)
+                    }
+                  } else {
+                    setMentionOpen(false)
+                  }
                 }}
                 onKeyDown={e => {
+                  // Handle mention popover navigation
+                  if (mentionOpen) {
+                    if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+                      // We'll let the Command component handle it
+                    }
+                    if (e.key === 'Escape') {
+                      setMentionOpen(false)
+                      return
+                    }
+                  }
+
+                  // Handle Backspace to remove last selected app if input is empty
+                  if (e.key === 'Backspace' && input === '' && selectedApps.length > 0) {
+                    onRemoveApp(selectedApps[selectedApps.length - 1])
+                  }
+
                   // Only handle Enter key, ignore all other keys including spacebar
                   if (e.key === 'Enter') {
                     if (
@@ -410,7 +491,7 @@ export function ChatPanel({
                         size={'icon'}
                         variant={'ghost'}
                         onClick={handleNewChat}
-                        className="size-8 rounded-full bg-muted/30 hover:bg-muted/60 border-border text-muted-foreground hover:text-foreground transition-all duration-200 border-0"
+                        className="md:hidden size-8 rounded-full bg-transparent hover:bg-muted/60 border-border text-muted-foreground hover:text-foreground transition-all duration-200 border-0"
                         disabled={isLoading || isToolInvocationInProgress()}
                       >
                         <MessageCirclePlus size={18} />
@@ -428,14 +509,14 @@ export function ChatPanel({
                       size={'icon'}
                       variant={'ghost'}
                       className={cn(
-                        'size-8 rounded-full bg-muted/30 hover:bg-muted/60 border-border text-muted-foreground hover:text-foreground transition-all duration-200 border-0',
+                        'size-8 rounded-full bg-transparent hover:bg-muted/60 border-border text-muted-foreground hover:text-foreground transition-all duration-200 border-0',
                         isFileUploading && 'opacity-50 cursor-not-allowed'
                       )}
                       onClick={handleFileButtonClick}
                       disabled={isFileUploading}
                       title={isFileUploading ? "Uploading file..." : "Attach files"}
                     >
-                      <Paperclip size={18} />
+                      <Paperclip size={16} />
                     </Button>
                   </TooltipTrigger>
                   <TooltipContent side="top" className='text-xs'>Attach files</TooltipContent>
@@ -450,7 +531,7 @@ export function ChatPanel({
                         size={'icon'}
                         variant={'ghost'}
                         className={cn(
-                          'size-8 rounded-full bg-muted/30 hover:bg-muted/60 border-border text-muted-foreground hover:text-foreground transition-all duration-200 border-0',
+                          'size-8 rounded-full bg-transparent hover:bg-muted/60 border-border text-muted-foreground hover:text-foreground transition-all duration-200 border-0',
                           (isEnhancePromptLoading || isFileUploading) && 'animate-pulse duration-1000 bg-transparent opacity-50 cursor-not-allowed'
                         )}
                         onClick={handleEnhancePrompt}
@@ -494,7 +575,6 @@ export function ChatPanel({
         </div>
       </form>
 
-      {/* 28 */}
       {messages.length === 0 && (
         <div className="mb-8">
           <EmptyScreen
@@ -506,6 +586,42 @@ export function ChatPanel({
             className={cn(showEmptyScreen ? 'visible' : 'invisible')}
           />
         </div>
+      )}
+
+      {mentionOpen && (
+        <MentionPopover
+          open={mentionOpen}
+          onOpenChange={setMentionOpen}
+          searchQuery={mentionSearch}
+          onSearchQueryChange={setMentionSearch}
+          anchorRect={mentionRect}
+          onSelect={(item) => {
+            if (inputRef.current) {
+              // Get the text before the @
+              const before = input.slice(0, mentionStartIndex)
+              // Get the text after the current cursor position (search query)
+              const after = input.slice(inputRef.current.selectionStart || 0)
+
+              // Trigger app selection
+              onSelectApp(item.id)
+
+              // Clear the @mentions query from the input text
+              const newValue = `${before}${after}`
+
+              handleInputChange({
+                target: { value: newValue }
+              } as React.ChangeEvent<HTMLTextAreaElement>)
+
+              setMentionOpen(false)
+              // Restore focus
+              setTimeout(() => {
+                inputRef.current?.focus()
+                const newPos = before.length
+                inputRef.current?.setSelectionRange(newPos, newPos)
+              }, 0)
+            }
+          }}
+        />
       )}
     </div>
   )

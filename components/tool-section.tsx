@@ -2,6 +2,7 @@
 
 import { ToolInvocation } from 'ai'
 
+import { PROVIDER_MAP } from '@/lib/connectors/types'
 import { ConnectorSearchSection } from './connector-search-section'
 import { DateTimeSection } from './datetime-section'
 import { DocumentSection } from './doument-section'
@@ -103,11 +104,6 @@ export function ToolSection({
         </div>
       )
 
-    case 'connectorSearch':
-      return (
-        <ConnectorSearchSection tool={tool} />
-      )
-
     case 'videoSearch':
       return (
         <div className='mt-4'>
@@ -162,7 +158,17 @@ export function ToolSection({
           />
         </div>
       )
+
     default:
+      const appPrefix = tool.toolName.split('_')[0].toLowerCase()
+      const supportedApps = Object.values(PROVIDER_MAP) as string[]
+
+      if (supportedApps.includes(appPrefix)) {
+        return (
+          <ConnectorSearchSection tool={tool} />
+        )
+      }
+
       return null
   }
 }

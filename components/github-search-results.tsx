@@ -66,7 +66,7 @@ export function GithubSearchResults({ results, isArtifect }: GithubSearchResults
                         rel="noopener noreferrer"
                         className="block"
                     >
-                        <Card className="w-full hover:bg-muted/50 transition-colors border-border/50">
+                        <Card className="w-full bg-transparent hover:bg-muted/50 transition-colors border-b border-border/50">
                             <CardContent className="p-3">
                                 <div className="flex items-start gap-2">
                                     <Avatar className="h-8 w-8 flex-shrink-0 rounded-md">

@@ -1,9 +1,8 @@
 import { generateId } from 'ai'
 import { Suspense } from 'react'
 
-import { getModels } from '@/lib/config/models'
-
 import { Chat } from '@/components/chat'
+import { getModels } from '@/lib/config/models'
 
 export default async function Page() {
   const models = await getModels()

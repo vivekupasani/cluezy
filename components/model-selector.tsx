@@ -111,7 +111,7 @@ export function ModelSelector({ models }: ModelSelectorProps) {
           size="sm"
           role="combobox"
           aria-expanded={open}
-          className="h-8 rounded-full bg-transparent px-2 hover:bg-muted/50 text-muted-foreground hover:text-foreground transition-all duration-200"
+          className="h-8 rounded-xl bg-transparent px-2 hover:bg-muted/50 text-muted-foreground hover:text-foreground transition-all duration-200"
         >
           {selectedModel ? (
             <div className="flex items-center gap-2">

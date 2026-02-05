@@ -4,10 +4,11 @@ import { useEffect, useMemo, useRef, useState } from 'react'
 
 import { useChat } from '@ai-sdk/react'
 import { User } from '@supabase/supabase-js'
-import { ChatRequestOptions } from 'ai'
+import { ChatRequestOptions, JSONValue } from 'ai'
 import { Message } from 'ai/react'
 import { toast } from 'sonner'
 
+import { ConnectorProvider } from '@/lib/connectors/types'
 import { createClient } from '@/lib/supabase/client'
 import { Model } from '@/lib/types/models'
 import { cn } from '@/lib/utils'
@@ -70,6 +71,7 @@ export function Chat({
   const [isFileUploading, setIsFileUploading] = useState(false)
   const [uploadingCount, setUploadingCount] = useState(0)
   const [excludedDomains, setExcludedDomains] = useState<string[]>([])
+  const [selectedApps, setSelectedApps] = useState<ConnectorProvider[]>([])
 
   useEffect(() => {
     // Initial load
@@ -111,7 +113,8 @@ export function Chat({
     id: id,
     body: {
       id,
-      excludeDomains: excludedDomains
+      excludeDomains: excludedDomains,
+      selectedApps: selectedApps
     },
     onFinish: () => {
       if (window.location.pathname === '/') {
@@ -338,11 +341,17 @@ export function Chat({
       })
     })
 
-    // Create the message with parts
+    // Create the message with parts and annotations
     append({
       role: 'user',
       content: input, // Keep the original content for compatibility
-      parts: messageParts
+      parts: messageParts,
+      annotations: selectedApps.length > 0 ? [
+        {
+          type: 'selected-apps',
+          data: selectedApps
+        } as JSONValue
+      ] : undefined
     })
 
     // Clear input and attached files
@@ -410,6 +419,8 @@ export function Chat({
 
   useEffect(() => {
     setMessages(savedMessages)
+    // Clear selected apps when navigating to a new chat
+    setSelectedApps([])
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id])
 
@@ -436,7 +447,6 @@ export function Chat({
       if (messageIndex === -1) return
 
       const messagesUpToEdited = messages.slice(0, messageIndex + 1)
-
       setMessages(messagesUpToEdited)
 
       setData(undefined)
@@ -444,7 +454,13 @@ export function Chat({
       await reload({
         body: {
           chatId: id,
-          regenerate: true
+          regenerate: true,
+          annotations: selectedApps.length > 0 ? [
+            {
+              type: 'selected-apps',
+              data: selectedApps
+            }
+          ] : undefined
         }
       })
     } catch (error) {
@@ -519,6 +535,15 @@ export function Chat({
         uploadingCount={uploadingCount}
         onFileUpload={handleFileUpload}
         onRemoveFile={handleRemoveFile}
+        selectedApps={selectedApps}
+        onSelectApp={(app) => {
+          if (!selectedApps.includes(app)) {
+            setSelectedApps(prev => [...prev, app])
+          }
+        }}
+        onRemoveApp={(app) => {
+          setSelectedApps(prev => prev.filter(a => a !== app))
+        }}
       />
 
       {/* Rate Limit Dialog */}

@@ -16,6 +16,7 @@ import { AuthProvider } from '@/components/context/auth-context'
 import { HistoryDialog, HistoryDialogProvider } from '@/components/history-dialog'
 import { ThemeProvider } from '@/components/theme-provider'
 
+import { ConnectorsProvider } from '@/components/context/connectors-context'
 import './globals.css'
 
 const fontSans = Baumans({
@@ -144,28 +145,30 @@ export default async function RootLayout({
       >
         <AuthProvider>
           <HistoryDialogProvider>
-            <ThemeProvider
-              attribute="class"
-              defaultTheme="system"
-              enableSystem
-              disableTransitionOnChange
-            >
-              <SidebarProvider defaultOpen={false}>
-                <div className="relative flex flex-col flex-1">
-                  <React.Suspense fallback={null}>
-                    <AppSidebar />
-                  </React.Suspense>
-                  <main className="flex flex-1 min-h-0">
-                    <ArtifactRoot>{children}</ArtifactRoot>
-                  </main>
-                  <React.Suspense fallback={null}>
-                    <HistoryDialog />
-                  </React.Suspense>
-                </div>
-              </SidebarProvider>
-              <Toaster />
-              <Analytics />
-            </ThemeProvider>
+            <ConnectorsProvider>
+              <ThemeProvider
+                attribute="class"
+                defaultTheme="system"
+                enableSystem
+                disableTransitionOnChange
+              >
+                <SidebarProvider defaultOpen={false}>
+                  <div className="relative flex flex-row flex-1">
+                    <React.Suspense fallback={null}>
+                      <AppSidebar />
+                    </React.Suspense>
+                    <main className="flex flex-1 min-h-0">
+                      <ArtifactRoot>{children}</ArtifactRoot>
+                    </main>
+                    <React.Suspense fallback={null}>
+                      <HistoryDialog />
+                    </React.Suspense>
+                  </div>
+                </SidebarProvider>
+                <Toaster />
+                <Analytics />
+              </ThemeProvider>
+            </ConnectorsProvider>
           </HistoryDialogProvider>
         </AuthProvider>
       </body>

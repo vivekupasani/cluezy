@@ -24,6 +24,7 @@ export const weatherTool = tool({
     }) => {
         console.log("I AM USING WEATHER TOOL")
         try {
+            const apiKey = process.env.OPENWEATHER_API_KEY;
             let lat = latitude;
             let lng = longitude;
             let locationName = location;
@@ -40,28 +41,28 @@ export const weatherTool = tool({
                 }
 
                 const geocodingResponse = await fetch(
-                    `https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(
+                    `http://api.openweathermap.org/geo/1.0/direct?q=${encodeURIComponent(
                         location,
-                    )}&count=1&language=en&format=json`,
+                    )}&limit=1&appid=${apiKey}`,
                 );
 
                 const geocodingData = await geocodingResponse.json();
 
-                if (!geocodingData.results || geocodingData.results.length === 0) {
+                if (!geocodingData || geocodingData.length === 0) {
                     throw new Error(`Location '${location}' not found`);
                 }
 
-                const geocodingResult = geocodingData.results[0];
-                lat = geocodingResult.latitude;
-                lng = geocodingResult.longitude;
+                const geocodingResult = geocodingData[0];
+                lat = geocodingResult.lat;
+                lng = geocodingResult.lon;
                 locationName = geocodingResult.name;
                 country = geocodingResult.country;
-                timezone = geocodingResult.timezone;
+                // Timezone is not available in OWM Geo API, will be handled by weather data or omitted
             } else {
                 if (!location) {
                     try {
                         const reverseGeocodeResponse = await fetch(
-                            `https://api.openweathermap.org/geo/1.0/reverse?lat=${lat}&lon=${lng}&limit=1&appid=${process.env.OPENWEATHER_API_KEY}`,
+                            `https://api.openweathermap.org/geo/1.0/reverse?lat=${lat}&lon=${lng}&limit=1&appid=${apiKey}`,
                         );
                         const reverseGeocodeData = await reverseGeocodeResponse.json();
 
@@ -82,7 +83,7 @@ export const weatherTool = tool({
             // console.log('Longitude:', lng);
             // console.log('Location:', locationName);
 
-            const apiKey = process.env.OPENWEATHER_API_KEY;
+            // const apiKey = process.env.OPENWEATHER_API_KEY; // Already declared above
             const [
                 weatherResponse,
                 airPollutionResponse,

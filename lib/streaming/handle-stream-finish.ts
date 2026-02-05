@@ -14,6 +14,7 @@ interface HandleStreamFinishParams {
   userId: string
   skipRelatedQuestions?: boolean
   annotations?: ExtendedCoreMessage[]
+  selectedApps?: string[]
 }
 
 export async function handleStreamFinish({
@@ -24,10 +25,32 @@ export async function handleStreamFinish({
   dataStream,
   userId,
   skipRelatedQuestions = false,
-  annotations = []
+  annotations = [],
+  selectedApps = []
 }: HandleStreamFinishParams) {
   try {
+    // Inject selected apps annotation as a separate data message before the user message
+    const appsAnnotation: ExtendedCoreMessage | null = (selectedApps && selectedApps.length > 0) ? {
+      role: 'data',
+      content: {
+        type: 'selected-apps',
+        data: selectedApps
+      } as JSONValue
+    } : null
+
     const extendedCoreMessages = convertToExtendedCoreMessages(originalMessages)
+
+    // If we have apps, find the last user message in the converted array and insert the annotation before it
+    let finalHistory = [...extendedCoreMessages]
+    if (appsAnnotation) {
+      const lastUserIndex = finalHistory.findLastIndex(m => m.role === 'user')
+      if (lastUserIndex !== -1) {
+        finalHistory.splice(lastUserIndex, 0, appsAnnotation)
+      } else {
+        finalHistory.push(appsAnnotation)
+      }
+    }
+
     let allAnnotations = [...annotations]
 
     if (!skipRelatedQuestions) {
@@ -61,7 +84,7 @@ export async function handleStreamFinish({
 
     // Create the message to save
     const generatedMessages = [
-      ...extendedCoreMessages,
+      ...finalHistory,
       ...responseMessages.slice(0, -1),
       ...allAnnotations, // Add annotations before the last message
       ...responseMessages.slice(-1)
