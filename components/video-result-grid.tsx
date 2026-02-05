@@ -45,7 +45,7 @@ export function VideoResultGrid({
             initialIndex={index}
           >
             <div className={`group relative cursor-pointer ${cardClasses}`}>
-              <Card className="flex-1 bg-gradient-to-br from-card/55 via-card/70 to-card/45 backdrop-blur-sm min-h-40 overflow-hidden rounded-xl border border-border/50 transition-all duration-300 hover:scale-[1.02] hover:shadow-xl hover:shadow-primary/5 active:scale-[0.98]">
+              <Card className="flex-1 bg-card/60 backdrop-blur-sm min-h-40 overflow-hidden rounded-xl border border-border/50 transition-all duration-300 hover:scale-[1.02] hover:shadow-xl hover:shadow-primary/5 active:scale-[0.98]">
                 <CardContent className="p-0">
                   {baseUrl && (
                     <div className="relative w-full aspect-video bg-muted overflow-hidden">
@@ -100,7 +100,7 @@ export function VideoResultGrid({
                 </CardContent>
               </Card>
               {showOverlay && (
-                <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/40 text-white backdrop-blur-[2px] transition-colors group-hover:bg-black/50 rounded-xl">
+                <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/40 text-white backdrop-blur-[0.5px] transition-colors group-hover:bg-black/50 rounded-xl">
                   <PlusCircle className="mb-1 h-6 w-6" />
                   <span className="text-[10px] font-medium uppercase tracking-wider">
                     +{videos.length - 4} More

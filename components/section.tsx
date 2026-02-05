@@ -20,6 +20,7 @@ import {
 
 import { cn } from '@/lib/utils'
 
+import { useIsMobile } from '@/hooks/use-mobile'
 import { ToolBadge } from './tool-badge'
 import { Badge } from './ui/badge'
 import { Separator } from './ui/separator'
@@ -131,13 +132,14 @@ export function ToolArgsSection({
   tool: string
   number?: number
 }) {
+  const isMobile = useIsMobile()
   return (
     <Section
       size="sm"
       className="py-0 flex flex-col sm:flex-row items-start sm:items-center justify-between w-full gap-2"
     >
       <ToolBadge tool={tool}>{children}</ToolBadge>
-      {number && number > 0 && (
+      {number && number > 0 && !isMobile && (
         <StatusIndicator icon={Check} iconClassName="text-green-500">
           {number} results
         </StatusIndicator>

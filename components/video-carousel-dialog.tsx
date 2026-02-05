@@ -91,7 +91,7 @@ export function VideoCarouselDialog({
             </div>
           </DialogHeader>
 
-          <div className="relative flex flex-1 items-center justify-center p-4 min-h-0 bg-black/5">
+          <div className="relative flex flex-1 items-center justify-center p-4 min-h-0">
             <Carousel
               setApi={setApi}
               opts={{
@@ -100,7 +100,7 @@ export function VideoCarouselDialog({
               }}
               className="w-full h-full max-w-3xl"
             >
-              <CarouselContent className="h-full">
+              <CarouselContent className="h-full rounded-2xl">
                 {videos.map((video, idx) => {
                   const videoId = video.link.split('v=')[1]
                   return (
@@ -133,7 +133,7 @@ export function VideoCarouselDialog({
             </Carousel>
           </div>
 
-          <div className="p-4 bg-muted/20 border-t border-border/50">
+          <div className="p-4 border-t border-border/50">
             <div className="flex justify-center gap-1">
               {videos.slice(0, 10).map((_, idx) => (
                 <button

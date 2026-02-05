@@ -271,7 +271,7 @@ export const WeatherSection = ({ tool }: WeatherSectionProps) => {
                         </div>
                     </div>
 
-                    <div className="flex items-center justify-center w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 rounded-xl bg-muted/30 border border-border ml-3 flex-shrink-0">
+                    <div className="flex items-center justify-center w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 rounded-xl bg-muted/30 ml-3 flex-shrink-0">
                         {getWeatherIcon(currentWeather.weather[0]?.id, 32)}
                     </div>
                 </div>

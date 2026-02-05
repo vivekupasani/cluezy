@@ -67,7 +67,6 @@ export const UserMessage: React.FC<UserMessageProps> = ({
       console.error('Failed to save message:', error)
     }
   }
-  console.log("UserMessage [received]:", selectedApps)
   return (
     <CollapsibleMessage role="user">
       <div

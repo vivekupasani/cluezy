@@ -46,8 +46,8 @@ export function InspectorPanel() {
 
   return (
     <TooltipProvider>
-      <div className="h-full flex flex-col overflow-hidden bg-muted md:px-4 md:pt-14 md:pb-4">
-        <div className="flex flex-col h-full bg-background md:rounded-xl md:border overflow-hidden">
+      <div className="h-full flex flex-col overflow-hidden bg-background md:px-4 md:pt-14 md:pb-4">
+        <div className="flex flex-col h-full bg-secondary dark:bg-card/70 text-secondary-foreground dark:text-foreground/90 md:rounded-xl md:border overflow-hidden">
           <div className="flex items-center justify-between px-4 py-2">
             <h3 className="flex items-center gap-2">
               <div className="bg-muted p-2 rounded-md flex items-center gap-2">

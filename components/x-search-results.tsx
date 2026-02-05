@@ -12,7 +12,7 @@ interface XSearchResultsProps {
 
 export function XSearchResults({ results, isArtifect }: XSearchResultsProps) {
     return (
-        <div className={`flex flex-col gap-2 ${!isArtifect ? 'h-96 overflow-y-auto HiddenScrollbar' : 'h-full'}`}>
+        <div className={`flex flex-col gap-0 ${!isArtifect ? 'h-96 overflow-y-auto HiddenScrollbar' : 'h-full'}`}>
             {results.map((result) => (
                 <Link
                     key={result.id}
@@ -21,7 +21,7 @@ export function XSearchResults({ results, isArtifect }: XSearchResultsProps) {
                     rel="noopener noreferrer"
                     className="block"
                 >
-                    <Card className="w-full bg-transparent hover:bg-muted/50 transition-colors border-b border-border/50">
+                    <Card className="w-full bg-transparent hover:bg-muted/50 border-none border-b border-transparent">
                         <CardContent className="p-4">
                             <div className="flex items-start space-x-3">
                                 <Avatar className="h-8 w-8 flex-shrink-0">

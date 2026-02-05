@@ -49,7 +49,7 @@ export function GithubSearchResults({ results, isArtifect }: GithubSearchResults
     }
 
     return (
-        <div className={`flex flex-col gap-2 ${!isArtifect ? 'h-96 overflow-y-auto HiddenScrollbar' : 'h-full'}`}>
+        <div className={`flex flex-col gap-0 ${!isArtifect ? 'h-96 overflow-y-auto HiddenScrollbar' : 'h-full'}`}>
             {results.map((result, index) => {
                 const info = getRepoInfo(result.url, result.author, result.title)
                 const cleanedText = cleanText(result.text)
@@ -66,7 +66,7 @@ export function GithubSearchResults({ results, isArtifect }: GithubSearchResults
                         rel="noopener noreferrer"
                         className="block"
                     >
-                        <Card className="w-full bg-transparent hover:bg-muted/50 transition-colors border-b border-border/50">
+                        <Card className="w-full bg-transparent hover:bg-muted/50 border-none border-b border-transparent">
                             <CardContent className="p-3">
                                 <div className="flex items-start gap-2">
                                     <Avatar className="h-8 w-8 flex-shrink-0 rounded-md">

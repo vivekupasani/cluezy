@@ -28,7 +28,7 @@ export function DocumentSearchResults({ results, isArtifact }: DocumentSearchRes
     }
 
     return (
-        <div className={`flex flex-col w-full gap-2 ${!isArtifact ? 'h-96 overflow-y-auto HiddenScrollbar' : 'h-full'}`}>
+        <div className={`flex flex-col w-full gap-0 ${!isArtifact ? 'h-96 overflow-y-auto HiddenScrollbar' : 'h-full'}`}>
             {results.map((result, index) => (
                 <Link
                     key={index}
@@ -37,7 +37,7 @@ export function DocumentSearchResults({ results, isArtifact }: DocumentSearchRes
                     rel="noopener noreferrer"
                     className="block"
                 >
-                    <Card className="w-full bg-transparent hover:bg-muted/50 transition-colors border-b border-border/50">
+                    <Card className="w-full bg-transparent hover:bg-muted/50 border-none border-b border-transparent">
                         <CardContent className="p-3">
                             <div className="flex items-start gap-2">
                                 <Avatar className="h-8 w-8 flex-shrink-0 rounded-md">

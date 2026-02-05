@@ -107,7 +107,6 @@ export function RenderMessage({
     )
     return (appsAnnotation as any)?.data as string[] | undefined
   }, [message.annotations])
-  console.log(`RenderMessage [${message.role}]:`, selectedApps)
   if (message.role === 'user') {
     return (
       <UserMessage
