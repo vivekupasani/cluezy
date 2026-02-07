@@ -31,8 +31,8 @@ export default function Page() {
 
       {/* Centered Content */}
       <main className="flex flex-1 items-center justify-center px-4">
-        <div className="w-full max-w-sm">
-          <Card className="bg-background shadow-lg shadow-muted rounded-md">
+        <div className="w-full h-full max-w-[400px] rounded-2xl bg-muted/80 dark:border-none border border-muted-foreground/10 backdrop-blur-xl p-2">
+          <Card className="w-full h-full max-w-[400px] rounded-xl bg-background drop-shadow-xl">
             <CardHeader>
               <CardTitle className="text-2xl txt-grad">
                 Thank you for signing up!
@@ -43,7 +43,7 @@ export default function Page() {
             </CardHeader>
 
             <CardContent>
-              <p className="text-sm txt-mut">
+              <p className="text-sm txt-mut text-center">
                 You&apos;ve successfully signed up. Please check your email to
                 confirm your account before signing in.
               </p>

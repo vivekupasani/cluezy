@@ -300,8 +300,8 @@ export function ChatPanel({
         <div className='bg-background'>
           <div className={cn(
             "relative flex flex-col w-full p-2.5 transition-all duration-300",
-            "bg-card/80 backdrop-blur-xl border border-border",
-            "ring-1 ring-border/30",
+            "bg-card/80 backdrop-blur-xl",
+            "ring-1 ring-border/20",
             // "shadow-sm",
             "rounded-[20px]",
             isDragging && "ring-2 ring-primary bg-primary/5 border-primary/50"
@@ -554,14 +554,14 @@ export function ChatPanel({
                       size={'icon'}
                       variant={'ghost'}
                       className={cn(
-                        'size-8 transition-all duration-200 rounded-full',
+                        'size-8 transition-all duration-200 rounded-lg',
                         'bg-primary text-primary-foreground hover:bg-primary/80 hover:text-primary-foreground',
                         isLoading && 'bg-destructive text-destructive-foreground hover:bg-destructive/80 hover:text-destructive-foreground'
                       )}
                       onClick={isLoading ? stop : undefined}
                     >
                       {isLoading ? (
-                        <Square size={14} className='fill-current' />
+                        <Square size={16} className='fill-current' />
                       ) : (
                         <ArrowUp size={16} />
                       )}

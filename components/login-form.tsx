@@ -87,7 +87,7 @@ export function LoginForm({
       className={cn('flex flex-col items-center justify-center gap-3', className)}
       {...props}
     >
-      <div className='w-full h-full max-w-[400px] rounded-2xl bg-muted/80 border border-muted-foreground/10 backdrop-blur-xl p-2'>
+      <div className='w-full h-full max-w-[400px] rounded-2xl bg-muted/80 dark:border-none border border-muted-foreground/10 backdrop-blur-xl p-2'>
         <Card className="w-full h-full max-w-[400px] rounded-xl bg-background drop-shadow-xl">
           <CardHeader className="text-center">
             <CardTitle className="text-2xl txt-grad flex flex-col items-center justify-center gap-4">
@@ -120,7 +120,6 @@ export function LoginForm({
                     placeholder="********"
                     required
                     value={password}
-                    autoFocus
                     onChange={e => setPassword(e.target.value)}
                   />
                   <Link

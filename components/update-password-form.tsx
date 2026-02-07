@@ -1,7 +1,7 @@
 'use client'
 
-import { useState } from 'react'
 import { useRouter } from 'next/navigation'
+import { useState } from 'react'
 
 import { createClient } from '@/lib/supabase/client'
 import { cn } from '@/lib/utils/index'
@@ -16,6 +16,8 @@ import {
 } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
+
+import Link from 'next/link'
 
 export function UpdatePasswordForm({
   className,
@@ -46,9 +48,15 @@ export function UpdatePasswordForm({
   }
 
   return (
-    <div className={cn('flex flex-col gap-3', className)} {...props}>
-      <div className='w-full max-w-sm shadow-lg shadow-muted rounded-md'>
-        <Card className='bg-background'>
+    <div
+      className={cn(
+        'flex flex-col items-center justify-center gap-3',
+        className
+      )}
+      {...props}
+    >
+      <div className='w-full h-full max-w-[400px] rounded-2xl bg-muted/80 dark:border-none border border-muted-foreground/10 backdrop-blur-xl p-2'>
+        <Card className='w-full h-full max-w-[400px] rounded-xl bg-background drop-shadow-xl'>
           <CardHeader>
             <CardTitle className="text-2xl txt-grad">Reset Your Password</CardTitle>
             <CardDescription className='txt-mut'>
@@ -66,6 +74,7 @@ export function UpdatePasswordForm({
                     placeholder="New password"
                     required
                     value={password}
+                    autoFocus
                     onChange={e => setPassword(e.target.value)}
                     className='text-foreground/90'
                   />
@@ -78,6 +87,15 @@ export function UpdatePasswordForm({
             </form>
           </CardContent>
         </Card>
+        <div className="mt-4 mb-2 text-center text-sm txt-grad ">
+          Already have an account?{' '}
+          <Link
+            href="/auth/login"
+            className="hover:underline underline-offset-4 text-foreground/70 hover:text-foreground"
+          >
+            Login
+          </Link>
+        </div>
       </div>
     </div >
   )

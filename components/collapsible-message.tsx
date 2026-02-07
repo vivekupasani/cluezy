@@ -49,8 +49,8 @@ export function CollapsibleMessage({
       {isCollapsible ? (
         <div
           className={cn(
-            'flex-1 rounded-tl-2xl rounded-b-2xl rounded-tr-sm p-4 bg-secondary dark:bg-card/70 text-secondary-foreground dark:text-foreground/90',
-            showBorder && 'border border-border/50'
+            'flex-1 rounded-2xl p-4 bg-muted dark:bg-card/70 text-secondary-foreground dark:text-foreground/90',
+            showBorder && 'border border-border/30'
           )}
         >
           <Collapsible

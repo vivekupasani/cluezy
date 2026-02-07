@@ -136,11 +136,11 @@ export default function ConnectorsPageContent() {
                                         <motion.div
                                             layoutId={connection.id}
                                             key={connection.id}
-                                            className="group relative flex items-center p-3 rounded-xl bg-card border hover:bg-card/50 transition-all duration-200 gap-4 cursor-pointer"
+                                            className="group relative flex items-center p-3 rounded-xl bg-card border-none hover:bg-card/50 transition-all duration-200 gap-4 cursor-pointer"
                                             onClick={() => connection.provider && openConnectDialog(connection.provider)}
                                         >
                                             <div className="flex-shrink-0">
-                                                <div className="text-xl p-2.5 bg-background border flex items-center justify-center rounded-full w-12 h-12 shadow-sm">
+                                                <div className="text-xl p-2.5 bg-background border border-border/30 flex items-center justify-center rounded-full w-12 h-12 shadow-sm">
                                                     {Icon ? <Icon /> : <div className="w-5 h-5 bg-muted rounded-full" />}
                                                 </div>
                                             </div>
@@ -178,11 +178,11 @@ export default function ConnectorsPageContent() {
                                 return (
                                     <div
                                         key={provider}
-                                        className="group relative flex items-center p-3 rounded-xl bg-card border hover:bg-card/50 transition-all duration-200 gap-4 cursor-pointer"
+                                        className="group relative flex items-center p-3 rounded-xl bg-card border-none hover:bg-card/50 transition-all duration-200 gap-4 cursor-pointer"
                                         onClick={() => user && openConnectDialog(provider)}
                                     >
                                         <div className="flex-shrink-0">
-                                            <div className="text-xl p-2.5 bg-background border flex items-center justify-center rounded-full w-12 h-12 shadow-sm">
+                                            <div className="text-xl p-2.5 bg-background border border-border/30 flex items-center justify-center rounded-full w-12 h-12 shadow-sm">
                                                 <Icon />
                                             </div>
                                         </div>

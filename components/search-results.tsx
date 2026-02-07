@@ -50,7 +50,7 @@ export function SearchResults({
             target="_blank"
             className="block"
           >
-            <Card className="w-full hover:bg-muted/50 transition-colors">
+            <Card className="w-full hover:bg-muted/50 border border-border transition-colors">
               <CardContent className="p-2 flex items-start space-x-2">
                 <Avatar className="h-4 w-4 mt-1 flex-shrink-0">
                   <AvatarImage
@@ -94,7 +94,7 @@ export function SearchResults({
       {displayedGridResults.map((result, index) => (
         <div className="w-1/2 md:w-1/4 p-1" key={index}>
           <Link href={result.url} passHref target="_blank">
-            <div className="flex-1 h-full hover:bg-muted/50 transition-colors bg-gradient-to-br from-card/55 via-card/70 to-card/45 backdrop-blur-sm drop-shadow-sm border border-border rounded-lg">
+            <div className="flex-1 h-full hover:bg-muted/50 transition-colors bg-gradient-to-br from-card/55 via-card/70 to-card/45 backdrop-blur-sm drop-shadow-sm border-none rounded-lg">
               <div className="p-2 flex flex-col justify-between h-full">
                 <p className="text-xs line-clamp-2 min-h-[2rem] txt-grad">
                   {result.title || result.content}
@@ -121,11 +121,10 @@ export function SearchResults({
       ))}
       {!showAllResults && additionalResultsCount > 0 && (
         <div className="w-1/2 md:w-1/4 p-1">
-          <div className="flex-1 flex h-full items-center justify-center bg-gradient-to-br from-card/55 via-card/70 to-card/45 backdrop-blur-sm drop-shadow-sm border border-border rounded-lg">
+          <div className="flex-1 flex h-full items-center justify-center bg-gradient-to-br from-card/55 via-card/70 to-card/45 backdrop-blur-sm drop-shadow-sm border border-transparent rounded-lg">
             <div className="p-2">
               <Button
-                variant={'link'}
-                className="txt-grad hover:text-primary"
+                className="bg-transparent hover:bg-transparent txt-grad hover:text-primary"
                 onClick={handleViewMore}
               >
                 View {additionalResultsCount} more
@@ -137,11 +136,10 @@ export function SearchResults({
 
       {showAllResults && additionalResultsCount > 0 && (
         <div className="w-1/2 md:w-1/4 p-1">
-          <div className="flex-1 flex h-full items-center justify-center bg-gradient-to-br from-card/55 via-card/70 to-card/45 backdrop-blur-sm drop-shadow-sm border border-border rounded-lg">
+          <div className="flex-1 flex h-full items-center justify-center bg-gradient-to-br from-card/55 via-card/70 to-card/45 backdrop-blur-sm drop-shadow-sm border border-transparent rounded-lg">
             <div className="p-2">
               <Button
-                variant={'link'}
-                className="txt-grad hover:text-primary"
+                className="bg-transparent hover:bg-transparent txt-grad hover:text-primary"
                 onClick={handleViewLess}
               >
                 View less

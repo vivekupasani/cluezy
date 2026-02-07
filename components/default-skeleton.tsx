@@ -37,7 +37,7 @@ export function ImageSkeleton() {
           key={index}
           className="w-[calc(50%-0.5rem)] md:w-[calc(25%-0.5rem)]"
         >
-          <Skeleton className="h-20 w-full" />
+          <Skeleton className="h-20 w-full bg-card/40" />
         </div>
       ))}
     </div>
@@ -72,18 +72,18 @@ export function XSearchSkeleton() {
         <div key={index} className="w-full h-full">
           <div className="flex flex-col h-full p-4 border-none rounded-lg bg-transparent text-card-foreground shadow-sm">
             <div className="flex items-start space-x-3 mb-2">
-              <Skeleton className="h-8 w-8 rounded-full flex-shrink-0" />
+              <Skeleton className="h-8 w-8 rounded-full flex-shrink-0 bg-accent" />
               <div className="flex-1 min-w-0 space-y-2">
                 <div className="flex items-center space-x-2">
-                  <Skeleton className="h-4 w-24" />
-                  <Skeleton className="h-3 w-16" />
+                  <Skeleton className="h-4 w-24 bg-accent" />
+                  <Skeleton className="h-3 w-16 bg-accent" />
                 </div>
               </div>
             </div>
             <div className="space-y-1 mt-auto">
-              <Skeleton className="h-3 w-full" />
-              <Skeleton className="h-3 w-[90%]" />
-              <Skeleton className="h-3 w-[80%]" />
+              <Skeleton className="h-3 w-full bg-accent" />
+              <Skeleton className="h-3 w-[90%] bg-accent" />
+              <Skeleton className="h-3 w-[80%] bg-accent" />
             </div>
           </div>
         </div>
@@ -98,16 +98,16 @@ export function GithubSearchSkeleton() {
       {[...Array(3)].map((_, index) => (
         <div key={index} className="w-full">
           <div className="flex items-start space-x-3 p-4 border-none rounded-lg bg-transparent text-card-foreground shadow-sm">
-            <Skeleton className="h-8 w-8 rounded-full flex-shrink-0" />
+            <Skeleton className="h-8 w-8 rounded-full flex-shrink-0 bg-accent" />
             <div className="flex-1 min-w-0 space-y-2">
               <div className="flex items-center space-x-2">
-                <Skeleton className="h-4 w-24" />
-                <Skeleton className="h-3 w-16" />
+                <Skeleton className="h-4 w-24 bg-accent" />
+                <Skeleton className="h-3 w-16 bg-accent" />
               </div>
               <div className="space-y-1">
-                <Skeleton className="h-3 w-full" />
-                <Skeleton className="h-3 w-[90%]" />
-                <Skeleton className="h-3 w-[80%]" />
+                <Skeleton className="h-3 w-full bg-accent" />
+                <Skeleton className="h-3 w-[90%] bg-accent" />
+                <Skeleton className="h-3 w-[80%] bg-accent" />
               </div>
             </div>
           </div>
@@ -123,13 +123,13 @@ export function DocumentSearchSkeleton() {
       {[...Array(3)].map((_, index) => (
         <div key={index} className="w-full">
           <div className="flex items-start gap-2 p-3 border-none rounded-lg bg-transparent text-card-foreground shadow-sm">
-            <Skeleton className="h-8 w-8 rounded-md flex-shrink-0" />
+            <Skeleton className="h-8 w-8 rounded-md flex-shrink-0 bg-accent" />
             <div className="flex-1 min-w-0 space-y-1">
-              <Skeleton className="h-3 w-3/4" />
-              <Skeleton className="h-3 w-24" />
+              <Skeleton className="h-3 w-3/4 bg-accent" />
+              <Skeleton className="h-3 w-24 bg-accent" />
               <div className="space-y-1 mt-1">
-                <Skeleton className="h-3 w-full" />
-                <Skeleton className="h-3 w-[85%]" />
+                <Skeleton className="h-3 w-full bg-accent" />
+                <Skeleton className="h-3 w-[85%] bg-accent" />
               </div>
             </div>
           </div>

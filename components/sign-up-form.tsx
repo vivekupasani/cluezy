@@ -83,7 +83,7 @@ export function SignUpForm({
 
   return (
     <div className={cn('flex flex-col items-center justify-center gap-3 md:mt-8', className)} {...props}>
-      <div className="w-full h-full max-w-[400px] rounded-2xl bg-muted/80 border border-muted-foreground/10 backdrop-blur-xl p-2">
+      <div className="w-full h-full max-w-[400px] rounded-2xl bg-muted/80 dark:border-none border border-muted-foreground/10 backdrop-blur-xl p-2">
         <Card className="w-full h-full max-w-[400px] rounded-xl bg-background drop-shadow-xl">
           <CardHeader className="text-center">
             <CardTitle className="text-2xl flex flex-col items-center justify-center gap-4 txt-grad">
@@ -117,7 +117,6 @@ export function SignUpForm({
                     placeholder="********"
                     required
                     value={password}
-                    autoFocus
                     onChange={e => setPassword(e.target.value)}
                   />
                 </div>
@@ -129,7 +128,6 @@ export function SignUpForm({
                     placeholder="********"
                     required
                     value={repeatPassword}
-                    autoFocus
                     onChange={e => setRepeatPassword(e.target.value)}
                   />
                 </div>
