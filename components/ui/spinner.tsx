@@ -3,15 +3,13 @@
 
 import { cn } from '@/lib/utils'
 import { IconLogo } from './icons'
-import { TextShimmer } from './text-shimmer'
+import { LoaderOne } from './loader'
 
 interface SpinnerProps extends React.SVGProps<SVGSVGElement> { }
 
 export const Spinner = ({ className, ...props }: SpinnerProps) => (
-  <div>
-    <TextShimmer className='text-sm ml-4 md:ml-1 select-none'>
-      Thinking...
-    </TextShimmer>
+  <div className='pl-4 md:pl-0'>
+    <LoaderOne />
   </div>
 )
 
