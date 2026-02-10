@@ -1,16 +1,16 @@
 'use client'
 
-import { useCallback, useEffect, useMemo, useRef, useState, useTransition } from 'react'
-
-import { MessageCircle, Search } from 'lucide-react'
-import { toast } from 'sonner'
-
+import { useAuth } from '@/components/context/auth-context'
 import { Chat } from '@/lib/types'
 
-import { useHistoryDialog } from '../history-dialog'
-import { Dialog, DialogContent, DialogTitle } from '../ui/dialog'
+import { MessageCircle, Search } from 'lucide-react'
+import { useCallback, useEffect, useMemo, useRef, useState, useTransition } from 'react'
 
-import { useAuth } from '@/components/context/auth-context'
+import { toast } from 'sonner'
+
+import { useHistoryDialog } from '../history-dialog'
+
+import { Dialog, DialogContent, DialogTitle } from '../ui/dialog'
 import { ChatHistorySkeleton } from './chat-history-skeleton'
 import { ChatMenuItem } from './chat-menu-item'
 
@@ -405,7 +405,7 @@ export function ChatHistoryClient() {
   return (
     <Dialog open={isHistoryDialogOpen} onOpenChange={() => setHistoryDialogIsOpen(false)}>
       <DialogTitle></DialogTitle>
-      <DialogContent className="w-[95%] md:w-full max-w-2xl h-[70vh] sm:h-[70vh] p-0 bg-background/95 backdrop-blur-sm text-popover-foreground border border-border rounded-2xl overflow-hidden flex flex-col gap-0 cosmic-glass HiddenScrollbar">
+      <DialogContent className="w-[95%] md:w-full max-w-2xl h-[70vh] sm:h-[70vh] p-0 bg-background/95 backdrop-blur-sm text-popover-foreground border-none rounded-2xl overflow-hidden flex flex-col gap-0 cosmic-glass HiddenScrollbar">
         <div className="flex-shrink-0 py-2 px-4">
           <div className="flex items-center gap-3 mb-1">
             <Search size={16} className="text-muted-foreground" />

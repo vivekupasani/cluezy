@@ -58,7 +58,7 @@ export function AppSidebar() {
   }
 
   return (
-    <Sidebar collapsible="icon" variant='sidebar' className='dark:border-none'>
+    <Sidebar collapsible="icon" variant='sidebar' className='border border-border/70 dark:border-none'>
       <SidebarHeader className="flex flex-row items-center justify-between pt-4 pb-2 gap-0">
         <SidebarMenuButton onClick={toggleSidebar}>
           <Tooltip>

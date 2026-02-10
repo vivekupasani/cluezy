@@ -113,6 +113,25 @@ export function ChatPanel({
   const [mentionSearch, setMentionSearch] = useState('')
   const [mentionRect, setMentionRect] = useState<DOMRect | null>(null)
   const [mentionStartIndex, setMentionStartIndex] = useState(-1)
+  const chipsRef = useRef<HTMLDivElement>(null)
+  const [chipsWidth, setChipsWidth] = useState(0)
+
+  // Measure chips width whenever selectedApps changes or window resizes
+  useEffect(() => {
+    if (!chipsRef.current) {
+      setChipsWidth(0)
+      return
+    }
+
+    const observer = new ResizeObserver((entries) => {
+      for (const entry of entries) {
+        setChipsWidth(entry.contentRect.width + 6) // Add some gap
+      }
+    })
+
+    observer.observe(chipsRef.current)
+    return () => observer.disconnect()
+  }, [selectedApps])
 
   if (pathName.startsWith("/share/")) {
     return null;
@@ -300,7 +319,7 @@ export function ChatPanel({
         <div className='bg-background'>
           <div className={cn(
             "relative flex flex-col w-full p-2.5 transition-all duration-300",
-            "bg-card/80 backdrop-blur-xl",
+            "bg-card backdrop-blur-xl",
             "ring-1 ring-border/20",
             // "shadow-sm",
             "rounded-[20px]",
@@ -363,26 +382,33 @@ export function ChatPanel({
             )}
 
             {/* Textarea Area */}
-            <div className="flex flex-wrap items-start gap-1.5 min-h-[44px] pl-2">
+            <div className="relative w-full">
               {/* Inline Selected Apps (Mentions) */}
-              {selectedApps.map(app => {
-                const config = CONNECTOR_CONFIGS[app]
-                const Icon = config ? PROVIDER_ICONS[config.icon] : null
+              {selectedApps.length > 0 && (
+                <div
+                  ref={chipsRef}
+                  className="absolute left-2 top-2 flex flex-wrap gap-1.5 z-10 pointer-events-none"
+                >
+                  {selectedApps.map(app => {
+                    const config = CONNECTOR_CONFIGS[app]
+                    const Icon = config ? PROVIDER_ICONS[config.icon] : null
 
-                return (
-                  <div
-                    key={app}
-                    className="inline-flex items-center gap-1.5 bg-muted/80 px-2 py-1 my-2 rounded-lg border border-border/50 text-[11px] font-medium text-muted-foreground transition-colors hover:bg-muted"
-                  >
-                    <div className="shrink-0 flex items-center justify-center size-3.5">
-                      {Icon && <Icon className="size-full" />}
-                    </div>
-                    <span className="truncate">
-                      {config?.name || app}
-                    </span>
-                  </div>
-                )
-              })}
+                    return (
+                      <div
+                        key={app}
+                        className="inline-flex items-center gap-1 bg-muted/80 px-2 py-1 rounded-lg border border-border/50 text-[11px] font-medium text-foreground/80 pointer-events-auto"
+                      >
+                        <div className="shrink-0 flex items-center justify-center size-3.5">
+                          {Icon && <Icon className="size-full" />}
+                        </div>
+                        <span className="truncate max-w-[100px]">
+                          {config?.name || app}
+                        </span>
+                      </div>
+                    )
+                  })}
+                </div>
+              )}
 
               <Textarea
                 ref={inputRef}
@@ -397,7 +423,8 @@ export function ChatPanel({
                 autoFocus={true}
                 value={input}
                 disabled={isToolInvocationInProgress()}
-                className="flex-1 resize-none HiddenScrollbar bg-transparent text-foreground placeholder:text-muted-foreground/60 outline-none text-[15px] leading-relaxed py-2 disabled:cursor-not-allowed disabled:opacity-50 min-h-[40px]"
+                style={{ textIndent: selectedApps.length > 0 ? `${chipsWidth}px` : '0px' }}
+                className="w-full resize-none HiddenScrollbar bg-transparent text-foreground placeholder:text-muted-foreground/60 outline-none text-[15px] leading-relaxed py-2 px-2 disabled:cursor-not-allowed disabled:opacity-50 min-h-[40px]"
                 onChange={e => {
                   const newValue = e.target.value
                   const selectionStart = e.target.selectionStart || 0
@@ -476,7 +503,7 @@ export function ChatPanel({
             </div>
 
             {/* Bottom Toolbar: Model Selector & Actions */}
-            <div className="flex justify-between items-center pt-2 mt-1 pl-1 pr-1">
+            <div className="flex justify-between items-center pt-2 mt-0 pl-1 pr-1">
               <div className="flex items-center gap-2">
                 <ModelSelector models={models ?? []} />
                 <SearchModeToggle />

@@ -51,12 +51,9 @@ export async function generateMetadata(props: {
       }
     }
   }
-  // If no image is found, metadata.openGraph.images will remain undefined,
-  // allowing fallback to parent or global OG image settings.
   return metadata
 }
 
-// ... rest of the file (default export SearchPage) remains the same
 export default async function SearchPage(props: {
   params: Promise<{ id: string }>
 }) {
@@ -64,10 +61,8 @@ export default async function SearchPage(props: {
   const { id } = await props.params
 
   const chat = await getChat(id, userId)
-  // convertToUIMessages for useChat hook
+
   const messages = convertToUIMessages(chat?.messages || [])
-  // console.log("rudraaaa :", chat)
-  // console.log("vivekkkk :", messages)
   if (!chat) {
     redirect('/')
   }

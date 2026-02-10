@@ -13,8 +13,6 @@ import {
     Gauge,
     MapPin,
     Sun,
-    Sunrise,
-    Sunset,
     Wind
 } from "lucide-react"
 import { useEffect, useState } from "react"
@@ -79,7 +77,7 @@ interface WeatherData {
 // Skeleton Loader Component
 const WeatherSkeleton = () => {
     return (
-        <div className="w-full px-3 sm:px-0 py-4">
+        <div className="w-full mt-2">
             {/* Header Skeleton */}
             <div className="border border-border rounded-2xl p-4 sm:p-5 mb-3 sm:mb-4">
                 <div className="flex items-center justify-between mb-3 sm:mb-4">
@@ -253,9 +251,9 @@ export const WeatherSection = ({ tool }: WeatherSectionProps) => {
     })).slice(0, 5)
 
     return (
-        <div className="w-[95%] md:w-full mx-auto px-3 sm:px-0 md:px-6 py-4 md:py-6 border border-border rounded-2xl bg-background mt-4">
+        <div className="w-[95%] md:w-full mx-auto rounded-2xl bg-background mt-4">
             {/* Current Weather - Hero Card */}
-            <div className="bg-muted border border-border rounded-2xl p-4 sm:p-5 md:p-6 mb-3 sm:mb-4">
+            <div className="bg-muted dark:bg-card border border-border rounded-2xl p-4 sm:p-5 md:p-6 mb-3 sm:mb-4">
                 <div className="flex items-start justify-between mb-3 sm:mb-4">
                     <div className="flex-1 min-w-0">
                         <div className="flex items-center gap-1.5 sm:gap-2 mb-1.5 sm:mb-2">
@@ -271,7 +269,7 @@ export const WeatherSection = ({ tool }: WeatherSectionProps) => {
                         </div>
                     </div>
 
-                    <div className="flex items-center justify-center w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 rounded-xl bg-muted/30 ml-3 flex-shrink-0">
+                    <div className="flex items-center justify-center w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 rounded-xl ml-3 flex-shrink-0">
                         {getWeatherIcon(currentWeather.weather[0]?.id, 32)}
                     </div>
                 </div>
@@ -289,7 +287,7 @@ export const WeatherSection = ({ tool }: WeatherSectionProps) => {
             </div>
 
             {/* Hourly Forecast - Horizontal Scroll Card */}
-            <div className="bg-muted border border-border rounded-2xl p-4 sm:p-5 md:p-6 mb-3 sm:mb-4">
+            <div className="bg-muted dark:bg-card border border-border rounded-2xl p-4 sm:p-5 md:p-6 mb-3 sm:mb-4">
                 <h3 className="text-xs font-semibold tracking-wide text-muted-foreground uppercase mb-3 sm:mb-4">Hourly</h3>
                 <div className="flex gap-2 sm:gap-3 flex-wrap overflow-x-auto pb-2 -mx-1 px-1 scrollbar-hide">
                     {chartData.map((hour, index) => (
@@ -306,7 +304,7 @@ export const WeatherSection = ({ tool }: WeatherSectionProps) => {
             </div>
 
             {/* Weather Details - Compact Grid Card */}
-            <div className="bg-muted border border-border rounded-2xl p-4 sm:p-5 md:p-6 mb-3 sm:mb-4">
+            <div className="bg-muted dark:bg-card border border-border rounded-2xl p-4 sm:p-5 md:p-6 mb-3 sm:mb-4">
                 <h3 className="text-xs font-semibold tracking-wide text-muted-foreground uppercase mb-3 sm:mb-4">Details</h3>
                 <div className="grid grid-cols-2 gap-2 sm:gap-3">
                     <div className="p-3 rounded-xl bg-muted/20 border border-border/50">
@@ -348,7 +346,7 @@ export const WeatherSection = ({ tool }: WeatherSectionProps) => {
             </div>
 
             {/* 5-Day Forecast - List Style Card */}
-            <div className="bg-muted border border-border rounded-2xl p-4 sm:p-5 md:p-6 mb-3 sm:mb-4">
+            <div className="bg-muted dark:bg-card border border-border rounded-2xl p-4 sm:p-5 md:p-6 mb-3 sm:mb-4">
                 <h3 className="text-xs font-semibold tracking-wide text-muted-foreground uppercase mb-3 sm:mb-4">5-Day Forecast</h3>
                 <div className="space-y-1.5 sm:space-y-2">
                     {dailyForecast.map((day, index) => (
@@ -375,33 +373,6 @@ export const WeatherSection = ({ tool }: WeatherSectionProps) => {
                         </div>
                     ))}
                 </div>
-            </div>
-
-            {/* Sun Times Card */}
-            {data.city?.sunrise && data.city?.sunset && (
-                <div className="bg-muted border border-border rounded-2xl p-4 sm:p-5 md:p-6 mb-3 sm:mb-4">
-                    <div className="grid grid-cols-2 gap-2 sm:gap-3">
-                        <div className="flex items-center gap-2 p-3 rounded-xl bg-muted/20 border border-border/50">
-                            <Sunrise className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-orange-400 flex-shrink-0" />
-                            <div className="min-w-0">
-                                <p className="text-xs text-muted-foreground">Sunrise</p>
-                                <p className="text-sm font-medium truncate">{formatTime(data.city.sunrise)}</p>
-                            </div>
-                        </div>
-                        <div className="flex items-center gap-2 p-3 rounded-xl bg-muted/20 border border-border/50">
-                            <Sunset className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-purple-400 flex-shrink-0" />
-                            <div className="min-w-0">
-                                <p className="text-xs text-muted-foreground">Sunset</p>
-                                <p className="text-sm font-medium truncate">{formatTime(data.city.sunset)}</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            )}
-
-            {/* Footer */}
-            <div className="text-center text-xs text-muted-foreground pt-2">
-                <span>Updated {currentTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
             </div>
         </div>
     )

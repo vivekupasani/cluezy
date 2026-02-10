@@ -21,6 +21,7 @@ export async function proxy(request: NextRequest) {
     const publicPaths = [
         '/', // Root path
         '/auth', // Auth-related pages
+        '/user', // User-related pages
         '/share', // Share pages
         '/api', // API routes
         '/playbook' // Playbook page
