@@ -64,8 +64,8 @@ export function AppSidebar() {
           <Tooltip>
             <TooltipTrigger asChild>
               <div className='flex justify-end w-full items-center'>
-                {/* <div className="flex h-7 w-7 items-center object-cover justify-center rounded-full overflow-hidden bg-primary text-primary-foreground">
-                  <Image src="/cluezy-logo.png" alt="Cluezy" width={28} height={28} />
+                {/* <div className="flex h-7 w-7 items-center object-cover justify-center rounded-full overflow-hidden">
+                  <CluezyLogo />
                 </div> */}
                 <AnimatePresence mode="wait" initial={false}>
                   <motion.div
@@ -164,12 +164,6 @@ export function AppSidebar() {
                 }
               />
             </SidebarMenuItem>
-          </SidebarMenu>
-        </SidebarGroup>
-
-        {state !== 'collapsed' && (
-          <SidebarGroup>
-            <SidebarGroupLabel>Information</SidebarGroupLabel>
             <SidebarMenu>
               <SidebarMenuItem>
                 <Tooltip>
@@ -241,6 +235,12 @@ export function AppSidebar() {
               </SidebarMenuItem>
 
             </SidebarMenu>
+          </SidebarMenu>
+        </SidebarGroup>
+
+        {state !== 'collapsed' && (
+          <SidebarGroup>
+            <SidebarGroupLabel></SidebarGroupLabel>
           </SidebarGroup>
         )}
       </SidebarContent>

@@ -97,7 +97,7 @@ export default async function TermsPage() {
     return (
         <div className="min-h-screen h-full overflow-y-auto CustomScrollbar selection:bg-primary/20">
             <div className="max-w-3xl mx-auto px-6 py-20 md:py-24">
-                <header className="mb-16 md:mb-16 text-center space-y-4">
+                <header className="mb-6 text-center space-y-4">
                     <button
                         onClick={() => router.push("/")}
                         className="visible md:hidden group flex items-center mb-5 gap-1.5 text-muted-foreground hover:text-foreground text-[16px] transition-colors duration-200"
@@ -108,26 +108,30 @@ export default async function TermsPage() {
                         />
                         Back
                     </button>
-                    <h1 className="text-4xl md:text-5xl font-bold tracking-tight bg-clip-text text-transparent bg-gradient-to-b from-foreground to-foreground/70">
-                        Terms of Service
-                    </h1>
-                    <p className="text-muted-foreground text-sm md:text-base max-w-md mx-auto leading-relaxed">
-                        By using our service, you agree to these terms and conditions.
-                    </p>
+                    <div className="flex flex-col justify-start items-start">
+                        <h1 className="text-3xl md:text-4xl font-bold tracking-tight bg-clip-text text-transparent bg-gradient-to-b from-foreground to-foreground/70">
+                            Terms of Service
+                        </h1>
+                        <p className="text-muted-foreground text-sm md:text-base max-w-md text-start">
+                            By using our service, you agree to these terms and conditions.
+                        </p>
+                    </div>
                 </header>
 
-                <main className="space-y-8">
-                    <section className="text-muted-foreground/90 text-sm md:text-base leading-relaxed border-b border-border/40">
-                        By accessing and using the Cluezy website and services ("Service"), you agree to be bound by these Terms of Use ("Terms"). These Terms constitute a legally binding agreement between you and Cluezy. If you do not agree to these Terms, please refrain from using the Service.
+                <main className="text-muted-foreground/90">
+                    <section className="space-y-6 border-b border-border/40 pb-10">
+                        <p className="text-md text-foreground/90">
+                            By accessing and using the Cluezy website and services ("Service"), you agree to be bound by these Terms of Use ("Terms"). These Terms constitute a legally binding agreement between you and Cluezy. If you do not agree to these Terms, please refrain from using the Service.
+                        </p>
                     </section>
 
-                    <div className="space-y-8">
+                    <div className="space-y-8 mt-10">
                         {termsOfUse.map((term) => (
                             <section key={term.id} className="space-y-4">
-                                <h2 className="text-xl md:text-2xl font-semibold text-foreground tracking-tight">
+                                <h2 className="text-foreground font-semibold">
                                     {term.title}
                                 </h2>
-                                <p className="text-muted-foreground/90 text-sm md:text-base leading-7">
+                                <p className="text-sm">
                                     {term.content}
                                 </p>
                             </section>

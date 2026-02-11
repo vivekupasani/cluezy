@@ -9,7 +9,7 @@ export default async function AboutPage() {
     return (
         <div className="min-h-screen h-full overflow-y-auto CustomScrollbar selection:bg-primary/20">
             <div className="max-w-3xl mx-auto px-6 py-20 md:py-24">
-                <header className="mb-16 md:mb-24 text-center space-y-4">
+                <header className="mb-6 text-center space-y-4">
                     <button
                         onClick={() => router.push("/")}
                         className="visible md:hidden group flex items-center mb-5 gap-1.5 text-muted-foreground hover:text-foreground text-[16px] transition-colors duration-200"
@@ -20,28 +20,30 @@ export default async function AboutPage() {
                         />
                         Back
                     </button>
-                    <h1 className="text-4xl md:text-5xl font-bold tracking-tight bg-clip-text text-transparent bg-gradient-to-b from-foreground to-foreground/70">
-                        Know About Us
-                    </h1>
-                    <p className="text-muted-foreground text-sm md:text-base max-w-md mx-auto leading-relaxed">
-                        Learn more about who we are and what drives the future of intelligent research at Cluezy.
-                    </p>
+                    <div className="flex flex-col justify-start items-start">
+                        <h1 className="text-3xl md:text-4xl font-bold tracking-tight bg-clip-text text-transparent bg-gradient-to-b from-foreground to-foreground/70">
+                            Know About Us
+                        </h1>
+                        <p className="text-muted-foreground text-sm md:text-base max-w-md text-start">
+                            Learn more about who we are and what drives the future of intelligent research at Cluezy.
+                        </p>
+                    </div>
                 </header>
 
-                <main className="space-y-12 text-muted-foreground/90 leading-7 md:leading-8">
+                <main className="text-muted-foreground/90 leading-7 md:leading-8">
                     <section className="space-y-6">
-                        <p className="text-lg text-foreground/90">
-                            At <span className="font-semibold text-foreground">Cluezy</span>, we believe that finding accurate answers shouldn’t be complicated.
-                            Cluezy is an <span className="text-foreground font-medium italic underline decoration-primary/30 underline-offset-4">agentic research engine</span> designed to make information discovery smarter, faster, and more intuitive.
+                        <p className="text-md text-foreground/90">
+                            At <span className="font-semibold">Cluezy</span>, we believe that finding accurate answers shouldn’t be complicated.
+                            Cluezy is an <span className="font-medium italic underline decoration-primary/30 underline-offset-4">agentic research engine</span> designed to make information discovery smarter, faster, and more intuitive.
                         </p>
 
                         <p>
-                            Our mission is to make knowledge access <span className="text-foreground font-medium">instant, intelligent, and effortless</span> for everyone.
+                            Our mission is to make knowledge access <span className="font-medium">instant, intelligent, and effortless</span> for everyone.
                             We combine advanced AI models, deep contextual understanding, and real-time search capabilities to deliver accurate, meaningful, and reliable answers—not just a list of links.
                         </p>
                     </section>
 
-                    <section className="grid gap-8 md:grid-cols-2">
+                    <section className="grid gap-8 md:grid-cols-2 mt-10">
                         <div className="p-6 rounded-2xl border border-border/50 bg-secondary/10 space-y-3">
                             <h2 className="text-foreground font-semibold">Our Vision</h2>
                             <p className="text-sm">Redefining how people interact with information through innovation, user centric design, and cutting-edge technology.</p>
