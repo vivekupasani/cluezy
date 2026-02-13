@@ -8,12 +8,8 @@ import {
     CloudRain,
     CloudSnow,
     CloudSun,
-    Droplets,
-    Eye,
-    Gauge,
     MapPin,
-    Sun,
-    Wind
+    Sun
 } from "lucide-react"
 import { useEffect, useState } from "react"
 import { Skeleton } from "./ui/skeleton"
@@ -91,34 +87,34 @@ const WeatherSkeleton = () => {
             </div>
 
             {/* Hourly Forecast Skeleton */}
-            <div className="border border-border rounded-2xl p-4 sm:p-5 mb-3 sm:mb-4">
+            {/* <div className="border border-border rounded-2xl p-4 sm:p-5 mb-3 sm:mb-4">
                 <Skeleton className="h-3 sm:h-4 w-20 sm:w-24 mb-3 sm:mb-4" />
                 <div className="flex gap-2 sm:gap-3 overflow-x-auto pb-2">
                     {Array.from({ length: 6 }).map((_, i) => (
                         <Skeleton key={i} className="h-16 w-12 sm:h-20 sm:w-14 rounded-xl flex-shrink-0" />
                     ))}
                 </div>
-            </div>
+            </div> */}
 
             {/* Stats Grid Skeleton */}
-            <div className="border border-border rounded-2xl p-4 sm:p-5 mb-3 sm:mb-4">
+            {/* <div className="border border-border rounded-2xl p-4 sm:p-5 mb-3 sm:mb-4">
                 <Skeleton className="h-3 sm:h-4 w-16 sm:w-20 mb-3 sm:mb-4" />
                 <div className="grid grid-cols-2 gap-2 sm:gap-3">
                     {Array.from({ length: 4 }).map((_, i) => (
                         <Skeleton key={i} className="h-14 sm:h-16 rounded-xl" />
                     ))}
                 </div>
-            </div>
+            </div> */}
 
             {/* Daily Forecast Skeleton */}
-            <div className="border border-border rounded-2xl p-4 sm:p-5">
+            {/* <div className="border border-border rounded-2xl p-4 sm:p-5">
                 <Skeleton className="h-3 sm:h-4 w-24 sm:w-28 mb-3 sm:mb-4" />
                 <div className="space-y-2">
                     {Array.from({ length: 5 }).map((_, i) => (
                         <Skeleton key={i} className="h-10 sm:h-12 rounded-xl" />
                     ))}
                 </div>
-            </div>
+            </div> */}
         </div>
     )
 }
@@ -253,7 +249,7 @@ export const WeatherSection = ({ tool }: WeatherSectionProps) => {
     return (
         <div className="w-[95%] md:w-full mx-auto rounded-2xl bg-background mt-4">
             {/* Current Weather - Hero Card */}
-            <div className="bg-muted dark:bg-card border border-border rounded-2xl p-4 sm:p-5 md:p-6 mb-3 sm:mb-4">
+            <div className="bg-muted dark:bg-card border border-border rounded-2xl p-4 sm:p-5 md:p-6">
                 <div className="flex items-start justify-between mb-3 sm:mb-4">
                     <div className="flex-1 min-w-0">
                         <div className="flex items-center gap-1.5 sm:gap-2 mb-1.5 sm:mb-2">
@@ -270,7 +266,7 @@ export const WeatherSection = ({ tool }: WeatherSectionProps) => {
                     </div>
 
                     <div className="flex items-center justify-center w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 rounded-xl ml-3 flex-shrink-0">
-                        {getWeatherIcon(currentWeather.weather[0]?.id, 32)}
+                        {getWeatherIcon(currentWeather.weather[0]?.id, 42)}
                     </div>
                 </div>
 
@@ -287,7 +283,7 @@ export const WeatherSection = ({ tool }: WeatherSectionProps) => {
             </div>
 
             {/* Hourly Forecast - Horizontal Scroll Card */}
-            <div className="bg-muted dark:bg-card border border-border rounded-2xl p-4 sm:p-5 md:p-6 mb-3 sm:mb-4">
+            {/* <div className="bg-muted dark:bg-card border border-border rounded-2xl p-4 sm:p-5 md:p-6 mb-3 sm:mb-4">
                 <h3 className="text-xs font-semibold tracking-wide text-muted-foreground uppercase mb-3 sm:mb-4">Hourly</h3>
                 <div className="flex gap-2 sm:gap-3 flex-wrap overflow-x-auto pb-2 -mx-1 px-1 scrollbar-hide">
                     {chartData.map((hour, index) => (
@@ -301,10 +297,10 @@ export const WeatherSection = ({ tool }: WeatherSectionProps) => {
                         </div>
                     ))}
                 </div>
-            </div>
+            </div> */}
 
             {/* Weather Details - Compact Grid Card */}
-            <div className="bg-muted dark:bg-card border border-border rounded-2xl p-4 sm:p-5 md:p-6 mb-3 sm:mb-4">
+            {/* <div className="bg-muted dark:bg-card border border-border rounded-2xl p-4 sm:p-5 md:p-6 mb-3 sm:mb-4">
                 <h3 className="text-xs font-semibold tracking-wide text-muted-foreground uppercase mb-3 sm:mb-4">Details</h3>
                 <div className="grid grid-cols-2 gap-2 sm:gap-3">
                     <div className="p-3 rounded-xl bg-muted/20 border border-border/50">
@@ -343,10 +339,10 @@ export const WeatherSection = ({ tool }: WeatherSectionProps) => {
                         <p className="text-xs text-muted-foreground truncate">hPa</p>
                     </div>
                 </div>
-            </div>
+            </div> */}
 
             {/* 5-Day Forecast - List Style Card */}
-            <div className="bg-muted dark:bg-card border border-border rounded-2xl p-4 sm:p-5 md:p-6 mb-3 sm:mb-4">
+            {/* <div className="bg-muted dark:bg-card border border-border rounded-2xl p-4 sm:p-5 md:p-6 mb-3 sm:mb-4">
                 <h3 className="text-xs font-semibold tracking-wide text-muted-foreground uppercase mb-3 sm:mb-4">5-Day Forecast</h3>
                 <div className="space-y-1.5 sm:space-y-2">
                     {dailyForecast.map((day, index) => (
@@ -373,7 +369,7 @@ export const WeatherSection = ({ tool }: WeatherSectionProps) => {
                         </div>
                     ))}
                 </div>
-            </div>
+            </div> */}
         </div>
     )
 }

@@ -19,14 +19,12 @@ export function createGithubSearchTool(globalExcludeDomains: string[] = []) {
                     ...new Set([...excludeDomains, ...globalExcludeDomains])
                 ];
 
-                const result = await exa.searchAndContents(
+                const result = await exa.search(
                     query,
                     {
                         category: "github",
                         numResults: 10,
-                        text: true,
-                        type: "auto",
-                        livecrawl: "fallback",
+                        type: "instant",
                         excludeDomains: mergedExcludeDomains
                     }
                 );

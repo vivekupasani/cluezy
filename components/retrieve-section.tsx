@@ -57,7 +57,7 @@ export function RetrieveSection({
       ) : (
         <div>
           <Section title="Sources">
-            <SearchSkeleton />
+            <SearchSkeleton sourcesLength={1} />
           </Section>
         </div>
       )}

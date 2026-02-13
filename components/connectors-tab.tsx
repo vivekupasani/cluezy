@@ -1,6 +1,6 @@
 'use client';
 
-import { SVGProps, useEffect, useState } from 'react';
+import { JSX, SVGProps, useEffect, useState } from 'react';
 
 import { Loader2, RefreshCw } from 'lucide-react';
 import { toast } from 'sonner';

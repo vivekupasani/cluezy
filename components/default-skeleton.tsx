@@ -11,10 +11,53 @@ export const DefaultSkeleton = () => {
   )
 }
 
-export function SearchSkeleton() {
+export const ChatLoadingSkeleton = () => {
+  return (
+    <div className="flex flex-col gap-6 pb-4 w-full">
+      {/* User message block */}
+      <div className="flex justify-end w-full">
+        <div className="bg-secondary dark:bg-muted/40 rounded-t-2xl rounded-tbr-sm rounded-bl-2xl p-4 max-w-[80%] w-full flex flex-col gap-2">
+          <Skeleton className="h-4 w-[100%] rounded-full opacity-60 bg-secondary-foreground/10 dark:bg-muted" />
+          <Skeleton className="h-4 w-[15%] rounded-full opacity-40 self-end bg-secondary-foreground/10 dark:bg-muted" />
+        </div>
+      </div>
+
+      {/* AI Response Section */}
+      <div className="flex flex-col gap-6">
+        {/* Intro text */}
+        <div className="flex flex-col gap-3">
+          <Skeleton className="h-4 w-full rounded-md" />
+          <Skeleton className="h-4 w-[96%] rounded-md" />
+          <Skeleton className="h-4 w-[75%] rounded-md" />
+        </div>
+
+        {/* Section Header */}
+        <Skeleton className="h-5 w-32 rounded-md mt-2" />
+
+        {/* List items with icons */}
+        <div className="flex flex-col gap-5 mt-1 ml-1">
+          {[...Array(2)].map((_, i) => (
+            <div key={i} className="flex gap-4">
+              <Skeleton className="size-2 rounded-full mt-2 shrink-0" />
+              <div className="flex flex-col gap-2.5 w-full">
+                <Skeleton className="h-4 w-[88%] rounded-md" />
+                <div className="flex gap-2 items-center">
+                  <Skeleton className="size-1.5 rounded-full shrink-0 ml-1 opacity-30" />
+                  <Skeleton className="h-3.5 w-[65%] rounded-md opacity-60" />
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  )
+}
+
+export function SearchSkeleton({ sourcesLength = 4 }: { sourcesLength?: number }) {
   return (
     <div className="flex flex-wrap">
-      {[...Array(4)].map((_, index) => (
+      {[...Array(sourcesLength)].map((_, index) => (
         <div key={index} className="w-1/2 md:w-1/4 p-1">
           <div className="flex flex-col justify-between h-full min-h-[4.5rem] bg-card/40 backdrop-blur-sm border border-border/60 rounded-lg p-2 gap-2">
             <Skeleton className="h-4 w-full" />

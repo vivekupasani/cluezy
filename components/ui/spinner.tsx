@@ -8,7 +8,7 @@ import { LoaderOne } from './loader'
 interface SpinnerProps extends React.SVGProps<SVGSVGElement> { }
 
 export const Spinner = ({ className, ...props }: SpinnerProps) => (
-  <div className='pl-4 md:pl-0'>
+  <div className='pl-4 md:pl-2'>
     <LoaderOne />
   </div>
 )

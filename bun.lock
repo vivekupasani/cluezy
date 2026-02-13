@@ -49,7 +49,6 @@
         "cmdk": "1.0.0",
         "docx": "^9.5.1",
         "embla-carousel-react": "^8.0.0",
-        "exa-js": "^1.0.12",
         "framer-motion": "^12.23.26",
         "gsap": "^3.13.0",
         "html2canvas": "^1.4.1",
@@ -1159,8 +1158,6 @@
     "events": ["events@3.3.0", "", {}, "sha512-mQw+2fkQbALzQ7V0MY0IqdnXNOeTtP4r0lN9z7AAawCXgqea7bDii20AYrIBrFd/Hx0M2Ocz6S111CaFkUcb0Q=="],
 
     "eventsource-parser": ["eventsource-parser@3.0.6", "", {}, "sha512-Vo1ab+QXPzZ4tCa8SwIHJFaSzy4R6SHf7BY79rFBDf0idraZWAkYrDjDj8uWaSm3S2TK+hJ7/t1CEmZ7jXw+pg=="],
-
-    "exa-js": ["exa-js@1.6.13", "", { "dependencies": { "cross-fetch": "~4.1.0", "dotenv": "~16.4.7" } }, "sha512-SkUJCZQwuqXA7OO70fTQnGV9vHFeDiu1jL2sot0Hl6vhxSuGWfvS5sXReKx/1j5R9qL5JAYAcohOFUiusjqNbg=="],
 
     "extend": ["extend@3.0.2", "", {}, "sha512-fjquC59cD7CyW6urNXK0FBufkZcoiGG80wTuPujX590cB5Ttln20E2UB4S/WARVqhXffZl2LNgS+gQdPIIim/g=="],
 

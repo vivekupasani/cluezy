@@ -10,9 +10,8 @@ import type { SearchResults as TypeSearchResults } from '@/lib/types'
 import { useArtifact } from '@/components/artifact/artifact-context'
 
 import { CollapsibleMessage } from './collapsible-message'
-import { ImageSkeleton, SearchSkeleton } from './default-skeleton'
+import { SearchSkeleton } from './default-skeleton'
 import { SearchResults } from './search-results'
-import { SearchResultsImageSection } from './search-results-image'
 import { Section, ToolArgsSection } from './section'
 // import { XSearchResults } from './x-search-results' // This line is removed as per instruction
 
@@ -75,9 +74,9 @@ export function SearchSection({
             <Section title="Sources">
               <SearchSkeleton />
             </Section>
-            <Section title="Images">
+            {/* <Section title="Images">
               <ImageSkeleton />
-            </Section>
+            </Section> */}
           </div>
         ) : searchResults?.results ? (
           <Section title="Sources">
@@ -85,7 +84,7 @@ export function SearchSection({
           </Section>
         ) : null}
 
-        {searchResults &&
+        {/* {searchResults &&
           searchResults.images &&
           searchResults.images.length > 0 && (
             <Section title='Images'>
@@ -94,7 +93,7 @@ export function SearchSection({
                 query={query}
               />
             </Section>
-          )}
+          )} */}
       </CollapsibleMessage>
     </div>
   )

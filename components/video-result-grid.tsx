@@ -2,13 +2,13 @@
 
 import Image from 'next/image'
 
-import { Play, PlusCircle } from 'lucide-react'
 
 import { SerperSearchResultItem } from '@/lib/types'
 
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Card, CardContent } from '@/components/ui/card'
 
+import { PlusCircle } from 'lucide-react'
 import { VideoCarouselDialog } from './video-carousel-dialog'
 
 interface VideoResultGridProps {
@@ -45,7 +45,7 @@ export function VideoResultGrid({
             initialIndex={index}
           >
             <div className={`group relative cursor-pointer ${cardClasses}`}>
-              <Card className="flex-1 bg-card/60 backdrop-blur-sm min-h-40 overflow-hidden rounded-xl border border-border/50 transition-all duration-300 hover:scale-[1.02] hover:shadow-xl hover:shadow-primary/5 active:scale-[0.98]">
+              <Card className="flex-1 bg-card/60 backdrop-blur-sm min-h-40 overflow-hidden rounded-xl border border-foreground/5 transition-all duration-300 hover:shadow-xl hover:shadow-primary/5 active:scale-[0.98]">
                 <CardContent className="p-0">
                   {baseUrl && (
                     <div className="relative w-full aspect-video bg-muted overflow-hidden">
@@ -58,7 +58,7 @@ export function VideoResultGrid({
                             ? '(max-width: 768px) 50vw, 25vw'
                             : '(max-width: 639px) 300px, 250px'
                         } // Different sizes per mode
-                        className="object-cover transition-transform duration-500 group-hover:scale-105"
+                        className="object-cover transition-transform duration-500"
                         priority={index < 4}
                         onError={e => {
                           const target = e.target as HTMLImageElement
@@ -66,13 +66,13 @@ export function VideoResultGrid({
                         }}
                       />
                       {/* Play overlay on hover */}
-                      <div className="absolute inset-0 flex items-center justify-center bg-black/0 transition-colors duration-300 group-hover:bg-black/20">
+                      {/* <div className="absolute inset-0 flex items-center justify-center bg-black/0 transition-colors duration-300 group-hover:bg-black/20">
                         <div className="scale-0 opacity-0 transition-all duration-300 group-hover:scale-100 group-hover:opacity-100">
                           <div className="rounded-full bg-white/20 p-3 backdrop-blur-md">
                             <Play className="h-6 w-6 text-white fill-current" />
                           </div>
                         </div>
-                      </div>
+                      </div> */}
                     </div>
                   )}
                   <div className="p-3">

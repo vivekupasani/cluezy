@@ -308,7 +308,7 @@ export function ChatPanel({
             type="button"
             variant="outline"
             size="icon"
-            className="absolute -top-12 border border-border right-4 z-20 size-8 rounded-full bg-background backdrop-blur-sm shadow-sm hover:bg-background transition-all"
+            className="absolute -top-12 border border-foreground/5 right-4 z-20 size-8 rounded-full bg-card backdrop-blur-sm shadow-sm hover:bg-card/70 transition-all"
             onClick={handleScrollToBottom}
             title="Scroll to bottom"
           >
@@ -320,7 +320,7 @@ export function ChatPanel({
           <div className={cn(
             "relative flex flex-col w-full p-2.5 transition-all duration-300",
             "bg-card backdrop-blur-xl",
-            "ring-1 ring-border/20",
+            "ring-1 ring-border/20 border border-foreground/5",
             // "shadow-sm",
             "rounded-[20px]",
             isDragging && "ring-2 ring-primary bg-primary/5 border-primary/50"

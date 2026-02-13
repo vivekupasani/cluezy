@@ -94,7 +94,7 @@ export function SearchResults({
       {displayedGridResults.map((result, index) => (
         <div className="w-1/2 md:w-1/4 p-1" key={index}>
           <Link href={result.url} passHref target="_blank">
-            <div className="flex-1 h-full hover:bg-muted/50 transition-colors bg-card backdrop-blur-sm drop-shadow-sm border border-foreground/5 rounded-lg">
+            <div className="flex-1 h-full bg-card/70 dark:bg-card hover:bg-card/50 dark:hover:bg-card/70 transition-colors backdrop-blur-sm drop-shadow-sm border border-foreground/5 rounded-lg">
               <div className="p-2 flex flex-col justify-between h-full">
                 <p className="text-xs line-clamp-2 min-h-[2rem] txt-grad">
                   {result.title || result.content}
@@ -121,7 +121,7 @@ export function SearchResults({
       ))}
       {!showAllResults && additionalResultsCount > 0 && (
         <div className="w-1/2 md:w-1/4 p-1">
-          <div className="flex-1 flex h-full items-center justify-center bg-card backdrop-blur-sm drop-shadow-sm border border-foreground/5 rounded-lg">
+          <div className="flex-1 flex h-full items-center justify-center bg-card/70 dark:bg-card hover:bg-card/50 dark:hover:bg-card/70 transition-colors backdrop-blur-sm drop-shadow-sm border border-foreground/5 rounded-lg">
             <div className="p-2">
               <Button
                 className="bg-transparent hover:bg-transparent txt-grad hover:text-primary"
@@ -136,7 +136,7 @@ export function SearchResults({
 
       {showAllResults && additionalResultsCount > 0 && (
         <div className="w-1/2 md:w-1/4 p-1">
-          <div className="flex-1 flex h-full items-center justify-center bg-card backdrop-blur-sm drop-shadow-sm border border-foreground/5 rounded-lg">
+          <div className="flex-1 flex h-full items-center justify-center bg-card/70 dark:bg-card hover:bg-card/50 dark:hover:bg-card/70 transition-colors backdrop-blur-sm drop-shadow-sm border border-foreground/5 rounded-lg">
             <div className="p-2">
               <Button
                 className="bg-transparent hover:bg-transparent txt-grad hover:text-primary"

@@ -113,7 +113,7 @@ export function ChatMenuItem({ chat }: ChatMenuItemProps) {
   if (isRenameClicked) {
     return (
       <div className="px-1.5 py-0.5">
-        <div className="flex gap-2 items-center bg-accent/30 border border-border/40 rounded-xl px-3 py-1.5 transition-all duration-200 ring-1 ring-primary/10">
+        <div className="flex gap-2 items-center bg-accent/30 border border-border/40 rounded-xl px-3 py-2 ring-1 ring-primary/10 min-h-[44px]">
           <input
             type="text"
             value={newTitle}
@@ -129,14 +129,14 @@ export function ChatMenuItem({ chat }: ChatMenuItemProps) {
           <div className="flex items-center gap-1.5 shrink-0">
             <button
               onClick={() => setIsRenameClicked(false)}
-              className="p-1 hover:bg-background/80 rounded-lg transition-colors text-muted-foreground/60"
+              className="p-1 hover:bg-background/80 rounded-lg text-muted-foreground/60"
             >
               <X size={14} />
             </button>
             <button
               onClick={onRename}
               disabled={isRenaming}
-              className="p-1 hover:bg-primary/10 rounded-lg transition-colors text-primary"
+              className="p-1 hover:bg-primary/10 rounded-lg text-primary"
             >
               {isRenaming ? <LoadingSpinner className="size-3" /> : <Check size={14} />}
             </button>
@@ -150,14 +150,14 @@ export function ChatMenuItem({ chat }: ChatMenuItemProps) {
   if (isDeleteClicked) {
     return (
       <div className="px-1.5 py-0.5">
-        <div className="flex gap-2 items-center bg-destructive/5 border border-destructive/20 rounded-xl px-3 py-1.5 transition-all duration-200">
+        <div className="flex gap-2 items-center bg-destructive/5 border border-destructive/20 rounded-xl px-3 py-2 min-h-[44px]">
           <div className="text-xs text-destructive/70 font-medium flex-1 truncate">
             Delete conversation?
           </div>
           <div className="flex items-center gap-1.5 shrink-0">
             <button
               onClick={() => setIsDeleteClicked(false)}
-              className="p-1 hover:bg-destructive/10 rounded-lg transition-colors text-destructive/40 hover:text-destructive/60"
+              className="p-1 hover:bg-destructive/10 rounded-lg text-destructive/40 hover:text-destructive/60"
               disabled={isDeleting}
             >
               <X size={14} />
@@ -165,7 +165,7 @@ export function ChatMenuItem({ chat }: ChatMenuItemProps) {
             <button
               onClick={onDelete}
               disabled={isDeleting}
-              className="p-1 hover:bg-destructive/10 rounded-lg transition-colors text-destructive"
+              className="p-1 hover:bg-destructive/10 rounded-lg text-destructive"
             >
               {isDeleting ? <LoadingSpinner className="size-3" /> : <Check size={14} />}
             </button>
@@ -180,7 +180,7 @@ export function ChatMenuItem({ chat }: ChatMenuItemProps) {
     <div className="group px-1.5 py-0.5">
       <div
         className={cn(
-          "flex items-center gap-2 px-3 py-2 rounded-xl transition-all duration-300 border border-transparent select-none",
+          "flex items-center gap-2 px-3 py-2 rounded-xl border border-transparent select-none min-h-[44px]",
           isActive
             ? "bg-accent/60 border-border/40 shadow-[0_2px_8px_-2px_rgba(0,0,0,0.05)]"
             : "hover:bg-muted/50 hover:border-border/20"
@@ -190,13 +190,13 @@ export function ChatMenuItem({ chat }: ChatMenuItemProps) {
           href={chat.path}
           onClick={() => {
             setHistoryDialogIsOpen(false)
-            toast.message(`Opening conversation "${chat.title}"`)
+            toast.message(`Opening conversation "${chat.title.slice(0, 25)}..."`)
           }}
           className="flex-1 min-w-0"
         >
           <div className="flex flex-col gap-0.5 overflow-hidden">
             <span className={cn(
-              "text-sm font-medium truncate leading-tight transition-colors",
+              "text-sm font-medium truncate leading-tight",
               isActive ? "text-foreground" : "text-foreground/80 group-hover:text-foreground"
             )}>
               {chat.title || "Untitled conversation"}
@@ -209,15 +209,15 @@ export function ChatMenuItem({ chat }: ChatMenuItemProps) {
 
         {/* Action buttons - Hover reveal */}
         <div className={cn(
-          "flex items-center gap-1 opacity-100 md:opacity-0 group-hover:opacity-100 transition-all duration-300 translate-x-1 group-hover:translate-x-0 shrink-0",
-          (isRenameClicked || isDeleteClicked || isActive) && "opacity-100 translate-x-0"
+          "flex items-center gap-1 opacity-100 md:opacity-100 group-hover:opacity-100 shrink-0",
+          (isRenameClicked || isDeleteClicked || isActive) && "opacity-100"
         )}>
           <button
             onClick={(e) => {
               e.preventDefault()
               setIsRenameClicked(true)
             }}
-            className="p-1.5 text-muted-foreground/80 hover:text-foreground hover:bg-background rounded-lg transition-all"
+            className="p-1.5 text-muted-foreground/80 hover:text-foreground hover:bg-background rounded-lg"
             title="Rename"
           >
             <Edit size={14} />
@@ -227,7 +227,7 @@ export function ChatMenuItem({ chat }: ChatMenuItemProps) {
               e.preventDefault()
               setIsDeleteClicked(true)
             }}
-            className="p-1.5 text-muted-foreground/80 hover:text-destructive hover:bg-destructive/5 rounded-lg transition-all"
+            className="p-1.5 text-muted-foreground/80 hover:text-destructive hover:bg-destructive/5 rounded-lg"
             title="Delete"
           >
             <Trash2 size={14} />

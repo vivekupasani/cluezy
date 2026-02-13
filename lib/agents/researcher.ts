@@ -3,7 +3,6 @@ import { CONNECTOR_CONFIGS, ConnectorProvider } from '../connectors/types'
 import { RESEARCHER_SYSTEM_PROMPT } from '../prompts/researcher-sys-prompt'
 import { getVercelTools } from '../services/tools'
 import { createAcademicSearchTool } from '../tools/acadamic-search'
-import { datetimeTool } from '../tools/datetime'
 import { createGithubSearchTool } from '../tools/github-search'
 import { createFileSearchTool } from '../tools/pdf-search'
 import { productSearchTool } from '../tools/product-search'
@@ -11,6 +10,7 @@ import { retrieveTool } from '../tools/retrieve'
 import { createSearchTool } from '../tools/search'
 import { createVideoSearchTool } from '../tools/video-search'
 import { weatherTool } from '../tools/weather'
+import { createWebSearchTool } from '../tools/web-search'
 import { createXSearchTool } from '../tools/x-search'
 import { youtubeVideoAnalysisTool } from '../tools/youtube-video-analysis'
 import { getModel } from '../utils/registry'
@@ -42,6 +42,7 @@ export async function researcher({
     const docSearchTool = createFileSearchTool("doc")
     const pptSearchTool = createFileSearchTool("ppt")
 
+    const webSearchTool = createWebSearchTool(excludeDomains)
     const academicSearchTool = createAcademicSearchTool(excludeDomains)
     const xSearchTool = createXSearchTool()
     const githubSearchTool = createGithubSearchTool()
@@ -69,13 +70,12 @@ export async function researcher({
     }
 
     const tools = {
-      search: searchTool,
+      search: webSearchTool,
       acadamicSearch: academicSearchTool,
       retrieve: retrieveTool,
       videoSearch: videoSearchTool,
       weather: weatherTool,
       youtubeVideoAnalysis: youtubeVideoAnalysisTool,
-      datetime: datetimeTool,
       productSearch: productSearchTool,
       pdfSearch: pdfSearchTool,
       docSearch: docSearchTool,

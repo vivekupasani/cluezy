@@ -1,19 +1,18 @@
 import { cookies } from 'next/headers'
 
 import { getCurrentUserId } from '@/lib/auth/get-current-user'
-import { createManualToolStreamResponse } from '@/lib/streaming/create-manual-tool-stream'
 import { createToolCallingStreamResponse } from '@/lib/streaming/create-tool-calling-stream'
 import { Model } from '@/lib/types/models'
-import { getClientIdentifier, unauthenticatedRateLimit } from '@/lib/utils/rate-limit'
+import { authenticatedRateLimit, getClientIdentifier, unauthenticatedRateLimit } from '@/lib/utils/rate-limit'
 import { isProviderEnabled } from '@/lib/utils/registry'
 
 export const maxDuration = 30
 
 const DEFAULT_MODEL: Model = {
-  id: 'gpt-4o-mini',
-  name: 'GPT-4o mini',
-  provider: 'OpenAI',
-  providerId: 'openai',
+  id: 'gemini-2.5-flash',
+  name: 'Gemini 2.5 Flash',
+  provider: 'Google Generative AI',
+  providerId: 'google',
   enabled: true,
   toolCallType: 'native'
 }
@@ -46,21 +45,21 @@ export async function POST(req: Request) {
         );
       }
     }
-    // else {
-    //   const { success, reset, remaining } = await authenticatedRateLimit.limit(userId);
-    //   console.log("Remaining credits for the day : ", remaining)
+    else {
+      const { success, reset, remaining } = await authenticatedRateLimit.limit(userId);
+      console.log("Remaining credits for the day : ", remaining)
 
-    //   if (!success) {
-    //     const resetDate = new Date(reset);
-    //     return new Response(
-    //       `You've reached your usage limit for now. Take a short break and come back at ${resetDate} to continue your research!`,
-    //       {
-    //         status: 429,
-    //         statusText: 'Too Many Requests',
-    //       }
-    //     );
-    //   }
-    // }
+      if (!success) {
+        const resetDate = new Date(reset);
+        return new Response(
+          `You've reached your usage limit for now. Take a short break and come back at ${resetDate} to continue your research!`,
+          {
+            status: 429,
+            statusText: 'Too Many Requests',
+          }
+        );
+      }
+    }
 
     if (isSharePage) {
       return new Response('Chatting is disabled on shared links. Start a new conversation to continue.', {
@@ -71,7 +70,6 @@ export async function POST(req: Request) {
 
     const cookieStore = await cookies()
     const modelJson = cookieStore.get('selectedModel')?.value
-    const searchMode = true
 
     let selectedModel = DEFAULT_MODEL
 
@@ -96,30 +94,18 @@ export async function POST(req: Request) {
       )
     }
 
-    const supportsToolCalling = selectedModel.toolCallType === 'native'
-
     // Transform app names from kebab-case (e.g., 'google-drive') to connector format (e.g., 'googledrive')
     const transformedApps = selectedApps.map((app: string) => app.replace(/-/g, ''))
 
-    // console.log("transformedApps : ", transformedApps)
-    return supportsToolCalling
-      ? createToolCallingStreamResponse({
-        messages,
-        model: selectedModel,
-        chatId,
-        searchMode,
-        userId,
-        excludeDomains,
-        selectedApps: transformedApps
-      })
-      : createManualToolStreamResponse({
-        messages,
-        model: selectedModel,
-        chatId,
-        searchMode,
-        userId,
-        selectedApps: transformedApps
-      })
+    return createToolCallingStreamResponse({
+      messages,
+      model: selectedModel,
+      chatId,
+      searchMode: true,
+      userId,
+      excludeDomains,
+      selectedApps: transformedApps
+    })
   } catch (error) {
     console.error('API route error:', error)
     return new Response('Error processing your request', {

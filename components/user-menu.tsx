@@ -1,7 +1,7 @@
 'use client'
 
 import { User } from '@supabase/supabase-js'
-import { Link2, LogOut, LucideBadgeAlert, Palette } from 'lucide-react'
+import { ExternalLink, LogOut, Palette } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { toast } from 'sonner'
 
@@ -21,8 +21,9 @@ import { createClient } from '@/lib/supabase/client'
 import { useAuth } from './context/auth-context'
 import { clearChatHistoryCache } from './sidebar/chat-history-client'
 
-import { CompanyInfoItems } from './company-info'
-import { ExternalLinkItems } from './external-link-items'
+import { cn } from '@/lib/utils'
+import Link from 'next/link'
+import { SiInstagram, SiLinkedin, SiX } from 'react-icons/si'
 import { ThemeMenuItems } from './theme-menu-items'
 
 interface UserMenuProps {
@@ -63,11 +64,31 @@ export default function UserMenu({ user, state }: UserMenuProps) {
     toast.success('Logged out successfully')
   }
 
+  const externalLinks = [
+    {
+      name: 'X',
+      href: 'https://x.com/v1vekupasani',
+      icon: <SiX className="mr-2 h-4 w-4 text-foreground/70" />
+    },
+    {
+      name: 'Linkedin',
+      href: 'https://www.linkedin.com/company/cluezy',
+      icon: <SiLinkedin className="mr-2 h-4 w-4 text-foreground/70" />
+    },
+    {
+      name: 'Instagram',
+      href: 'https://www.instagram.com/v1vekupasani/',
+      icon: <SiInstagram className="mr-2 h-4 w-4 text-foreground/70" />
+    }
+  ]
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <button
-          className={`group flex items-center mb-2 gap-2 w-full rounded-lg hover:bg-sidebar-accent transition`}
+          className={cn(
+            "group flex items-center mb-2 md:mb-0 gap-2 w-full rounded-lg hover:bg-sidebar-accent transition",
+          )}
         >
           <Avatar className="h-8 w-8">
             <AvatarImage src={avatarUrl} />
@@ -109,7 +130,7 @@ export default function UserMenu({ user, state }: UserMenuProps) {
         </DropdownMenuSub>
 
         {/* Links */}
-        <DropdownMenuSub>
+        {/* <DropdownMenuSub>
           <DropdownMenuSubTrigger>
             <Link2 className="mr-2 h-4 w-4 text-foreground/70" />
             <span className='text-foreground/70 font-medium'>Links</span>
@@ -117,10 +138,10 @@ export default function UserMenu({ user, state }: UserMenuProps) {
           <DropdownMenuSubContent>
             <ExternalLinkItems />
           </DropdownMenuSubContent>
-        </DropdownMenuSub>
+        </DropdownMenuSub> */}
 
         {/* Company */}
-        <DropdownMenuSub>
+        {/* <DropdownMenuSub>
           <DropdownMenuSubTrigger>
             <LucideBadgeAlert className="mr-2 h-4 w-4 text-foreground/70" />
             <span className='text-foreground/70 font-medium'>Company Info</span>
@@ -128,7 +149,22 @@ export default function UserMenu({ user, state }: UserMenuProps) {
           <DropdownMenuSubContent>
             <CompanyInfoItems />
           </DropdownMenuSubContent>
-        </DropdownMenuSub>
+        </DropdownMenuSub> */}
+
+        {
+          externalLinks.map((link) => (
+            <DropdownMenuItem
+              onClick={handleLogout}
+              className=""
+            >
+              <Link href={link.href} target="_blank" rel="noopener noreferrer" className='flex items-center justify-between'>
+                {link.icon}
+                <span className='text-foreground/70 font-medium text-sm'>{link.name}</span>
+              </Link>
+              <ExternalLink className="ml-auto h-4 w-4 text-foreground/70" />
+            </DropdownMenuItem>
+          ))
+        }
 
         <DropdownMenuSeparator />
 
@@ -141,6 +177,6 @@ export default function UserMenu({ user, state }: UserMenuProps) {
           Logout
         </DropdownMenuItem>
       </DropdownMenuContent>
-    </DropdownMenu>
+    </DropdownMenu >
   )
 }

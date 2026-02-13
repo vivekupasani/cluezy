@@ -39,7 +39,7 @@ export function AppSidebar() {
 
   useEffect(() => {
     const handleKeyDown = (e: globalThis.KeyboardEvent) => {
-      if (e.key === 'o' && e.shiftKey && e.ctrlKey) {
+      if (e.key === 'O' && e.ctrlKey && e.shiftKey) {
         e.preventDefault()
         router.push('/')
       }
@@ -58,7 +58,7 @@ export function AppSidebar() {
   }
 
   return (
-    <Sidebar collapsible="icon" variant='sidebar' className='border border-border/70 dark:border-none'>
+    <Sidebar collapsible="icon" variant='sidebar' className='border-r border-foreground/10'>
       <SidebarHeader className="flex flex-row items-center justify-between pt-4 pb-2 gap-0">
         <SidebarMenuButton onClick={toggleSidebar}>
           <Tooltip>
@@ -84,16 +84,91 @@ export function AppSidebar() {
         </SidebarMenuButton>
       </SidebarHeader>
 
-      <SidebarContent className="gap-0">
-        <SidebarGroup>
-          <SidebarGroupLabel>Platform</SidebarGroupLabel>
+      <SidebarContent className="gap-0 ml-[7.6px]">
+        <SidebarMenu>
+          <SidebarMenuItem>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <SidebarMenuButton
+                  onClick={() => {
+                    router.push('/')
+                    // Optional: Refresh or reset chat state if needed
+                    if (isMobile) {
+                      setOpenMobile(false)
+                    }
+                  }}
+                  className="justify-start gap-2 data-[state=open]:px-2"
+                >
+                  <SquarePen className="size-5 text-muted-foreground" />
+                  <span className='text-foreground/80'>New Chat</span>
+                </SidebarMenuButton>
+              </TooltipTrigger>
+              <TooltipContent side="right" className='text-xs'>
+                New Chat
+              </TooltipContent>
+            </Tooltip>
+          </SidebarMenuItem>
+
+          <SidebarMenuItem>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <SidebarMenuButton
+                  onClick={() => {
+                    setHistoryDialogIsOpen(true)
+                    if (isMobile) {
+                      setOpenMobile(false)
+                    }
+                  }}
+                  className="justify-start gap-2 data-[state=open]:px-2"
+                >
+                  <Search className="size-5 text-muted-foreground" />
+                  <span className='text-foreground/80'>Search chats</span>
+                </SidebarMenuButton>
+              </TooltipTrigger>
+              <TooltipContent side="right" className='text-xs'>Search chats</TooltipContent>
+            </Tooltip>
+          </SidebarMenuItem>
+
           <SidebarMenu>
             <SidebarMenuItem>
               <Tooltip>
                 <TooltipTrigger asChild>
                   <SidebarMenuButton
                     onClick={() => {
-                      router.push('/')
+                      router.push('/apps')
+                      if (isMobile) {
+                        setOpenMobile(false)
+                      }
+                    }}
+                    className="justify-start gap-2 data-[state=open]:px-2"
+                  >
+                    <LayoutGrid className="size-5 font-bold text-muted-foreground" />
+                    <span className='text-foreground/80'>Apps</span>
+                  </SidebarMenuButton>
+                </TooltipTrigger>
+                <TooltipContent side="right" className='text-xs'>Apps</TooltipContent>
+              </Tooltip>
+            </SidebarMenuItem>
+          </SidebarMenu>
+
+          <SidebarMenuItem>
+            <ExcludedDomainsDialog
+              trigger={
+                <SidebarMenuButton
+                  className="justify-start gap-2 data-[state=open]:px-2">
+                  <GlobeLock className="size-5 text-muted-foreground" />
+                  <span className='text-foreground/80'>Exclude Sources</span>
+                </SidebarMenuButton>
+              }
+            />
+          </SidebarMenuItem>
+          <SidebarMenu>
+            <SidebarMenuItem>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <SidebarMenuButton
+                    onClick={() => {
+                      router.push('/about')
                       // Optional: Refresh or reset chat state if needed
                       if (isMobile) {
                         setOpenMobile(false)
@@ -101,12 +176,12 @@ export function AppSidebar() {
                     }}
                     className="justify-start gap-2 data-[state=open]:px-2"
                   >
-                    <SquarePen className="size-5 text-muted-foreground" />
-                    <span className='text-foreground/80'>New Chat</span>
+                    <Info className="size-5 text-muted-foreground" />
+                    <span className='text-foreground/80'>About Us</span>
                   </SidebarMenuButton>
                 </TooltipTrigger>
                 <TooltipContent side="right" className='text-xs'>
-                  New Chat
+                  About Us
                 </TooltipContent>
               </Tooltip>
             </SidebarMenuItem>
@@ -116,127 +191,49 @@ export function AppSidebar() {
                 <TooltipTrigger asChild>
                   <SidebarMenuButton
                     onClick={() => {
-                      setHistoryDialogIsOpen(true)
+                      router.push('/privacy')
+                      // Optional: Refresh or reset chat state if needed
                       if (isMobile) {
                         setOpenMobile(false)
                       }
                     }}
                     className="justify-start gap-2 data-[state=open]:px-2"
                   >
-                    <Search className="size-5 text-muted-foreground" />
-                    <span className='text-foreground/80'>Search chats</span>
+                    <ShieldCheck className="size-5 text-muted-foreground" />
+                    <span className='text-foreground/80'>Privacy Policy</span>
                   </SidebarMenuButton>
                 </TooltipTrigger>
-                <TooltipContent side="right" className='text-xs'>Search chats</TooltipContent>
+                <TooltipContent side="right" className='text-xs'>
+                  Privacy Policy
+                </TooltipContent>
               </Tooltip>
             </SidebarMenuItem>
 
-            <SidebarMenu>
-              <SidebarMenuItem>
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <SidebarMenuButton
-                      onClick={() => {
-                        router.push('/apps')
-                        if (isMobile) {
-                          setOpenMobile(false)
-                        }
-                      }}
-                      className="justify-start gap-2 data-[state=open]:px-2"
-                    >
-                      <LayoutGrid className="size-5 font-bold text-muted-foreground" />
-                      <span className='text-foreground/80'>Apps</span>
-                    </SidebarMenuButton>
-                  </TooltipTrigger>
-                  <TooltipContent side="right" className='text-xs'>Apps</TooltipContent>
-                </Tooltip>
-              </SidebarMenuItem>
-            </SidebarMenu>
-
             <SidebarMenuItem>
-              <ExcludedDomainsDialog
-                trigger={
+              <Tooltip>
+                <TooltipTrigger asChild>
                   <SidebarMenuButton
-                    className="justify-start gap-2 data-[state=open]:px-2">
-                    <GlobeLock className="size-5 text-muted-foreground" />
-                    <span className='text-foreground/80'>Exclude Sources</span>
+                    onClick={() => {
+                      router.push('/terms')
+                      // Optional: Refresh or reset chat state if needed
+                      if (isMobile) {
+                        setOpenMobile(false)
+                      }
+                    }}
+                    className="justify-start gap-2 data-[state=open]:px-2"
+                  >
+                    <FileText className="size-5 text-muted-foreground" />
+                    <span className='text-foreground/80'>Terms & Service</span>
                   </SidebarMenuButton>
-                }
-              />
+                </TooltipTrigger>
+                <TooltipContent side="right" className='text-xs'>
+                  Terms & Service
+                </TooltipContent>
+              </Tooltip>
             </SidebarMenuItem>
-            <SidebarMenu>
-              <SidebarMenuItem>
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <SidebarMenuButton
-                      onClick={() => {
-                        router.push('/about')
-                        // Optional: Refresh or reset chat state if needed
-                        if (isMobile) {
-                          setOpenMobile(false)
-                        }
-                      }}
-                      className="justify-start gap-2 data-[state=open]:px-2"
-                    >
-                      <Info className="size-5 text-muted-foreground" />
-                      <span className='text-foreground/80'>About</span>
-                    </SidebarMenuButton>
-                  </TooltipTrigger>
-                  <TooltipContent side="right" className='text-xs'>
-                    About
-                  </TooltipContent>
-                </Tooltip>
-              </SidebarMenuItem>
 
-              <SidebarMenuItem>
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <SidebarMenuButton
-                      onClick={() => {
-                        router.push('/privacy')
-                        // Optional: Refresh or reset chat state if needed
-                        if (isMobile) {
-                          setOpenMobile(false)
-                        }
-                      }}
-                      className="justify-start gap-2 data-[state=open]:px-2"
-                    >
-                      <ShieldCheck className="size-5 text-muted-foreground" />
-                      <span className='text-foreground/80'>Privacy Policy</span>
-                    </SidebarMenuButton>
-                  </TooltipTrigger>
-                  <TooltipContent side="right" className='text-xs'>
-                    Privacy Policy
-                  </TooltipContent>
-                </Tooltip>
-              </SidebarMenuItem>
-
-              <SidebarMenuItem>
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <SidebarMenuButton
-                      onClick={() => {
-                        router.push('/terms')
-                        // Optional: Refresh or reset chat state if needed
-                        if (isMobile) {
-                          setOpenMobile(false)
-                        }
-                      }}
-                      className="justify-start gap-2 data-[state=open]:px-2"
-                    >
-                      <FileText className="size-5 text-muted-foreground" />
-                      <span className='text-foreground/80'>Terms & Service</span>
-                    </SidebarMenuButton>
-                  </TooltipTrigger>
-                  <TooltipContent side="right" className='text-xs'>
-                    Terms & Service
-                  </TooltipContent>
-                </Tooltip>
-              </SidebarMenuItem>
-
-            </SidebarMenu>
           </SidebarMenu>
-        </SidebarGroup>
+        </SidebarMenu>
 
         {state !== 'collapsed' && (
           <SidebarGroup>
