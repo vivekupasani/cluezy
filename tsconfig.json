@@ -25,7 +25,9 @@
       "@/*": [
         "./*"
       ],
-      "zod/v3": ["./node_modules/zod"]
+      "zod/v3": [
+        "./node_modules/zod"
+      ]
     },
     "target": "ES2017"
   },
