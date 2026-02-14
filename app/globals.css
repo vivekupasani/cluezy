@@ -70,7 +70,7 @@
   }
 
   .dark {
-    --background: 0 0% 6.6667%;
+    --background: 0 0% 6.9667%;
     --foreground: 0 0% 93.3333%;
     --card: 0 0% 9.8039%;
     --card-foreground: 0 0% 93.3333%;
@@ -94,7 +94,7 @@
     --chart-3: 0 0% 16.4706%;
     --chart-4: 30.0000 17.8571% 21.9608%;
     --chart-5: 30 100% 87.8431%;
-    --sidebar: 10 2% 8%;
+    --sidebar: 0 0% 8.8039%;
     --sidebar-foreground: 0 0% 90%;
     --sidebar-primary: 15 55% 50%;
     --sidebar-primary-foreground: 0 0% 100%;

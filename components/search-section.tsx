@@ -12,7 +12,7 @@ import { useArtifact } from '@/components/artifact/artifact-context'
 import { CollapsibleMessage } from './collapsible-message'
 import { SearchSkeleton } from './default-skeleton'
 import { SearchResults } from './search-results'
-import { Section, ToolArgsSection } from './section'
+import { ToolArgsSection } from './section'
 // import { XSearchResults } from './x-search-results' // This line is removed as per instruction
 
 interface SearchSectionProps {
@@ -71,17 +71,13 @@ export function SearchSection({
       >
         {isLoading && isToolLoading ? (
           <div>
-            <Section title="Sources">
-              <SearchSkeleton />
-            </Section>
+            <SearchSkeleton />
             {/* <Section title="Images">
               <ImageSkeleton />
             </Section> */}
           </div>
         ) : searchResults?.results ? (
-          <Section title="Sources">
-            <SearchResults results={searchResults.results} />
-          </Section>
+          <SearchResults results={searchResults.results} />
         ) : null}
 
         {/* {searchResults &&

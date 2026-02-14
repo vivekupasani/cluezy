@@ -5,7 +5,7 @@ import { useArtifact } from './artifact/artifact-context'
 import { CollapsibleMessage } from './collapsible-message'
 import { DocumentSearchSkeleton } from './default-skeleton'
 import { DocumentSearchResults } from './document-search-results'
-import { Section, ToolArgsSection } from "./section"
+import { ToolArgsSection } from "./section"
 
 interface DocumentSectionProps {
     tool: ToolInvocation
@@ -64,9 +64,7 @@ export const DocumentSection = ({ tool, isOpen, onOpenChange }: DocumentSectionP
                 onOpenChange={onOpenChange}
                 showIcon={false}
             >
-                <Section title={sectionTitle}>
-                    <DocumentSearchSkeleton />
-                </Section>
+                <DocumentSearchSkeleton />
             </CollapsibleMessage>
         )
     }
@@ -83,9 +81,7 @@ export const DocumentSection = ({ tool, isOpen, onOpenChange }: DocumentSectionP
             onOpenChange={onOpenChange}
             showIcon={false}
         >
-            <Section title={sectionTitle}>
-                <DocumentSearchResults results={data} />
-            </Section>
+            <DocumentSearchResults results={data} />
         </CollapsibleMessage>
     )
 }

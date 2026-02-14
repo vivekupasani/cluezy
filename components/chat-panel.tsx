@@ -280,8 +280,9 @@ export function ChatPanel({
       )}
     >
       {messages.length === 0 && (
-        <div className="flex flex-col items-center mb-1">
-          <h1 className='text-2xl md:text-3xl tracking-tight pb-2 font-medium txt-grad'>
+        <div className="flex flex-col items-center mb-1 md:mt-10">
+          <h1
+            className='text-2xl md:text-3xl pb-2 font-medium txt-grad'>
             How can i help you today?
           </h1>
         </div>
@@ -320,7 +321,7 @@ export function ChatPanel({
           <div className={cn(
             "relative flex flex-col w-full p-2.5 transition-all duration-300",
             "bg-card backdrop-blur-xl",
-            "ring-1 ring-border/20 border border-foreground/5",
+            "ring-1 ring-border/20 border border-foreground/10 dark:border-foreground/5",
             // "shadow-sm",
             "rounded-[20px]",
             isDragging && "ring-2 ring-primary bg-primary/5 border-primary/50"
@@ -510,6 +511,28 @@ export function ChatPanel({
               </div>
 
               <div className="flex items-center gap-1.5">
+                {/* Enhance prompt button */}
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <Button
+                      type='button'
+                      size={'icon'}
+                      variant={'ghost'}
+                      className={cn(
+                        'size-8 rounded-full bg-transparent hover:bg-muted/60 border-border text-muted-foreground hover:text-foreground transition-all duration-200 border-0',
+                        (isEnhancePromptLoading || isFileUploading) && 'animate-pulse duration-1000 bg-transparent opacity-50 cursor-not-allowed'
+                      )}
+                      onClick={handleEnhancePrompt}
+                      disabled={isEnhancePromptLoading || isFileUploading || input.length === 0}
+                      title={isFileUploading ? "Wait for file upload" : "Enhance prompt"}
+                    >
+                      {
+                        isEnhancePromptLoading ? <Loader2 size={16} className='animate-spin' /> : <WandSparkles size={16} />
+                      }
+                    </Button>
+                  </TooltipTrigger>
+                  <TooltipContent side="top" className='text-xs'>Enhance prompt</TooltipContent>
+                </Tooltip>
                 <Tooltip>
                   <TooltipTrigger asChild>
                     {messages.length > 0 && (
@@ -549,31 +572,6 @@ export function ChatPanel({
                   <TooltipContent side="top" className='text-xs'>Attach files</TooltipContent>
                 </Tooltip>
 
-                {/* Enhance prompt button */}
-                {input.length !== 0 && (
-                  <Tooltip>
-                    <TooltipTrigger asChild>
-                      <Button
-                        type='button'
-                        size={'icon'}
-                        variant={'ghost'}
-                        className={cn(
-                          'size-8 rounded-full bg-transparent hover:bg-muted/60 border-border text-muted-foreground hover:text-foreground transition-all duration-200 border-0',
-                          (isEnhancePromptLoading || isFileUploading) && 'animate-pulse duration-1000 bg-transparent opacity-50 cursor-not-allowed'
-                        )}
-                        onClick={handleEnhancePrompt}
-                        disabled={isEnhancePromptLoading || isFileUploading}
-                        title={isFileUploading ? "Wait for file upload" : "Enhance prompt"}
-                      >
-                        {
-                          isEnhancePromptLoading ? <Loader2 size={16} className='animate-spin' /> : <WandSparkles size={16} />
-                        }
-                      </Button>
-                    </TooltipTrigger>
-                    <TooltipContent side="top" className='text-xs'>Enhance prompt</TooltipContent>
-                  </Tooltip>
-                )}
-
                 <Tooltip>
                   <TooltipTrigger asChild>
                     <Button
@@ -610,7 +608,7 @@ export function ChatPanel({
                 target: { value: message }
               } as React.ChangeEvent<HTMLTextAreaElement>)
             }}
-            className={cn(showEmptyScreen ? 'visible' : 'invisible')}
+            className={cn(showEmptyScreen ? 'visible' : 'invisible', input.length !== 0 ? 'opacity-0 mb-8 transition-opacity duration-200' : 'opacity-100 mb-8 transition-opacity duration-200')}
           />
         </div>
       )}

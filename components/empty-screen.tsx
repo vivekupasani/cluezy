@@ -56,7 +56,7 @@ export function EmptyScreen({
 
   return (
     <div className={cn(
-      "w-full max-w-3xl mt-5",
+      "w-full max-w-3xl mt-4",
       className
     )}>
       <div className="flex flex-wrap mx-auto gap-3 mt-4 items-center justify-center">
@@ -64,11 +64,11 @@ export function EmptyScreen({
           <Button
             key={index}
             variant="outline"
-            className="h-auto py-1 flex flex-col rounded-lg items-start gap-2 whitespace-normal text-left hover:bg-secondary/50 transition-colors border-border/60"
+            className="h-auto py-1 flex flex-col rounded-xl items-start gap-2 whitespace-normal text-left hover:bg-secondary/50 hover:text-secondary-foreground transition-colors border border-border/60 dark:border-card"
             onClick={() => submitMessage(example.message)}
           >
-            <div className="flex items-center gap-2 txt-act font-medium text-xs">
-              <example.icon size={16} className='text-accent-foreground/70' />
+            <div className="flex items-center gap-2 py-1 txt-act font-medium text-xs">
+              <example.icon size={14} className='text-accent-foreground/70' />
               {example.heading}
             </div>
           </Button>

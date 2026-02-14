@@ -80,7 +80,7 @@ export function MentionPopover({
                 </div>
             )}
             <PopoverContent
-                className="w-64 p-0 shadow-lg border-border/50 rounded-xl overflow-hidden"
+                className="w-60 p-0 shadow-lg border-border/50 rounded-xl overflow-hidden"
                 align="start"
                 side="bottom"
                 sideOffset={8}

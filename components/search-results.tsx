@@ -8,6 +8,7 @@ import { SearchResultItem } from '@/lib/types'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
+import { useIsMobile } from '@/hooks/use-mobile'
 
 export interface SearchResultsProps {
   results: SearchResultItem[]
@@ -20,6 +21,7 @@ export function SearchResults({
 }: SearchResultsProps) {
   // State to manage whether to display the results
   const [showAllResults, setShowAllResults] = useState(false)
+  const isMobile = useIsMobile()
 
   const handleViewMore = () => {
     setShowAllResults(true)
@@ -30,7 +32,7 @@ export function SearchResults({
   }
 
   // Logic for grid mode
-  const displayedGridResults = showAllResults ? results : results.slice(0, 3)
+  const displayedGridResults = showAllResults ? results : isMobile ? results.slice(0, 3) : results.slice(0, 7)
   const additionalResultsCount = results.length > 3 ? results.length - 3 : 0
   const displayUrlName = (url: string) => {
     const hostname = new URL(url).hostname
@@ -94,7 +96,7 @@ export function SearchResults({
       {displayedGridResults.map((result, index) => (
         <div className="w-1/2 md:w-1/4 p-1" key={index}>
           <Link href={result.url} passHref target="_blank">
-            <div className="flex-1 h-full bg-card/70 dark:bg-card hover:bg-card/50 dark:hover:bg-card/70 transition-colors backdrop-blur-sm drop-shadow-sm border border-foreground/5 rounded-lg">
+            <div className="flex-1 h-full bg-card/50 dark:bg-card hover:bg-card/50 dark:hover:bg-card/70 transition-colors backdrop-blur-sm drop-shadow-sm border border-foreground/5 rounded-lg">
               <div className="p-2 flex flex-col justify-between h-full">
                 <p className="text-xs line-clamp-2 min-h-[2rem] txt-grad">
                   {result.title || result.content}
@@ -121,7 +123,7 @@ export function SearchResults({
       ))}
       {!showAllResults && additionalResultsCount > 0 && (
         <div className="w-1/2 md:w-1/4 p-1">
-          <div className="flex-1 flex h-full items-center justify-center bg-card/70 dark:bg-card hover:bg-card/50 dark:hover:bg-card/70 transition-colors backdrop-blur-sm drop-shadow-sm border border-foreground/5 rounded-lg">
+          <div className="flex-1 flex h-full items-center justify-center bg-card/60 dark:bg-card hover:bg-card/50 dark:hover:bg-card/70 transition-colors backdrop-blur-sm drop-shadow-sm border border-foreground/5 rounded-lg">
             <div className="p-2">
               <Button
                 className="bg-transparent hover:bg-transparent txt-grad hover:text-primary"
@@ -136,7 +138,7 @@ export function SearchResults({
 
       {showAllResults && additionalResultsCount > 0 && (
         <div className="w-1/2 md:w-1/4 p-1">
-          <div className="flex-1 flex h-full items-center justify-center bg-card/70 dark:bg-card hover:bg-card/50 dark:hover:bg-card/70 transition-colors backdrop-blur-sm drop-shadow-sm border border-foreground/5 rounded-lg">
+          <div className="flex-1 flex h-full items-center justify-center bg-card/60 dark:bg-card hover:bg-card/50 dark:hover:bg-card/70 transition-colors backdrop-blur-sm drop-shadow-sm border border-foreground/5 rounded-lg">
             <div className="p-2">
               <Button
                 className="bg-transparent hover:bg-transparent txt-grad hover:text-primary"

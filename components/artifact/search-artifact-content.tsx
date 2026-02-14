@@ -6,7 +6,7 @@ import type { SearchResults as TypeSearchResults } from '@/lib/types'
 
 import { SearchResults } from '@/components/search-results'
 import { SearchResultsImageSection } from '@/components/search-results-image'
-import { Section, ToolArgsSection } from '@/components/section'
+import { ToolArgsSection } from '@/components/section'
 
 export function SearchArtifactContent({ tool }: { tool: ToolInvocation }) {
   const searchResults: TypeSearchResults =
@@ -27,10 +27,7 @@ export function SearchArtifactContent({ tool }: { tool: ToolInvocation }) {
           displayMode="full"
         />
       )}
-
-      <Section title="Sources">
-        <SearchResults results={searchResults.results} displayMode="list" />
-      </Section>
+      <SearchResults results={searchResults.results} displayMode="list" />
     </div>
   )
 }

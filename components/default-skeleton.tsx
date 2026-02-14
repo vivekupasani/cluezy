@@ -54,7 +54,7 @@ export const ChatLoadingSkeleton = () => {
   )
 }
 
-export function SearchSkeleton({ sourcesLength = 4 }: { sourcesLength?: number }) {
+export function SearchSkeleton({ sourcesLength = 8 }: { sourcesLength?: number }) {
   return (
     <div className="flex flex-wrap">
       {[...Array(sourcesLength)].map((_, index) => (
