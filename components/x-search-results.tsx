@@ -16,7 +16,7 @@ export function XSearchResults({ results, isArtifect }: XSearchResultsProps) {
             {results.map((result) => (
                 <Link
                     key={result.id}
-                    href={result.url}
+                    href={result.url.startsWith('http') ? result.url : `https://${result.url}`}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="block"

@@ -1,10 +1,12 @@
 "use client"
 import { Button } from "@/components/ui";
 import { cn } from "@/lib/utils";
-import { Cpu, History, LayoutGrid, Search, Users } from "lucide-react";
+import { ArrowLeft, Cpu, History, LayoutGrid, Search, Users } from "lucide-react";
+import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 
 export default function PricingPage() {
+    const router = useRouter();
 
     const pricingPlans = [
         {
@@ -55,6 +57,17 @@ export default function PricingPage() {
         <div className="h-screen w-full flex flex-col items-center px-4 sm:px-6 py-12 sm:py-20 overflow-y-auto CustomScrollbar">
             {/* Header */}
             <div className="text-center max-w-xl mb-8 sm:mb-14 px-2">
+                <button
+                    onClick={() => router.push("/")}
+                    className="visible md:hidden group flex items-center mb-5 pt-6 gap-1.5 text-muted-foreground hover:text-foreground text-[16px] transition-colors duration-200"
+                >
+                    <ArrowLeft
+                        size={16}
+                        className="transition-transform duration-200"
+                    />
+                    Back
+                </button>
+
                 <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight">premium pricing</h1>
                 <p className="mt-2 sm:mt-3 text-sm sm:text-base text-muted-foreground">
                     Choose the plan that fits your needs. Upgrade or downgrade anytime.
