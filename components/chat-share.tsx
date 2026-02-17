@@ -87,7 +87,7 @@ export function ChatShare({ chatId, className }: ChatShareProps) {
             </TooltipContent>
           </Tooltip>
         </DialogTrigger>
-        <DialogContent className='w-[95%] max-w-md bg-background/95 rounded-3xl backdrop-blur-md border-2 border-border/50 shadow-2xl'>
+        <DialogContent className='w-[95%] max-w-sm bg-background/95 rounded-3xl backdrop-blur-md border-2 border-border/50 shadow-2xl'>
           <DialogHeader className='space-y-3'>
             <DialogTitle className='text-2xl font-bold text-center bg-gradient-to-r from-orange-500 via-yellow-500 to-orange-600 bg-clip-text text-transparent'>
               Share link to search result
@@ -101,7 +101,7 @@ export function ChatShare({ chatId, className }: ChatShareProps) {
               <Button
                 onClick={handleShare}
                 disabled={pending}
-                className='w-full font-semibold py-5 rounded-xl shadow-lg hover:shadow-xl transition-all duration-200 hover:scale-[1.02]'
+                className='w-full font-semibold py-5 rounded-xl shadow-lg hover:bg-primary/80 hover:shadow-xl transition-all duration-200'
               >
                 {pending ? <LoadingSpinner /> : 'Get link'}
               </Button>
@@ -110,18 +110,18 @@ export function ChatShare({ chatId, className }: ChatShareProps) {
               <Button
                 onClick={handleCopy}
                 disabled={pending}
-                className='w-full font-semibold py-5 rounded-xl shadow-lg hover:shadow-xl transition-all duration-200 hover:scale-[1.02]'
+                className='w-full font-semibold py-5 rounded-xl shadow-lg hover:bg-primary/80 hover:shadow-xl transition-all duration-200'
               >
                 {'Copy link'}
               </Button>
             )}
-            <Button
+            {/* <Button
               variant="ghost"
               className='w-full text-muted-foreground hover:text-foreground py-5 rounded-xl'
               onClick={() => setOpen(false)}
             >
               Cancel
-            </Button>
+            </Button> */}
           </div>
         </DialogContent>
       </Dialog>
