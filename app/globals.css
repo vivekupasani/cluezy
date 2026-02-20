@@ -133,6 +133,7 @@
 .CustomScrollbar {
   scrollbar-width: thin;
   scrollbar-color: hsl(var(--accent)) hsl(var(--background));
+  scroll-behavior: smooth;
 }
 
 .HiddenScrollbar {

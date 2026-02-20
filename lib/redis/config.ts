@@ -57,13 +57,30 @@ export class RedisWrapper {
     }
   }
 
+  async get<T = string>(key: string): Promise<T | null> {
+    if (this.client instanceof Redis) {
+      return this.client.get(key) as Promise<T | null>
+    } else {
+      const result = await (this.client as RedisClientType).get(key)
+      return result ? (result as unknown as T) : null
+    }
+  }
+
+  async set(key: string, value: string): Promise<string | null> {
+    if (this.client instanceof Redis) {
+      return this.client.set(key, value) as Promise<string | null>
+    } else {
+      return (this.client as RedisClientType).set(key, value)
+    }
+  }
+
   pipeline() {
     return this.client instanceof Redis
       ? new UpstashPipelineWrapper(this.client.pipeline())
       : new LocalPipelineWrapper((this.client as RedisClientType).multi())
   }
 
-  async hmset(key: string, value: Record<string, any>): Promise<'OK' | number> {
+  async hmset(key: string, value: Record<string, any>): Promise<any> {
     if (this.client instanceof Redis) {
       return this.client.hmset(key, value)
     } else {
@@ -125,6 +142,11 @@ class UpstashPipelineWrapper {
     return this
   }
 
+  set(key: string, value: string) {
+    this.pipeline.set(key, value)
+    return this
+  }
+
   del(key: string) {
     this.pipeline.del(key)
     return this
@@ -142,6 +164,11 @@ class UpstashPipelineWrapper {
 
   zadd(key: string, score: number, member: string) {
     this.pipeline.zadd(key, { score, member })
+    return this
+  }
+
+  expire(key: string, seconds: number) {
+    this.pipeline.expire(key, seconds)
     return this
   }
 
@@ -167,6 +194,11 @@ class LocalPipelineWrapper {
     return this
   }
 
+  set(key: string, value: string) {
+    this.pipeline.set(key, value)
+    return this
+  }
+
   del(key: string) {
     this.pipeline.del(key)
     return this
@@ -188,6 +220,11 @@ class LocalPipelineWrapper {
 
   zadd(key: string, score: number, member: string) {
     this.pipeline.zAdd(key, { score, value: member })
+    return this
+  }
+
+  expire(key: string, seconds: number) {
+    this.pipeline.expire(key, seconds)
     return this
   }
 

@@ -1,5 +1,6 @@
 import { cookies } from 'next/headers'
 
+import { getUserPlan, UserPlanDetailsProps } from '@/lib/actions/user-premium'
 import { getCurrentUserId } from '@/lib/auth/get-current-user'
 import { createToolCallingStreamResponse } from '@/lib/streaming/create-tool-calling-stream'
 import { Model } from '@/lib/types/models'
@@ -22,7 +23,7 @@ export async function POST(req: Request) {
     const { messages, id: chatId, excludeDomains, selectedApps } = await req.json()
     const referer = req.headers.get('referer')
     const isSharePage = referer?.includes('/share/')
-
+    let userPlanDetails: UserPlanDetailsProps | null = null
     // Parallelize authentication and identifier fetching
     const [userId, identifier] = await Promise.all([
       getCurrentUserId(),
@@ -46,18 +47,22 @@ export async function POST(req: Request) {
       }
     }
     else {
-      const { success, reset, remaining } = await authenticatedRateLimit.limit(userId);
-      console.log("Remaining credits for the day : ", remaining)
+      userPlanDetails = await getUserPlan(userId);
+      //check if user is paid plan or not
+      if (userPlanDetails?.planName === "Free") {
+        const { success, reset, remaining } = await authenticatedRateLimit.limit(userId);
+        console.log("Remaining credits for the day : ", remaining)
 
-      if (!success) {
-        const resetDate = new Date(reset);
-        return new Response(
-          `You've reached your usage limit for now. Take a short break and come back at ${resetDate} to continue your research!`,
-          {
-            status: 429,
-            statusText: 'Too Many Requests',
-          }
-        );
+        if (!success) {
+          const resetDate = new Date(reset);
+          return new Response(
+            `You've reached your free usage limit. Upgrade to Pro for unlimited access, or come back at ${resetDate} to continue your research!`,
+            {
+              status: 429,
+              statusText: 'Too Many Requests',
+            }
+          );
+        }
       }
     }
 
@@ -104,7 +109,8 @@ export async function POST(req: Request) {
       searchMode: true,
       userId,
       excludeDomains,
-      selectedApps: transformedApps
+      selectedApps: transformedApps,
+      userPlanDetails: userPlanDetails
     })
   } catch (error) {
     console.error('API route error:', error)

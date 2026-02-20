@@ -1,7 +1,7 @@
 'use client'
 
 import { AnimatePresence, motion } from 'framer-motion'
-import { Crown, FileText, GlobeLock, Info, LayoutGrid, PanelLeftClose, PanelRightClose, Search, ShieldCheck, SquarePen } from 'lucide-react'
+import { CreditCard, Crown, FileText, GlobeLock, Info, LayoutGrid, PanelLeftClose, PanelRightClose, Search, ShieldCheck, SquarePen } from 'lucide-react'
 import { usePathname, useRouter } from 'next/navigation'
 
 import { useAuth } from '@/components/context/auth-context'
@@ -20,19 +20,23 @@ import {
 import UserMenu from '@/components/user-menu'
 import { useIsMobile } from '@/hooks/use-mobile'
 import { useEffect } from 'react'
+import { BillingDialog } from './billing-dialog'
 import { ExcludedDomainsDialog } from './excluded-domains-dialog'
+import { PricingDialog } from './pricing-dialog'
 import { Tooltip, TooltipContent, TooltipTrigger } from './ui/tooltip'
 
 export function AppSidebar() {
   const router = useRouter()
   const { setHistoryDialogIsOpen } = useHistoryDialog()
-  const { user } = useAuth()
+  const { user, userPlanDetails } = useAuth()
   const { toggleSidebar, setOpenMobile, setOpen, state } = useSidebar()
   const pathName = usePathname()
   const isMobile = useIsMobile()
   const pages = [
     '/pricing',
-    '/playbook'
+    '/playbook',
+    '/premium',
+    '/payment-successful'
   ]
 
   useEffect(() => {
@@ -127,6 +131,18 @@ export function AppSidebar() {
             </Tooltip>
           </SidebarMenuItem>
 
+          <SidebarMenuItem>
+            <ExcludedDomainsDialog
+              trigger={
+                <SidebarMenuButton
+                  className="justify-start gap-2 data-[state=open]:px-2">
+                  <GlobeLock className="size-5 text-muted-foreground" />
+                  <span className='text-foreground/80'>Exclude Sources</span>
+                </SidebarMenuButton>
+              }
+            />
+          </SidebarMenuItem>
+
           <SidebarMenu>
             <SidebarMenuItem>
               <Tooltip>
@@ -149,40 +165,36 @@ export function AppSidebar() {
             </SidebarMenuItem>
           </SidebarMenu>
 
-          <SidebarMenuItem>
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <SidebarMenuButton
-                  onClick={() => {
-                    router.push('/premium')
-                    // Optional: Refresh or reset chat state if needed
-                    if (isMobile) {
-                      setOpenMobile(false)
-                    }
-                  }}
-                  className="justify-start gap-2 data-[state=open]:px-2"
-                >
-                  <Crown className="size-5 text-muted-foreground" />
-                  <span className='text-foreground/80'>Premium (Coming Soon)</span>
-                </SidebarMenuButton>
-              </TooltipTrigger>
-              <TooltipContent side="right" className='text-xs'>
-                Premium
-              </TooltipContent>
-            </Tooltip>
-          </SidebarMenuItem>
+          {
+            userPlanDetails?.planName != "Free" && user ? (
+              <SidebarMenuItem>
+                <BillingDialog
+                  trigger={
+                    <SidebarMenuButton
+                      className="justify-start gap-2 data-[state=open]:px-2"
+                    >
+                      <CreditCard className="size-5 text-muted-foreground" />
+                      <span className='text-foreground/80'>Billing</span>
+                    </SidebarMenuButton>
+                  }
+                />
+              </SidebarMenuItem>
+            ) : (
+              <SidebarMenuItem>
+                <PricingDialog
+                  trigger={
+                    <SidebarMenuButton
+                      className="justify-start gap-2 data-[state=open]:px-2"
+                    >
+                      <Crown className="size-5 text-muted-foreground" />
+                      <span className='text-foreground/80'>Subscription</span>
+                    </SidebarMenuButton>
+                  }
+                />
+              </SidebarMenuItem>
+            )
+          }
 
-          <SidebarMenuItem>
-            <ExcludedDomainsDialog
-              trigger={
-                <SidebarMenuButton
-                  className="justify-start gap-2 data-[state=open]:px-2">
-                  <GlobeLock className="size-5 text-muted-foreground" />
-                  <span className='text-foreground/80'>Exclude Sources</span>
-                </SidebarMenuButton>
-              }
-            />
-          </SidebarMenuItem>
         </SidebarMenu>
 
         {state !== 'collapsed' && (

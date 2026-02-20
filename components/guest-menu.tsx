@@ -125,8 +125,9 @@ export default function GuestMenu({ state }: { state: "expanded" | "collapsed" }
         </DropdownMenuSub> */}
 
         {
-          externalLinks.map((link) => (
+          externalLinks.map((link, idx) => (
             <DropdownMenuItem
+              key={idx}
             >
               <Link href={link.href} target="_blank" rel="noopener noreferrer" className='flex items-center justify-between'>
                 {link.icon}

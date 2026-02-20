@@ -93,7 +93,7 @@ export function MentionPopover({
                         onValueChange={onSearchQueryChange}
                         className="h-9 text-sm"
                     />
-                    <CommandList className="max-h-[200px] overflow-y-auto CustomScrollbar p-1">
+                    <CommandList className="max-h-[200px] overflow-y-auto HiddenScrollbar p-1">
                         {
                             MENTION_ITEMS.length !== 0 && (
                                 <CommandGroup heading="Connected Apps" className="text-muted-foreground/70 text-[10px] font-medium py-1">

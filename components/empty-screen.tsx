@@ -14,7 +14,7 @@ export function EmptyScreen({
   const exampleMessages = [
     {
       heading: 'Research',
-      message: 'Deeply analyze the impact of room-temperature superconductors on global energy grids.',
+      message: 'Analyze the long-term economic effects of remote work on urban real estate markets.',
       icon: Zap
     },
     {
@@ -24,34 +24,19 @@ export function EmptyScreen({
     },
     {
       heading: 'Academic',
-      message: 'Search for recent papers on the impact of microplastics on marine ecosystems.',
+      message: 'Find recent studies on the impact of oceanic warming on deep-sea biodiversity.',
       icon: BookOpen
     },
     {
       heading: 'File Search',
-      message: 'Search for recent technical whitepapers about AI safety in PDF format.',
+      message: 'Search for technical whitepapers about post-quantum cryptography in PDF format.',
       icon: FileSearch
     },
     {
       heading: 'Market Data',
-      message: 'What is NVIDIA\'s current stock price, market cap, and recent analyst ratings?',
+      message: 'Compare the market performance of the top 5 semiconductor companies over the last 12 months.',
       icon: LineChart
-    },
-    // {
-    //   heading: 'Apps',
-    //   message: 'Search my Google Drive and Notion for any documents related to the 2025 Project Roadmap.',
-    //   icon: Unplug
-    // },
-    // {
-    //   heading: 'Product ID',
-    //   message: 'What product is this and where can I buy it? https://m.media-amazon.com/images/I/71K7602I-EL.jpg',
-    //   icon: ShoppingBag
-    // },
-    // {
-    //   heading: 'Weather',
-    //   message: 'What is the 5-day weather forecast for Mumbai including temperature and precipitation?',
-    //   icon: CloudSun
-    // }
+    }
   ]
 
   return (

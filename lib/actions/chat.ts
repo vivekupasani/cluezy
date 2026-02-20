@@ -5,6 +5,7 @@ import { redirect } from 'next/navigation'
 
 import { getRedisClient, RedisWrapper } from '@/lib/redis/config'
 import { type Chat } from '@/lib/types'
+import { UserPlanDetailsProps } from './user-premium'
 
 async function getRedis(): Promise<RedisWrapper> {
   return await getRedisClient()
@@ -237,9 +238,7 @@ export async function renameChat(
   }
 }
 
-
-
-export async function saveChat(chat: Chat, userId: string = 'anonymous') {
+export async function saveChat(chat: Chat, userId: string = 'anonymous', userPlanDetails?: UserPlanDetailsProps | null) {
   try {
     const redis = await getRedis()
     const pipeline = redis.pipeline()
@@ -251,6 +250,10 @@ export async function saveChat(chat: Chat, userId: string = 'anonymous') {
 
     pipeline.hmset(`chat:${chat.id}`, chatToSave)
     pipeline.zadd(getUserChatKey(userId), Date.now(), `chat:${chat.id}`)
+
+    if (userPlanDetails?.planName === "Free") {
+      pipeline.expire(`chat:${chat.id}`, 30 * 24 * 60 * 60) // 30 days
+    }
 
     const results = await pipeline.exec()
 

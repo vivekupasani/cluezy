@@ -71,8 +71,8 @@ const privacy: PrivacySection[] = [
 export default async function PrivacyPage() {
     const router = useRouter();
     return (
-        <div className="min-h-screen h-full overflow-y-auto CustomScrollbar selection:bg-primary/20">
-            <div className="max-w-3xl mx-auto px-6 py-20 md:py-24">
+        <div className="min-h-screen h-full overflow-y-auto CustomScrollbar">
+            <div className="max-w-3xl mx-auto px-6 py-6 md:py-14">
                 <header className="mb-6 text-center space-y-4">
                     <button
                         onClick={() => router.push("/")}

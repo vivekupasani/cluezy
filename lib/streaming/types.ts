@@ -1,5 +1,6 @@
 import { Message } from 'ai'
 
+import { UserPlanDetailsProps } from '../actions/user-premium'
 import { ConnectorProvider } from '../connectors/types'
 import { Model } from '../types/models'
 
@@ -11,4 +12,5 @@ export interface BaseStreamConfig {
   userId: string
   excludeDomains?: string[],
   selectedApps?: ConnectorProvider[]
+  userPlanDetails?: UserPlanDetailsProps | null
 }

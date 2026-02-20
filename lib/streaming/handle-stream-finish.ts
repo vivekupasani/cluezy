@@ -4,6 +4,7 @@ import { getChat, saveChat } from '@/lib/actions/chat'
 import { generateRelatedQuestions } from '@/lib/agents/generate-related-questions'
 import { ExtendedCoreMessage } from '@/lib/types'
 import { convertToExtendedCoreMessages } from '@/lib/utils'
+import { UserPlanDetailsProps } from '../actions/user-premium'
 
 interface HandleStreamFinishParams {
   responseMessages: CoreMessage[]
@@ -14,7 +15,8 @@ interface HandleStreamFinishParams {
   userId: string
   skipRelatedQuestions?: boolean
   annotations?: ExtendedCoreMessage[]
-  selectedApps?: string[]
+  selectedApps?: string[],
+  userPlanDetails?: UserPlanDetailsProps | null
 }
 
 export async function handleStreamFinish({
@@ -26,7 +28,8 @@ export async function handleStreamFinish({
   userId,
   skipRelatedQuestions = false,
   annotations = [],
-  selectedApps = []
+  selectedApps = [],
+  userPlanDetails
 }: HandleStreamFinishParams) {
   try {
     // Inject selected apps annotation as a separate data message before the user message
@@ -142,7 +145,8 @@ export async function handleStreamFinish({
         ...savedChat,
         messages: sanitizedMessages
       },
-      userId
+      userId,
+      userPlanDetails
     ).catch(error => {
       console.error('Failed to save chat:', error)
       throw new Error('Failed to save chat history')

@@ -33,7 +33,7 @@ interface UserMenuProps {
 
 export default function UserMenu({ user, state }: UserMenuProps) {
   const router = useRouter()
-  const { setUser } = useAuth()
+  const { setUser, userPlanDetails, setUserPlanDetails } = useAuth()
 
   const userName =
     user.user_metadata?.full_name ||
@@ -58,6 +58,7 @@ export default function UserMenu({ user, state }: UserMenuProps) {
     const supabase = createClient()
     await supabase.auth.signOut()
     setUser(null)
+    setUserPlanDetails(null)
     clearChatHistoryCache()
     router.push('/')
     router.refresh()
@@ -87,15 +88,32 @@ export default function UserMenu({ user, state }: UserMenuProps) {
       <DropdownMenuTrigger asChild>
         <button
           className={cn(
-            "group flex items-center mb-2 md:mb-0 gap-2 w-full rounded-lg hover:bg-sidebar-accent transition",
+            "group flex items-center mb-2 md:mb-2 gap-2 w-full rounded-l-full rounded-r-2xl hover:bg-sidebar-accent transition",
           )}
         >
-          <Avatar className="h-8 w-8">
-            <AvatarImage src={avatarUrl} />
-            <AvatarFallback className="text-xs">
-              {getInitials(userName, user.email)}
-            </AvatarFallback>
-          </Avatar>
+          <div className="relative">
+            <Avatar className={cn("h-8 w-8",
+              userPlanDetails?.isActive && userPlanDetails?.planName === "Pro" && "ring-2 ring-amber-500/50",
+              userPlanDetails?.isActive && userPlanDetails?.planName === "Max" && "ring-2 ring-amber-500/50",
+              // !userPlanDetails?.isActive && userPlanDetails?.planName === "Free" && "ring-2 ring-primary/50",
+            )}>
+              <AvatarImage src={avatarUrl} />
+              <AvatarFallback className="text-xs ">
+                {getInitials(userName, user.email)}
+              </AvatarFallback>
+            </Avatar>
+            {userPlanDetails?.isActive && (
+              <span
+                className={cn(
+                  "absolute -bottom-1.5 right-1/2 translate-x-1/2 z-50 rounded-full px-1.5 py-[1px] text-[8px] font-bold tracking-widest lowercase text-white shadow-sm ring-1 ring-background",
+                  userPlanDetails?.planName === "Pro" && "bg-gradient-to-r from-amber-500 to-orange-600",
+                  userPlanDetails?.planName === "Max" && "bg-gradient-to-r from-amber-500 to-orange-600",
+                  !["Pro", "Max"].includes(userPlanDetails?.planName || "") && "bg-primary"
+                )}>
+                {userPlanDetails?.planName}
+              </span>
+            )}
+          </div>
 
           <div className="flex flex-col text-left truncate">
             <span className="text-sm font-medium truncate text-foreground/70">
@@ -152,8 +170,9 @@ export default function UserMenu({ user, state }: UserMenuProps) {
         </DropdownMenuSub> */}
 
         {
-          externalLinks.map((link) => (
+          externalLinks.map((link, idx) => (
             <DropdownMenuItem
+              key={idx}
               onClick={handleLogout}
               className=""
             >

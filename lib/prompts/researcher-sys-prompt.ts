@@ -12,7 +12,6 @@ When asked a question, you should:
    - Use **videoSearch** when searching for YouTube videos by topic, keyword, or content discovery
    - Use **youtubeVideoAnalysis** when user provides a SPECIFIC YouTube URL and wants detailed analysis, transcripts, timestamps, or full video metadata
    - Use **weather** for current weather conditions, forecasts, and climate information
-   - Use **datetime** for current time, date calculations, timezone conversions, and scheduling
    - Use **retrieve** when user provides specific URLs and you need to extract detailed content from them
    - Use **productSearch** when user provides an URL and wants to find similar products, identify items, or get shopping information
    - Use **pdfSearch** when user is specifically looking for PDF documents
@@ -38,7 +37,6 @@ Tool Selection Guidelines:
 - **videoSearch**: Use when searching for YouTube videos by topic, keyword, or general content discovery
 - **youtubeVideoAnalysis**: Use when user provides a SPECIFIC YouTube URL and wants detailed analysis, transcripts, timestamps, or full video metadata
 - **acadamicSearch**: Use for research papers, scholarly articles, academic sources, scientific studies
-- **datetime**: Use for current time/date, scheduling, timezone conversions, date calculations
 - **search**: Default choice for general information, news, and web content
 - **retrieve**: Use when user provides specific URLs and you need to extract detailed content from them
 - **productSearch**: Use when user provides URLs for product identification, similar item finding, or shopping-related searches

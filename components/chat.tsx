@@ -13,7 +13,6 @@ import { createClient } from '@/lib/supabase/client'
 import { Model } from '@/lib/types/models'
 import { cn } from '@/lib/utils'
 
-import { CircleDollarSign } from 'lucide-react'
 import { ChatMessages } from './chat-messages'
 import { ChatPanel } from './chat-panel'
 import { useHistoryDialog } from './history-dialog'
@@ -498,12 +497,6 @@ export function Chat({
       data-testid="full-chat"
     >
       {/* <Header /> */}
-
-      {/* Upgrade button */}
-      <div className='opacity-0 absolute top-2 right-2 flex items-center border border-primary bg-sidebar-accent drop-shadow-sm shadow-primary gap-2 px-3 py-1.5 rounded-lg cursor-pointer'>
-        <CircleDollarSign size={14} className='text-primary' />
-        <p className='text-xs'>Upgrade</p>
-      </div>
 
       <ChatMessages
         sections={sections}

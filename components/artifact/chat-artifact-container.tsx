@@ -39,7 +39,9 @@ export function ChatArtifactContainer({
 
   const pages = [
     '/pricing',
-    '/playbook'
+    '/playbook',
+    '/payment-successful',
+    isMobile && '/privacy', '/about', '/terms', '/premium'
   ]
 
   return (

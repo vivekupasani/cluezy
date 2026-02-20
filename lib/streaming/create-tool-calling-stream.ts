@@ -211,7 +211,8 @@ export function createToolCallingStreamResponse(config: BaseStreamConfig) {
               dataStream,
               userId,
               skipRelatedQuestions: true,
-              selectedApps: config.selectedApps
+              selectedApps: config.selectedApps,
+              userPlanDetails: config.userPlanDetails
             })
           }
         })
