@@ -45,7 +45,7 @@ export function BotMessage({
     li: ({ node, ordered, index, checked, ...props }: any) => (
       <li className="leading-5" {...props} />
     ),
-    strong: (props: any) => <strong className="font-semibold text-foreground" {...props} />,
+    strong: (props: any) => <strong className="font-semibold text-foreground/90 dark:text-foreground/95" {...props} />,
     em: (props: any) => <em className="italic text-foreground/90 dark:text-foreground/95" {...props} />,
     blockquote: (props: any) => (
       <blockquote className="border-l-4 border-primary bg-muted/30 pl-4 py-2 pr-2 rounded-r-lg italic text-foreground/90 dark:text-foreground/95 my-6" {...props} />
