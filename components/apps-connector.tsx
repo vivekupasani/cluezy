@@ -47,12 +47,12 @@ export function AppsConnector({
     const isDeleting = connection && deletingId === connection.id;
 
     return (
-        <div className="min-h-screen bg-background text-foreground mt-10 lg:mt-0">
-            <div className="max-w-2xl mx-auto md:px-8 pt-6 mt-5 mb-20 md:mb-0 md:mt-5">
+        <div className="min-h-screen bg-background text-foreground mt-2 lg:mt-0">
+            <div className="max-w-2xl mx-auto md:px-8 pt-6 mb-20 md:mb-0 md:mt-5">
 
                 {/* Back */}
                 <button
-                    onClick={() => router.push("/apps")}
+                    onClick={() => router.push("/connectors")}
                     className="group flex items-center gap-1.5 text-muted-foreground hover:text-foreground text-[16px] transition-colors duration-200"
                 >
                     <ArrowLeft
@@ -144,7 +144,7 @@ export function AppsConnector({
                 {/* ─── Tools / Features ─── */}
                 <div className="mt-5">
                     <p className="text-[11px] font-semibold text-muted-foreground uppercase tracking-widest mb-3">
-                        Tools
+                        Features
                     </p>
 
                     <div className="flex flex-col gap-px bg-border/50 rounded-xl overflow-hidden border border-border/50">

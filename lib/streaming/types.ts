@@ -13,4 +13,5 @@ export interface BaseStreamConfig {
   excludeDomains?: string[],
   selectedApps?: ConnectorProvider[]
   userPlanDetails?: UserPlanDetailsProps | null
+  isIncognito?: boolean
 }

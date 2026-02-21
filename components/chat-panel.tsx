@@ -105,6 +105,7 @@ export function ChatPanel({
   const [isEnhancePromptLoading, setIsEnhancePromptLoading] = useState(false)
   const isMobile = useIsMobile()
   const { user } = useAuth()
+  const { state } = useArtifact()
   const pathName = usePathname()
   const [isDragging, setIsDragging] = useState(false)
 
@@ -282,7 +283,7 @@ export function ChatPanel({
       {messages.length === 0 && (
         <div className="flex flex-col items-center mb-1 md:mt-10">
           <h1
-            className='text-2xl md:text-3xl pb-2 font-medium txt-grad'>
+            className='text-2xl sm:text-3xl md:text-3xl pb-2 font-medium txt-grad'>
             How can i help you today?
           </h1>
         </div>
@@ -318,10 +319,19 @@ export function ChatPanel({
         )}
 
         <div className='bg-background'>
+
+          {
+            !user && messages.length > 0 && (
+              <div className='bg-accent text-accent-foreground mx-4 py-2 text-sm rounded-t-2xl text-center px-4'>
+                You haven't logged in yet. Please <span className='text-primary font-semibold'>login</span> to increase your chat limits and save your chat history.
+              </div>
+            )
+          }
+
           <div className={cn(
             "relative flex flex-col w-full p-2.5 transition-all duration-300",
             "bg-card backdrop-blur-xl",
-            "ring-1 ring-border/20 border border-foreground/10 dark:border-foreground/5",
+            "ring-1 ring-border/20 border border-border dark:border-border",
             // "shadow-sm",
             "rounded-[20px]",
             isDragging && "ring-2 ring-primary bg-primary/5 border-primary/50"
@@ -425,7 +435,7 @@ export function ChatPanel({
                 value={input}
                 disabled={isToolInvocationInProgress()}
                 style={{ textIndent: selectedApps.length > 0 ? `${chipsWidth}px` : '0px' }}
-                className="w-full resize-none HiddenScrollbar bg-transparent text-foreground placeholder:text-muted-foreground/60 outline-none text-[15px] leading-relaxed py-2 px-2 disabled:cursor-not-allowed disabled:opacity-50 min-h-[40px]"
+                className="w-full resize-none HiddenScrollbar bg-transparent text-foreground placeholder:text-muted-foreground/60 outline-none text-[15px] leading-relaxed py-2 px-2 disabled:cursor-not-allowed disabled:opacity-50 min-h-[44px]"
                 onChange={e => {
                   const newValue = e.target.value
                   const selectionStart = e.target.selectionStart || 0

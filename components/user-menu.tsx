@@ -88,7 +88,7 @@ export default function UserMenu({ user, state }: UserMenuProps) {
       <DropdownMenuTrigger asChild>
         <button
           className={cn(
-            "group flex items-center mb-2 md:mb-2 gap-2 w-full rounded-l-full rounded-r-2xl hover:bg-sidebar-accent transition",
+            "group flex items-center mb-2 md:mb-2 gap-2 w-full rounded-lg hover:bg-sidebar-accent transition",
           )}
         >
           <div className="relative">

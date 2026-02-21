@@ -13,6 +13,7 @@ import { createClient } from '@/lib/supabase/client'
 import { Model } from '@/lib/types/models'
 import { cn } from '@/lib/utils'
 
+import { useArtifact } from './artifact/artifact-context'
 import { ChatMessages } from './chat-messages'
 import { ChatPanel } from './chat-panel'
 import { useHistoryDialog } from './history-dialog'
@@ -71,6 +72,8 @@ export function Chat({
   const [uploadingCount, setUploadingCount] = useState(0)
   const [excludedDomains, setExcludedDomains] = useState<string[]>([])
   const [selectedApps, setSelectedApps] = useState<ConnectorProvider[]>([])
+  const { state: artifactState } = useArtifact()
+  const isIncognito = artifactState.isIncognito
 
   useEffect(() => {
     // Initial load
@@ -113,7 +116,8 @@ export function Chat({
     body: {
       id,
       excludeDomains: excludedDomains,
-      selectedApps: selectedApps
+      selectedApps: selectedApps,
+      isIncognito
     },
     onFinish: () => {
       if (window.location.pathname === '/') {

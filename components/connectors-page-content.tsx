@@ -59,7 +59,7 @@ export default function ConnectorsPageContent() {
     };
 
     const openConnectDialog = (provider: ConnectorProvider) => {
-        router.push(`/apps/${provider}`);
+        router.push(`/connectors/${provider}`);
     };
 
     const filteredActive = activeProviders.filter(provider => {
@@ -71,8 +71,8 @@ export default function ConnectorsPageContent() {
     const connectedProviders = new Set(connections.map(c => c.provider));
 
     return (
-        <div className="w-full max-w-2xl mx-auto space-y-8 mt-10 lg:mt-0">
-            <header className="text-start mt-5 md:mt-10">
+        <div className="w-full max-w-2xl mx-auto space-y-8 mt-2 lg:mt-0">
+            <header className="text-start md:mt-10">
                 <button
                     onClick={() => router.push("/")}
                     className="visible md:hidden group flex items-center mb-5 pt-6 gap-1.5 text-muted-foreground hover:text-foreground text-[16px] transition-colors duration-200"
@@ -84,7 +84,7 @@ export default function ConnectorsPageContent() {
                     Back
                 </button>
                 <h1 className="text-2xl font-medium tracking-tight">
-                    Apps
+                    Connectors
                 </h1>
 
                 <p className="text-muted-foreground text-base max-w-2xl mx-auto">

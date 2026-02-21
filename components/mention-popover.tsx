@@ -141,7 +141,7 @@ export function MentionPopover({
                                         <CommandItem
                                             key={item.id}
                                             value={item.id}
-                                            onSelect={() => router.push(`/apps/${item.id}`)}
+                                            onSelect={() => router.push(`/connectors/${item.id}`)}
                                             className="flex items-center gap-2 px-2 py-1.5 rounded-lg cursor-pointer opacity-60 hover:opacity-100 transition-opacity aria-selected:bg-accent/30"
                                         >
                                             <div className="shrink-0 flex items-center justify-center size-5 rounded bg-muted/30">

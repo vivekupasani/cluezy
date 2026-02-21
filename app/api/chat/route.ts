@@ -20,7 +20,7 @@ const DEFAULT_MODEL: Model = {
 
 export async function POST(req: Request) {
   try {
-    const { messages, id: chatId, excludeDomains, selectedApps } = await req.json()
+    const { messages, id: chatId, excludeDomains, selectedApps, isIncognito } = await req.json()
     const referer = req.headers.get('referer')
     const isSharePage = referer?.includes('/share/')
     let userPlanDetails: UserPlanDetailsProps | null = null
@@ -110,7 +110,8 @@ export async function POST(req: Request) {
       userId,
       excludeDomains,
       selectedApps: transformedApps,
-      userPlanDetails: userPlanDetails
+      userPlanDetails: userPlanDetails,
+      isIncognito
     })
   } catch (error) {
     console.error('API route error:', error)

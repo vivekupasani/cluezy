@@ -10,7 +10,7 @@ export default function Page() {
       {/* Header */}
       <header className="h-14 flex items-center px-5">
         <Link
-          href="/"
+          href="/auth/login"
           className="group flex items-center gap-1 text-sm"
         >
           <ArrowLeft

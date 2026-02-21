@@ -1,6 +1,7 @@
 'use client'
 
 import { useArtifact } from '@/components/artifact/artifact-context'
+import { useIsMobile } from '@/hooks/use-mobile'
 import type { SearchResults as TypeSearchResults } from '@/lib/types'
 import { useChat } from '@ai-sdk/react'
 import { ToolInvocation } from 'ai'
@@ -30,7 +31,7 @@ export function XSearchSection({
     const isToolLoading = tool.state === 'call'
     const searchResults: TypeSearchResults =
         tool.state === 'result' ? tool.result : undefined
-    const query = tool.args?.query as string | undefined
+    const query = !useIsMobile ? (tool.args?.query as string | undefined) : (tool.args?.query as string | undefined)?.slice(0, 50) + '...'
 
     const { open } = useArtifact()
     const header = (

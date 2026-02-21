@@ -23,7 +23,7 @@ export function XSearchResults({ results, isArtifect }: XSearchResultsProps) {
                 >
                     <Card className="w-full bg-transparent hover:bg-muted/50 border-none border-b border-transparent">
                         <CardContent className="p-4">
-                            <div className="flex items-start space-x-3">
+                            <div className="flex items-center space-x-3">
                                 <Avatar className="h-8 w-8 flex-shrink-0">
                                     <AvatarImage
                                         src={`https://unavatar.io/twitter/${result.author.replace('@', '')}`}
@@ -38,7 +38,7 @@ export function XSearchResults({ results, isArtifect }: XSearchResultsProps) {
                                             {new Date(result.publishedDate).toLocaleDateString()}
                                         </span>
                                     </div>
-                                    <p className="text-xs text-foreground/90 whitespace-pre-wrap break-words line-clamp-4">
+                                    <p className="text-xs text-foreground/90 whitespace-pre-wrap break-words line-clamp-2">
                                         {result.text}
                                     </p>
                                 </div>

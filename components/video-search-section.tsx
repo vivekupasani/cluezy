@@ -7,6 +7,7 @@ import type { SerperSearchResults } from '@/lib/types'
 
 import { useArtifact } from '@/components/artifact/artifact-context'
 
+import { useIsMobile } from '@/hooks/use-mobile'
 import { CollapsibleMessage } from './collapsible-message'
 import { VideoSearchSkeleton } from './default-skeleton'
 import { Section, ToolArgsSection } from './section'
@@ -33,7 +34,7 @@ export function VideoSearchSection({
   const isToolLoading = tool.state === 'call'
   const videoResults: SerperSearchResults =
     tool.state === 'result' ? tool.result : undefined
-  const query = tool.args?.query as string | undefined
+  const query = !useIsMobile ? (tool.args?.query as string | undefined) : (tool.args?.query as string | undefined)?.slice(0, 50) + '...'
 
   const { open } = useArtifact()
   const header = (

@@ -25,56 +25,62 @@ export function BotMessage({
 
   const baseComponents = {
     p: (props: any) => (
-      <p className="text-base leading-relaxed text-foreground/80 dark:text-foreground/90 my-2" {...props} />
+      <p className="text-base leading-7 text-foreground/90 dark:text-foreground/95 my-3 first:mt-0 last:mb-0" {...props} />
     ),
     h1: (props: any) => (
-      <h1 className="text-xl font-bold txt-grad mt-4 mb-2 underline" {...props} />
+      <h1 className="text-2xl font-bold txt-grad leading-tight tracking-tight mt-6 mb-2" {...props} />
     ),
     h2: (props: any) => (
-      <h2 className="text-xl font-semibold txt-grad mt-3 mb-2 underline" {...props} />
+      <h2 className="text-xl font-semibold txt-grad leading-tight tracking-tight mt-5 mb-2" {...props} />
     ),
     h3: (props: any) => (
-      <h3 className="text-base font-semibold txt-grad mt-2 mb-1" {...props} />
+      <h3 className="text-lg font-semibold txt-grad leading-tight tracking-tight mt-4 mb-1" {...props} />
     ),
     ul: (props: any) => (
-      <ul className="list-disc pl-6 space-y-1 text-base text-foreground/80 dark:text-foreground/90" {...props} />
+      <ul className="list-disc pl-6 my-3 space-y-1 text-base text-foreground/90 dark:text-foreground/95" {...props} />
     ),
     ol: (props: any) => (
-      <ol className="list-decimal pl-6 space-y-1 text-base text-foreground/80 dark:text-foreground/90" {...props} />
+      <ol className="list-decimal pl-6 my-3 space-y-1 text-base text-foreground/90 dark:text-foreground/95" {...props} />
     ),
     li: ({ node, ordered, index, checked, ...props }: any) => (
-      <li className="my-1" {...props} />
+      <li className="leading-5" {...props} />
     ),
-    strong: (props: any) => <strong className="font-semibold text-foreground/85" {...props} />,
-    em: (props: any) => <em className="italic text-foreground/80 dark:text-foreground/90" {...props} />,
+    strong: (props: any) => <strong className="font-semibold text-foreground" {...props} />,
+    em: (props: any) => <em className="italic text-foreground/90 dark:text-foreground/95" {...props} />,
     blockquote: (props: any) => (
-      <blockquote className="border-l-4 border-accent pl-4 italic text-foreground/80 dark:text-foreground/90" {...props} />
+      <blockquote className="border-l-4 border-primary bg-muted/30 pl-4 py-2 pr-2 rounded-r-lg italic text-foreground/90 dark:text-foreground/95 my-6" {...props} />
     ),
     a: Citing,
+    hr: (props: any) => (
+      <hr className="my-6 border-t border-border" {...props} />
+    ),
+    img: (props: any) => (
+      <img className="rounded-xl border border-border shadow-sm my-4 max-w-full h-auto" {...props} />
+    ),
     // Table components
     table: (props: any) => (
-      <div className="my-4  overflow-x-auto max-w-[320px] md:max-w-2xl">
-        <table className="min-w-full text-xs border border-border border-collapse" {...props} />
+      <div className="my-6 overflow-x-auto rounded-lg border border-border bg-card max-w-[320px] sm:max-w-[350px] md:max-w-2xl">
+        <table className="divide-y divide-border text-sm" {...props} />
       </div>
     ),
     thead: (props: any) => (
       <thead className="bg-muted/50" {...props} />
     ),
     tbody: (props: any) => (
-      <tbody {...props} />
+      <tbody className="divide-y divide-border" {...props} />
     ),
     tr: (props: any) => (
-      <tr className="border-b border-border text-center" {...props} />
+      <tr className="hover:bg-muted/30 transition-colors" {...props} />
     ),
     th: (props: any) => (
       <th
-        className="border border-border px-4 py-2 text-center font-semibold text-base bg-muted/30"
+        className="px-4 py-3 text-left font-semibold text-foreground bg-muted/30"
         {...props}
       />
     ),
     td: (props: any) => (
       <td
-        className="border border-border px-4 py-2 text-center text-base text-foreground/80"
+        className="px-4 py-3 text-foreground/80 dark:text-foreground/90 whitespace-nowrap"
         {...props}
       />
     ),
@@ -86,7 +92,7 @@ export function BotMessage({
       const match = /language-(\w+)/.exec(className || '')
       if (inline) {
         return (
-          <code className="bg-muted px-1.5 py-0.5 rounded text-xs font-mono" {...props}>
+          <code className="bg-muted/80 px-1.5 py-0.5 rounded-md text-[0.85rem] font-mono text-foreground" {...props}>
             {children}
           </code>
         )

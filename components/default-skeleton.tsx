@@ -16,19 +16,16 @@ export const ChatLoadingSkeleton = () => {
     <div className="flex flex-col gap-6 pb-4 w-full">
       {/* User message block */}
       <div className="flex justify-end w-full">
-        <div className="bg-secondary dark:bg-muted/40 rounded-t-2xl rounded-tbr-sm rounded-bl-2xl p-4 max-w-[80%] w-full flex flex-col gap-2">
-          <Skeleton className="h-4 w-[100%] rounded-full opacity-60 bg-secondary-foreground/10 dark:bg-muted" />
-          <Skeleton className="h-4 w-[15%] rounded-full opacity-40 self-end bg-secondary-foreground/10 dark:bg-muted" />
-        </div>
+        <Skeleton className="h-11 w-[100%] bg-accent dark:bg-muted/40 rounded-2xl p-4 max-w-[80%]" />
       </div>
 
       {/* AI Response Section */}
       <div className="flex flex-col gap-6">
         {/* Intro text */}
         <div className="flex flex-col gap-3">
-          <Skeleton className="h-4 w-full rounded-md" />
-          <Skeleton className="h-4 w-[96%] rounded-md" />
-          <Skeleton className="h-4 w-[75%] rounded-md" />
+          <Skeleton className="h-4 w-full rounded-md bg-accent dark:bg-muted/40" />
+          <Skeleton className="h-4 w-[96%] rounded-md bg-accent dark:bg-muted/40" />
+          <Skeleton className="h-4 w-[75%] rounded-md bg-accent dark:bg-muted/40" />
         </div>
 
         {/* Section Header */}
@@ -40,10 +37,10 @@ export const ChatLoadingSkeleton = () => {
             <div key={i} className="flex gap-4">
               <Skeleton className="size-2 rounded-full mt-2 shrink-0" />
               <div className="flex flex-col gap-2.5 w-full">
-                <Skeleton className="h-4 w-[88%] rounded-md" />
+                <Skeleton className="h-4 w-[88%] rounded-md bg-accent dark:bg-muted/40" />
                 <div className="flex gap-2 items-center">
                   <Skeleton className="size-1.5 rounded-full shrink-0 ml-1 opacity-30" />
-                  <Skeleton className="h-3.5 w-[65%] rounded-md opacity-60" />
+                  <Skeleton className="h-3.5 w-[65%] rounded-md opacity-60 bg-accent dark:bg-muted/40" />
                 </div>
               </div>
             </div>
@@ -54,7 +51,7 @@ export const ChatLoadingSkeleton = () => {
   )
 }
 
-export function SearchSkeleton({ sourcesLength = 8 }: { sourcesLength?: number }) {
+export function SearchSkeleton({ sourcesLength = 4 }: { sourcesLength?: number }) {
   return (
     <div className="flex flex-wrap">
       {[...Array(sourcesLength)].map((_, index) => (

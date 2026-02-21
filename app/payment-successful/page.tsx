@@ -49,7 +49,7 @@ export default function PaymentSuccessfulPage() {
               "
                             style={{ fontFamily: "var(--font-serif)" }}
                         >
-                            Welcome aboard<span className="text-muted-foreground/80">.</span>
+                            Thank You<span className="text-foreground/70">.</span>
                         </h1>
                         <p className="text-base sm:text-lg text-muted-foreground leading-relaxed max-w-prose">
                             Your subscription is now active. A detailed receipt will be sent to your email shortly.

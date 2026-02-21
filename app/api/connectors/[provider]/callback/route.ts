@@ -20,19 +20,19 @@ export async function GET(
         if (error) {
             console.error(`❌ OAuth error for ${provider}:`, error);
             return NextResponse.redirect(
-                new URL(`/apps?error=${encodeURIComponent(error)}`, request.url)
+                new URL(`/connectors?error=${encodeURIComponent(error)}`, request.url)
             );
         }
 
         // Success - redirect to settings with success message
         console.log(`✅ OAuth callback successful for ${provider}`);
         return NextResponse.redirect(
-            new URL(`/apps?success=${provider}`, request.url)
+            new URL(`/connectors?success=${provider}`, request.url)
         );
     } catch (error: any) {
         console.error('Error handling OAuth callback:', error);
         return NextResponse.redirect(
-            new URL(`/apps?error=${encodeURIComponent(error.message)}`, request.url)
+            new URL(`/connectors?error=${encodeURIComponent(error.message)}`, request.url)
         );
     }
 }

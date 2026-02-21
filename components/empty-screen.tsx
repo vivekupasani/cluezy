@@ -2,7 +2,6 @@ import { BookOpen, FileSearch, LineChart, Youtube, Zap } from 'lucide-react';
 
 import { cn } from '@/lib/utils';
 
-import { Button } from './ui';
 
 export function EmptyScreen({
   submitMessage,
@@ -46,17 +45,16 @@ export function EmptyScreen({
     )}>
       <div className="flex flex-wrap mx-auto gap-3 mt-4 items-center justify-center">
         {exampleMessages.map((example, index) => (
-          <Button
+          <div
             key={index}
-            variant="outline"
-            className="h-auto py-1 flex flex-col rounded-xl items-start gap-2 whitespace-normal text-left hover:bg-secondary/50 hover:text-secondary-foreground transition-colors border border-border/60 dark:border-card"
+            className="h-auto py-1 flex flex-col rounded-lg cursor-pointer items-start gap-2 whitespace-normal text-left hover:bg-secondary/50 hover:text-secondary-foreground transition-colors border border-border/60 dark:border-card"
             onClick={() => submitMessage(example.message)}
           >
-            <div className="flex items-center gap-2 py-1 txt-act font-medium text-xs">
+            <div className="flex items-center gap-2 px-4 py-0.5 text-accent-foreground/70 font-medium text-xs">
               <example.icon size={14} className='text-accent-foreground/70' />
               {example.heading}
             </div>
-          </Button>
+          </div>
         ))}
       </div>
     </div>

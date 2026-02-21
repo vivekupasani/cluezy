@@ -69,7 +69,7 @@ export function PricingDialog({
     )
 }
 
-function PricingTile({ plan, user, userPlanDetails }: { plan: any; user: any; userPlanDetails: any }) {
+export function PricingTile({ plan, user, userPlanDetails }: { plan: any; user: any; userPlanDetails: any }) {
     const isCurrentPlan = userPlanDetails?.isActive
         ? userPlanDetails.planName === plan.name
         : plan.name === "Free";
@@ -77,7 +77,8 @@ function PricingTile({ plan, user, userPlanDetails }: { plan: any; user: any; us
     const isAnyPlanActive = userPlanDetails?.isActive;
     const isFreePlan = plan.name === "Free";
 
-    const isDisabled = isAnyPlanActive || isFreePlan || isCurrentPlan;
+    // const isDisabled = isAnyPlanActive || isFreePlan || isCurrentPlan;
+    const isDisabled = true;
 
     return (
         <div
@@ -125,7 +126,7 @@ function PricingTile({ plan, user, userPlanDetails }: { plan: any; user: any; us
             <div className="mt-auto pt-4">
                 <Button
                     asChild={!isDisabled}
-                    disabled={isDisabled || !user}
+                    disabled
                     className={cn(
                         'w-full rounded-full text-xs h-9',
                         isCurrentPlan
@@ -138,7 +139,8 @@ function PricingTile({ plan, user, userPlanDetails }: { plan: any; user: any; us
                 >
                     {isDisabled ? (
                         <span className="flex items-center justify-center gap-1.5">
-                            {isCurrentPlan ? "Current Plan" : `Get ${plan.name}`}
+                            {/* {isCurrentPlan ? "Current Plan" : `Get ${plan.name}`} */}
+                            Subscription is currently not available
                         </span>
                     ) : !user ? (
                         <Button className="flex items-center justify-center gap-1.5">

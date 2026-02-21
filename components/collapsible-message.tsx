@@ -49,8 +49,8 @@ export function CollapsibleMessage({
       {isCollapsible ? (
         <div
           className={cn(
-            'flex-1 rounded-2xl py-4 bg-accent/50 dark:bg-sidebar text-secondary-foreground dark:text-foreground/90',
-            showBorder && 'border border-foreground/5 dark:border-foreground/5'
+            'flex-1 rounded-2xl py-4 bg-transparent dark:bg-transparent text-secondary-foreground dark:text-foreground/90',
+            showBorder && 'border border-border dark:border-border/50'
           )}
         >
           <Collapsible
@@ -58,7 +58,7 @@ export function CollapsibleMessage({
             onOpenChange={onOpenChange}
             className="w-full"
           >
-            <div className="flex items-center justify-between w-full gap-2 px-4">
+            <div className="flex items-center justify-between h-4 w-full gap-2 px-4">
               {header && <div className="text-sm w-full">{header}</div>}
               <CollapsibleTrigger asChild>
                 <button
@@ -71,7 +71,7 @@ export function CollapsibleMessage({
               </CollapsibleTrigger>
             </div>
             <CollapsibleContent className="data-[state=closed]:animate-collapse-up data-[state=open]:animate-collapse-down">
-              <Separator orientation='horizontal' className="my-4 border border-foreground/10 dark:border-foreground/10" />
+              <Separator orientation='horizontal' className="my-4 border border-border/60 dark:border-border/40" />
               <div className="px-4">
                 {content}
               </div>

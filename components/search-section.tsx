@@ -9,6 +9,7 @@ import type { SearchResults as TypeSearchResults } from '@/lib/types'
 
 import { useArtifact } from '@/components/artifact/artifact-context'
 
+import { useIsMobile } from '@/hooks/use-mobile'
 import { CollapsibleMessage } from './collapsible-message'
 import { SearchSkeleton } from './default-skeleton'
 import { SearchResults } from './search-results'
@@ -32,11 +33,11 @@ export function SearchSection({
     id: chatId
   })
   const isLoading = status === 'submitted' || status === 'streaming'
-
+  const isMobile = useIsMobile()
   const isToolLoading = tool.state === 'call'
   const searchResults: TypeSearchResults =
     tool.state === 'result' ? tool.result : undefined
-  const query = tool.args?.query as string | undefined
+  const query = !isMobile ? (tool.args?.query as string | undefined) : (tool.args?.query as string | undefined)?.slice(0, 40) + '...'
   const includeDomains = tool.args?.includeDomains as string[] | undefined
   const includeDomainsString = includeDomains
     ? ` [${includeDomains.join(', ')}]`

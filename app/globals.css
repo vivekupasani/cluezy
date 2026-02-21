@@ -4,38 +4,38 @@
 
 @layer base {
   :root {
-    --background: 40 18% 95%;
+    --background: 40 18% 97%;
     --foreground: 0 0% 20%;
     --card: 0 0% 100%;
     --card-foreground: 0 0% 20%;
     --popover: 0 0% 100%;
     --popover-foreground: 0 0% 20%;
-    --primary: 15 55% 50%;
+    --primary: 11 80% 63%;
     --primary-foreground: 0 0% 100%;
-    --secondary: 40 10% 90%;
+    --secondary: 40 10% 94%;
     --secondary-foreground: 0 0% 20%;
-    --muted: 40 10% 94%;
-    --muted-foreground: 0 0% 40%;
-    --accent: 40 10% 88%;
+    --muted: 40 10% 96%;
+    --muted-foreground: 40 10% 40%;
+    --accent: 40 10% 94%;
     --accent-foreground: 0 0% 20%;
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
-    --border: 40 10% 88%;
-    --input: 40 10% 88%;
-    --ring: 15 55% 50%;
-    --chart-1: 15 55% 50%;
+    --border: 40 10% 92%;
+    --input: 40 10% 92%;
+    --ring: 11 80% 63%;
+    --chart-1: 11 80% 63%;
     --chart-2: 40 10% 60%;
     --chart-3: 40 10% 70%;
     --chart-4: 40 10% 80%;
     --chart-5: 40 10% 90%;
-    --sidebar: 40 18% 94%;
+    --sidebar: 40 18% 96%;
     --sidebar-foreground: 0 0% 20%;
-    --sidebar-primary: 15 55% 50%;
+    --sidebar-primary: 11 80% 63%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 40 10% 90%;
+    --sidebar-accent: 40 10% 94%;
     --sidebar-accent-foreground: 0 0% 20%;
-    --sidebar-border: 40 10% 88%;
-    --sidebar-ring: 15 55% 50%;
+    --sidebar-border: 40 10% 92%;
+    --sidebar-ring: 11 80% 63%;
     --font-sans:
       ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI',
       Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif,
@@ -70,38 +70,38 @@
   }
 
   .dark {
-    --background: 0 0% 6.9667%;
-    --foreground: 0 0% 93.3333%;
-    --card: 0 0% 9.8039%;
-    --card-foreground: 0 0% 93.3333%;
-    --popover: 0 0% 9.8039%;
-    --popover-foreground: 0 0% 93.3333%;
-    --primary: 15 55% 50%;
+    --background: 0 0% 9%;
+    --foreground: 0 0% 93%;
+    --card: 0 0% 12%;
+    --card-foreground: 0 0% 93%;
+    --popover: 0 0% 10%;
+    --popover-foreground: 0 0% 93%;
+    --primary: 11 80% 63%;
     --primary-foreground: 0 0% 100%;
-    --secondary: 15 20% 18%;
-    --secondary-foreground: 15 60% 90%;
-    --muted: 0 0% 13.3333%;
-    --muted-foreground: 0 0% 70.5882%;
-    --accent: 0 0% 16.4706%;
-    --accent-foreground: 0 0% 93.3333%;
-    --destructive: 10.1639 77.8723% 53.9216%;
+    --secondary: 0 0% 15%;
+    --secondary-foreground: 0 0% 93%;
+    --muted: 0 0% 13%;
+    --muted-foreground: 0 0% 70%;
+    --accent: 0 0% 16%;
+    --accent-foreground: 0 0% 93%;
+    --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
-    --border: 45 14.2857% 10.9804%;
-    --input: 0 0% 28.2353%;
-    --ring: 15 55% 50%;
-    --chart-1: 15 55% 50%;
-    --chart-2: 15 20% 18%;
-    --chart-3: 0 0% 16.4706%;
-    --chart-4: 30.0000 17.8571% 21.9608%;
-    --chart-5: 30 100% 87.8431%;
-    --sidebar: 0 0% 8.8039%;
+    --border: 0 0% 15%;
+    --input: 0 0% 15%;
+    --ring: 11 80% 63%;
+    --chart-1: 11 80% 63%;
+    --chart-2: 0 0% 15%;
+    --chart-3: 0 0% 16%;
+    --chart-4: 0 0% 22%;
+    --chart-5: 0 0% 88%;
+    --sidebar: 0 0% 10%;
     --sidebar-foreground: 0 0% 90%;
-    --sidebar-primary: 15 55% 50%;
+    --sidebar-primary: 11 80% 63%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 15 15% 15%;
-    --sidebar-accent-foreground: 15 60% 90%;
-    --sidebar-border: 15 10% 14%;
-    --sidebar-ring: 15 55% 50%;
+    --sidebar-accent: 0 0% 15%;
+    --sidebar-accent-foreground: 0 0% 93%;
+    --sidebar-border: 0 0% 14%;
+    --sidebar-ring: 11 80% 63%;
   }
 }
 

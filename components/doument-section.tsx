@@ -1,6 +1,7 @@
 
 import { ToolInvocation } from "ai"
 
+import { useIsMobile } from "@/hooks/use-mobile"
 import { useArtifact } from './artifact/artifact-context'
 import { CollapsibleMessage } from './collapsible-message'
 import { DocumentSearchSkeleton } from './default-skeleton'
@@ -34,7 +35,7 @@ export const DocumentSection = ({ tool, isOpen, onOpenChange }: DocumentSectionP
         pptSearch: "Presentations"
     }[toolName] || "Search"  // default
 
-    const query = tool.args?.query as string | undefined
+    const query = !useIsMobile ? (tool.args?.query as string | undefined) : (tool.args?.query as string | undefined)?.slice(0, 50) + '...'
 
     const { open } = useArtifact()
 

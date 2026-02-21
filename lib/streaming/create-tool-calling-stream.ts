@@ -157,7 +157,7 @@ export function createToolCallingStreamResponse(config: BaseStreamConfig) {
 
   return createDataStreamResponse({
     execute: async (dataStream: DataStreamWriter) => {
-      const { messages, model, chatId, searchMode, userId, selectedApps } = config
+      const { messages, model, chatId, searchMode, userId, selectedApps, isIncognito } = config
       const modelId = `${model.providerId}:${model.id}`
 
       // Write selected apps to data stream for live UI update
@@ -212,7 +212,8 @@ export function createToolCallingStreamResponse(config: BaseStreamConfig) {
               userId,
               skipRelatedQuestions: true,
               selectedApps: config.selectedApps,
-              userPlanDetails: config.userPlanDetails
+              userPlanDetails: config.userPlanDetails,
+              isIncognito
             })
           }
         })

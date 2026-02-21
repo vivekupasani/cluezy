@@ -28,7 +28,7 @@ export function DocumentSearchResults({ results, isArtifact }: DocumentSearchRes
     }
 
     return (
-        <div className={`flex flex-col w-full gap-0 ${!isArtifact ? 'h-96 overflow-y-auto HiddenScrollbar' : 'h-full'}`}>
+        <div className={`flex flex-col w-full gap-0 ${!isArtifact ? 'h-72 overflow-y-auto HiddenScrollbar' : 'h-full'}`}>
             {results.map((result, index) => (
                 <Link
                     key={index}
@@ -39,7 +39,7 @@ export function DocumentSearchResults({ results, isArtifact }: DocumentSearchRes
                 >
                     <Card className="w-full bg-transparent hover:bg-muted/50 border-none border-b border-transparent">
                         <CardContent className="p-3">
-                            <div className="flex items-start gap-2">
+                            <div className="flex items-center gap-2">
                                 <Avatar className="h-8 w-8 flex-shrink-0 rounded-md">
                                     <AvatarImage
                                         src={`https://www.google.com/s2/favicons?domain=${new URL(result.link).hostname}`}
@@ -65,7 +65,7 @@ export function DocumentSearchResults({ results, isArtifact }: DocumentSearchRes
                                     )}
 
                                     {result.snippet && (
-                                        <div className="text-xs text-foreground/80 line-clamp-2 prose prose-sm max-w-none">
+                                        <div className="text-xs text-foreground/80 line-clamp-1 prose prose-sm max-w-none">
                                             {result.snippet}
                                         </div>
                                     )}

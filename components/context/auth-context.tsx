@@ -20,7 +20,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     const [userPlanDetails, setUserPlanDetails] = React.useState<UserPlanDetailsProps | null>(null);
     const [isLoading, setIsLoading] = React.useState(true);
 
-    console.log("user plan details: ", userPlanDetails)
+    // console.log("user plan details: ", userPlanDetails)
 
     React.useEffect(() => {
         if (!user) {

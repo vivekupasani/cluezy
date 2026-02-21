@@ -60,7 +60,7 @@ export function AppSidebar() {
   }
 
   return (
-    <Sidebar collapsible="icon" variant='sidebar' className='border-r border-foreground/10'>
+    <Sidebar collapsible="icon" variant='sidebar' className='border-r border-border'>
       <SidebarHeader className="flex flex-row items-center justify-between pt-4 pb-2 gap-0">
         <SidebarMenuButton onClick={toggleSidebar}>
           <Tooltip>
@@ -149,7 +149,7 @@ export function AppSidebar() {
                 <TooltipTrigger asChild>
                   <SidebarMenuButton
                     onClick={() => {
-                      router.push('/apps')
+                      router.push('/connectors')
                       if (isMobile) {
                         setOpenMobile(false)
                       }
@@ -157,10 +157,10 @@ export function AppSidebar() {
                     className="justify-start gap-2 data-[state=open]:px-2"
                   >
                     <LayoutGrid className="size-5 font-bold text-muted-foreground" />
-                    <span className='text-foreground/80'>Apps</span>
+                    <span className='text-foreground/80'>Connectors</span>
                   </SidebarMenuButton>
                 </TooltipTrigger>
-                <TooltipContent side="right" className='text-xs'>Apps</TooltipContent>
+                <TooltipContent side="right" className='text-xs'>Connectors</TooltipContent>
               </Tooltip>
             </SidebarMenuItem>
           </SidebarMenu>
@@ -174,7 +174,7 @@ export function AppSidebar() {
                       className="justify-start gap-2 data-[state=open]:px-2"
                     >
                       <CreditCard className="size-5 text-muted-foreground" />
-                      <span className='text-foreground/80'>Billing</span>
+                      <span className='text-foreground/80'>Manage Billing</span>
                     </SidebarMenuButton>
                   }
                 />

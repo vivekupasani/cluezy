@@ -4,7 +4,7 @@ import { ChatLoadingSkeleton } from "@/components/default-skeleton"
 import { Model } from "@/lib/types/models"
 import { cn } from "@/lib/utils"
 import { getCookie } from "@/lib/utils/cookies"
-import { ArrowUp, ChevronDown, Paperclip } from "lucide-react"
+import { ArrowUp, ChevronDown, Paperclip, WandSparkles } from "lucide-react"
 import { useEffect, useState } from "react"
 
 export default function TestPage() {
@@ -37,7 +37,7 @@ export default function TestPage() {
             "rounded-[20px]"
           )}>
             <div className="relative w-full">
-              <div className="w-full bg-transparent text-muted-foreground/60 outline-none text-[15px] leading-relaxed pt-2 px-2 min-h-[49px] cursor-not-allowed">
+              <div className="w-full bg-transparent text-muted-foreground/60 outline-none text-[15px] leading-relaxed pt-2 px-2 min-h-[53px] cursor-not-allowed">
                 Ask follow up questions or type @ to mention
               </div>
             </div>
@@ -50,6 +50,9 @@ export default function TestPage() {
                 <ChevronDown size={12} className="opacity-50" />
               </div>
               <div className="flex items-center gap-1.5 opacity-50">
+                <div className="size-8 rounded-full flex items-center justify-center text-muted-foreground">
+                  <WandSparkles size={16} />
+                </div>
                 <div className="size-8 rounded-full flex items-center justify-center text-muted-foreground">
                   <Paperclip size={16} />
                 </div>

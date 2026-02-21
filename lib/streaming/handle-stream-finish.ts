@@ -17,6 +17,7 @@ interface HandleStreamFinishParams {
   annotations?: ExtendedCoreMessage[]
   selectedApps?: string[],
   userPlanDetails?: UserPlanDetailsProps | null
+  isIncognito?: boolean
 }
 
 export async function handleStreamFinish({
@@ -29,7 +30,8 @@ export async function handleStreamFinish({
   skipRelatedQuestions = false,
   annotations = [],
   selectedApps = [],
-  userPlanDetails
+  userPlanDetails,
+  isIncognito = false
 }: HandleStreamFinishParams) {
   try {
     // Inject selected apps annotation as a separate data message before the user message
@@ -124,8 +126,8 @@ export async function handleStreamFinish({
       return
     }
 
-    // Return from here if user is not authenticated
-    if (userId == "anonymous") {
+    // Return from here if user is not authenticated or in incognito mode
+    if (userId == "anonymous" || isIncognito) {
       return
     }
 

@@ -34,24 +34,28 @@ export type Part = TextPart | ReasoningPart | ToolInvocationPart
 interface ArtifactState {
   part: Part | null
   isOpen: boolean
+  isIncognito: boolean
 }
 
 type ArtifactAction = { type: 'OPEN'; payload: Part } | { type: 'CLOSE' }
 
 const initialState: ArtifactState = {
   part: null,
-  isOpen: false
+  isOpen: false,
+  isIncognito: false
 }
 
 function artifactReducer(
   state: ArtifactState,
-  action: ArtifactAction
+  action: ArtifactAction | { type: 'SET_INCOGNITO'; payload: boolean }
 ): ArtifactState {
   switch (action.type) {
     case 'OPEN':
-      return { part: action.payload, isOpen: true }
+      return { ...state, part: action.payload, isOpen: true }
     case 'CLOSE':
       return { ...state, isOpen: false }
+    case 'SET_INCOGNITO':
+      return { ...state, isIncognito: action.payload }
     default:
       return state
   }
@@ -61,6 +65,7 @@ interface ArtifactContextValue {
   state: ArtifactState
   open: (part: Part) => void
   close: () => void
+  setIsIncognito: (value: boolean) => void
 }
 
 const ArtifactContext = createContext<ArtifactContextValue | undefined>(
@@ -87,8 +92,12 @@ export function ArtifactProvider({ children }: { children: ReactNode }) {
     setOpen(false)
   }
 
+  const setIsIncognito = (value: boolean) => {
+    dispatch({ type: 'SET_INCOGNITO', payload: value })
+  }
+
   return (
-    <ArtifactContext.Provider value={{ state, open, close }}>
+    <ArtifactContext.Provider value={{ state, open, close, setIsIncognito }}>
       {children}
     </ArtifactContext.Provider>
   )
