@@ -36,21 +36,6 @@ export const pricingPlans: pricingPlanProps[] = [
         ],
     },
     {
-        id: "starter",
-        name: "Starter",
-        price: 8,
-        cycle: "month",
-        priceId: "",
-        paymentLink: "",
-        popular: false,
-        description: "Smart research with limited searches and core AI features.",
-        features: [
-            { icon: Search, label: "500 searches per month" },
-            { icon: Cpu, label: "Advanced AI models" },
-            { icon: History, label: "Unlimited search history" },
-        ],
-    },
-    {
         id: "pro",
         name: "Pro",
         price: 15,
