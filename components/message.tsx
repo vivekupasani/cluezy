@@ -25,30 +25,30 @@ export function BotMessage({
 
   const baseComponents = {
     p: (props: any) => (
-      <p className="text-base leading-7 text-foreground/90 dark:text-foreground/95 my-3 first:mt-0 last:mb-0" {...props} />
+      <p className="text-base leading-6 text-foreground/90 my-3 tracking-wide first:mt-0 last:mb-0" {...props} />
     ),
     h1: (props: any) => (
-      <h1 className="text-2xl font-bold txt-grad leading-tight tracking-tight mt-6 mb-2" {...props} />
+      <h1 className="text-2xl font-bold txt-grad leading-tight tracking-wide mt-6 mb-2" {...props} />
     ),
     h2: (props: any) => (
-      <h2 className="text-xl font-semibold txt-grad leading-tight tracking-tight mt-5 mb-2" {...props} />
+      <h2 className="text-xl font-semibold txt-grad leading-tight tracking-wide mt-5 mb-2" {...props} />
     ),
     h3: (props: any) => (
-      <h3 className="text-lg font-semibold txt-grad leading-tight tracking-tight mt-4 mb-1" {...props} />
+      <h3 className="text-lg font-semibold txt-grad leading-tight tracking-wide mt-4 mb-1" {...props} />
     ),
     ul: (props: any) => (
-      <ul className="list-disc pl-6 my-3 space-y-1 text-base text-foreground/90 dark:text-foreground/95" {...props} />
+      <ul className="list-disc pl-6 my-3 space-y-1 text-base leading-6 tracking-wide text-foreground/90" {...props} />
     ),
     ol: (props: any) => (
-      <ol className="list-decimal pl-6 my-3 space-y-1 text-base text-foreground/90 dark:text-foreground/95" {...props} />
+      <ol className="list-decimal pl-6 my-3 space-y-1 text-base leading-6 tracking-wide text-foreground/90" {...props} />
     ),
     li: ({ node, ordered, index, checked, ...props }: any) => (
-      <li className="leading-5" {...props} />
+      <li className="leading-6 tracking-wide" {...props} />
     ),
-    strong: (props: any) => <strong className="font-semibold text-foreground/90 dark:text-foreground/95" {...props} />,
-    em: (props: any) => <em className="italic text-foreground/90 dark:text-foreground/95" {...props} />,
+    strong: (props: any) => <strong className="font-semibold text-foreground/90 tracking-wide" {...props} />,
+    em: (props: any) => <em className="italic text-foreground/90 tracking-wide" {...props} />,
     blockquote: (props: any) => (
-      <blockquote className="border-l-4 border-primary bg-muted/30 pl-4 py-2 pr-2 rounded-r-lg italic text-foreground/90 dark:text-foreground/95 my-6" {...props} />
+      <blockquote className="border-l-4 border-primary bg-muted/30 pl-4 py-2 pr-2 rounded-r-lg italic text-foreground/90 my-6 tracking-wide" {...props} />
     ),
     a: Citing,
     hr: (props: any) => (
@@ -59,28 +59,28 @@ export function BotMessage({
     ),
     // Table components
     table: (props: any) => (
-      <div className="my-6 overflow-x-auto rounded-lg border border-border bg-card max-w-[320px] sm:max-w-[350px] md:max-w-2xl">
-        <table className="divide-y divide-border text-sm" {...props} />
+      <div className="w-[90vw] md:w-full overflow-x-scroll my-6 rounded-xl border border-border bg-card">
+        <table className="min-w-full divide-y divide-border text-sm tracking-wide rounded-lg" {...props} />
       </div>
     ),
     thead: (props: any) => (
-      <thead className="bg-muted/50" {...props} />
+      <thead className="bg-muted/50 tracking-wide" {...props} />
     ),
     tbody: (props: any) => (
-      <tbody className="divide-y divide-border" {...props} />
+      <tbody className="divide-y divide-border tracking-wide" {...props} />
     ),
     tr: (props: any) => (
       <tr className="hover:bg-muted/30 transition-colors" {...props} />
     ),
     th: (props: any) => (
       <th
-        className="px-4 py-3 text-left font-semibold text-foreground bg-muted/30"
+        className="px-4 py-3 text-left font-semibold text-foreground bg-muted/30 tracking-wide"
         {...props}
       />
     ),
     td: (props: any) => (
       <td
-        className="px-4 py-3 text-foreground/80 dark:text-foreground/90 whitespace-nowrap"
+        className="px-4 py-3 text-foreground/80 whitespace-nowrap tracking-wide"
         {...props}
       />
     ),

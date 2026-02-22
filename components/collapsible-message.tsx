@@ -24,7 +24,7 @@ export function CollapsibleMessage({
   children,
   role,
   isCollapsible = false,
-  isOpen = true,
+  isOpen = false,
   header,
   onOpenChange,
   showBorder = true,
@@ -49,8 +49,8 @@ export function CollapsibleMessage({
       {isCollapsible ? (
         <div
           className={cn(
-            'flex-1 rounded-2xl py-4 bg-transparent dark:bg-transparent text-secondary-foreground dark:text-foreground/90',
-            showBorder && 'border border-border dark:border-border/50'
+            'flex-1 rounded-2xl py-4 bg-accent/35 dark:bg-card/30 text-secondary-foreground dark:text-foreground/90',
+            showBorder && 'border border-accent-foreground/5 dark:border-border/50'
           )}
         >
           <Collapsible

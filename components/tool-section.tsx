@@ -94,7 +94,7 @@ export function ToolSection({
 
     case 'xSearch':
       return (
-        <div className='mt-0'>
+        <div className='mt-0 mb-0'>
           <XSearchSection
             tool={tool}
             isOpen={isOpen}

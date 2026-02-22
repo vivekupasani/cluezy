@@ -33,7 +33,7 @@ export function SearchResults({
 
   // Logic for grid mode
   const displayedGridResults = showAllResults ? results : isMobile ? results.slice(0, 3) : results.slice(0, 7)
-  const additionalResultsCount = results.length > 3 ? results.length - 3 : 0
+  const additionalResultsCount = results.length > 3 ? results.length - 7 : 0
   const displayUrlName = (url: string) => {
     const hostname = new URL(url).hostname
     const parts = hostname.split('.')
@@ -96,7 +96,7 @@ export function SearchResults({
       {displayedGridResults.map((result, index) => (
         <div className="w-1/2 md:w-1/4 p-1" key={index}>
           <Link href={result.url} passHref target="_blank">
-            <div className="flex-1 h-full bg-card/40 dark:bg-sidebar/60 hover:bg-card/50 dark:hover:bg-sidebar/70 transition-colors backdrop-blur-sm drop-shadow-sm border border-border dark:border-border/70 rounded-lg">
+            <div className="flex-1 h-full bg-card/40 dark:bg-sidebar/40 hover:bg-card/50 dark:hover:bg-sidebar/60 transition-colors backdrop-blur-sm drop-shadow-none border border-border dark:border-border/50 rounded-lg">
               <div className="p-2 flex flex-col justify-between h-full">
                 <p className="text-xs line-clamp-2 min-h-[2rem] txt-grad">
                   {result.title || result.content}
@@ -123,7 +123,7 @@ export function SearchResults({
       ))}
       {!showAllResults && additionalResultsCount > 0 && (
         <div className="w-1/2 md:w-1/4 p-1">
-          <div className="flex-1 flex h-full items-center justify-center bg-card/40 dark:bg-sidebar/60 hover:bg-card/50 dark:hover:bg-sidebar/70 transition-colors backdrop-blur-sm drop-shadow-sm border border-border dark:border-border/40 rounded-lg">
+          <div className="flex-1 flex h-full items-center justify-center bg-card/40 dark:bg-sidebar/60 hover:bg-card/50 dark:hover:bg-sidebar/70 transition-colors backdrop-blur-sm drop-shadow-sm border border-border/70 dark:border-border/50 rounded-lg">
             <div className="p-2">
               <Button
                 className="bg-transparent hover:bg-transparent txt-grad hover:text-primary"
@@ -138,7 +138,7 @@ export function SearchResults({
 
       {showAllResults && additionalResultsCount > 0 && (
         <div className="w-1/2 md:w-1/4 p-1">
-          <div className="flex-1 flex h-full items-center justify-center bg-card/60 dark:bg-sidebar/60 hover:bg-card/50 dark:hover:bg-sidebar/70 transition-colors backdrop-blur-sm drop-shadow-sm border border-border dark:border-border/40 rounded-lg">
+          <div className="flex-1 flex h-full items-center justify-center bg-card/60 dark:bg-sidebar/60 hover:bg-card/50 dark:hover:bg-sidebar/70 transition-colors backdrop-blur-sm drop-shadow-sm border border-border/70 dark:border-border/50 rounded-lg">
             <div className="p-2">
               <Button
                 className="bg-transparent hover:bg-transparent txt-grad hover:text-primary"

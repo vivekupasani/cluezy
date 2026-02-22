@@ -93,7 +93,7 @@ export const UserMessage: React.FC<UserMessageProps> = ({
             </div>
           </div>
         ) : (
-          <div className="relative flex flex-col max-w-xs md:max-w-lg bg-accent dark:bg-card text-secondary-foreground dark:text-foreground/90 px-4 py-2.5 rounded-2xl border border-border/60 dark:border-border/40">
+          <div className="relative flex flex-col max-w-xs md:max-w-lg bg-foreground/10 dark:bg-accent/70 text-foreground dark:text-foreground/90 px-4 py-2.5 rounded-2xl border border-border/60 dark:border-border/40">
             {selectedApps && selectedApps.length > 0 && (
               <div className="flex flex-wrap gap-1.5 mb-2">
                 {selectedApps.map(app => {

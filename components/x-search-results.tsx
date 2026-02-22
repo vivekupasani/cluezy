@@ -12,7 +12,7 @@ interface XSearchResultsProps {
 
 export function XSearchResults({ results, isArtifect }: XSearchResultsProps) {
     return (
-        <div className={`flex flex-col gap-0 ${!isArtifect ? 'h-96 overflow-y-auto HiddenScrollbar' : 'h-full'}`}>
+        <div className={`flex flex-col gap-0 ${!isArtifect ? 'h-64 overflow-y-auto HiddenScrollbar' : 'h-full'}`}>
             {results.map((result) => (
                 <Link
                     key={result.id}

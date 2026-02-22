@@ -43,7 +43,7 @@ export function AnswerSection({
       <BotMessage message={content} />
       {showActions && (
         <MessageActions
-          message={content} // Keep original message content for copy
+          message={content}
           messageId={messageId}
           chatId={chatId || ''}
           enableShare={enableShare}
