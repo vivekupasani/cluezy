@@ -323,7 +323,7 @@ export function ChatPanel({
           {
             !user && messages.length > 0 && (
               <div className='bg-accent text-accent-foreground mx-4 py-2 text-sm rounded-t-2xl text-center px-4'>
-                You haven't logged in yet. Please <span className='text-primary font-semibold'>login</span> to increase your chat limits and save your chat history.
+                You haven't logged in yet. Please <Link href="/auth/login" className='text-primary font-semibold'>login</Link> to increase your chat limits and save your chat history.
               </div>
             )
           }
@@ -335,7 +335,7 @@ export function ChatPanel({
             // "shadow-sm",
             "rounded-[20px]",
             isDragging && "ring-2 ring-primary bg-primary/5 border-primary/50",
-            state.isIncognito && "border border-dashed border-primary dark:border-primary/30"
+            state.isIncognito && "border border-dashed border-primary dark:border-primary/60"
           )}
             onDragOver={handleDragOver}
             onDragLeave={handleDragLeave}
