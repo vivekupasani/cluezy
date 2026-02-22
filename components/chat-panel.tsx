@@ -334,7 +334,8 @@ export function ChatPanel({
             "ring-1 ring-border/20 border border-border dark:border-border",
             // "shadow-sm",
             "rounded-[20px]",
-            isDragging && "ring-2 ring-primary bg-primary/5 border-primary/50"
+            isDragging && "ring-2 ring-primary bg-primary/5 border-primary/50",
+            state.isIncognito && "border border-dashed border-primary dark:border-primary/30"
           )}
             onDragOver={handleDragOver}
             onDragLeave={handleDragLeave}

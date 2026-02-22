@@ -78,7 +78,7 @@ export function ChatArtifactContainer({
                   className={cn(
                     "size-9 rounded-full transition-all duration-300",
                     state.isIncognito
-                      ? "bg-accent text-primary border-secondary/30 dark:bg-secondary dark:text-secondary-foreground hover:bg-accent/90 hover:text-background/50"
+                      ? "bg-accent text-primary dark:bg-secondary dark:text-secondary-foreground hover:bg-accent/90 hover:text-background/50 border border-dashed border-primary/40 dark:border-primary/30"
                       : "bg-transparent hover:bg-background/50"
                   )}
                   onClick={() => {
@@ -98,7 +98,7 @@ export function ChatArtifactContainer({
 
         {state.isIncognito && (
           <div className="absolute top-16 md:top-12 left-1/2 md:left-1/2 -translate-x-1/2 md:-translate-x-1/2 z-30 pointer-events-none">
-            <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-accent/50 dark:bg-secondary/50 border border-primary/10 dark:border-secondary/60 backdrop-blur-sm animate-in fade-in slide-in-from-top-4 duration-500 fade-out slide-out-to-top-4">
+            <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-accent/50 dark:bg-secondary/50 border border-dashed border-primary/40 dark:border-primary/20 backdrop-blur-sm animate-in fade-in slide-in-from-top-4 duration-500 fade-out slide-out-to-top-4">
               <Ghost size={14} className="text-accent-foreground dark:text-secondary-foreground" />
               <span className="text-[10px] md:text-[11px] font-medium text-accent-foreground dark:text-secondary-foreground uppercase tracking-wider">Incognito Mode Active</span>
             </div>
