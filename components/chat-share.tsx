@@ -79,7 +79,7 @@ export function ChatShare({ chatId, className }: ChatShareProps) {
                 variant={'ghost'}
                 onClick={() => setOpen(true)}
               >
-                <Share size={14} className='text-foreground/70 hover:text-foreground transition-colors' />
+                <Share size={14} className='text-foreground hover:text-foreground transition-colors' />
               </Button>
             </TooltipTrigger>
             <TooltipContent side="bottom" className='text-xs'>

@@ -334,7 +334,7 @@ const SidebarTrigger = React.forwardRef<
           exit={{ opacity: 0 }}
           transition={{ duration: 0.2, ease: "easeInOut" }}
         >
-          {state === 'collapsed' ? <PanelRightClose size={18} /> : <PanelLeftClose size={18} />}
+          {state === 'collapsed' ? <PanelRightClose size={16} /> : <PanelLeftClose size={16} />}
         </motion.div>
       </AnimatePresence>
       <span className="sr-only">Toggle Sidebar</span>

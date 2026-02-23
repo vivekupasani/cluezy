@@ -24,12 +24,27 @@ export const CluezyLogo = ({ size = 30, className, ...props }: CluezyLogoProps) 
     }
     setCurrentTheme(theme);
   };
+
+  function getFillColor() {
+    switch (currentTheme) {
+      case "light":
+        return "#4f1d21";
+      case "dark":
+        return "#dcc6d0";
+      case "boring-light":
+        return "#171717";
+      case "boring-dark":
+        return "#fafafa";
+      default:
+        return "#4f1d21";
+    }
+  }
   return (
     <svg
       width={size}
       height={size}
       viewBox="0 0 24 24"
-      fill={currentTheme === "light" ? "#6c6c6b" : "#b4b4b4"}
+      fill={getFillColor()}
       xmlns="http://www.w3.org/2000/svg"
       {...props}
     >

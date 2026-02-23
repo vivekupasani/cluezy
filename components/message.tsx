@@ -25,7 +25,7 @@ export function BotMessage({
 
   const baseComponents = {
     p: (props: any) => (
-      <p className="text-base leading-6 text-foreground/90 my-3 tracking-wide first:mt-0 last:mb-0" {...props} />
+      <p className="text-base leading-6 text-foreground my-3 tracking-wide first:mt-0 last:mb-0" {...props} />
     ),
     h1: (props: any) => (
       <h1 className="text-2xl font-bold txt-grad leading-tight tracking-wide mt-6 mb-2" {...props} />
@@ -37,18 +37,18 @@ export function BotMessage({
       <h3 className="text-lg font-semibold txt-grad leading-tight tracking-wide mt-4 mb-1" {...props} />
     ),
     ul: (props: any) => (
-      <ul className="list-disc pl-6 my-3 space-y-1 text-base leading-6 tracking-wide text-foreground/90" {...props} />
+      <ul className="list-disc pl-6 my-3 space-y-1 text-base leading-6 tracking-wide text-foreground" {...props} />
     ),
     ol: (props: any) => (
-      <ol className="list-decimal pl-6 my-3 space-y-1 text-base leading-6 tracking-wide text-foreground/90" {...props} />
+      <ol className="list-decimal pl-6 my-3 space-y-1 text-base leading-6 tracking-wide text-foreground" {...props} />
     ),
     li: ({ node, ordered, index, checked, ...props }: any) => (
       <li className="leading-6 tracking-wide" {...props} />
     ),
-    strong: (props: any) => <strong className="font-semibold text-foreground/90 tracking-wide" {...props} />,
-    em: (props: any) => <em className="italic text-foreground/90 tracking-wide" {...props} />,
+    strong: (props: any) => <strong className="font-semibold text-foreground tracking-wide" {...props} />,
+    em: (props: any) => <em className="italic text-foreground tracking-wide" {...props} />,
     blockquote: (props: any) => (
-      <blockquote className="border-l-4 border-primary bg-muted/30 pl-4 py-2 pr-2 rounded-r-lg italic text-foreground/90 my-6 tracking-wide" {...props} />
+      <blockquote className="border-l-4 border-primary bg-muted/30 pl-4 py-2 pr-2 rounded-r-lg italic text-foreground my-6 tracking-wide" {...props} />
     ),
     a: Citing,
     hr: (props: any) => (

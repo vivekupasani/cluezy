@@ -87,7 +87,7 @@ export default function ConnectorsPageContent() {
                     Connectors
                 </h1>
 
-                <p className="text-muted-foreground text-base max-w-2xl mx-auto">
+                <p className="text-foreground text-base max-w-2xl mx-auto">
                     Chat with your favorite apps in Cluezy
                 </p>
             </header>

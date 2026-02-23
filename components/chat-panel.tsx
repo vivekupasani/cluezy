@@ -33,6 +33,7 @@ import { ModelSelector } from './model-selector'
 import { SearchModeToggle } from './search-mode-toggle'
 import { clearChatHistoryCache } from './sidebar/chat-history-client'
 import { Button } from './ui/button'
+import { useSidebar } from './ui/sidebar'
 import { Tooltip, TooltipContent, TooltipTrigger } from './ui/tooltip'
 
 // Add FileAttachment interface
@@ -106,6 +107,7 @@ export function ChatPanel({
   const isMobile = useIsMobile()
   const { user } = useAuth()
   const { state } = useArtifact()
+  const { open } = useSidebar()
   const pathName = usePathname()
   const [isDragging, setIsDragging] = useState(false)
 
@@ -274,7 +276,7 @@ export function ChatPanel({
   return (
     <div
       className={cn(
-        'w-full group/form-container shrink-0 mx-auto max-w-2xl px-2 md:px-0',
+        'w-full group/form-container mx-auto max-w-2xl px-2 md:px-0',
         messages.length > 0
           ? 'sticky bottom-0 pb-4 sm:pb-2'
           : 'px-2 sm:px-0'
@@ -310,7 +312,7 @@ export function ChatPanel({
             type="button"
             variant="outline"
             size="icon"
-            className="absolute -top-12 border border-foreground/5 right-4 z-20 size-8 rounded-full bg-card backdrop-blur-sm shadow-sm hover:bg-card/70 transition-all"
+            className="absolute -top-12 border border-foreground/5 right-4 z-20 size-8 rounded-full bg-accent/20 dark:bg-card backdrop-blur-sm shadow-sm hover:bg-card/70 transition-all"
             onClick={handleScrollToBottom}
             title="Scroll to bottom"
           >
@@ -330,7 +332,7 @@ export function ChatPanel({
 
           <div className={cn(
             "relative flex flex-col w-full p-2.5 transition-all duration-300",
-            "bg-card backdrop-blur-xl",
+            "bg-accent/20 dark:bg-card backdrop-blur-xl",
             "ring-1 ring-border/20 border border-border dark:border-border",
             // "shadow-sm",
             "rounded-[20px]",
@@ -436,7 +438,7 @@ export function ChatPanel({
                 value={input}
                 disabled={isToolInvocationInProgress()}
                 style={{ textIndent: selectedApps.length > 0 ? `${chipsWidth}px` : '0px' }}
-                className="w-full resize-none HiddenScrollbar bg-transparent text-foreground placeholder:text-muted-foreground/60 outline-none text-[15px] leading-relaxed py-2 px-2 disabled:cursor-not-allowed disabled:opacity-50 min-h-[44px]"
+                className="w-full resize-none HiddenScrollbar bg-transparent text-foreground placeholder:text-foreground/60 outline-none text-[15px] leading-relaxed py-2 px-2 disabled:cursor-not-allowed disabled:opacity-50 min-h-[44px]"
                 onChange={e => {
                   const newValue = e.target.value
                   const selectionStart = e.target.selectionStart || 0
@@ -530,7 +532,7 @@ export function ChatPanel({
                       size={'icon'}
                       variant={'ghost'}
                       className={cn(
-                        'size-8 rounded-full bg-transparent hover:bg-muted/60 border-border text-muted-foreground hover:text-foreground transition-all duration-200 border-0',
+                        'size-8 rounded-full bg-transparent hover:bg-muted/60 border-border text-foreground hover:text-foreground transition-all duration-200 border-0',
                         (isEnhancePromptLoading || isFileUploading) && 'animate-pulse duration-1000 bg-transparent opacity-50 cursor-not-allowed'
                       )}
                       onClick={handleEnhancePrompt}
@@ -552,7 +554,10 @@ export function ChatPanel({
                         size={'icon'}
                         variant={'ghost'}
                         onClick={handleNewChat}
-                        className="md:hidden size-8 rounded-full bg-transparent hover:bg-muted/60 border-border text-muted-foreground hover:text-foreground transition-all duration-200 border-0"
+                        className={cn(
+                          " size-8 rounded-full bg-transparent hover:bg-muted/60 border-border text-foreground hover:text-foreground transition-opacity duration-200 ease-in-out border-0",
+                          open && !isMobile && "hidden"
+                        )}
                         disabled={isLoading || isToolInvocationInProgress()}
                       >
                         <MessageCirclePlus size={18} />
@@ -570,7 +575,7 @@ export function ChatPanel({
                       size={'icon'}
                       variant={'ghost'}
                       className={cn(
-                        'size-8 rounded-full bg-transparent hover:bg-muted/60 border-border text-muted-foreground hover:text-foreground transition-all duration-200 border-0',
+                        'size-8 rounded-full bg-transparent hover:bg-muted/60 border-border text-foreground hover:text-foreground transition-all duration-200 border-0',
                         isFileUploading && 'opacity-50 cursor-not-allowed'
                       )}
                       onClick={handleFileButtonClick}
@@ -589,10 +594,10 @@ export function ChatPanel({
                       type={isLoading ? 'button' : 'submit'}
                       size={'icon'}
                       variant={'ghost'}
+                      disabled={!isLoading && (input.length === 0 || isFileUploading)}
                       className={cn(
                         'size-8 transition-all duration-200 rounded-lg',
                         'bg-primary text-primary-foreground hover:bg-primary/80 hover:text-primary-foreground',
-                        isLoading && 'bg-destructive text-destructive-foreground hover:bg-destructive/80 hover:text-destructive-foreground'
                       )}
                       onClick={isLoading ? stop : undefined}
                     >
@@ -612,14 +617,14 @@ export function ChatPanel({
       </form>
 
       {messages.length === 0 && (
-        <div className="mb-8">
+        <div className="mb-8 md:mb-[80px]">
           <EmptyScreen
             submitMessage={message => {
               handleInputChange({
                 target: { value: message }
               } as React.ChangeEvent<HTMLTextAreaElement>)
             }}
-            className={cn(showEmptyScreen ? 'visible' : 'invisible', input.length !== 0 ? 'opacity-0 mb-8 transition-opacity duration-200' : 'opacity-100 mb-8 transition-opacity duration-200')}
+            className={cn(showEmptyScreen ? 'visible' : 'invisible', input.length !== 0 ? 'opacity-0 md:hidden transition-opacity duration-200' : 'opacity-100 md:hidden transition-opacity duration-200')}
           />
         </div>
       )}

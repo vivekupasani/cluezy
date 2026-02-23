@@ -12,16 +12,24 @@ export function ThemeMenuItems() {
   return (
     <>
       <DropdownMenuItem onClick={() => setTheme('light')} className='cursor-pointer'>
-        <Sun className="mr-2 h-4 w-4 text-foreground/70" />
-        <span className='text-foreground/70 font-medium'>Light</span>
+        <Sun className="mr-2 h-4 w-4 text-foreground" />
+        <span className='text-foreground font-medium'>Light</span>
       </DropdownMenuItem>
       <DropdownMenuItem onClick={() => setTheme('dark')} className='cursor-pointer'>
-        <Moon className="mr-2 h-4 w-4 text-foreground/70" />
-        <span className='text-foreground/70 font-medium'>Dark</span>
+        <Moon className="mr-2 h-4 w-4 text-foreground" />
+        <span className='text-foreground font-medium'>Dark</span>
       </DropdownMenuItem>
       <DropdownMenuItem onClick={() => setTheme('system')} className='cursor-pointer'>
-        <Laptop className="mr-2 h-4 w-4 text-foreground/70" />
-        <span className='text-foreground/70 font-medium'>System</span>
+        <Laptop className="mr-2 h-4 w-4 text-foreground" />
+        <span className='text-foreground font-medium'>System</span>
+      </DropdownMenuItem>
+      <DropdownMenuItem onClick={() => setTheme('boring-light')} className='cursor-pointer'>
+        <Sun className="mr-2 h-4 w-4 text-foreground" />
+        <span className='text-foreground font-medium'>Boring Light</span>
+      </DropdownMenuItem>
+      <DropdownMenuItem onClick={() => setTheme('boring-dark')} className='cursor-pointer'>
+        <Moon className="mr-2 h-4 w-4 text-foreground" />
+        <span className='text-foreground font-medium'>Boring Dark</span>
       </DropdownMenuItem>
     </>
   )

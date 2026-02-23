@@ -53,17 +53,17 @@ export default function GuestMenu({ state }: { state: "expanded" | "collapsed" }
     {
       name: 'X',
       href: 'https://x.com/v1vekupasani',
-      icon: <SiX className="mr-2 h-4 w-4 text-foreground/70" />
+      icon: <SiX className="mr-2 h-4 w-4 text-foreground" />
     },
     {
       name: 'Linkedin',
       href: 'https://www.linkedin.com/company/cluezy',
-      icon: <SiLinkedin className="mr-2 h-4 w-4 text-foreground/70" />
+      icon: <SiLinkedin className="mr-2 h-4 w-4 text-foreground" />
     },
     {
       name: 'Instagram',
       href: 'https://www.instagram.com/v1vekupasani/',
-      icon: <SiInstagram className="mr-2 h-4 w-4 text-foreground/70" />
+      icon: <SiInstagram className="mr-2 h-4 w-4 text-foreground" />
     }
   ]
 
@@ -74,15 +74,15 @@ export default function GuestMenu({ state }: { state: "expanded" | "collapsed" }
           className={`group flex items-center gap-2 w-full px-2 py-2 rounded-lg hover:bg-sidebar-accent transition`}
         >
           <div className="relative flex shrink-0 overflow-hidden">
-            <Settings size={16} className='text-muted-foreground' />
+            <Settings size={16} className='text-foreground font-normal' />
           </div>
 
-          <div className="flex flex-col text-foreground/80 text-left truncate text-sm">
+          <div className="flex flex-col text-foreground text-left truncate text-sm font-normal">
             Settings & Help center
           </div>
         </button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="w-56 dark:border-border/50 ml-6" align="end" forceMount>
+      <DropdownMenuContent className="w-56 dark:border-border/50 ml-6 rounded-lg" align="end" forceMount>
         <DropdownMenuItem asChild>
           <Link
             onClick={() => {
@@ -91,15 +91,15 @@ export default function GuestMenu({ state }: { state: "expanded" | "collapsed" }
               }
             }}
             href="/auth/login" className='cursor-pointer'>
-            <LogIn className="mr-2 h-4 w-4 text-foreground/70" />
-            <span className='text-foreground/70 font-medium text-sm'>Sign In</span>
+            <LogIn className="mr-2 h-4 w-4 text-foreground" />
+            <span className='text-foreground font-normal text-sm'>Sign In</span>
           </Link>
         </DropdownMenuItem>
         <DropdownMenuSeparator />
         <DropdownMenuSub>
           <DropdownMenuSubTrigger className='cursor-pointer'>
-            <Palette className="mr-2 h-4 w-4 text-foreground/70" />
-            <span className='text-foreground/70 font-medium'>Theme</span>
+            <Palette className="mr-2 h-4 w-4 text-foreground" />
+            <span className='text-foreground font-normal'>Theme</span>
           </DropdownMenuSubTrigger>
           <DropdownMenuSubContent>
             <ThemeMenuItems />
@@ -107,8 +107,8 @@ export default function GuestMenu({ state }: { state: "expanded" | "collapsed" }
         </DropdownMenuSub>
         {/* <DropdownMenuSub>
           <DropdownMenuSubTrigger className='cursor-pointer'>
-            <Link2 className="mr-2 h-4 w-4 text-foreground/70" />
-            <span className='text-foreground/70 font-medium'>Links</span>
+            <Link2 className="mr-2 h-4 w-4 text-foreground" />
+            <span className='text-foreground font-normal'>Links</span>
           </DropdownMenuSubTrigger>
           <DropdownMenuSubContent>
             <ExternalLinkItems />
@@ -116,8 +116,8 @@ export default function GuestMenu({ state }: { state: "expanded" | "collapsed" }
         </DropdownMenuSub>
         <DropdownMenuSub>
           <DropdownMenuSubTrigger className='cursor-pointer'>
-            <LucideBadgeAlert className="mr-2 h-4 w-4 text-foreground/70" />
-            <span className='text-foreground/70 font-medium'>Company Info</span>
+            <LucideBadgeAlert className="mr-2 h-4 w-4 text-foreground" />
+            <span className='text-foreground font-normal'>Company Info</span>
           </DropdownMenuSubTrigger>
           <DropdownMenuSubContent>
             <CompanyInfoItems />
@@ -131,9 +131,9 @@ export default function GuestMenu({ state }: { state: "expanded" | "collapsed" }
             >
               <Link href={link.href} target="_blank" rel="noopener noreferrer" className='flex items-center justify-between'>
                 {link.icon}
-                <span className='text-foreground/70 font-medium text-sm'>{link.name}</span>
+                <span className='text-foreground font-normal text-sm'>{link.name}</span>
               </Link>
-              <ExternalLink className="ml-auto h-4 w-4 text-foreground/70" />
+              <ExternalLink className="ml-auto h-4 w-4 text-foreground" />
             </DropdownMenuItem>
           ))
         }

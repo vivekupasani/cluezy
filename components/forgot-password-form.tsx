@@ -64,7 +64,7 @@ export function ForgotPasswordForm({
           </Card>
         </div>
       ) : (
-        <div className='w-full h-full max-w-[400px] rounded-2xl bg-muted/80 dark:border-none border border-muted-foreground/10 backdrop-blur-xl p-2'>
+        <div className='w-full h-full max-w-[400px] rounded-2xl bg-muted dark:bg-secondary/70 dark:border-none border border-muted-foreground/10 backdrop-blur-xl p-2'>
           <Card className='w-full h-full max-w-[400px] rounded-xl bg-background drop-shadow-xl'>
             <CardHeader>
               <CardTitle className="text-2xl txt-grad">Reset Your Password</CardTitle>

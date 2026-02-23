@@ -197,11 +197,11 @@ export function ChatMenuItem({ chat }: ChatMenuItemProps) {
           <div className="flex flex-col gap-0.5 overflow-hidden">
             <span className={cn(
               "text-sm font-medium truncate leading-tight",
-              isActive ? "text-foreground" : "text-foreground/80 group-hover:text-foreground"
+              isActive ? "text-foreground" : "text-foreground group-hover:text-foreground"
             )}>
               {chat.title || "Untitled conversation"}
             </span>
-            <span className="text-[10px] text-muted-foreground/50 font-medium tracking-tight">
+            <span className="text-[10px] text-muted-foreground font-medium tracking-tight">
               {formatDateWithTime(chat.createdAt)}
             </span>
           </div>
@@ -217,7 +217,7 @@ export function ChatMenuItem({ chat }: ChatMenuItemProps) {
               e.preventDefault()
               setIsRenameClicked(true)
             }}
-            className="p-1.5 text-muted-foreground/80 hover:text-foreground hover:bg-background rounded-lg"
+            className="p-1.5 text-foreground hover:text-foreground hover:bg-background rounded-lg"
             title="Rename"
           >
             <Edit size={14} />
@@ -227,7 +227,7 @@ export function ChatMenuItem({ chat }: ChatMenuItemProps) {
               e.preventDefault()
               setIsDeleteClicked(true)
             }}
-            className="p-1.5 text-muted-foreground/80 hover:text-destructive hover:bg-destructive/5 rounded-lg"
+            className="p-1.5 text-foreground hover:text-destructive hover:bg-destructive/5 rounded-lg"
             title="Delete"
           >
             <Trash2 size={14} />

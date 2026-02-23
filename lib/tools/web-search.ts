@@ -26,7 +26,9 @@ export function createWebSearchTool(globalExcludeDomains: string[] = []) {
                         contents: {
                             highlights: {
                                 maxCharacters: 4000
-                            }
+                            },
+                            text: true,
+                            livecrawl: "fallback",
                         },
                         excludeDomains: mergedExcludeDomains,
                     }),

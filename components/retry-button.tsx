@@ -25,7 +25,7 @@ export const RetryButton: React.FC<RetryButtonProps> = ({
           onClick={() => reload()}
           aria-label={`Retry from message ${messageId}`}
         >
-          <RotateCcw size={14} className="text-foreground/70 hover:text-foreground transition-colors" />
+          <RotateCcw size={14} className="text-foreground hover:text-foreground transition-colors" />
           <span className="sr-only">Try again</span>
         </Button>
       </TooltipTrigger>

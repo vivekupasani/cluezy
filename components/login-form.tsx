@@ -87,7 +87,7 @@ export function LoginForm({
       className={cn('flex flex-col items-center justify-center gap-3', className)}
       {...props}
     >
-      <div className='w-full h-full max-w-[400px] rounded-2xl bg-muted/80 dark:border-none border border-muted-foreground/10 backdrop-blur-xl p-2'>
+      <div className='w-full h-full max-w-[400px] rounded-2xl bg-muted dark:bg-secondary/70 dark:border-none border border-muted-foreground/10 backdrop-blur-xl p-2'>
         <Card className="w-full h-full max-w-[400px] rounded-xl bg-background drop-shadow-xl">
           <CardHeader className="text-center">
             <CardTitle className="text-2xl txt-grad flex flex-col items-center justify-center gap-4">
@@ -179,7 +179,7 @@ export function LoginForm({
       </div>
 
       <div className='text-xs mt-5 text-center txt-mut'>
-        By continuing, you agree to our <br /><Link href="/terms" className="hover:underline text-foreground/70">Terms of Service</Link> and <Link href="/privacy" className="hover:underline text-foreground/70">Privacy Policy</Link>.
+        By continuing, you agree to our <Link href="/terms" className="underline text-foreground/70">Terms of Service</Link> and <Link href="/privacy" className="underline text-foreground/70">Privacy Policy</Link>.
       </div>
     </div>
   )

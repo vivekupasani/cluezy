@@ -240,7 +240,7 @@ export const DownloadResponse = ({ message, chatId }: { message: string; chatId:
                             type="button"
                             variant="ghost"
                             size="icon">
-                            <Download size={14} className="text-foreground/70 hover:text-foreground transition-colors" />
+                            <Download size={14} className="text-foreground hover:text-foreground transition-colors" />
                         </Button>
                     </DropdownMenuTrigger>
                 </TooltipTrigger>

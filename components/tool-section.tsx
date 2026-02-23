@@ -3,6 +3,7 @@
 import { ToolInvocation } from 'ai'
 
 import { PROVIDER_MAP } from '@/lib/connectors/types'
+import { AcadamicSection } from './acadamic-section'
 import { ConnectorSearchSection } from './connector-search-section'
 import { DateTimeSection } from './datetime-section'
 import { DocumentSection } from './doument-section'
@@ -83,7 +84,7 @@ export function ToolSection({
     case 'acadamicSearch':
       return (
         <div className='mt-0'>
-          <SearchSection
+          <AcadamicSection
             tool={tool}
             isOpen={isOpen}
             onOpenChange={onOpenChange}

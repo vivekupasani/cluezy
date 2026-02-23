@@ -100,7 +100,7 @@ export function VideoResultGrid({
                 </CardContent>
               </Card>
               {showOverlay && (
-                <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/40 text-white backdrop-blur-[0.5px] transition-colors group-hover:bg-black/50 rounded-xl">
+                <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/20 text-white backdrop-blur-[0.5px] transition-colors group-hover:bg-black/50 rounded-xl">
                   <PlusCircle className="mb-1 h-6 w-6" />
                   <span className="text-[10px] font-medium uppercase tracking-wider">
                     +{videos.length - 4} More

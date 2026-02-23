@@ -66,9 +66,9 @@ export function GithubSearchResults({ results, isArtifect }: GithubSearchResults
                         rel="noopener noreferrer"
                         className="block"
                     >
-                        <Card className="w-full bg-transparent hover:bg-muted/50 border-none border-b border-transparent">
-                            <CardContent className="p-3">
-                                <div className="flex items-start gap-2">
+                        <Card className="w-full bg-transparent hover:bg-muted/50 border-none shadow-none">
+                            <CardContent className="p-2">
+                                <div className="flex items-center gap-2">
                                     <Avatar className="h-8 w-8 flex-shrink-0 rounded-md">
                                         <AvatarImage
                                             src={favicon || `https://github.com/${info.owner}.png`}
@@ -98,7 +98,7 @@ export function GithubSearchResults({ results, isArtifect }: GithubSearchResults
                                         )}
 
                                         {cleanedText && (
-                                            <div className="text-xs text-foreground/80 line-clamp-2 prose prose-sm max-w-none">
+                                            <div className="text-xs text-foreground/80 line-clamp-1 prose prose-sm max-w-none">
                                                 {cleanedText}
                                             </div>
                                         )}

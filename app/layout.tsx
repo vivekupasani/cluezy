@@ -138,7 +138,7 @@ export default async function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body
         className={cn(
-          'h-full flex flex-col font-sans antialiased',
+          'h-screen flex flex-col font-sans antialiased',
           fontSans.variable
         )}
         suppressHydrationWarning
@@ -151,8 +151,9 @@ export default async function RootLayout({
                 defaultTheme="system"
                 enableSystem
                 disableTransitionOnChange
+                themes={['light', 'dark', 'system', 'boring-light', 'boring-dark']}
               >
-                <SidebarProvider defaultOpen={false}>
+                <SidebarProvider defaultOpen={true}>
                   <div className="relative flex flex-row flex-1">
                     <React.Suspense fallback={null}>
                       <AppSidebar />

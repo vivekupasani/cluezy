@@ -13,7 +13,7 @@ import { useIsMobile } from '@/hooks/use-mobile'
 import { CollapsibleMessage } from './collapsible-message'
 import { SearchSkeleton } from './default-skeleton'
 import { SearchResults } from './search-results'
-import { ToolArgsSection } from './section'
+import { Section, ToolArgsSection } from './section'
 // import { XSearchResults } from './x-search-results' // This line is removed as per instruction
 
 interface SearchSectionProps {
@@ -71,14 +71,13 @@ export function SearchSection({
         showIcon={false}
       >
         {isLoading && isToolLoading ? (
-          <div>
+          <Section title="Web Search Results">
             <SearchSkeleton />
-            {/* <Section title="Images">
-              <ImageSkeleton />
-            </Section> */}
-          </div>
+          </Section>
         ) : searchResults?.results ? (
-          <SearchResults results={searchResults.results} />
+          <Section title="Web Search Results">
+            <SearchResults results={searchResults.results} />
+          </Section>
         ) : null}
 
         {/* {searchResults &&

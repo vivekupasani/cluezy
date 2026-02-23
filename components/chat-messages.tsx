@@ -122,7 +122,7 @@ export function ChatMessages({
       role="list"
       aria-roledescription="chat messages"
       className={cn(
-        'relative size-full pt-14 HiddenScrollbar ',
+        'relative size-full pt-[70px] md:pt-14 HiddenScrollbar',
         sections.length > 0 ? 'flex-1 overflow-y-auto' : ''
       )}
     >

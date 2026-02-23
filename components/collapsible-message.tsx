@@ -49,7 +49,7 @@ export function CollapsibleMessage({
       {isCollapsible ? (
         <div
           className={cn(
-            'flex-1 rounded-2xl py-4 bg-accent/35 dark:bg-card/30 text-secondary-foreground dark:text-foreground/90',
+            'flex-1 rounded-2xl py-4 bg-muted/60 dark:bg-card/40 text-secondary-foreground dark:text-foreground/90 max-w-2xl',
             showBorder && 'border border-accent-foreground/5 dark:border-border/50'
           )}
         >

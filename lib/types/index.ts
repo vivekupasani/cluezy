@@ -35,6 +35,11 @@ export type SearchResultItem = {
     url: string
     content: string
     summary?: string
+    highlights: any
+    favicon?: string
+    image?: string
+    publishedDate?: string
+    text?: string
 }
 
 export type ExaSearchResultItem = {

@@ -24,11 +24,11 @@ export default function PaymentSuccessfulPage() {
         <>
             <div
                 className={`
-          min-h-screen flex items-center justify-center p-5 sm:p-8
-          bg-background text-foreground
-          transition-opacity duration-700
-          ${visible ? "opacity-100" : "opacity-0"}
-        `}
+                    min-h-screen flex items-center justify-center p-5 sm:p-8
+                    bg-background text-foreground
+                    transition-opacity duration-700
+                    ${visible ? "opacity-100" : "opacity-0"}
+                `}
             >
                 <div className="w-full max-w-md space-y-8">
 
@@ -43,10 +43,7 @@ export default function PaymentSuccessfulPage() {
                     {/* Heading */}
                     <div className="space-y-3">
                         <h1
-                            className="
-                font-serif text-4xl sm:text-5xl font-normal tracking-tight
-                text-foreground
-              "
+                            className="font-serif text-4xl sm:text-5xl font-normal tracking-tight text-foreground"
                             style={{ fontFamily: "var(--font-serif)" }}
                         >
                             Thank You<span className="text-foreground/70">.</span>
@@ -58,10 +55,7 @@ export default function PaymentSuccessfulPage() {
 
                     {/* Plan details */}
                     <div
-                        className="
-              rounded-xl border bg-muted dark:bg-card p-5 shadow-sm
-              space-y-4
-            "
+                        className="rounded-xl border bg-muted dark:bg-card p-5 shadow-sm space-y-4"
                     >
                         <div className="flex items-center justify-between gap-4">
                             <div>
@@ -83,20 +77,14 @@ export default function PaymentSuccessfulPage() {
 
                             <div className="flex shrink-0 items-center gap-2.5">
                                 <span
-                                    className="
-                    inline-flex items-center rounded-full border border-primary/20
-                    bg-primary/5 px-3 py-1 text-xs font-medium text-primary
-                  "
+                                    className="inline-flex items-center rounded-full border border-primary/20 bg-primary/5 px-3 py-1 text-xs font-medium text-primary"
                                 >
                                     <span className="mr-1.5 h-2 w-2 rounded-full bg-primary" />
                                     Active
                                 </span>
 
                                 <span
-                                    className="
-                    rounded-md border bg-muted px-2.5 py-1 text-xs font-medium
-                    text-muted-foreground
-                  "
+                                    className="rounded-md border bg-muted px-2.5 py-1 text-xs font-medium text-muted-foreground"
                                 >
                                     {billingLabel}
                                 </span>
@@ -107,29 +95,24 @@ export default function PaymentSuccessfulPage() {
                     {/* CTA */}
                     <Button
                         onClick={() => router.replace("/")}
-                        className={`
-              group relative flex w-full items-centerjustify-center
-              rounded-xl bg-primary px-6 py-4 text-base font-medium
-              text-primary-foreground shadow transition-all
-              hover:bg-primary/95 hover:shadow-md active:scale-[0.99]
-            `}
+                        className="group relative flex w-full items-centerjustify-center rounded-xl bg-primary px-6 py-4 text-base font-medium text-primary-foreground shadow transition-all hover:bg-primary/95 hover:shadow-md active:scale-[0.99]"
                     >
                         <span>Return to Home</span>
                     </Button>
 
                     {/* Footer links */}
-                    <p className="text-center text-sm text-muted-foreground/70">
+                    <p className="text-center text-sm text-muted-foreground">
                         Questions?{" "}
                         <a
                             href="mailto:cluezyai@gmail.com"
-                            className="text-muted-foreground hover:text-foreground underline underline-offset-4 transition-colors"
+                            className="text-foreground hover:text-foreground underline underline-offset-4 transition-colors"
                         >
                             Contact support
                         </a>{" "}
                         •{" "}
                         <Link
                             href={STRIPE_BILLING_URL}
-                            className="text-muted-foreground hover:text-foreground underline underline-offset-4 transition-colors"
+                            className="text-foreground hover:text-foreground underline underline-offset-4 transition-colors"
                         >
                             Manage billing
                         </Link>

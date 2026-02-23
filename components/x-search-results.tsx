@@ -21,15 +21,15 @@ export function XSearchResults({ results, isArtifect }: XSearchResultsProps) {
                     rel="noopener noreferrer"
                     className="block"
                 >
-                    <Card className="w-full bg-transparent hover:bg-muted/50 border-none border-b border-transparent">
-                        <CardContent className="p-4">
+                    <Card className="w-full bg-transparent hover:bg-muted/50 border-none shadow-none">
+                        <CardContent className="p-3">
                             <div className="flex items-center space-x-3">
                                 <Avatar className="h-8 w-8 flex-shrink-0">
                                     <AvatarImage
                                         src={`https://unavatar.io/twitter/${result.author.replace('@', '')}`}
                                         alt={result.author}
                                     />
-                                    <AvatarFallback>{result.author[0]?.toUpperCase() || 'X'}</AvatarFallback>
+                                    <AvatarFallback className='h-8 w-8'>{result.author[0]?.toUpperCase() || 'X'}</AvatarFallback>
                                 </Avatar>
                                 <div className="flex-1 min-w-0">
                                     <div className="flex items-center space-x-2 mb-1">

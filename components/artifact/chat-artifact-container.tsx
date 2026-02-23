@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react'
 
 import { useMediaQuery } from '@/lib/hooks/use-media-query'
 import { cn } from '@/lib/utils'
-import { Ghost } from 'lucide-react'
+import { Ghost, Search } from 'lucide-react'
 
 import {
   ResizableHandle,
@@ -16,7 +16,9 @@ import { SidebarTrigger, useSidebar } from '@/components/ui/sidebar'
 import { InspectorDrawer } from '@/components/inspector/inspector-drawer'
 import { InspectorPanel } from '@/components/inspector/inspector-panel'
 
+import { motion } from 'motion/react'
 import { usePathname } from 'next/navigation'
+import { useHistoryDialog } from '../history-dialog'
 import { Button, Tooltip, TooltipContent, TooltipTrigger } from '../ui'
 import { useArtifact } from './artifact-context'
 export function ChatArtifactContainer({
@@ -29,6 +31,7 @@ export function ChatArtifactContainer({
   const [renderPanel, setRenderPanel] = useState(state.isOpen)
   const { open, openMobile, isMobile: isMobileSidebar } = useSidebar()
   const pathName = usePathname()
+  const { setHistoryDialogIsOpen } = useHistoryDialog()
 
   useEffect(() => {
     if (state.isOpen) {
@@ -49,26 +52,44 @@ export function ChatArtifactContainer({
     "/auth/forgot-password",
     "/auth/confirm",
     "/auth/error",
-    isMobile && '/privacy', '/about', '/terms', '/premium'
+    '/privacy', '/about', '/terms', '/premium'
   ]
 
   return (
     <div className="flex-1 min-h-0 h-screen flex relative">
-      <div className="absolute p-2 md:p-2 z-50 bg-background/50 backdrop-blur-lg md:bg-transparent md:backdrop-blur-none w-full flex justify-between items-center pointer-events-none">
-        <div className="flex items-center gap-2 pointer-events-auto">
-          {(!open || isMobileSidebar) && !pages.includes(pathName) && !pathName.includes("/connectors") && (
+      <div className={`absolute p-2 md:p-2 z-50 bg-background/50 backdrop-blur-lg md:bg-transparent md:backdrop-blur-none w-full flex ${open && !isMobileSidebar ? 'justify-end' : 'justify-between'} items-center pointer-events-none`}>
+        {(!open || isMobileSidebar) && !pages.includes(pathName) && !pathName.includes("/connectors") && (
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: 20 }}
+            transition={{ duration: 0.3 }}
+            className="flex items-center gap-3 pointer-events-auto bg-sidebar px-3 py-2.5 rounded-lg">
             <Tooltip>
               <TooltipTrigger asChild>
-                <SidebarTrigger className='text-muted-foreground md:hidden' />
+                <SidebarTrigger className='text-foreground' />
               </TooltipTrigger>
-              <TooltipContent side="right" className='text-xs'>
+              <TooltipContent side="bottom" className='text-xs ml-2 mt-3'>
                 Toggle Sidebar
               </TooltipContent>
             </Tooltip>
-          )}
-        </div>
 
-        <div className="flex items-center gap-2 pointer-events-auto">
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <div className='flex items-center justify-center'>
+                  <Search size={16} onClick={() => setHistoryDialogIsOpen(true)} className="cursor-pointer text-foreground font-medium hover:bg-accent hover:text-accent-foreground rounded-full" />
+                </div>
+              </TooltipTrigger>
+              <TooltipContent side="bottom" className='text-xs ml-2 mt-3'>
+                Search
+              </TooltipContent>
+            </Tooltip>
+          </motion.div>
+        )}
+
+        <div className={cn("flex items-center gap-2 pointer-events-auto mt-0",
+          open && !isMobileSidebar ? "mt-2 transition-all duration-300 ease-in-out" : "mt-0 transition-all duration-300 ease-in-out"
+        )}>
           {!pages.includes(pathName) && !pathName.includes("/connectors") && (
             <Tooltip>
               <TooltipTrigger asChild>
@@ -86,7 +107,7 @@ export function ChatArtifactContainer({
                     setIsIncognito(newValue)
                   }}
                 >
-                  <Ghost size={18} className={cn("text-muted-foreground", state.isIncognito && "text-accent-foreground")} />
+                  <Ghost size={16} className={cn("text-muted-foreground", state.isIncognito && "text-accent-foreground")} />
                 </Button>
               </TooltipTrigger>
               <TooltipContent side="bottom" className='mr-3 opacity-0 md:opacity-100'>

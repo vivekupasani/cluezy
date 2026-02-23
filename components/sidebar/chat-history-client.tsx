@@ -75,7 +75,7 @@ function ChatHistoryList({
         <p className="text-sm font-medium text-foreground/80 mb-1">
           {searchQuery ? 'No results found' : 'No chat history'}
         </p>
-        <p className="text-xs text-muted-foreground max-w-[240px] leading-relaxed">
+        <p className="text-xs text-foreground max-w-[240px] leading-relaxed">
           {searchQuery
             ? 'We couldn\'t find any conversations matching your search.'
             : 'Your conversation history will appear here once you start chatting.'}
@@ -91,7 +91,7 @@ function ChatHistoryList({
       <div key={label} className="mb-6 last:mb-0">
         {!compact && (
           <div className="px-4 mb-2">
-            <h3 className="text-[11px] font-semibold text-muted-foreground/50 uppercase tracking-wider">
+            <h3 className="text-[11px] font-semibold text-foreground uppercase tracking-wider">
               {label}
             </h3>
           </div>
@@ -408,13 +408,13 @@ export function ChatHistoryClient() {
       <DialogContent className="w-[95%] md:w-full max-w-2xl h-[70vh] sm:h-[70vh] p-0 bg-background/95 backdrop-blur-sm text-popover-foreground border-none rounded-2xl overflow-hidden flex flex-col gap-0 cosmic-glass HiddenScrollbar">
         <div className="flex-shrink-0 py-2 px-4">
           <div className="flex items-center gap-3 mb-1">
-            <Search size={16} className="text-muted-foreground" />
+            <Search size={16} className="text-foreground" />
             <input
               placeholder="Search titles and messages..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               autoFocus={false}
-              className="border-none bg-transparent focus:outline-none text-sm h-8 flex-1 placeholder-txt-mut text-foreground/90"
+              className="border-none bg-transparent focus:outline-none text-sm h-8 flex-1 placeholder-txt-mut text-foreground"
             />
             {/* <button
               onClick={handleRefresh}
@@ -453,10 +453,10 @@ export function ChatHistoryClient() {
 
         <div className="flex-none border-t border-border/50 bg-background/50 px-4 md:px-6 py-3">
           <div className="flex items-center justify-between text-xs">
-            <span className="text-muted-foreground/50 font-medium">
+            <span className="text-foreground font-medium">
               {hasChats ? `${groups.thisWeek.length + groups.lastWeek.length + groups.thisMonth.length + groups.older.length} conversations` : 'No conversations'}
             </span>
-            <kbd className="hidden md:inline-flex items-center gap-1 px-2 py-1 bg-muted/30 border border-border/40 rounded-md text-[10px] text-muted-foreground/60 font-mono">
+            <kbd className="hidden md:inline-flex items-center gap-1 px-2 py-1 bg-muted/30 border border-border/40 rounded-md text-[10px] text-foreground font-mono">
               <span>⌘</span>
               <span>K</span>
             </kbd>

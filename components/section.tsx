@@ -63,6 +63,14 @@ export const Section: React.FC<SectionProps> = ({
       icon = <Twitter size={iconSize} className={iconClassName} />
       type = 'badge'
       break
+    case 'Web Search Results':
+      icon = <Search size={iconSize} className={iconClassName} />
+      type = 'badge'
+      break
+    case 'Academic Search Results':
+      icon = <BookCheck size={iconSize} className={iconClassName} />
+      type = 'badge'
+      break
     case 'Github Search Results':
       icon = <Github size={iconSize} className={iconClassName} />
       type = 'badge'

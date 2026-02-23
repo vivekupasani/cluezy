@@ -13,12 +13,14 @@ import { createClient } from '@/lib/supabase/client'
 import { Model } from '@/lib/types/models'
 import { cn } from '@/lib/utils'
 
+import { useIsMobile } from '@/hooks/use-mobile'
 import { useArtifact } from './artifact/artifact-context'
 import { ChatMessages } from './chat-messages'
 import { ChatPanel } from './chat-panel'
 import { useHistoryDialog } from './history-dialog'
 import { Button } from './ui'
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from './ui/dialog'
+import { useSidebar } from './ui/sidebar'
 
 // Define section structure
 interface ChatSection {
@@ -73,6 +75,7 @@ export function Chat({
   const [excludedDomains, setExcludedDomains] = useState<string[]>([])
   const [selectedApps, setSelectedApps] = useState<ConnectorProvider[]>([])
   const { state: artifactState } = useArtifact()
+  const { open } = useSidebar()
   const isIncognito = artifactState.isIncognito
 
   useEffect(() => {
@@ -491,120 +494,125 @@ export function Chat({
   }
 
   // console.log("messgaes", messages)
-
+  const isMobile = useIsMobile()
   return (
-    <div
-      className={cn(
-        'relative flex h-full min-w-0 w-full flex-1 flex-col',
-        messages.length === 0 ? 'items-center justify-center' : ''
-      )}
-      data-testid="full-chat"
-    >
-      {/* <Header /> */}
+    <div className={cn(
+      'bg-sidebar flex h-screen min-w-0 w-full flex-1 flex-col',
+    )}>
+      <div
+        className={cn(
+          'relative bg-background flex h-screen min-w-0 w-full flex-1 flex-col',
+          messages.length === 0 ? 'items-center justify-center' : '',
+          open && !isMobile ? "mt-3.5 rounded-tl-xl border-t border-l border-sidebar-ring/30 dark:border-sidebar-ring/10 transition-all duration-300 ease-in-out" : "mt-0 rounded-t-none transition-all duration-300 ease-in-out border-l border-sidebar-foreground/10"
+        )}
+        data-testid="full-chat"
+      >
+        {/* <Header /> */}
 
-      <ChatMessages
-        sections={sections}
-        data={data}
-        onQuerySelect={onQuerySelect}
-        isLoading={isLoading}
-        chatId={id}
-        addToolResult={addToolResult}
-        scrollContainerRef={scrollContainerRef}
-        onUpdateMessage={handleUpdateAndReloadMessage}
-        reload={handleReloadFrom}
-      />
+        <ChatMessages
+          sections={sections}
+          data={data}
+          onQuerySelect={onQuerySelect}
+          isLoading={isLoading}
+          chatId={id}
+          addToolResult={addToolResult}
+          scrollContainerRef={scrollContainerRef}
+          onUpdateMessage={handleUpdateAndReloadMessage}
+          reload={handleReloadFrom}
+        />
 
-      <ChatPanel
-        input={input}
-        handleInputChange={handleInputChange}
-        handleSubmit={onSubmit}
-        isLoading={isLoading}
-        messages={messages}
-        setMessages={setMessages}
-        stop={stop}
-        query={query}
-        append={append}
-        models={models}
-        showScrollToBottomButton={!isAtBottom}
-        scrollContainerRef={scrollContainerRef}
-        attachedFiles={attachedFiles}
-        isFileUploading={isFileUploading}
-        uploadingCount={uploadingCount}
-        onFileUpload={handleFileUpload}
-        onRemoveFile={handleRemoveFile}
-        selectedApps={selectedApps}
-        onSelectApp={(app) => {
-          if (!selectedApps.includes(app)) {
-            setSelectedApps(prev => [...prev, app])
-          }
-        }}
-        onRemoveApp={(app) => {
-          setSelectedApps(prev => prev.filter(a => a !== app))
-        }}
-      />
+        <ChatPanel
+          input={input}
+          handleInputChange={handleInputChange}
+          handleSubmit={onSubmit}
+          isLoading={isLoading}
+          messages={messages}
+          setMessages={setMessages}
+          stop={stop}
+          query={query}
+          append={append}
+          models={models}
+          showScrollToBottomButton={!isAtBottom}
+          scrollContainerRef={scrollContainerRef}
+          attachedFiles={attachedFiles}
+          isFileUploading={isFileUploading}
+          uploadingCount={uploadingCount}
+          onFileUpload={handleFileUpload}
+          onRemoveFile={handleRemoveFile}
+          selectedApps={selectedApps}
+          onSelectApp={(app) => {
+            if (!selectedApps.includes(app)) {
+              setSelectedApps(prev => [...prev, app])
+            }
+          }}
+          onRemoveApp={(app) => {
+            setSelectedApps(prev => prev.filter(a => a !== app))
+          }}
+        />
 
-      {/* Rate Limit Dialog */}
-      <Dialog open={isRateLimitDialogOpen} onOpenChange={setisRateLimitDialogOpen}>
-        <DialogContent className='w-[95%] max-w-sm bg-background/95 rounded-3xl backdrop-blur-md border-2 border-border/50 shadow-2xl'>
-          <DialogHeader className='space-y-3'>
-            <DialogTitle className='text-2xl font-bold text-center bg-gradient-to-r from-orange-500 via-yellow-500 to-orange-600 bg-clip-text text-transparent'>
-              {isRateLimitDialogControlVisible ? 'Daily Limit Reached' : 'Rate Limit Exceeded'}
-            </DialogTitle>
-            <DialogDescription className='text-center text-muted-foreground text-sm leading-relaxed px-2'>
-              {isRateLimitDialogControlVisible ? (
-                <>
-                  {
-                    rateLimitMessage || "You've used all your free searches for today. Sign in to unlock unlimited access and premium features!"
-                  }
-                </>
-              ) : (
-                <>
-                  {
-                    rateLimitMessage || "You've reached your usage limit for now. Take a short break and come back after some time to continue your research!"
-                  }
-                </>
-              )}
-            </DialogDescription>
-          </DialogHeader>
+        {/* Rate Limit Dialog */}
+        <Dialog open={isRateLimitDialogOpen} onOpenChange={setisRateLimitDialogOpen}>
+          <DialogContent className='w-[95%] max-w-sm bg-background/95 rounded-3xl backdrop-blur-md border-2 border-border/50 shadow-2xl'>
+            <DialogHeader className='space-y-3'>
+              <DialogTitle className='text-2xl font-bold text-center bg-gradient-to-r from-orange-500 via-yellow-500 to-orange-600 bg-clip-text text-transparent'>
+                {isRateLimitDialogControlVisible ? 'Daily Limit Reached' : 'Rate Limit Exceeded'}
+              </DialogTitle>
+              <DialogDescription className='text-center text-muted-foreground text-sm leading-relaxed px-2'>
+                {isRateLimitDialogControlVisible ? (
+                  <>
+                    {
+                      rateLimitMessage || "You've used all your free searches for today. Sign in to unlock unlimited access and premium features!"
+                    }
+                  </>
+                ) : (
+                  <>
+                    {
+                      rateLimitMessage || "You've reached your usage limit for now. Take a short break and come back after some time to continue your research!"
+                    }
+                  </>
+                )}
+              </DialogDescription>
+            </DialogHeader>
 
-          {/* Action Buttons */}
-          {isRateLimitDialogControlVisible ? (
-            <div className="flex flex-col gap-2.5 mt-6">
-              <Button
-                onClick={() => {
-                  (window.location.href = '/auth/login')
-                  setisRateLimitDialogOpen(false)
-                }}
-                className='w-full font-semibold py-5 rounded-xl shadow-lg hover:bg-primary/80 hover:shadow-xl transition-all duration-200'
-              >
-                Sign In to Continue
-              </Button>
-              <Button
-                variant="ghost"
-                className='w-full text-muted-foreground hover:text-foreground py-5 rounded-xl'
-                onClick={() => setisRateLimitDialogOpen(false)}
-              >
-                Maybe Later
-              </Button>
-            </div>
-          ) : (
-            <div className="flex flex-col gap-2.5 mt-6">
-              {/* <div className='p-4 rounded-xl bg-muted/50 border border-border/50'>
+            {/* Action Buttons */}
+            {isRateLimitDialogControlVisible ? (
+              <div className="flex flex-col gap-2.5 mt-6">
+                <Button
+                  onClick={() => {
+                    (window.location.href = '/auth/login')
+                    setisRateLimitDialogOpen(false)
+                  }}
+                  className='w-full font-semibold py-5 rounded-xl shadow-lg hover:bg-primary/80 hover:shadow-xl transition-all duration-200'
+                >
+                  Sign In to Continue
+                </Button>
+                <Button
+                  variant="ghost"
+                  className='w-full text-muted-foreground hover:text-foreground py-5 rounded-xl'
+                  onClick={() => setisRateLimitDialogOpen(false)}
+                >
+                  Maybe Later
+                </Button>
+              </div>
+            ) : (
+              <div className="flex flex-col gap-2.5 mt-6">
+                {/* <div className='p-4 rounded-xl bg-muted/50 border border-border/50'>
                 <p className='text-xs text-muted-foreground text-center leading-relaxed'>
                   {rateLimitMessage || "You're doing great! Take a moment to review your research, and you'll be able to continue shortly."}
                 </p>
               </div> */}
-              <Button
-                variant="default"
-                className='w-full py-5 rounded-xl font-semibold'
-                onClick={() => setisRateLimitDialogOpen(false)}
-              >
-                Got It
-              </Button>
-            </div>
-          )}
-        </DialogContent>
-      </Dialog>
+                <Button
+                  variant="default"
+                  className='w-full py-5 rounded-xl font-semibold'
+                  onClick={() => setisRateLimitDialogOpen(false)}
+                >
+                  Got It
+                </Button>
+              </div>
+            )}
+          </DialogContent>
+        </Dialog>
+      </div>
     </div>
   )
 }

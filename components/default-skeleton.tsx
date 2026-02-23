@@ -107,7 +107,7 @@ export function VideoSearchSkeleton() {
 
 export function XSearchSkeleton() {
   return (
-    <div className="flex flex-col gap-2">
+    <div className="flex flex-col gap-1">
       {[...Array(3)].map((_, index) => (
         <div key={index} className="w-full h-full">
           <div className="flex flex-col h-full p-4 border-none rounded-lg bg-transparent text-card-foreground shadow-sm">
@@ -123,7 +123,6 @@ export function XSearchSkeleton() {
             <div className="space-y-1 mt-auto">
               <Skeleton className="h-3 w-full bg-accent" />
               <Skeleton className="h-3 w-[90%] bg-accent" />
-              <Skeleton className="h-3 w-[80%] bg-accent" />
             </div>
           </div>
         </div>
@@ -134,7 +133,7 @@ export function XSearchSkeleton() {
 
 export function GithubSearchSkeleton() {
   return (
-    <div className="flex flex-col gap-2">
+    <div className="flex flex-col gap-1">
       {[...Array(3)].map((_, index) => (
         <div key={index} className="w-full">
           <div className="flex items-start space-x-3 p-4 border-none rounded-lg bg-transparent text-card-foreground shadow-sm">
@@ -147,7 +146,6 @@ export function GithubSearchSkeleton() {
               <div className="space-y-1">
                 <Skeleton className="h-3 w-full bg-accent" />
                 <Skeleton className="h-3 w-[90%] bg-accent" />
-                <Skeleton className="h-3 w-[80%] bg-accent" />
               </div>
             </div>
           </div>

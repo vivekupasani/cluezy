@@ -93,7 +93,7 @@ export const UserMessage: React.FC<UserMessageProps> = ({
             </div>
           </div>
         ) : (
-          <div className="relative flex flex-col max-w-xs md:max-w-lg bg-foreground/10 dark:bg-accent/70 text-foreground dark:text-foreground/90 px-4 py-2.5 rounded-2xl border border-border/60 dark:border-border/40">
+          <div className="relative flex flex-col max-w-xs md:max-w-lg font-medium bg-secondary/30 dark:bg-secondary text-foreground dark:text-foreground px-4 py-2.5 rounded-xl border border-border/60 dark:border-border/40">
             {selectedApps && selectedApps.length > 0 && (
               <div className="flex flex-wrap gap-1.5 mb-2">
                 {selectedApps.map(app => {
@@ -103,7 +103,7 @@ export const UserMessage: React.FC<UserMessageProps> = ({
                   return (
                     <div
                       key={app}
-                      className="inline-flex items-center gap-1.5 bg-muted/80 px-2 py-1 rounded-lg border border-border/50 text-[11px] font-medium text-muted-foreground transition-colors hover:bg-muted"
+                      className="inline-flex items-center gap-1.5 bg-muted px-2 py-1 rounded-lg border border-border/50 text-[11px] font-medium text-muted-foreground transition-colors hover:bg-muted"
                     >
                       <div className="shrink-0 flex items-center justify-center size-3.5">
                         {Icon && <Icon className="size-full" />}

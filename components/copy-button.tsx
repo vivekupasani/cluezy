@@ -19,7 +19,7 @@ export const CopyButton = ({ message }: { message: string }) => {
                     onClick={handleCopy}
                     className="h-8 w-8 rounded-full ring-0"
                 >
-                    <Copy size={14} className='text-foreground/70 hover:text-foreground transition-colors' />
+                    <Copy size={14} className='text-foreground hover:text-foreground transition-colors' />
                 </Button>
             </TooltipTrigger>
             <TooltipContent side="bottom" className='text-xs'>
