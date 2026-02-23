@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react'
 
 import { useMediaQuery } from '@/lib/hooks/use-media-query'
 import { cn } from '@/lib/utils'
-import { Ghost, Search } from 'lucide-react'
+import { Ghost, Search, Sun } from 'lucide-react'
 
 import {
   ResizableHandle,
@@ -19,7 +19,13 @@ import { InspectorPanel } from '@/components/inspector/inspector-panel'
 import { motion } from 'motion/react'
 import { usePathname } from 'next/navigation'
 import { useHistoryDialog } from '../history-dialog'
+import { ArtifactThemeMenuItems } from '../theme-menu-items'
 import { Button, Tooltip, TooltipContent, TooltipTrigger } from '../ui'
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuTrigger
+} from '../ui/dropdown-menu'
 import { useArtifact } from './artifact-context'
 export function ChatArtifactContainer({
   children
@@ -84,6 +90,24 @@ export function ChatArtifactContainer({
                 Search
               </TooltipContent>
             </Tooltip>
+
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <div className='flex items-center justify-center pointer-events-auto'>
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <Sun size={16} className="cursor-pointer text-foreground font-medium hover:bg-accent hover:text-accent-foreground rounded-full" />
+                    </TooltipTrigger>
+                    <TooltipContent side="bottom" className='text-xs ml-2 mt-3'>
+                      Theme
+                    </TooltipContent>
+                  </Tooltip>
+                </div>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="start" className="w-36 mt-2">
+                <ArtifactThemeMenuItems />
+              </DropdownMenuContent>
+            </DropdownMenu>
           </motion.div>
         )}
 

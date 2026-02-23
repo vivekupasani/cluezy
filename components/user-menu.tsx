@@ -93,8 +93,8 @@ export default function UserMenu({ user, state }: UserMenuProps) {
         >
           <div className="relative">
             <Avatar className={cn("h-8 w-8",
-              userPlanDetails?.isActive && userPlanDetails?.planName === "Pro" && "ring-2 ring-amber-500/50",
-              userPlanDetails?.isActive && userPlanDetails?.planName === "Max" && "ring-2 ring-amber-500/50",
+              userPlanDetails?.isActive && userPlanDetails?.planName === "Pro" && "ring-2 ring-primary",
+              userPlanDetails?.isActive && userPlanDetails?.planName === "Max" && "ring-2 ring-primary",
               // !userPlanDetails?.isActive && userPlanDetails?.planName === "Free" && "ring-2 ring-primary/50",
             )}>
               <AvatarImage src={avatarUrl} />
@@ -106,8 +106,8 @@ export default function UserMenu({ user, state }: UserMenuProps) {
               <span
                 className={cn(
                   "absolute -bottom-1.5 right-1/2 translate-x-1/2 z-50 rounded-full px-1.5 py-[1px] text-[8px] font-bold tracking-widest lowercase text-white shadow-sm ring-1 ring-background",
-                  userPlanDetails?.planName === "Pro" && "bg-gradient-to-r from-amber-500 to-orange-600",
-                  userPlanDetails?.planName === "Max" && "bg-gradient-to-r from-amber-500 to-orange-600",
+                  userPlanDetails?.planName === "Pro" && "bg-gradient-to-r from-primary to-primary/90",
+                  userPlanDetails?.planName === "Max" && "bg-gradient-to-r from-primary to-primary/90",
                   !["Pro", "Max"].includes(userPlanDetails?.planName || "") && "bg-primary"
                 )}>
                 {userPlanDetails?.planName}

@@ -150,14 +150,14 @@ export function ChatMenuItem({ chat }: ChatMenuItemProps) {
   if (isDeleteClicked) {
     return (
       <div className="px-1.5 py-0.5">
-        <div className="flex gap-2 items-center bg-destructive/5 border border-destructive/20 rounded-xl px-3 py-2 min-h-[44px]">
-          <div className="text-xs text-destructive/70 font-medium flex-1 truncate">
+        <div className="flex gap-2 items-center bg-accent/30 border border-border/40 rounded-xl px-3 py-2 min-h-[44px]">
+          <div className="text-xs text-foreground font-medium flex-1 truncate">
             Delete conversation?
           </div>
           <div className="flex items-center gap-1.5 shrink-0">
             <button
               onClick={() => setIsDeleteClicked(false)}
-              className="p-1 hover:bg-destructive/10 rounded-lg text-destructive/40 hover:text-destructive/60"
+              className="p-1 hover:bg-background/80 rounded-lg text-muted-foreground/60"
               disabled={isDeleting}
             >
               <X size={14} />
@@ -165,7 +165,7 @@ export function ChatMenuItem({ chat }: ChatMenuItemProps) {
             <button
               onClick={onDelete}
               disabled={isDeleting}
-              className="p-1 hover:bg-destructive/10 rounded-lg text-destructive"
+              className="p-1 hover:bg-primary/10 rounded-lg text-primary"
             >
               {isDeleting ? <LoadingSpinner className="size-3" /> : <Check size={14} />}
             </button>
@@ -227,7 +227,7 @@ export function ChatMenuItem({ chat }: ChatMenuItemProps) {
               e.preventDefault()
               setIsDeleteClicked(true)
             }}
-            className="p-1.5 text-foreground hover:text-destructive hover:bg-destructive/5 rounded-lg"
+            className="p-1.5 text-foreground hover:text-foreground hover:bg-background rounded-lg"
             title="Delete"
           >
             <Trash2 size={14} />

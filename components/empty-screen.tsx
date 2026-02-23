@@ -47,7 +47,7 @@ export function EmptyScreen({
         {exampleMessages.map((example, index) => (
           <div
             key={index}
-            className="h-auto py-1 flex flex-col rounded-lg cursor-pointer items-start gap-2 whitespace-normal text-left hover:bg-secondary/50 hover:text-secondary-foreground transition-colors border border-border/60 dark:border-card"
+            className="h-auto py-1 flex flex-col rounded-lg cursor-pointer items-start gap-2 whitespace-normal text-left hover:bg-secondary/50 hover:text-secondary-foreground transition-colors border border-border/60 dark:border-border/40"
             onClick={() => submitMessage(example.message)}
           >
             <div className="flex items-center gap-2 px-2 py-0.5 text-accent-foreground/70 font-medium text-xs">
