@@ -249,7 +249,7 @@ export const WeatherSection = ({ tool }: WeatherSectionProps) => {
     return (
         <div className="w-[95%] md:w-full mx-auto rounded-2xl bg-background mt-4">
             {/* Current Weather - Hero Card */}
-            <div className="bg-muted dark:bg-card border border-border rounded-2xl p-4 sm:p-5 md:p-6">
+            <div className="bg-muted dark:bg-card boring-dark:bg-card border border-border rounded-2xl p-4 sm:p-5 md:p-6">
                 <div className="flex items-start justify-between mb-3 sm:mb-4">
                     <div className="flex-1 min-w-0">
                         <div className="flex items-center gap-1.5 sm:gap-2 mb-1.5 sm:mb-2">

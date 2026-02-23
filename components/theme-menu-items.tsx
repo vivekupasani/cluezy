@@ -25,11 +25,11 @@ export function ThemeMenuItems() {
       </DropdownMenuItem>
       <DropdownMenuItem onClick={() => setTheme('boring-light')} className='cursor-pointer'>
         <Sun className="mr-2 h-4 w-4 text-foreground" />
-        <span className='text-foreground font-medium'>Boring Light</span>
+        <span className='text-foreground font-medium'>Normal Light</span>
       </DropdownMenuItem>
       <DropdownMenuItem onClick={() => setTheme('boring-dark')} className='cursor-pointer'>
         <Moon className="mr-2 h-4 w-4 text-foreground" />
-        <span className='text-foreground font-medium'>Boring Dark</span>
+        <span className='text-foreground font-medium'>Normal Dark</span>
       </DropdownMenuItem>
     </>
   )

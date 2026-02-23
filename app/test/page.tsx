@@ -2,6 +2,7 @@
 
 import { ChatLoadingSkeleton } from "@/components/default-skeleton"
 import { useSidebar } from "@/components/ui/sidebar"
+import { useIsMobile } from "@/hooks/use-mobile"
 import { Model } from "@/lib/types/models"
 import { cn } from "@/lib/utils"
 import { getCookie } from "@/lib/utils/cookies"
@@ -11,6 +12,7 @@ import { useEffect, useState } from "react"
 export default function TestPage() {
     const [model, setModel] = useState<Model | null>(null)
     const { open } = useSidebar()
+    const isMobile = useIsMobile()
     useEffect(() => {
         const savedModel = getCookie('selectedModel')
         if (savedModel) {
@@ -25,14 +27,14 @@ export default function TestPage() {
 
     return (
         <div className={cn("h-screen min-w-0 w-full bg-sidebar mt-0",
-            open ? "pt-3.5 border-none transition-all duration-300 ease-in-out" : "mt-0 rounded-t-none transition-all duration-300 ease-in-out border-l border-sidebar-foreground/10"
+            open && !isMobile ? "pt-3.5 border-none transition-all duration-300 ease-in-out" : "mt-0 rounded-t-none transition-all duration-300 ease-in-out border-l border-sidebar-foreground/10"
         )}>
             <div className={cn("h-screen min-w-0 w-full bg-background mt-0",
-                open ? "rounded-tl-xl border-t border-l border-sidebar-ring/30 dark:border-sidebar-ring/10 transition-all duration-300 ease-in-out" : "mt-0 rounded-t-none transition-all duration-300 ease-in-out border-l border-sidebar-foreground/10"
+                open && !isMobile ? "rounded-tl-xl border-t border-l border-sidebar-ring/30 dark:border-sidebar-ring/10 transition-all duration-300 ease-in-out" : "mt-0 rounded-t-none transition-all duration-300 ease-in-out border-l border-sidebar-foreground/10"
             )}>
                 <div className={cn("relative flex h-screen min-w-0 w-full max-w-2xl mx-auto flex-1 flex-col justify-between",
                 )}>
-                    <div className="flex-1 flex flex-col items-center pt-14 md:pt-14 px-2 md:px-0">
+                    <div className="flex-1 flex flex-col items-center pt-[70px] md:pt-14 px-2 md:px-0">
                         <ChatLoadingSkeleton />
                     </div>
 
@@ -40,7 +42,7 @@ export default function TestPage() {
                         <div className="bg-background">
                             <div className={cn(
                                 "relative flex flex-col w-full p-2.5 transition-all duration-300",
-                                "bg-card backdrop-blur-xl",
+                                "bg-accent/20 dark:bg-card backdrop-blur-xl",
                                 "ring-1 ring-border/20 border border-foreground/5",
                                 "rounded-[20px]"
                             )}>

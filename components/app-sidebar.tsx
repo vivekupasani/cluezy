@@ -64,7 +64,7 @@ export function AppSidebar() {
       <SidebarHeader className="flex flex-row items-center justify-between pt-4 pb-4 gap-0">
         <SidebarMenuButton onClick={toggleSidebar}>
           <div className='flex justify-between w-full items-center'>
-            <div className="flex h-7 w-7 items-center object-cover justify-center rounded-md overflow-hidden">
+            <div className="flex h-8 w-7 items-center object-cover justify-center rounded-md overflow-hidden">
               <CluezyLogo />
             </div>
             <AnimatePresence mode="wait" initial={false}>

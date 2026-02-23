@@ -28,9 +28,9 @@ export const CluezyLogo = ({ size = 30, className, ...props }: CluezyLogoProps) 
   function getFillColor() {
     switch (currentTheme) {
       case "light":
-        return "#4f1d21";
+        return "#48214b";
       case "dark":
-        return "#dcc6d0";
+        return "#d2c4de";
       case "boring-light":
         return "#171717";
       case "boring-dark":
@@ -39,6 +39,7 @@ export const CluezyLogo = ({ size = 30, className, ...props }: CluezyLogoProps) 
         return "#4f1d21";
     }
   }
+
   return (
     <svg
       width={size}

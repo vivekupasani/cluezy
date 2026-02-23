@@ -150,7 +150,14 @@ const config = {
       },
     }
   },
-  plugins: [require('tailwindcss-animate'), require('@tailwindcss/typography')]
+  plugins: [
+    require('tailwindcss-animate'),
+    require('@tailwindcss/typography'),
+    ({ addVariant }: { addVariant: any }) => {
+      addVariant('boring-dark', '.boring-dark &')
+      addVariant('boring-light', '.boring-light &')
+    }
+  ]
 } satisfies Config
 
 export default config
