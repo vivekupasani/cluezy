@@ -49,6 +49,7 @@ export class ExaSearchProvider extends BaseSearchProvider {
         title: result.title,
         url: result.url,
         content: result.highlight || result.text,
+        highlights: result.highlights || []
       })),
       query,
       images,

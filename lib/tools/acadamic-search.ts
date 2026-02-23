@@ -12,6 +12,7 @@ export function createAcademicSearchTool(globalExcludeDomains: string[] = []) {
         execute: async ({ query, excludeDomains = [] }: { query: string, excludeDomains?: string[] }) => {
             try {
                 console.log("I AM USING ACADEMIC SEARCH TOOL")
+                console.log("query: ", query);
                 const exa = new Exa(process.env.EXA_API_KEY);
 
                 // Merge global exclusions with request-specific exclusions

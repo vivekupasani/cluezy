@@ -73,7 +73,8 @@ export class SearXNGSearchProvider extends BaseSearchProvider {
           (result: SearXNGResult): SearchResultItem => ({
             title: result.title,
             url: result.url,
-            content: result.content
+            content: result.content,
+            highlights: []
           })
         ),
         query: data.query,

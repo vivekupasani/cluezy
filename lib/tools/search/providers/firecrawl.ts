@@ -44,21 +44,24 @@ export class FirecrawlSearchProvider extends BaseSearchProvider {
         return {
           title: resource.title || '',
           url: resource.url,
-          content: markdown || resource.description || ''
+          content: markdown || resource.description || '',
+          highlights: []
         }
       }
 
       return {
         title: resource.title || '',
         url: resource.url,
-        content: resource.snippet || ''
+        content: resource.snippet || '',
+        highlights: []
       }
     })
 
     const images =
       response.data?.images?.map((img: FirecrawlImageResult) => ({
         url: img.imageUrl,
-        description: img.title || ''
+        description: img.title || '',
+        highlights: []
       })) || []
 
     return {

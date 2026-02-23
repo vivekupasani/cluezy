@@ -28,7 +28,8 @@ async function fetchJinaReaderData(
         {
           title: json.data.title,
           content,
-          url: json.data.url
+          url: json.data.url,
+          highlights: []
         }
       ],
       query: '',
@@ -65,7 +66,8 @@ async function fetchTavilyExtractData(
         {
           title: content.slice(0, 100),
           content,
-          url: result.url
+          url: result.url,
+          highlights: []
         }
       ],
       query: '',
