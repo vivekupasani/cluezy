@@ -58,13 +58,13 @@ export function ChatArtifactContainer({
     "/auth/forgot-password",
     "/auth/confirm",
     "/auth/error",
-    '/privacy', '/about', '/terms', '/premium'
+    isMobile && ['/privacy', '/about', '/terms', '/premium']
   ]
 
   return (
     <div className="flex-1 min-h-0 h-svh flex relative">
       <div className={`absolute p-2 md:p-2 z-50 bg-background/50 backdrop-blur-lg md:bg-transparent md:backdrop-blur-none w-full flex ${open && !isMobileSidebar ? 'justify-end' : 'justify-between'} items-center pointer-events-none`}>
-        {(!open || isMobileSidebar) && !pages.includes(pathName) && !pathName.includes("/connectors") && (
+        {(!open || isMobileSidebar) && !pages.includes(pathName) && (!isMobile || !pathName.includes("/connectors")) && (
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}

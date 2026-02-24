@@ -46,10 +46,10 @@ export function ModelSelector({ models }: ModelSelectorProps) {
   const [open, setOpen] = useState(false)
   const [value, setValue] = useState('')
   const DEFAULT_SELECTED_MODEL: Model = {
-    "id": "gemini-2.5-flash",
-    "name": "Gemini 2.5 Flash",
-    "provider": "Google Generative AI",
-    "providerId": "google",
+    "id": "gpt-4o-mini",
+    "name": "GPT-4o mini",
+    "provider": "OpenAI",
+    "providerId": "openai",
     "enabled": true,
     "toolCallType": "native"
   }
@@ -146,7 +146,7 @@ export function ModelSelector({ models }: ModelSelectorProps) {
                       className={`flex justify-between items-center px-2 py-1.5 rounded-lg mb-0.5 cursor-pointer aria-selected:bg-accent/50 ${isSelected ? 'bg-accent/50' : ''}`}
                     >
                       <div className="flex items-center space-x-2.5 overflow-hidden">
-                        <div className="shrink-0 rounded-full border border-border/40 p-0.5 bg-background">
+                        <div className="shrink-0 rounded-full border border-border/40 p-0.5 bg-white">
                           <Image
                             src={`/providers/logos/${model.providerId}.svg`}
                             alt={model.provider}

@@ -13,11 +13,16 @@ import { useAuth } from '@/components/context/auth-context';
 import { useConnectors } from '@/components/context/connectors-context';
 import { Input } from '@/components/ui/input';
 import { Skeleton } from '@/components/ui/skeleton';
+import { useIsMobile } from '@/hooks/use-mobile';
 import { PROVIDER_ICONS } from '@/lib/connectors/icons';
 import { CONNECTOR_CONFIGS, ConnectorProvider } from '@/lib/connectors/types';
+import { cn } from '@/lib/utils';
 import { motion } from 'framer-motion';
 import { useTheme } from 'next-themes';
+import { toast } from 'sonner';
+import { HistoryDialog } from './history-dialog';
 import { Tooltip, TooltipContent, TooltipTrigger } from './ui';
+import { useSidebar } from './ui/sidebar';
 
 const activeProviders: ConnectorProvider[] = [
     'gmail',
@@ -32,7 +37,26 @@ const activeProviders: ConnectorProvider[] = [
     'youtube'
 ];
 
-export default function ConnectorsPageContent() {
+export function ConnectorsClientPage() {
+    const { open } = useSidebar();
+    const isMobile = useIsMobile()
+    return (
+        <div className={cn("h-svh min-w-0 w-full bg-sidebar mt-0",
+            open && !isMobile ? "pt-3.5 border-none transition-all duration-300 ease-in-out" : "mt-0 rounded-t-none transition-all duration-300 ease-in-out border-l border-sidebar-foreground/10"
+        )}>
+            <div className={cn("h-svh min-w-0 w-full bg-background mt-0",
+                open && !isMobile ? "rounded-tl-xl border-t border-l border-sidebar-ring/30 dark:border-sidebar-ring/10 transition-all duration-300 ease-in-out" : "mt-0 rounded-t-none transition-all duration-300 ease-in-out border-l border-sidebar-foreground/10"
+            )}>
+                <div className="CustomScrollbar max-w-2xl mx-auto p-4 lg:p-8 h-full overflow-y-auto HiddenScrollbar">
+                    <ConnectorsPageContent />
+                    <HistoryDialog />
+                </div>
+            </div>
+        </div>
+    );
+}
+
+export function ConnectorsPageContent() {
     const {
         connections,
         loading,
@@ -72,7 +96,7 @@ export default function ConnectorsPageContent() {
 
     return (
         <div className="w-full max-w-2xl mx-auto space-y-8 mt-2 lg:mt-0">
-            <header className="text-start md:mt-10">
+            <header className="text-start md:mt-6">
                 <button
                     onClick={() => router.push("/")}
                     className="visible md:hidden group flex items-center mb-5 pt-6 gap-1.5 text-muted-foreground hover:text-foreground text-[16px] transition-colors duration-200"
@@ -97,7 +121,7 @@ export default function ConnectorsPageContent() {
                     placeholder="Search your favorite apps..."
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
-                    className="pl-9 bg-card border-0 h-11 focus:ring-0 rounded-xl focus-visible:ring-0 focus-visible:ring-offset-0"
+                    className="pl-9 bg-accent/40 dark:bg-card border-0 h-11 focus:ring-0 rounded-xl focus-visible:ring-0 focus-visible:ring-offset-0"
                 />
             </div>
 
@@ -136,7 +160,7 @@ export default function ConnectorsPageContent() {
                                         <motion.div
                                             layoutId={connection.id}
                                             key={connection.id}
-                                            className="group relative flex items-center p-3 rounded-xl bg-card border-none hover:bg-card/50 transition-all duration-200 gap-4 cursor-pointer"
+                                            className="group relative flex items-center p-3 rounded-xl bg-accent/40 dark:bg-card border-none hover:bg-accent/60 hover:dark:bg-card/50 transition-all duration-200 gap-4 cursor-pointer"
                                             onClick={() => connection.provider && openConnectDialog(connection.provider)}
                                         >
                                             <div className="flex-shrink-0">
@@ -178,8 +202,15 @@ export default function ConnectorsPageContent() {
                                 return (
                                     <div
                                         key={provider}
-                                        className="group relative flex items-center p-3 rounded-xl bg-card border-none hover:bg-card/50 transition-all duration-200 gap-4 cursor-pointer"
-                                        onClick={() => user && openConnectDialog(provider)}
+                                        className="group relative flex items-center p-3 rounded-xl bg-accent/40 dark:bg-card border-none hover:bg-accent/60 hover:dark:bg-card/50 transition-all duration-200 gap-4 cursor-pointer"
+                                        onClick={() => {
+                                            if (user) {
+                                                openConnectDialog(provider)
+                                            }
+                                            else {
+                                                toast.message("Please login to connect your account")
+                                            }
+                                        }}
                                     >
                                         <div className="flex-shrink-0">
                                             <div className="text-xl p-2.5 bg-background border border-border/30 flex items-center justify-center rounded-full w-12 h-12 shadow-sm">

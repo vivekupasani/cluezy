@@ -2,6 +2,7 @@ import {
   CoreMessage,
   createDataStreamResponse,
   DataStreamWriter,
+  JSONValue,
   streamText
 } from 'ai'
 
@@ -10,6 +11,7 @@ import { researcher } from '@/lib/agents/researcher'
 import { getMaxAllowedTokens, truncateMessages } from '../utils/context-window'
 import { isReasoningModel } from '../utils/registry'
 
+import { ExtendedCoreMessage } from '../types'
 import { handleStreamFinish } from './handle-stream-finish'
 import { BaseStreamConfig } from './types'
 
@@ -189,10 +191,27 @@ export function createToolCallingStreamResponse(config: BaseStreamConfig) {
           selectedApps: config.selectedApps
         })
 
+        // Variables to track the reasoning timing.
+        let reasoningStartTime: number | null = null
+        let reasoningDuration: number | null = null
+
         const result = streamText({
           ...researcherConfig,
           onFinish: async (result) => {
             console.log("✅ Stream finished, checking tool calls...")
+
+            const annotations: ExtendedCoreMessage[] = [
+              {
+                role: 'data',
+                content: {
+                  type: 'reasoning',
+                  data: {
+                    time: reasoningDuration ?? 0,
+                    reasoning: result.reasoning
+                  }
+                } as JSONValue
+              }
+            ]
 
             // Check if the last message contains an ask_question tool invocation
             const lastMessage = result.response.messages[result.response.messages.length - 1]
@@ -211,15 +230,37 @@ export function createToolCallingStreamResponse(config: BaseStreamConfig) {
               dataStream,
               userId,
               skipRelatedQuestions: true,
+              annotations,
               selectedApps: config.selectedApps,
               userPlanDetails: config.userPlanDetails,
               isIncognito
             })
+          },
+          onChunk(event) {
+            const chunkType = event.chunk?.type
+
+            if (chunkType === 'reasoning') {
+              if (reasoningStartTime === null) {
+                reasoningStartTime = Date.now()
+              }
+            } else {
+              if (reasoningStartTime !== null) {
+                const elapsedTime = Date.now() - reasoningStartTime
+                reasoningDuration = elapsedTime
+                dataStream.writeMessageAnnotation({
+                  type: 'reasoning',
+                  data: { time: elapsedTime }
+                } as JSONValue)
+                reasoningStartTime = null
+              }
+            }
           }
         })
 
         // Merge stream into data stream
-        result.mergeIntoDataStream(dataStream)
+        result.mergeIntoDataStream(dataStream, {
+          sendReasoning: true
+        })
 
       } catch (error) {
         console.error('❌ Stream execution error:', error)

@@ -1,14 +1,18 @@
 "use client";
 
 import { useAuth } from "@/components/context/auth-context";
+import { useIsMobile } from "@/hooks/use-mobile";
 import { PROVIDER_ICONS } from "@/lib/connectors/icons";
 import {
     Connection,
     CONNECTOR_CONFIGS,
     ConnectorProvider,
 } from "@/lib/connectors/types";
+import { cn } from "@/lib/utils";
 import { ArrowLeft, Check, Loader2, Shield } from "lucide-react";
 import { useParams, useRouter } from "next/navigation";
+import { useConnectors } from "./context/connectors-context";
+import { useSidebar } from "./ui/sidebar";
 
 interface AppsConnectorProps {
     connections: Connection[];
@@ -18,6 +22,43 @@ interface AppsConnectorProps {
     handleConnect: (provider: ConnectorProvider) => Promise<void>;
     handleSync: (provider: ConnectorProvider) => Promise<void>;
     handleDisconnect: (connectionId: string) => Promise<void>;
+}
+
+export function AppsConnectorClientPage() {
+    const {
+        connections,
+        connectingProvider,
+        deletingId,
+        syncingProvider,
+        handleConnect,
+        handleSync,
+        handleDisconnect
+    } = useConnectors();
+
+    const { open } = useSidebar();
+    const isMobile = useIsMobile();
+
+    return (
+        <div className={cn("h-svh min-w-0 w-full bg-sidebar mt-0",
+            open && !isMobile ? "pt-3.5 border-none transition-all duration-300 ease-in-out" : "mt-0 rounded-t-none transition-all duration-300 ease-in-out border-l border-sidebar-foreground/10"
+        )}>
+            <div className={cn("h-svh min-w-0 w-full bg-background mt-0",
+                open && !isMobile ? "rounded-tl-xl border-t border-l border-sidebar-ring/30 dark:border-sidebar-ring/10 transition-all duration-300 ease-in-out" : "mt-0 rounded-t-none transition-all duration-300 ease-in-out border-l border-sidebar-foreground/10"
+            )}>
+                <div className="p-4 lg:p-8 h-full overflow-y-auto HiddenScrollbar">
+                    <AppsConnector
+                        connections={connections}
+                        connectingProvider={connectingProvider}
+                        deletingId={deletingId}
+                        syncingProvider={syncingProvider}
+                        handleConnect={handleConnect}
+                        handleSync={handleSync}
+                        handleDisconnect={handleDisconnect}
+                    />
+                </div>
+            </div>
+        </div>
+    );
 }
 
 export function AppsConnector({
@@ -48,7 +89,7 @@ export function AppsConnector({
 
     return (
         <div className="min-h-screen bg-background text-foreground mt-2 lg:mt-0">
-            <div className="max-w-2xl mx-auto md:px-8 pt-6 mb-20 md:mb-0 md:mt-5">
+            <div className="max-w-2xl mx-auto md:px-8 pt-6 mb-20 md:mb-0 md:mt-0">
 
                 {/* Back */}
                 <button
@@ -112,7 +153,7 @@ export function AppsConnector({
                     <button
                         onClick={() => handleDisconnect(connection.id)}
                         disabled={!!isDeleting}
-                        className="w-full mt-5 flex items-center justify-center gap-2 py-3 rounded-xl border border-border text-[13px] font-medium text-muted-foreground hover:border-destructive/20 hover:text-destructive hover:bg-destructive/5 transition-all duration-150 disabled:opacity-50"
+                        className="w-full mt-5 flex items-center justify-center gap-2 py-3 rounded-xl border border-border text-[13px] font-medium text-muted-foreground hover:border-primary/20 hover:text-primary hover:bg-primary/5 transition-all duration-150 disabled:opacity-50"
                     >
                         {isDeleting ? (
                             <>
@@ -151,7 +192,7 @@ export function AppsConnector({
                         {config.features.map((tool, i) => (
                             <div
                                 key={i}
-                                className="bg-card px-4 py-3.5 flex items-start gap-3 transition-colors duration-150"
+                                className="bg-accent/5 dark:bg-card px-4 py-3.5 flex items-start gap-3 transition-colors duration-150"
                             >
                                 {/* Checkmark dot */}
                                 <div className="mt-0.5 w-4 h-4 rounded-full bg-muted flex items-center justify-center flex-shrink-0">

@@ -10,12 +10,12 @@ import { isProviderEnabled } from '@/lib/utils/registry'
 export const maxDuration = 30
 
 const DEFAULT_MODEL: Model = {
-  id: 'gemini-2.5-flash',
-  name: 'Gemini 2.5 Flash',
-  provider: 'Google Generative AI',
-  providerId: 'google',
-  enabled: true,
-  toolCallType: 'native'
+  "id": "gpt-4o-mini",
+  "name": "GPT-4o mini",
+  "provider": "OpenAI",
+  "providerId": "openai",
+  "enabled": true,
+  "toolCallType": "native"
 }
 
 export async function POST(req: Request) {

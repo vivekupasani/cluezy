@@ -71,7 +71,7 @@ export function VideoCarouselDialog({
   return (
     <Dialog>
       <DialogTrigger asChild>{children}</DialogTrigger>
-      <DialogContent className="max-h-[90vh] w-[95%] border-border/50 bg-background/80 p-0 backdrop-blur-2xl sm:w-full sm:max-w-4xl overflow-hidden shadow-2xl">
+      <DialogContent className="max-h-[90vh] w-[95%] border-border/50 bg-popover p-0 backdrop-blur-2xl sm:w-full sm:max-w-4xl overflow-hidden shadow-2xl">
         <div className="flex flex-col h-full max-h-[90vh]">
           <DialogHeader className="p-6 pb-2">
             <div className="flex items-center justify-between gap-4">
@@ -79,7 +79,7 @@ export function VideoCarouselDialog({
                 <DialogTitle className="text-xl text-start font-semibold tracking-tight">
                   Video Preview
                 </DialogTitle>
-                <DialogDescription className="line-clamp-1 text-sm text-start text-muted-foreground">
+                <DialogDescription className="line-clamp-1 text-sm text-start text-foreground">
                   {query}
                 </DialogDescription>
               </div>

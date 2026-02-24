@@ -13,7 +13,7 @@ import { weatherTool } from '../tools/weather'
 import { createWebSearchTool } from '../tools/web-search'
 import { createXSearchTool } from '../tools/x-search'
 import { youtubeVideoAnalysisTool } from '../tools/youtube-video-analysis'
-import { getModel } from '../utils/registry'
+import { getModel, isReasoningModel } from '../utils/registry'
 
 type ResearcherReturn = Parameters<typeof streamText>[0]
 
@@ -85,6 +85,8 @@ export async function researcher({
       ...composioTools
     }
 
+    const isReasoning = isReasoningModel(model)
+
     return {
       model: getModel(model),
       system: systemPrompt,
@@ -94,7 +96,8 @@ export async function researcher({
         ? Object.keys(tools)
         : [],
       maxSteps: searchMode ? 5 : 1,
-      experimental_transform: smoothStream()
+      experimental_transform: smoothStream(),
+      temperature: isReasoning ? 1 : 0
     }
   } catch (error) {
     console.error('Error in chatResearcher:', error)

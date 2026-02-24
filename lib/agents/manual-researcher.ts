@@ -1,6 +1,6 @@
 import { CoreMessage, smoothStream, streamText } from 'ai'
 
-import { getModel } from '../utils/registry'
+import { getModel, isReasoningModel } from '../utils/registry'
 
 const BASE_SYSTEM_PROMPT = `
 Instructions:
@@ -55,11 +55,13 @@ export function manualResearcher({
       ? SEARCH_ENABLED_PROMPT
       : SEARCH_DISABLED_PROMPT
 
+    const isReasoning = isReasoningModel(model)
+
     return {
       model: getModel(model),
       system: `${systemPrompt}\nCurrent date and time: ${currentDate}`,
       messages,
-      temperature: 0.6,
+      temperature: isReasoning ? undefined : 0.6,
       topP: 1,
       topK: 40,
       experimental_transform: smoothStream()
