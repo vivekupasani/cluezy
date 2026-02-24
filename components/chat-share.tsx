@@ -89,7 +89,7 @@ export function ChatShare({ chatId, className }: ChatShareProps) {
         </DialogTrigger>
         <DialogContent className='w-[95%] max-w-sm bg-background/95 rounded-3xl backdrop-blur-md border-2 border-border/50 shadow-2xl'>
           <DialogHeader className='space-y-3'>
-            <DialogTitle className='text-2xl font-bold text-center bg-gradient-to-r from-orange-500 via-yellow-500 to-orange-600 bg-clip-text text-transparent'>
+            <DialogTitle className='text-2xl font-bold text-center bg-gradient-to-r from-primary via-primary/80 to-primary bg-clip-text text-transparent'>
               Share link to search result
             </DialogTitle>
             <DialogDescription className='text-center text-muted-foreground text-sm leading-relaxed px-2'>

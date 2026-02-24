@@ -12,10 +12,10 @@ export default async function AboutPage() {
     const { open } = useSidebar()
     const isMobile = useIsMobile()
     return (
-        <div className={cn("h-screen min-w-0 w-full bg-sidebar mt-0",
+        <div className={cn("h-svh min-w-0 w-full bg-sidebar mt-0",
             open && !isMobile ? "pt-3.5 border-none transition-all duration-300 ease-in-out" : "mt-0 rounded-t-none transition-all duration-300 ease-in-out border-l border-sidebar-foreground/10"
         )}>
-            <div className={cn("min-h-screen h-full overflow-y-auto CustomScrollbar bg-background",
+            <div className={cn("min-h-svh h-full overflow-y-auto CustomScrollbar bg-background",
                 open && !isMobile ? "rounded-tl-xl border-t border-l border-sidebar-ring/30 dark:border-sidebar-ring/10 transition-all duration-300 ease-in-out" : "mt-0 rounded-t-none transition-all duration-300 ease-in-out border-l border-sidebar-foreground/10"
             )}>
                 <div className="max-w-3xl mx-auto px-6 py-6 md:py-4">

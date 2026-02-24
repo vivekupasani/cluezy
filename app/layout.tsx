@@ -138,7 +138,7 @@ export default async function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body
         className={cn(
-          'h-screen flex flex-col font-sans antialiased',
+          'font-sans antialiased',
           fontSans.variable
         )}
         suppressHydrationWarning

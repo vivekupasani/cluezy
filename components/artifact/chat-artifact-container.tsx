@@ -62,7 +62,7 @@ export function ChatArtifactContainer({
   ]
 
   return (
-    <div className="flex-1 min-h-0 h-screen flex relative">
+    <div className="flex-1 min-h-0 h-svh flex relative">
       <div className={`absolute p-2 md:p-2 z-50 bg-background/50 backdrop-blur-lg md:bg-transparent md:backdrop-blur-none w-full flex ${open && !isMobileSidebar ? 'justify-end' : 'justify-between'} items-center pointer-events-none`}>
         {(!open || isMobileSidebar) && !pages.includes(pathName) && !pathName.includes("/connectors") && (
           <motion.div
@@ -131,7 +131,7 @@ export function ChatArtifactContainer({
                     setIsIncognito(newValue)
                   }}
                 >
-                  <Ghost size={16} className={cn("text-muted-foreground", state.isIncognito && "text-accent-foreground")} />
+                  <Ghost size={16} className={cn("text-foreground", state.isIncognito && "text-accent-foreground")} />
                 </Button>
               </TooltipTrigger>
               <TooltipContent side="bottom" className='mr-3 opacity-0 md:opacity-100'>

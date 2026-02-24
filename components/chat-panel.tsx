@@ -333,7 +333,7 @@ export function ChatPanel({
           <div className={cn(
             "relative flex flex-col w-full p-2.5 transition-all duration-300",
             "bg-accent/20 dark:bg-card boring-dark:bg-accent backdrop-blur-xl",
-            "ring-1 ring-border/20 border border-border dark:border-border/70",
+            "ring-1 ring-border/20 border border-border dark:border-sidebar-ring/10",
             // "shadow-sm",
             "rounded-[20px]",
             isDragging && "ring-2 ring-primary bg-primary/5 border-primary/50",
@@ -509,10 +509,6 @@ export function ChatPanel({
 
               {/* Right Actions: Send & Enhance */}
               <div className="flex flex-col gap-1.5 shrink-0 pt-0.5 pr-0.5">
-                {/* Send button (always visible or condition based on your preference? Originally was mostly bottom right) */}
-                {/* Let's put Enhance and Send stacked if needed, or side-by-side? Side-by-side seems better for height. */}
-                {/* Actually, let's keep them in the bottom row if we want a big text area, OR right aligned.
-                   The new standard is typically bottom right corner of the box. */}
               </div>
             </div>
 

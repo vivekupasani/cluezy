@@ -405,7 +405,7 @@ export function ChatHistoryClient() {
   return (
     <Dialog open={isHistoryDialogOpen} onOpenChange={() => setHistoryDialogIsOpen(false)}>
       <DialogTitle></DialogTitle>
-      <DialogContent className="w-[95%] md:w-full max-w-2xl h-[70vh] sm:h-[70vh] p-0 bg-background/95 backdrop-blur-sm text-popover-foreground border-none rounded-2xl overflow-hidden flex flex-col gap-0 cosmic-glass HiddenScrollbar">
+      <DialogContent className="w-[95%] md:w-full max-w-2xl h-[70vh] sm:h-[70vh] p-0 bg-popover backdrop-blur-sm text-popover-foreground border-none rounded-2xl overflow-hidden flex flex-col gap-0 cosmic-glass HiddenScrollbar">
         <div className="flex-shrink-0 py-2 px-4">
           <div className="flex items-center gap-3 mb-1">
             <Search size={16} className="text-foreground" />
@@ -451,7 +451,7 @@ export function ChatHistoryClient() {
 
         </div>
 
-        <div className="flex-none border-t border-border/50 bg-background/50 px-4 md:px-6 py-3">
+        <div className="flex-none border-t border-border/50 bg-popover/50 px-4 md:px-6 py-3">
           <div className="flex items-center justify-between text-xs">
             <span className="text-foreground font-medium">
               {hasChats ? `${groups.thisWeek.length + groups.lastWeek.length + groups.thisMonth.length + groups.older.length} conversations` : 'No conversations'}

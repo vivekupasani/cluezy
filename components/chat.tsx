@@ -497,11 +497,11 @@ export function Chat({
   const isMobile = useIsMobile()
   return (
     <div className={cn(
-      'bg-sidebar flex h-screen min-w-0 w-full flex-1 flex-col',
+      'bg-sidebar flex h-full min-w-0 w-full flex-1 flex-col',
     )}>
       <div
         className={cn(
-          'relative bg-background flex h-screen min-w-0 w-full flex-1 flex-col',
+          'relative bg-background flex h-full min-w-0 w-full flex-1 flex-col',
           messages.length === 0 ? 'items-center justify-center' : '',
           open && !isMobile ? "mt-3.5 rounded-tl-xl border-t border-l border-sidebar-ring/30 dark:border-sidebar-ring/10 transition-all duration-300 ease-in-out" : "mt-0 rounded-t-none transition-all duration-300 ease-in-out border-l border-sidebar-foreground/10"
         )}
@@ -554,7 +554,7 @@ export function Chat({
         <Dialog open={isRateLimitDialogOpen} onOpenChange={setisRateLimitDialogOpen}>
           <DialogContent className='w-[95%] max-w-sm bg-background/95 rounded-3xl backdrop-blur-md border-2 border-border/50 shadow-2xl'>
             <DialogHeader className='space-y-3'>
-              <DialogTitle className='text-2xl font-bold text-center bg-gradient-to-r from-orange-500 via-yellow-500 to-orange-600 bg-clip-text text-transparent'>
+              <DialogTitle className='text-2xl font-bold text-center bg-gradient-to-r from-primary via-primary/80 to-primary bg-clip-text text-transparent'>
                 {isRateLimitDialogControlVisible ? 'Daily Limit Reached' : 'Rate Limit Exceeded'}
               </DialogTitle>
               <DialogDescription className='text-center text-muted-foreground text-sm leading-relaxed px-2'>

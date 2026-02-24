@@ -26,13 +26,13 @@ export default function TestPage() {
   }, [])
 
   return (
-    <div className={cn("h-screen min-w-0 w-full bg-sidebar mt-0",
+    <div className={cn("h-svh min-w-0 w-full bg-sidebar mt-0",
       open && !isMobile ? "pt-3.5 border-none transition-all duration-300 ease-in-out" : "mt-0 rounded-t-none transition-all duration-300 ease-in-out border-l border-sidebar-foreground/10"
     )}>
-      <div className={cn("h-screen min-w-0 w-full bg-background mt-0",
+      <div className={cn("h-svh min-w-0 w-full bg-background mt-0",
         open && !isMobile ? "rounded-tl-xl border-t border-l border-sidebar-ring/30 dark:border-sidebar-ring/10 transition-all duration-300 ease-in-out" : "mt-0 rounded-t-none transition-all duration-300 ease-in-out border-l border-sidebar-foreground/10"
       )}>
-        <div className={cn("relative flex h-screen min-w-0 w-full max-w-2xl mx-auto flex-1 flex-col justify-between",
+        <div className={cn("relative flex h-svh min-w-0 w-full max-w-2xl mx-auto flex-1 flex-col justify-between",
         )}>
           <div className="flex-1 flex flex-col items-center pt-[70px] md:pt-14 px-2 md:px-0">
             <ChatLoadingSkeleton />
@@ -43,7 +43,7 @@ export default function TestPage() {
               <div className={cn(
                 "relative flex flex-col w-full p-2.5 transition-all duration-300",
                 "bg-accent/20 dark:bg-card boring-dark:bg-accent backdrop-blur-xl",
-                "ring-1 ring-border/20 border border-border dark:border-border/70",
+                "ring-1 ring-border/20 border border-border dark:border-sidebar-ring/10",
                 "rounded-[20px]"
               )}>
                 <div className="relative w-full">

@@ -128,7 +128,7 @@ export function ModelSelector({ models }: ModelSelectorProps) {
           <ChevronDown size={12} className="ml-1 opacity-50" />
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-[240px] p-0 mx-2 HiddenScrollbar border-border/50 rounded-lg bg-popover/50 backdrop-blur-sm" align="start">
+      <PopoverContent className="w-[240px] p-0 mx-2 HiddenScrollbar border-border/50 rounded-lg bg-popover backdrop-blur-sm" align="start">
         <Command className='bg-popover/10 rounded-lg'>
           <CommandInput placeholder="Search models..." className="h-9 text-sm" />
           <CommandList className="max-h-[250px] overflow-y-auto CustomScrollbar p-1">

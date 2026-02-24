@@ -116,7 +116,7 @@ export function ExcludedDomainsDialog({
                 </Tooltip>
             )}
 
-            <DialogContent className="w-[95%] md:w-full max-w-2xl h-[50vh] sm:h-[60vh] p-0 bg-background/95 backdrop-blur-sm text-popover-foreground border border-border rounded-2xl overflow-hidden flex flex-col gap-0 cosmic-glass HiddenScrollbar">
+            <DialogContent className="w-[95%] md:w-full max-w-2xl h-[50vh] sm:h-[60vh] p-0 bg-popover backdrop-blur-sm text-popover-foreground border border-border rounded-2xl overflow-hidden flex flex-col gap-0 cosmic-glass HiddenScrollbar">
                 <DialogHeader className="sr-only">
                     <DialogTitle>Excluded Sources</DialogTitle>
                     <DialogDescription>Manage domains to exclude from search results</DialogDescription>
@@ -186,7 +186,7 @@ export function ExcludedDomainsDialog({
                 </div>
 
                 {/* Footer Status Bar */}
-                <div className="flex-none border-t border-border/50 bg-background/50 px-4 md:px-6 py-3">
+                <div className="flex-none border-t border-border/50 bg-popover/50 px-4 md:px-6 py-3">
                     <div className="flex items-center justify-between text-xs">
                         <span className="text-muted-foreground/50 font-medium">
                             {excludedDomains.length} sources excluded
