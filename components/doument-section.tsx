@@ -35,7 +35,7 @@ export const DocumentSection = ({ tool, isOpen, onOpenChange }: DocumentSectionP
         pptSearch: "Presentations"
     }[toolName] || "Search"  // default
 
-    const query = !useIsMobile ? (tool.args?.query as string | undefined) : (tool.args?.query as string | undefined)?.slice(0, 50) + '...'
+    const query = !useIsMobile ? (tool.args?.query as string | undefined) : (tool.args?.query as string | undefined)?.slice(0, 44) + '...'
 
     const { open } = useArtifact()
 

@@ -9,6 +9,7 @@ import { xai } from '@ai-sdk/xai'
 import {
   createProviderRegistry,
   extractReasoningMiddleware,
+  LanguageModelV1Middleware,
   wrapLanguageModel
 } from 'ai'
 import { createOllama } from 'ollama-ai-provider'
@@ -43,6 +44,61 @@ export const registry = createProviderRegistry({
     baseURL: 'https://openrouter.ai/api/v1'
   })
 })
+
+/**
+ * Middleware for DeepSeek Reasoner that injects `reasoning_content` back into
+ * assistant messages before each API call.
+ *
+ * During multi-step tool calls, DeepSeek requires the reasoning_content from
+ * the previous assistant turn to be echoed back. The AI SDK drops `reasoning`
+ * parts when building the prompt, so we restore them via providerMetadata
+ * (keyed as `openaiCompatible`) so that `convertToOpenAICompatibleChatMessages`
+ * spreads them into the outgoing API message body via `getOpenAIMetadata()`.
+ */
+const deepseekReasoningMiddleware: LanguageModelV1Middleware = {
+  middlewareVersion: 'v1',
+  transformParams: async ({ params }) => {
+    const transformedPrompt = params.prompt.map((message) => {
+      if (message.role !== 'assistant') return message
+
+      // Find any reasoning part in this assistant message
+      const reasoningPart = message.content.find(
+        (part) => part.type === 'reasoning'
+      )
+      if (!reasoningPart || reasoningPart.type !== 'reasoning') return message
+
+      // Inject reasoning_content into both providerMetadata and providerOptions
+      // (as any) to ensure the openai-compatible converter spreads it into
+      // the outgoing API message body regardless of which field it reads.
+      const transformedMessage = {
+        ...message,
+        providerMetadata: {
+          ...message.providerMetadata,
+          openaiCompatible: {
+            ...(message.providerMetadata?.openaiCompatible ?? {}),
+            reasoning_content: reasoningPart.text
+          }
+        }
+      } as any
+
+      // Also set providerOptions if available/supported by the SDK version
+      transformedMessage.providerOptions = {
+        ...transformedMessage.providerOptions,
+        openaiCompatible: {
+          ...transformedMessage.providerOptions?.openaiCompatible,
+          reasoning_content: reasoningPart.text
+        }
+      }
+
+      return transformedMessage
+    })
+
+    return {
+      ...params,
+      prompt: transformedPrompt
+    }
+  }
+}
 
 export function getModel(model: string) {
   const [provider, ...modelNameParts] = model.split(':') ?? []
@@ -85,6 +141,17 @@ export function getModel(model: string) {
       middleware: extractReasoningMiddleware({
         tagName: 'think'
       })
+    })
+  }
+
+  // For deepseek-reasoner: wrap with middleware that echoes reasoning_content
+  // back during multi-step tool calls (required by DeepSeek API)
+  if (model.includes('deepseek') && model.includes('reasoner')) {
+    return wrapLanguageModel({
+      model: registry.languageModel(
+        model as Parameters<typeof registry.languageModel>[0]
+      ),
+      middleware: deepseekReasoningMiddleware
     })
   }
 
@@ -167,9 +234,12 @@ export function isToolCallSupported(model?: string) {
     return true
   }
 
-  // Deepseek R1 is not supported
-  // Deepseek v3's tool call is unstable, so we include it in the list
-  return !modelName?.includes('deepseek')
+  // Deepseek v3 and Reasoner support tool calling.
+  if (provider === 'deepseek' || modelName?.includes('deepseek')) {
+    return true
+  }
+
+  return true
 }
 
 export function isReasoningModel(model: string): boolean {

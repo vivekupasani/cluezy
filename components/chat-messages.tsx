@@ -46,7 +46,7 @@ export function ChatMessages({
 }: ChatMessagesProps) {
   const [openStates, setOpenStates] = useState<Record<string, boolean>>({})
   const manualToolCallId = 'manual-tool-call'
-  const [isOpen, setTsOpen] = useState(true)
+
 
   useEffect(() => {
     // Open manual tool call when the last section is a user message
@@ -106,13 +106,11 @@ export function ChatMessages({
     if (id.includes('call')) {
       return openStates[id] ?? true
     }
-    const baseId = id.endsWith('-related') ? id.slice(0, -8) : id
-    const index = allMessages.findIndex(msg => msg.id === baseId)
-    return isOpen
+    return openStates[id] ?? true
   }
 
   const handleOpenChange = (id: string, open: boolean) => {
-    setTsOpen(isOpen => !isOpen)
+    setOpenStates(prev => ({ ...prev, [id]: open }))
   }
 
   return (

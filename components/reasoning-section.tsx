@@ -55,7 +55,7 @@ export function ReasoningSection({
   if (!content) return <DefaultSkeleton />
 
   return (
-    <div className="flex flex-col gap-4 mx-2 sm:mx-0">
+    <div className="flex flex-col gap-4 sm:mx-0 mt-4">
       <CollapsibleMessage
         role="assistant"
         isCollapsible={true}
@@ -67,7 +67,7 @@ export function ReasoningSection({
       >
         <BotMessage
           message={content.reasoning}
-          className="prose-p:text-muted-foreground"
+          className="prose-p:text-foreground prose-p:text-sm"
         />
       </CollapsibleMessage>
     </div>

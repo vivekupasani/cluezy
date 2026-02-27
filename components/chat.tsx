@@ -552,7 +552,7 @@ export function Chat({
 
         {/* Rate Limit Dialog */}
         <Dialog open={isRateLimitDialogOpen} onOpenChange={setisRateLimitDialogOpen}>
-          <DialogContent className='w-[95%] max-w-sm bg-background/95 rounded-3xl backdrop-blur-md border-2 border-border/50 shadow-2xl'>
+          <DialogContent className='w-[95%] max-w-sm bg-popover rounded-3xl backdrop-blur-md border-2 border-border/50 shadow-2xl'>
             <DialogHeader className='space-y-3'>
               <DialogTitle className='text-2xl font-bold text-center bg-gradient-to-r from-primary via-primary/80 to-primary bg-clip-text text-transparent'>
                 {isRateLimitDialogControlVisible ? 'Daily Limit Reached' : 'Rate Limit Exceeded'}
@@ -586,13 +586,13 @@ export function Chat({
                 >
                   Sign In to Continue
                 </Button>
-                <Button
+                {/* <Button
                   variant="ghost"
                   className='w-full text-muted-foreground hover:text-foreground py-5 rounded-xl'
                   onClick={() => setisRateLimitDialogOpen(false)}
                 >
                   Maybe Later
-                </Button>
+                </Button> */}
               </div>
             ) : (
               <div className="flex flex-col gap-2.5 mt-6">

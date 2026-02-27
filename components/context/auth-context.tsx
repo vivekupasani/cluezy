@@ -20,8 +20,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     const [userPlanDetails, setUserPlanDetails] = React.useState<UserPlanDetailsProps | null>(null);
     const [isLoading, setIsLoading] = React.useState(true);
 
-    // console.log("user plan details: ", userPlanDetails)
-
     React.useEffect(() => {
         if (!user) {
             getUserData()
@@ -35,6 +33,10 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }, [user])
 
     const getUserData = async () => {
+        const localData = getfromLocalStorage("user");
+        if (localData) {
+            setUser(JSON.parse(localData));
+        }
         const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
         const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
 
@@ -43,7 +45,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
             const {
                 data: { user: supabaseUser }
             } = await supabase.auth.getUser()
+
             setUser(supabaseUser ?? null)
+            savetoLocalStorage("user", supabaseUser ?? null);
         }
         setIsLoading(false)
     }
@@ -54,19 +58,21 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         try {
             const { getUserPlan, saveUserPlanDetails } = await import('@/lib/actions/user-premium');
 
-            // We use user.email as the unique key for premium data
-            const email = user.email;
-            if (!email) return;
+            const localData = getfromLocalStorage("userPlanDetails");
+            if (localData) {
+                setUserPlanDetails(JSON.parse(localData));
+            }
 
             const data = await getUserPlan(user.id);
 
             if (data) {
                 setUserPlanDetails(data);
+                savetoLocalStorage("userPlanDetails", data);
             } else {
                 // Create new account data
                 const newPlanData = {
                     userId: user.id,
-                    email: email,
+                    email: user.email,
                     name: user.user_metadata?.full_name || user.user_metadata?.name || '',
                     planName: 'Free',
                     priceId: '',
@@ -76,10 +82,19 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
                 await saveUserPlanDetails(newPlanData);
                 setUserPlanDetails(newPlanData);
+                savetoLocalStorage("userPlanDetails", newPlanData);
             }
         } catch (error) {
             console.error("Error fetching premium plan data:", error);
         }
+    }
+
+    function savetoLocalStorage(key: string, value: any) {
+        localStorage.setItem(key, JSON.stringify(value));
+    }
+
+    function getfromLocalStorage(key: string) {
+        return localStorage.getItem(key);
     }
 
     return (

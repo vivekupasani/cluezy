@@ -175,18 +175,19 @@ export function AppSidebar() {
 
         {state !== 'collapsed' && (
           <motion.div
-            initial={{
-              opacity: 0,
-              x: 0
-            }}
-            animate={{
-              opacity: 1,
-              x: 1,
-              transition: {
-                duration: 0.2,
-                ease: 'easeInOut'
-              }
-            }}>
+          // initial={{
+          //   opacity: 0,
+          //   x: 0
+          // }}
+          // animate={{
+          //   opacity: 1,
+          //   x: 1,
+          //   transition: {
+          //     duration: 0.2,
+          //     ease: 'easeInOut'
+          //   }
+          // }}
+          >
             <SidebarHeader className='text-[10px] mt-2 uppercase text-foreground font-normal'>Company</SidebarHeader>
             <SidebarMenu className='transition-opacity'>
               <SidebarMenuItem>

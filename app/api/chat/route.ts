@@ -23,16 +23,13 @@ export async function POST(req: Request) {
     const { messages, id: chatId, excludeDomains, selectedApps, isIncognito } = await req.json()
     const referer = req.headers.get('referer')
     const isSharePage = referer?.includes('/share/')
+    const userId = await getCurrentUserId()
     let userPlanDetails: UserPlanDetailsProps | null = null
-    // Parallelize authentication and identifier fetching
-    const [userId, identifier] = await Promise.all([
-      getCurrentUserId(),
-      Promise.resolve(getClientIdentifier(req))
-    ])
 
     console.log("user id : ", userId)
 
     if (userId === "anonymous") {
+      const identifier = getClientIdentifier(req)
       const { success, limit, remaining } = await unauthenticatedRateLimit.limit(identifier);
       console.log("Remaining credits for the day : ", remaining)
 
@@ -54,7 +51,7 @@ export async function POST(req: Request) {
         console.log("Remaining credits for the day : ", remaining)
 
         if (!success) {
-          const resetDate = new Date(reset);
+          const resetDate = new Date(reset).toLocaleString();
           return new Response(
             `You've reached your free usage limit. Upgrade to Pro for unlimited access, or come back at ${resetDate} to continue your research!`,
             {

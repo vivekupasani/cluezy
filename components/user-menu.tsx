@@ -59,6 +59,8 @@ export default function UserMenu({ user, state }: UserMenuProps) {
     await supabase.auth.signOut()
     setUser(null)
     setUserPlanDetails(null)
+    localStorage.removeItem("user");
+    localStorage.removeItem("userPlanDetails");
     clearChatHistoryCache()
     router.push('/')
     router.refresh()

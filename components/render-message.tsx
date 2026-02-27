@@ -132,57 +132,61 @@ export function RenderMessage({
           chatId={chatId}
         />
       ))}
-      {message.parts?.map((part, index) => {
-        // Check if this is the last part in the array
-        const isLastPart = index === (message.parts?.length ?? 0) - 1
+      <div className='flex flex-col gap-1'>
+        {message.parts?.map((part, index) => {
+          // Check if this is the last part in the array
+          const isLastPart = index === (message.parts?.length ?? 0) - 1
 
-        switch (part.type) {
-          case 'tool-invocation':
-            return (
-              <ToolSection
-                key={`${messageId}-tool-${index}`}
-                tool={part.toolInvocation}
-                isOpen={getIsOpen(part.toolInvocation.toolCallId)}
-                onOpenChange={open =>
-                  onOpenChange(part.toolInvocation.toolCallId, open)
-                }
-                addToolResult={addToolResult}
-                chatId={chatId}
-              />
-            )
-          case 'text':
-            // Only show actions if this is the last part and it's a text part
-            return (
-              <div key={`${messageId}-text-${index}`} className='-mt-0.5'>
-                <AnswerSection
-                  key={`${messageId}-text-${index}`}
-                  content={part.text}
+          switch (part.type) {
+            case 'tool-invocation':
+              return (
+                <ToolSection
+                  key={`${messageId}-tool-${index}`}
+                  tool={part.toolInvocation}
+                  isOpen={getIsOpen(part.toolInvocation.toolCallId)}
+                  onOpenChange={open =>
+                    onOpenChange(part.toolInvocation.toolCallId, open)
+                  }
+                  addToolResult={addToolResult}
+                  chatId={chatId}
+                />
+              )
+
+            case 'reasoning':
+              return (
+                <ReasoningSection
+                  key={`${messageId}-reasoning-${index}`}
+                  content={{
+                    reasoning: part.reasoning,
+                    time: reasoningTime
+                  }}
                   isOpen={getIsOpen(messageId)}
                   onOpenChange={open => onOpenChange(messageId, open)}
-                  chatId={chatId}
-                  showActions={isLastPart}
-                  messageId={messageId}
-                  reload={reload}
                 />
-              </div>
-            )
-          case 'reasoning':
-            return (
-              <ReasoningSection
-                key={`${messageId}-reasoning-${index}`}
-                content={{
-                  reasoning: part.reasoning,
-                  time: reasoningTime
-                }}
-                isOpen={getIsOpen(messageId)}
-                onOpenChange={open => onOpenChange(messageId, open)}
-              />
-            )
-          // Add other part types as needed
-          default:
-            return null
-        }
-      })}
+              )
+
+            case 'text':
+              // Only show actions if this is the last part and it's a text part
+              return (
+                <div key={`${messageId}-text-${index}`} className='-mt-3'>
+                  <AnswerSection
+                    key={`${messageId}-text-${index}`}
+                    content={part.text}
+                    isOpen={getIsOpen(messageId)}
+                    onOpenChange={open => onOpenChange(messageId, open)}
+                    chatId={chatId}
+                    showActions={isLastPart}
+                    messageId={messageId}
+                    reload={reload}
+                  />
+                </div>
+              )
+            // Add other part types as needed
+            default:
+              return null
+          }
+        })}
+      </div>
       {relatedQuestions && relatedQuestions.length > 0 && (
         <RelatedQuestions
           annotations={relatedQuestions as JSONValue[]}

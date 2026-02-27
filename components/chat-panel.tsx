@@ -30,7 +30,6 @@ import { useAuth } from './context/auth-context'
 import { EmptyScreen } from './empty-screen'
 import { MentionPopover } from './mention-popover'
 import { ModelSelector } from './model-selector'
-import { SearchModeToggle } from './search-mode-toggle'
 import { clearChatHistoryCache } from './sidebar/chat-history-client'
 import { Button } from './ui/button'
 import { useSidebar } from './ui/sidebar'
@@ -312,7 +311,7 @@ export function ChatPanel({
             type="button"
             variant="outline"
             size="icon"
-            className="absolute -top-12 border border-foreground/5 right-4 z-20 size-8 rounded-full bg-accent/20 dark:bg-card boring-dark:bg-card backdrop-blur-sm shadow-sm hover:bg-card/70 transition-all"
+            className="absolute -top-12 border border-foreground/5 right-4 z-20 size-8 rounded-full bg-accent dark:bg-card boring-dark:bg-card backdrop-blur-sm shadow-sm hover:bg-accent/60 hover:dark:bg-card/70 transition-all"
             onClick={handleScrollToBottom}
             title="Scroll to bottom"
           >
@@ -516,7 +515,6 @@ export function ChatPanel({
             <div className="flex justify-between items-center pt-2 mt-0 pl-1 pr-1">
               <div className="flex items-center gap-2">
                 <ModelSelector models={models ?? []} />
-                <SearchModeToggle />
               </div>
 
               <div className="flex items-center gap-1.5">

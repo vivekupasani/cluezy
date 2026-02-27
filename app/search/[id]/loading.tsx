@@ -47,12 +47,12 @@ export default function TestPage() {
                 "rounded-[20px]"
               )}>
                 <div className="relative w-full">
-                  <div className="w-full bg-transparent text-muted-foreground/60 outline-none text-[15px] leading-relaxed pt-2 px-2 min-h-[53px] cursor-not-allowed">
+                  <div className="w-full bg-transparent text-muted-foreground/60 outline-none text-[15px] leading-relaxed pt-2 px-2 min-h-[52px] cursor-not-allowed">
                     Ask follow up questions or type @ to mention
                   </div>
                 </div>
 
-                <div className="flex justify-between items-center pt-2 pb-0.5 mt-0 pl-1 pr-1">
+                <div className="flex justify-between items-center pt-2 pb-0 mt-0 pl-1 pr-1">
                   <div className="flex items-center gap-1 h-8 px-2 text-muted-foreground">
                     <span className="text-xs font-medium">
                       {model?.name || 'Select model'}
