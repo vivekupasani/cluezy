@@ -49,13 +49,13 @@ interface FileAttachment {
 type MessagePart =
   | { type: 'text'; text: string }
   | {
-      type: 'file'
-      url: string
-      name: string
-      mimeType: string
-      size: number
-      data: string // Add the required data property
-    }
+    type: 'file'
+    url: string
+    name: string
+    mimeType: string
+    size: number
+    data: string // Add the required data property
+  }
 
 export function Chat({
   id,
@@ -376,11 +376,11 @@ export function Chat({
       annotations:
         selectedApps.length > 0
           ? [
-              {
-                type: 'selected-apps',
-                data: selectedApps
-              } as JSONValue
-            ]
+            {
+              type: 'selected-apps',
+              data: selectedApps
+            } as JSONValue
+          ]
           : undefined
     })
 
@@ -488,11 +488,11 @@ export function Chat({
           annotations:
             selectedApps.length > 0
               ? [
-                  {
-                    type: 'selected-apps',
-                    data: selectedApps
-                  }
-                ]
+                {
+                  type: 'selected-apps',
+                  data: selectedApps
+                }
+              ]
               : undefined
         }
       })
@@ -532,7 +532,7 @@ export function Chat({
           messages.length === 0 ? 'items-center justify-center' : '',
           open && !isMobile
             ? 'mt-3.5 rounded-tl-xl border-t border-l border-sidebar-ring/30 dark:border-sidebar-ring/10 transition-all duration-300 ease-in-out'
-            : 'mt-0 rounded-t-none transition-all duration-300 ease-in-out border-l border-sidebar-foreground/10'
+            : 'mt-0 rounded-t-none md:transition-all md:duration-300 md:ease-in-out border-l border-sidebar-foreground/10'
         )}
         data-testid="full-chat"
       >

@@ -27,25 +27,6 @@ export const ChatLoadingSkeleton = () => {
           <Skeleton className="h-4 w-[96%] rounded-md bg-accent dark:bg-muted/40" />
           <Skeleton className="h-4 w-[75%] rounded-md bg-accent dark:bg-muted/40" />
         </div>
-
-        {/* Section Header */}
-        <Skeleton className="h-5 w-32 rounded-md mt-2" />
-
-        {/* List items with icons */}
-        <div className="flex flex-col gap-5 mt-1 ml-1">
-          {[...Array(2)].map((_, i) => (
-            <div key={i} className="flex gap-4">
-              <Skeleton className="size-2 rounded-full mt-2 shrink-0" />
-              <div className="flex flex-col gap-2.5 w-full">
-                <Skeleton className="h-4 w-[88%] rounded-md bg-accent dark:bg-muted/40" />
-                <div className="flex gap-2 items-center">
-                  <Skeleton className="size-1.5 rounded-full shrink-0 ml-1 opacity-30" />
-                  <Skeleton className="h-3.5 w-[65%] rounded-md opacity-60 bg-accent dark:bg-muted/40" />
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
       </div>
     </div>
   )

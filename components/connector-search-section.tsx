@@ -29,7 +29,7 @@ export function ConnectorSearchSection({ tool }: { tool: ToolInvocation }) {
     ]
 
     return (
-        <div className="w-full rounded-xl border border-border bg-muted/60 dark:bg-card/40 shadow-sm overflow-hidden mt-4">
+        <div className="w-[95%] mx-auto md:w-full rounded-xl border border-border bg-muted/60 dark:bg-card/40 shadow-sm overflow-hidden mt-4">
             {/* Header row */}
             <button
                 onClick={() => setCollapsed(v => !v)}
