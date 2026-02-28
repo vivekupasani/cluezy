@@ -11,9 +11,9 @@ import { useIsMobile } from '@/hooks/use-mobile'
 import { PROVIDER_ICONS } from '@/lib/connectors/icons'
 import { CONNECTOR_CONFIGS, ConnectorProvider } from '@/lib/connectors/types'
 import { cn } from '@/lib/utils'
+import Link from 'next/link'
 import { toast } from 'sonner'
 import { HistoryDialog } from './history-dialog'
-import { Tooltip, TooltipContent, TooltipTrigger } from './ui'
 import { useSidebar } from './ui/sidebar'
 
 const activeProviders: ConnectorProvider[] = [
@@ -137,24 +137,28 @@ export function ConnectorsPageContent() {
                     : null
 
                   return (
-                    <AppCard
-                      key={connection.id}
-                      icon={Icon ? <Icon /> : null}
-                      name={connection.name || config?.name || connection.slug}
-                      tags={[connection.email || 'Connected']}
-                      topRight={
-                        syncingProvider === connection.provider ? (
-                          <RefreshCw className="h-3 w-3 text-primary animate-spin" />
-                        ) : (
-                          <ConnectedBadge />
-                        )
-                      }
-                      bottomLink={connection.name || config?.name}
-                      onClick={() =>
-                        connection.provider &&
-                        openConnectDialog(connection.provider)
-                      }
-                    />
+                    <Link
+                      href={`/connectors/${connection.provider}`}
+                    >
+                      <AppCard
+                        key={connection.id}
+                        icon={Icon ? <Icon /> : null}
+                        name={connection.name || config?.name || connection.slug}
+                        tags={[connection.email || 'Connected']}
+                        topRight={
+                          syncingProvider === connection.provider ? (
+                            <RefreshCw className="h-3 w-3 text-primary animate-spin" />
+                          ) : (
+                            <ConnectedBadge />
+                          )
+                        }
+                        bottomLink={connection.name || config?.name}
+                      // onClick={() =>
+                      //   connection.provider &&
+                      //   openConnectDialog(connection.provider)
+                      // }
+                      />
+                    </Link>
                   )
                 })}
               </div>
@@ -170,35 +174,32 @@ export function ConnectorsPageContent() {
                 const Icon = PROVIDER_ICONS[config.icon]
 
                 return (
-                  <Tooltip key={provider} delayDuration={300}>
-                    <TooltipTrigger asChild>
-                      <AppCard
-                        icon={<Icon />}
-                        name={config.name}
-                        tags={[config.description]}
-                        topRight={
-                          !user ? (
-                            <span className="text-[10px] text-muted-foreground/40 font-medium">
-                              Sign in
-                            </span>
-                          ) : (
-                            <ConnectBadge />
+                  <Link
+                    href={user ? `/connectors/${provider}` : ''}
+                  >
+                    <AppCard
+                      icon={<Icon />}
+                      name={config.name}
+                      tags={[config.description]}
+                      topRight={
+                        !user ? (
+                          <span className="text-[10px] text-muted-foreground/40 font-medium">
+                            Sign in
+                          </span>
+                        ) : (
+                          <ConnectBadge />
+                        )
+                      }
+                      bottomLink={config.name}
+                      onClick={() => {
+                        if (!user) {
+                          toast.message(
+                            'Please sign in to connect your account'
                           )
                         }
-                        bottomLink={config.name}
-                        onClick={() => {
-                          if (user) openConnectDialog(provider)
-                          else
-                            toast.message(
-                              'Please sign in to connect your account'
-                            )
-                        }}
-                      />
-                    </TooltipTrigger>
-                    {!user && (
-                      <TooltipContent>Sign in to connect</TooltipContent>
-                    )}
-                  </Tooltip>
+                      }}
+                    />
+                  </Link>
                 )
               })}
             </div>
