@@ -11,15 +11,10 @@ export default function Page() {
       <header className="h-14 flex items-center px-5">
         <Link
           href="/auth/login"
-          className="group flex items-center gap-1 text-sm"
+          className="group flex items-center justify-center gap-1 text-muted-foreground hover:text-foreground text-sm transition-colors duration-200"
         >
-          <ArrowLeft
-            size={16}
-            className="text-foreground/70 group-hover:text-foreground"
-          />
-          <span className="txt-grad group-hover:text-foreground">
-            Back
-          </span>
+          <ArrowLeft size={16} />
+          <span>Back to login</span>
         </Link>
       </header>
 

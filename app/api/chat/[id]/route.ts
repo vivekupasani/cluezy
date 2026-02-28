@@ -75,7 +75,10 @@ export async function PATCH(
       return NextResponse.json({ error: result.error }, { status: statusCode })
     }
 
-    return NextResponse.json({ ok: true, message: 'Chat title updated successfully.' })
+    return NextResponse.json({
+      ok: true,
+      message: 'Chat title updated successfully.'
+    })
   } catch (error) {
     console.error(`API route error updating chat title for ${chatId}:`, error)
     return NextResponse.json(
@@ -84,4 +87,3 @@ export async function PATCH(
     )
   }
 }
-

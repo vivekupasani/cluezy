@@ -48,7 +48,7 @@ export function createSearchTool(
 
       const effectiveSearchDepthForAPI =
         searchAPI === 'searxng' &&
-          process.env.SEARXNG_DEFAULT_DEPTH === 'advanced'
+        process.env.SEARXNG_DEFAULT_DEPTH === 'advanced'
           ? 'advanced'
           : effectiveSearchDepth || 'basic'
 
@@ -56,7 +56,7 @@ export function createSearchTool(
         `Using search API: ${searchAPI}, Search Depth: ${effectiveSearchDepthForAPI}`
       )
 
-      console.log("The query used for search : ", query)
+      console.log('The query used for search : ', query)
 
       try {
         if (
@@ -84,7 +84,7 @@ export function createSearchTool(
           }
           searchResult = await response.json()
         } else {
-          console.log("Using provider : ", searchAPI)
+          console.log('Using provider : ', searchAPI)
           // Use the provider factory to get the appropriate search provider
           const searchProvider = createSearchProvider(searchAPI)
           searchResult = await searchProvider.search(

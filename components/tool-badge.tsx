@@ -1,6 +1,13 @@
 import React from 'react'
 
-import { BookOpen, FileText, Film, Link, Presentation, Search } from 'lucide-react'
+import {
+  BookOpen,
+  FileText,
+  Film,
+  Link,
+  Presentation,
+  Search
+} from 'lucide-react'
 
 import { Badge } from './ui/badge'
 

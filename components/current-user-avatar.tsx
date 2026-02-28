@@ -3,7 +3,10 @@
 import { User2 } from 'lucide-react'
 
 import { useCurrentUserImage } from '@/hooks/use-current-user-image'
-import { useCurrentUserEmail, useCurrentUserName } from '@/hooks/use-current-user-name'
+import {
+  useCurrentUserEmail,
+  useCurrentUserName
+} from '@/hooks/use-current-user-name'
 
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 
@@ -12,7 +15,10 @@ interface CurrentUserAvatarProps {
   className?: string
 }
 
-export const CurrentUserAvatar = ({ size = 16, className }: CurrentUserAvatarProps) => {
+export const CurrentUserAvatar = ({
+  size = 16,
+  className
+}: CurrentUserAvatarProps) => {
   const profileImage = useCurrentUserImage()
   const name = useCurrentUserName()
   const email = useCurrentUserEmail()
@@ -44,8 +50,8 @@ export const CurrentUserAvatar = ({ size = 16, className }: CurrentUserAvatarPro
       <AvatarFallback className="p-1 text-xs font-medium flex items-center justify-center bg-gradient-to-br from-card/95 via-card to-card/90 backdrop-blur-sm shadow-inner shadow-card-foreground/10 border-b border-primary/8">
         {initials ? (
           <User2 size={size} className="text-muted-foreground" />
-          // <p className="text-xs p-2">{initials}</p>
         ) : (
+          // <p className="text-xs p-2">{initials}</p>
           <User2 size={size} className="text-muted-foreground" />
         )}
       </AvatarFallback>

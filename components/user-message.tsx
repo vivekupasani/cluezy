@@ -108,9 +108,7 @@ export const UserMessage: React.FC<UserMessageProps> = ({
                       <div className="shrink-0 flex items-center justify-center size-3.5">
                         {Icon && <Icon className="size-full" />}
                       </div>
-                      <span className="truncate">
-                        {config?.name || app}
-                      </span>
+                      <span className="truncate">{config?.name || app}</span>
                     </div>
                   )
                 })}

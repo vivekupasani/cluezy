@@ -17,7 +17,9 @@ export async function GET() {
       await Promise.all(
         ollamaModels.map(async ollamaModel => {
           try {
-            const capabilities = await client.getModelCapabilities(ollamaModel.name)
+            const capabilities = await client.getModelCapabilities(
+              ollamaModel.name
+            )
             return transformOllamaModel(ollamaModel, capabilities)
           } catch {
             return null

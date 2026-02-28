@@ -1,42 +1,48 @@
-"use client"
-import { useAuth } from '@/components/context/auth-context';
-import { useTheme } from 'next-themes';
-import React, { useEffect, useState } from 'react';
+'use client'
+import { useAuth } from '@/components/context/auth-context'
+import { useTheme } from 'next-themes'
+import React, { useEffect, useState } from 'react'
 
 interface CluezyLogoProps extends React.SVGProps<SVGSVGElement> {
   size?: number
   className?: string
 }
 
-export const CluezyLogo = ({ size = 30, className, ...props }: CluezyLogoProps) => {
-  const { user } = useAuth();
+export const CluezyLogo = ({
+  size = 30,
+  className,
+  ...props
+}: CluezyLogoProps) => {
+  const { user } = useAuth()
   const { theme, systemTheme } = useTheme()
-  const [currentTheme, setCurrentTheme] = useState<string | undefined>(undefined);
+  const [currentTheme, setCurrentTheme] = useState<string | undefined>(
+    undefined
+  )
 
   useEffect(() => {
     checkCurrentTheme()
-  }, [theme, systemTheme]);
+  }, [theme, systemTheme])
 
   const checkCurrentTheme = () => {
     if (theme === 'system') {
-      setCurrentTheme(systemTheme);
-      return;
+      setCurrentTheme(systemTheme)
+      return
     }
-    setCurrentTheme(theme);
-  };
+    setCurrentTheme(theme)
+  }
 
   function getFillColor() {
     switch (currentTheme) {
-      case "light":
-        return "#48214b";
-      case "dark":
-        return "#d2c4de";
-      case "boring-light":
-        return "#171717";
-      case "boring-dark":
-        return "#fafafa";
+      case 'light':
+        return '#48214b'
+      case 'dark':
+        return '#d2c4de'
+      case 'boring-light':
+        return '#171717'
+      case 'boring-dark':
+        return '#fafafa'
       default:
-        return "#4f1d21";
+        return '#4f1d21'
     }
   }
 

@@ -32,7 +32,11 @@ export function SearchResults({
   }
 
   // Logic for grid mode
-  const displayedGridResults = showAllResults ? results : isMobile ? results.slice(0, 3) : results.slice(0, 7)
+  const displayedGridResults = showAllResults
+    ? results
+    : isMobile
+      ? results.slice(0, 3)
+      : results.slice(0, 7)
   const additionalResultsCount = results.length > 3 ? results.length - 7 : 0
   const displayUrlName = (url: string) => {
     const hostname = new URL(url).hostname
@@ -56,8 +60,9 @@ export function SearchResults({
               <CardContent className="p-2 flex items-start space-x-2">
                 <Avatar className="h-4 w-4 mt-1 flex-shrink-0">
                   <AvatarImage
-                    src={`https://www.google.com/s2/favicons?domain=${new URL(result.url).hostname
-                      }`}
+                    src={`https://www.google.com/s2/favicons?domain=${
+                      new URL(result.url).hostname
+                    }`}
                     alt={new URL(result.url).hostname}
                   />
                   <AvatarFallback className="text-xs">
@@ -71,11 +76,11 @@ export function SearchResults({
                   <p className="text-xs text-muted-foreground line-clamp-2">
                     {result.content}
                   </p>
-                  {
-                    result.summary && <p className="text-xs text-muted-foreground line-clamp-2">
+                  {result.summary && (
+                    <p className="text-xs text-muted-foreground line-clamp-2">
                       {result.summary}
                     </p>
-                  }
+                  )}
                   <div className="text-xs text-muted-foreground/80 mt-1 truncate">
                     <span className="underline">
                       {new URL(result.url).hostname}
@@ -104,8 +109,9 @@ export function SearchResults({
                 <div className="mt-2 flex items-center space-x-1">
                   <Avatar className="h-4 w-4">
                     <AvatarImage
-                      src={`https://www.google.com/s2/favicons?domain=${new URL(result.url).hostname
-                        }`}
+                      src={`https://www.google.com/s2/favicons?domain=${
+                        new URL(result.url).hostname
+                      }`}
                       alt={new URL(result.url).hostname}
                     />
                     <AvatarFallback>

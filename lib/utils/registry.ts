@@ -58,12 +58,12 @@ export const registry = createProviderRegistry({
 const deepseekReasoningMiddleware: LanguageModelV1Middleware = {
   middlewareVersion: 'v1',
   transformParams: async ({ params }) => {
-    const transformedPrompt = params.prompt.map((message) => {
+    const transformedPrompt = params.prompt.map(message => {
       if (message.role !== 'assistant') return message
 
       // Find any reasoning part in this assistant message
       const reasoningPart = message.content.find(
-        (part) => part.type === 'reasoning'
+        part => part.type === 'reasoning'
       )
       if (!reasoningPart || reasoningPart.type !== 'reasoning') return message
 

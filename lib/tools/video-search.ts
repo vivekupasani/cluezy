@@ -10,7 +10,7 @@ export function createVideoSearchTool(fullModel: string) {
     description: 'Search for videos from YouTube',
     parameters: getSearchSchemaForModel(fullModel),
     execute: async ({ query }) => {
-      console.log("I AM USING VIDEO SEARCH TOOL")
+      console.log('I AM USING VIDEO SEARCH TOOL')
       try {
         const response = await fetch('https://google.serper.dev/videos', {
           method: 'POST',

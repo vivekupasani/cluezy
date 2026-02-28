@@ -7,7 +7,6 @@ import { Globe } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { getCookie, setCookie } from '@/lib/utils/cookies'
 
-
 export function SearchModeToggle() {
   const [isSearchMode, setIsSearchMode] = useState(true)
 
@@ -34,8 +33,9 @@ export function SearchModeToggle() {
       aria-label="Toggle search mode"
       // onClick={handleSearchModeChange}
       className={cn(
-        "opacity-0 bg-gradient-to-tr from-card/55 via-card/70 to-card/45 backdrop-blur-sm drop-shadow-sm shadow-inner shadow-foreground/5 border border-border/80 rounded-full px-2 py-2 cursor-pointer items-center hover:text-foreground/80 transition-colors",
-        isSearchMode && "text-chart-1 transition-colors duration-200 hover:text-chart-1/90",
+        'opacity-0 bg-gradient-to-tr from-card/55 via-card/70 to-card/45 backdrop-blur-sm drop-shadow-sm shadow-inner shadow-foreground/5 border border-border/80 rounded-full px-2 py-2 cursor-pointer items-center hover:text-foreground/80 transition-colors',
+        isSearchMode &&
+          'text-chart-1 transition-colors duration-200 hover:text-chart-1/90'
       )}
     >
       <Globe size={18} />

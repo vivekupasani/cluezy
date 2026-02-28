@@ -1,14 +1,13 @@
 // Based on: https://github.com/vercel/ai/blob/main/examples/next-ai-rsc/components/llm-stocks/spinner.tsx
 
-
 import { cn } from '@/lib/utils'
 import { IconLogo } from './icons'
 import { LoaderOne } from './loader'
 
-interface SpinnerProps extends React.SVGProps<SVGSVGElement> { }
+interface SpinnerProps extends React.SVGProps<SVGSVGElement> {}
 
 export const Spinner = ({ className, ...props }: SpinnerProps) => (
-  <div className='pl-4 md:pl-2'>
+  <div className="pl-4 md:pl-2">
     <LoaderOne />
   </div>
 )

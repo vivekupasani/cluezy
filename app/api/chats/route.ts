@@ -31,9 +31,9 @@ export async function GET(request: NextRequest) {
       error.message?.includes('Dynamic server usage') ||
       error.message?.includes('During prerendering') ||
       error.message?.includes('used request.url') ||
-      error.message?.includes('used cookies');
+      error.message?.includes('used cookies')
 
-    if (isBailout) throw error;
+    if (isBailout) throw error
 
     console.error('API route error fetching chats:', error)
     return NextResponse.json<ChatPageResponse>(

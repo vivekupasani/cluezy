@@ -36,7 +36,7 @@ export function ChatShare({ chatId, className }: ChatShareProps) {
     startTransition(() => {
       setOpen(true)
     })
-    //we need to share userId 
+    //we need to share userId
     const result = await shareChat(chatId)
     if (!result) {
       toast.error('Failed to share chat')
@@ -70,7 +70,7 @@ export function ChatShare({ chatId, className }: ChatShareProps) {
         aria-labelledby="share-dialog-title"
         aria-describedby="share-dialog-description"
       >
-        <DialogTrigger asChild className='ring-0'>
+        <DialogTrigger asChild className="ring-0">
           <Tooltip>
             <TooltipTrigger>
               <Button
@@ -79,20 +79,23 @@ export function ChatShare({ chatId, className }: ChatShareProps) {
                 variant={'ghost'}
                 onClick={() => setOpen(true)}
               >
-                <Share size={14} className='text-foreground hover:text-foreground transition-colors' />
+                <Share
+                  size={14}
+                  className="text-foreground hover:text-foreground transition-colors"
+                />
               </Button>
             </TooltipTrigger>
-            <TooltipContent side="bottom" className='text-xs'>
+            <TooltipContent side="bottom" className="text-xs">
               Share
             </TooltipContent>
           </Tooltip>
         </DialogTrigger>
-        <DialogContent className='w-[95%] max-w-sm bg-background/95 rounded-3xl backdrop-blur-md border-2 border-border/50 shadow-2xl'>
-          <DialogHeader className='space-y-3'>
-            <DialogTitle className='text-2xl font-bold text-center bg-gradient-to-r from-primary via-primary/80 to-primary bg-clip-text text-transparent'>
+        <DialogContent className="w-[95%] max-w-sm bg-background/95 rounded-3xl backdrop-blur-md border-2 border-border/50 shadow-2xl">
+          <DialogHeader className="space-y-3">
+            <DialogTitle className="text-2xl font-bold text-center bg-gradient-to-r from-primary via-primary/80 to-primary bg-clip-text text-transparent">
               Share link to search result
             </DialogTitle>
-            <DialogDescription className='text-center text-muted-foreground text-sm leading-relaxed px-2'>
+            <DialogDescription className="text-center text-muted-foreground text-sm leading-relaxed px-2">
               Anyone with the link will be able to view this search result.
             </DialogDescription>
           </DialogHeader>
@@ -101,7 +104,7 @@ export function ChatShare({ chatId, className }: ChatShareProps) {
               <Button
                 onClick={handleShare}
                 disabled={pending}
-                className='w-full font-semibold py-5 rounded-xl shadow-lg hover:bg-primary/80 hover:shadow-xl transition-all duration-200'
+                className="w-full font-semibold py-5 rounded-xl shadow-lg hover:bg-primary/80 hover:shadow-xl transition-all duration-200"
               >
                 {pending ? <LoadingSpinner /> : 'Get link'}
               </Button>
@@ -110,7 +113,7 @@ export function ChatShare({ chatId, className }: ChatShareProps) {
               <Button
                 onClick={handleCopy}
                 disabled={pending}
-                className='w-full font-semibold py-5 rounded-xl shadow-lg hover:bg-primary/80 hover:shadow-xl transition-all duration-200'
+                className="w-full font-semibold py-5 rounded-xl shadow-lg hover:bg-primary/80 hover:shadow-xl transition-all duration-200"
               >
                 {'Copy link'}
               </Button>

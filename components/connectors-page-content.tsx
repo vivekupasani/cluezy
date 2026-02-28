@@ -1,251 +1,346 @@
-'use client';
+'use client'
 
-import {
-    ArrowLeft,
-    ChevronRight,
-    RefreshCw,
-    Search
-} from 'lucide-react';
-import { useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { ArrowLeft, ArrowUpRight, RefreshCw, Search } from 'lucide-react'
+import { useRouter } from 'next/navigation'
+import { useState } from 'react'
 
-import { useAuth } from '@/components/context/auth-context';
-import { useConnectors } from '@/components/context/connectors-context';
-import { Input } from '@/components/ui/input';
-import { Skeleton } from '@/components/ui/skeleton';
-import { useIsMobile } from '@/hooks/use-mobile';
-import { PROVIDER_ICONS } from '@/lib/connectors/icons';
-import { CONNECTOR_CONFIGS, ConnectorProvider } from '@/lib/connectors/types';
-import { cn } from '@/lib/utils';
-import { motion } from 'framer-motion';
-import { useTheme } from 'next-themes';
-import { toast } from 'sonner';
-import { HistoryDialog } from './history-dialog';
-import { Tooltip, TooltipContent, TooltipTrigger } from './ui';
-import { useSidebar } from './ui/sidebar';
+import { useAuth } from '@/components/context/auth-context'
+import { useConnectors } from '@/components/context/connectors-context'
+import { Skeleton } from '@/components/ui/skeleton'
+import { useIsMobile } from '@/hooks/use-mobile'
+import { PROVIDER_ICONS } from '@/lib/connectors/icons'
+import { CONNECTOR_CONFIGS, ConnectorProvider } from '@/lib/connectors/types'
+import { cn } from '@/lib/utils'
+import { toast } from 'sonner'
+import { HistoryDialog } from './history-dialog'
+import { Tooltip, TooltipContent, TooltipTrigger } from './ui'
+import { useSidebar } from './ui/sidebar'
 
 const activeProviders: ConnectorProvider[] = [
-    'gmail',
-    'google-drive',
-    'notion',
-    'google-calendar',
-    'google-sheets',
-    'google-docs',
-    'linear',
-    'supabase',
-    'shopify',
-    'youtube'
-];
+  'gmail',
+  'google-drive',
+  'notion',
+  'google-calendar',
+  'google-sheets',
+  'google-docs',
+  'linear',
+  'supabase',
+  'shopify',
+  'youtube'
+]
 
 export function ConnectorsClientPage() {
-    const { open } = useSidebar();
-    const isMobile = useIsMobile()
-    return (
-        <div className={cn("h-svh min-w-0 w-full bg-sidebar mt-0",
-            open && !isMobile ? "pt-3.5 border-none transition-all duration-300 ease-in-out" : "mt-0 rounded-t-none transition-all duration-300 ease-in-out border-l border-sidebar-foreground/10"
-        )}>
-            <div className={cn("h-svh min-w-0 w-full bg-background mt-0",
-                open && !isMobile ? "rounded-tl-xl border-t border-l border-sidebar-ring/30 dark:border-sidebar-ring/10 transition-all duration-300 ease-in-out" : "mt-0 rounded-t-none transition-all duration-300 ease-in-out border-l border-sidebar-foreground/10"
-            )}>
-                <div className="CustomScrollbar max-w-2xl mx-auto p-4 lg:p-8 h-full overflow-y-auto HiddenScrollbar">
-                    <ConnectorsPageContent />
-                    <HistoryDialog />
-                </div>
-            </div>
+  const { open } = useSidebar()
+  const isMobile = useIsMobile()
+  return (
+    <div
+      className={cn(
+        'h-svh min-w-0 w-full bg-sidebar mt-0',
+        open && !isMobile
+          ? 'pt-3.5 border-none transition-all duration-300 ease-in-out'
+          : 'mt-0 rounded-t-none transition-all duration-300 ease-in-out border-l border-sidebar-foreground/10'
+      )}
+    >
+      <div
+        className={cn(
+          'h-svh min-w-0 w-full bg-background mt-0',
+          open && !isMobile
+            ? 'rounded-tl-xl border-t border-l border-sidebar-ring/30 dark:border-sidebar-ring/10 transition-all duration-300 ease-in-out'
+            : 'mt-0 rounded-t-none transition-all duration-300 ease-in-out border-l border-sidebar-foreground/10'
+        )}
+      >
+        <div className="CustomScrollbar max-w-5xl mx-auto px-4 lg:px-8 py-0 h-full overflow-y-auto HiddenScrollbar">
+          <ConnectorsPageContent />
+          <HistoryDialog />
         </div>
-    );
+      </div>
+    </div>
+  )
 }
 
 export function ConnectorsPageContent() {
-    const {
-        connections,
-        loading,
-        connectingProvider,
-        syncingProvider,
-        handleSync
-    } = useConnectors();
-    const [searchQuery, setSearchQuery] = useState('');
-    const { user } = useAuth();
-    const { theme, systemTheme } = useTheme()
-    const [currentTheme, setCurrentTheme] = useState<string | undefined>(undefined);
-    const router = useRouter();
+  const { connections, loading, connectingProvider, syncingProvider } =
+    useConnectors()
+  const [searchQuery, setSearchQuery] = useState('')
+  const { user } = useAuth()
+  const router = useRouter()
 
-    useEffect(() => {
-        checkCurrentTheme()
-    }, [theme, systemTheme]);
+  const openConnectDialog = (provider: ConnectorProvider) => {
+    router.push(`/connectors/${provider}`)
+  }
 
-    const checkCurrentTheme = () => {
-        if (theme === 'system') {
-            setCurrentTheme(systemTheme);
-            return;
-        }
-        setCurrentTheme(theme);
-    };
-
-    const openConnectDialog = (provider: ConnectorProvider) => {
-        router.push(`/connectors/${provider}`);
-    };
-
-    const filteredActive = activeProviders.filter(provider => {
-        const config = CONNECTOR_CONFIGS[provider];
-        return config.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-            config.description.toLowerCase().includes(searchQuery.toLowerCase());
-    });
-
-    const connectedProviders = new Set(connections.map(c => c.provider));
-
+  const filteredActive = activeProviders.filter(provider => {
+    const config = CONNECTOR_CONFIGS[provider]
     return (
-        <div className="w-full max-w-2xl mx-auto space-y-8 mt-2 lg:mt-0">
-            <header className="text-start md:mt-6">
-                <button
-                    onClick={() => router.push("/")}
-                    className="visible md:hidden group flex items-center mb-5 pt-6 gap-1.5 text-muted-foreground hover:text-foreground text-[16px] transition-colors duration-200"
-                >
-                    <ArrowLeft
-                        size={16}
-                        className="transition-transform duration-200"
-                    />
-                    Back
-                </button>
-                <h1 className="text-2xl font-medium tracking-tight">
-                    Connectors
-                </h1>
+      config.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      config.description.toLowerCase().includes(searchQuery.toLowerCase())
+    )
+  })
 
-                <p className="text-foreground text-base max-w-2xl mx-auto">
-                    Chat with your favorite apps in Cluezy
-                </p>
-            </header>
-            <div className="relative">
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                <Input
-                    placeholder="Search your favorite apps..."
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                    className="pl-9 bg-accent/40 dark:bg-card border-0 h-11 focus:ring-0 rounded-xl focus-visible:ring-0 focus-visible:ring-offset-0"
-                />
+  const connectedProviders = new Set(connections.map(c => c.provider))
+  const availableFiltered = filteredActive.filter(
+    p => !connectedProviders.has(p)
+  )
+
+  return (
+    <div className="w-full pb-10">
+      {/* ── Page Header ──────────────────────────────── */}
+      <div className="sticky top-0 z-10 bg-background/95 backdrop-blur-sm pt-4 md:pt-7 pb-4 mb-2">
+        <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-3">
+          <div className="flex flex-col md:flex-row items-start md:items-center gap-3">
+            <button
+              onClick={() => router.push('/')}
+              className="md:hidden flex items-center gap-1.5 text-muted-foreground hover:text-foreground text-sm transition-colors"
+            >
+              <ArrowLeft size={14} /> Back
+            </button>
+
+            <div>
+              <h1 className="text-lg font-semibold text-foreground leading-none">
+                Connectors
+                <span className="ml-2 text-xs font-normal text-muted-foreground/60 align-middle font-mono">
+                  {activeProviders.length}
+                </span>
+              </h1>
+              <p className="text-xs text-muted-foreground mt-0.5">
+                Connect your favourite apps and chat with them in Cluezy
+              </p>
+            </div>
+          </div>
+
+          {/* Search */}
+          <div className="relative w-48 shrink-0">
+            <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-muted-foreground/50 pointer-events-none" />
+            <input
+              placeholder="Search apps..."
+              value={searchQuery}
+              onChange={e => setSearchQuery(e.target.value)}
+              className="w-full pl-8 pr-3 h-8 text-xs bg-muted/40 border border-border/50 rounded-lg outline-none focus:border-ring/50 placeholder:text-muted-foreground/40 text-foreground transition-colors"
+            />
+          </div>
+        </div>
+      </div>
+
+      {loading ? (
+        <LoadingSkeleton />
+      ) : (
+        <div className="space-y-8">
+          {/* ── Connected ──────────────────────────── */}
+          {connections.length > 0 && (
+            <section>
+              <SectionLabel label="Connected" count={connections.length} />
+              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2.5">
+                {connections.map(connection => {
+                  const config = CONNECTOR_CONFIGS[connection.provider]
+                  const Icon = connection.provider
+                    ? PROVIDER_ICONS[config?.icon || '']
+                    : null
+
+                  return (
+                    <AppCard
+                      key={connection.id}
+                      icon={Icon ? <Icon /> : null}
+                      name={connection.name || config?.name || connection.slug}
+                      tags={[connection.email || 'Connected']}
+                      topRight={
+                        syncingProvider === connection.provider ? (
+                          <RefreshCw className="h-3 w-3 text-primary animate-spin" />
+                        ) : (
+                          <ConnectedBadge />
+                        )
+                      }
+                      bottomLink={connection.name || config?.name}
+                      onClick={() =>
+                        connection.provider &&
+                        openConnectDialog(connection.provider)
+                      }
+                    />
+                  )
+                })}
+              </div>
+            </section>
+          )}
+
+          {/* ── All Apps ───────────────────────────── */}
+          <section>
+            <SectionLabel label="All Apps" count={availableFiltered.length} />
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2.5">
+              {availableFiltered.map(provider => {
+                const config = CONNECTOR_CONFIGS[provider]
+                const Icon = PROVIDER_ICONS[config.icon]
+
+                return (
+                  <Tooltip key={provider} delayDuration={300}>
+                    <TooltipTrigger asChild>
+                      <AppCard
+                        icon={<Icon />}
+                        name={config.name}
+                        tags={[config.description]}
+                        topRight={
+                          !user ? (
+                            <span className="text-[10px] text-muted-foreground/40 font-medium">
+                              Sign in
+                            </span>
+                          ) : (
+                            <ConnectBadge />
+                          )
+                        }
+                        bottomLink={config.name}
+                        onClick={() => {
+                          if (user) openConnectDialog(provider)
+                          else
+                            toast.message(
+                              'Please sign in to connect your account'
+                            )
+                        }}
+                      />
+                    </TooltipTrigger>
+                    {!user && (
+                      <TooltipContent>Sign in to connect</TooltipContent>
+                    )}
+                  </Tooltip>
+                )
+              })}
             </div>
 
-            {loading ? (
-                <>
-                    <div className="space-y-4">
-                        <div>
-                            <Skeleton className="h-5 w-32 mb-4" />
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                                {[1, 2, 3, 4, 5, 6].map((i) => (
-                                    <div key={i} className="flex items-center p-3 rounded-xl bg-card/40 border gap-4">
-                                        <Skeleton className="h-12 w-12 rounded-full shrink-0" />
-                                        <div className="space-y-2 flex-1">
-                                            <Skeleton className="h-4 w-24" />
-                                            <Skeleton className="h-3 w-40" />
-                                        </div>
-                                        <Skeleton className="h-4 w-4 rounded shrink-0 mr-2" />
-                                    </div>
-                                ))}
-                            </div>
-                        </div>
-                    </div>
-                </>
-            ) : (
-                <>
-                    {/* Installed Connectors */}
-                    {connections.length > 0 && (
-                        <div className="space-y-4">
-                            <h3 className="text-sm font-semibold text-foreground pl-1">Installed Apps</h3>
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                                {connections.map((connection) => {
-                                    const config = CONNECTOR_CONFIGS[connection.provider];
-                                    const Icon = connection.provider ? PROVIDER_ICONS[config?.icon || ''] : null;
-
-                                    return (
-                                        <motion.div
-                                            layoutId={connection.id}
-                                            key={connection.id}
-                                            className="group relative flex items-center p-3 rounded-xl bg-accent/40 dark:bg-card border-none hover:bg-accent/60 hover:dark:bg-card/50 transition-all duration-200 gap-4 cursor-pointer"
-                                            onClick={() => connection.provider && openConnectDialog(connection.provider)}
-                                        >
-                                            <div className="flex-shrink-0">
-                                                <div className="text-xl p-2.5 bg-background border border-border/30 flex items-center justify-center rounded-full w-12 h-12 shadow-sm">
-                                                    {Icon ? <Icon /> : <div className="w-5 h-5 bg-muted rounded-full" />}
-                                                </div>
-                                            </div>
-                                            <div className="flex-1 min-w-0">
-                                                <h4 className="font-medium text-sm text-foreground">{connection.name || config?.name || connection.slug}</h4>
-                                                <p className="text-xs text-muted-foreground truncate">{connection.email}</p>
-                                            </div>
-
-                                            <div className="flex items-center gap-2">
-                                                {syncingProvider === connection.provider ? (
-                                                    <RefreshCw className="h-4 w-4 text-primary animate-spin" />
-                                                ) : (
-                                                    <ChevronRight className="h-4 w-4 text-muted-foreground/50 group-hover:text-foreground transition-colors" />
-                                                )}
-                                            </div>
-                                        </motion.div>
-                                    );
-                                })}
-                            </div>
-                        </div>
-                    )}
-
-                    {/* Available Connectors */}
-                    <div className="space-y-4">
-                        <h3 className="text-sm font-semibold text-foreground pl-1">Available Apps</h3>
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                            {/* Active connectors that are NOT connected */}
-                            {filteredActive.map((provider) => {
-                                if (connectedProviders.has(provider)) return null;
-
-                                const config = CONNECTOR_CONFIGS[provider];
-                                const Icon = PROVIDER_ICONS[config.icon];
-                                const isConnecting = connectingProvider === provider;
-
-                                return (
-                                    <div
-                                        key={provider}
-                                        className="group relative flex items-center p-3 rounded-xl bg-accent/40 dark:bg-card border-none hover:bg-accent/60 hover:dark:bg-card/50 transition-all duration-200 gap-4 cursor-pointer"
-                                        onClick={() => {
-                                            if (user) {
-                                                openConnectDialog(provider)
-                                            }
-                                            else {
-                                                toast.message("Please login to connect your account")
-                                            }
-                                        }}
-                                    >
-                                        <div className="flex-shrink-0">
-                                            <div className="text-xl p-2.5 bg-background border border-border/30 flex items-center justify-center rounded-full w-12 h-12 shadow-sm">
-                                                <Icon />
-                                            </div>
-                                        </div>
-
-                                        <div className="flex-1 min-w-0">
-                                            <h4 className="font-medium text-sm text-foreground">{config.name}</h4>
-                                            <p className="text-xs text-muted-foreground line-clamp-1">{config.description}</p>
-                                        </div>
-
-                                        <div className="flex items-center gap-2">
-                                            {!user ? (
-                                                <Tooltip>
-                                                    <TooltipTrigger asChild>
-                                                        <div className="h-4 w-4 text-muted-foreground/30">
-                                                            <ChevronRight className="h-4 w-4" />
-                                                        </div>
-                                                    </TooltipTrigger>
-                                                    <TooltipContent>
-                                                        Please login to enable
-                                                    </TooltipContent>
-                                                </Tooltip>
-                                            ) : (
-                                                <ChevronRight className="h-4 w-4 text-muted-foreground/50 group-hover:text-foreground transition-colors" />
-                                            )}
-                                        </div>
-                                    </div>
-                                );
-                            })}
-                        </div>
-                    </div>
-                </>
+            {availableFiltered.length === 0 && (
+              <p className="text-sm text-muted-foreground pt-3">
+                No apps match your search.
+              </p>
             )}
+          </section>
         </div>
-    );
+      )}
+    </div>
+  )
+}
+
+/* ─── Badges ──────────────────────────────────────────────── */
+
+function ConnectedBadge() {
+  return (
+    <span className="flex items-center gap-1 text-[10px] font-medium text-emerald-500 bg-emerald-500/10 px-1.5 py-0.5 rounded-md">
+      <span className="w-1 h-1 rounded-full bg-emerald-500 shrink-0" />
+      Active
+    </span>
+  )
+}
+
+function ConnectBadge() {
+  return (
+    <span className="text-[10px] font-medium text-muted-foreground/50">
+      + Connect
+    </span>
+  )
+}
+
+/* ─── AppCard ─────────────────────────────────────────────── */
+
+function AppCard({
+  icon,
+  name,
+  tags,
+  topRight,
+  bottomLink,
+  onClick,
+  disabled
+}: {
+  icon: React.ReactNode
+  name: string | undefined
+  tags?: string[]
+  topRight?: React.ReactNode
+  bottomLink?: string
+  onClick?: () => void
+  disabled?: boolean
+}) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      disabled={disabled}
+      className={cn(
+        'group relative w-full text-left flex flex-col gap-3 p-3.5',
+        'rounded-xl border border-border/40 dark:border-border/20',
+        'bg-card/50 dark:bg-card/80',
+        'hover:border-border/70 dark:hover:border-border/40 hover:bg-accent/10 dark:hover:bg-accent/10',
+        'transition-colors duration-150',
+        disabled && 'cursor-default opacity-50'
+      )}
+    >
+      {/* Top row */}
+      <div className="flex items-start justify-between gap-1">
+        <div className="w-9 h-9 rounded-lg bg-background border border-border/50 dark:border-border/30 flex items-center justify-center text-lg shrink-0">
+          {icon}
+        </div>
+        <div className="flex items-center pt-0.5">{topRight}</div>
+      </div>
+
+      {/* Name */}
+      <div className="flex-1">
+        <p className="text-sm font-semibold text-foreground leading-snug">
+          {name}
+        </p>
+
+        {/* Tags */}
+        {tags && tags.length > 0 && (
+          <p className="text-[10px] uppercase tracking-wide text-muted-foreground/50 font-medium mt-1.5 line-clamp-1">
+            {tags.join(' · ')}
+          </p>
+        )}
+      </div>
+
+      {/* Bottom link */}
+      {bottomLink && (
+        <div className="flex items-center gap-1 text-[11px] text-muted-foreground/50 group-hover:text-muted-foreground transition-colors">
+          <span className="truncate">{bottomLink}</span>
+          <ArrowUpRight className="h-2.5 w-2.5 shrink-0" />
+        </div>
+      )}
+    </button>
+  )
+}
+
+/* ─── Section label ───────────────────────────────────────── */
+
+function SectionLabel({ label, count }: { label: string; count: number }) {
+  return (
+    <div className="flex items-center gap-2 mb-3">
+      <span className="text-sm font-semibold text-foreground">{label}</span>
+      <span className="text-xs text-muted-foreground/50 font-mono">
+        {count}
+      </span>
+    </div>
+  )
+}
+
+/* ─── Loading skeleton ────────────────────────────────────── */
+
+function LoadingSkeleton() {
+  return (
+    <div className="space-y-8">
+      {[6, 8].map((n, si) => (
+        <div key={si}>
+          <Skeleton className="h-4 w-24 mb-3" />
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2.5">
+            {Array.from({ length: n }).map((_, i) => (
+              <div
+                key={i}
+                className="flex flex-col gap-3 p-3.5 rounded-xl border border-border/40 bg-card/50"
+              >
+                <div className="flex items-start justify-between">
+                  <Skeleton className="h-9 w-9 rounded-lg" />
+                  <Skeleton className="h-4 w-12 rounded-md" />
+                </div>
+                <div className="space-y-1.5">
+                  <Skeleton className="h-3.5 w-20" />
+                  <Skeleton className="h-2.5 w-28" />
+                </div>
+                <Skeleton className="h-2.5 w-16" />
+              </div>
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
+  )
 }

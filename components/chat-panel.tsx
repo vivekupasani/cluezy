@@ -125,7 +125,7 @@ export function ChatPanel({
       return
     }
 
-    const observer = new ResizeObserver((entries) => {
+    const observer = new ResizeObserver(entries => {
       for (const entry of entries) {
         setChipsWidth(entry.contentRect.width + 6) // Add some gap
       }
@@ -135,8 +135,8 @@ export function ChatPanel({
     return () => observer.disconnect()
   }, [selectedApps])
 
-  if (pathName.startsWith("/share/")) {
-    return null;
+  if (pathName.startsWith('/share/')) {
+    return null
   }
 
   const handleCompositionStart = () => setIsComposing(true)
@@ -149,18 +149,18 @@ export function ChatPanel({
   }
 
   const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+    e.preventDefault()
 
     // Prevent submission if input is empty and no files attached
-    if (input.trim().length === 0 && attachedFiles.length === 0) return;
+    if (input.trim().length === 0 && attachedFiles.length === 0) return
 
     // Prevent submission during tool invocation
-    if (isToolInvocationInProgress()) return;
+    if (isToolInvocationInProgress()) return
 
     clearChatHistoryCache()
 
-    handleSubmit(e);
-  };
+    handleSubmit(e)
+  }
 
   const handleNewChat = () => {
     setMessages([])
@@ -172,16 +172,16 @@ export function ChatPanel({
     // console.log("Clicked enhance prompt")
     setIsEnhancePromptLoading(true)
     try {
-      const res = await fetch("/api/enhance-prompt", {
-        method: "POST",
+      const res = await fetch('/api/enhance-prompt', {
+        method: 'POST',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ prompt: input }),
+        body: JSON.stringify({ prompt: input })
       })
 
       if (!res.ok) {
-        console.error("Enhance prompt failed:", res.statusText)
+        console.error('Enhance prompt failed:', res.statusText)
         return
       }
 
@@ -190,13 +190,13 @@ export function ChatPanel({
 
       if (data?.enhancedPrompt) {
         handleInputChange({
-          target: { value: data.enhancedPrompt },
+          target: { value: data.enhancedPrompt }
         } as React.ChangeEvent<HTMLTextAreaElement>)
       }
       setIsEnhancePromptLoading(false)
     } catch (err) {
       setIsEnhancePromptLoading(false)
-      console.error("Error enhancing prompt:", err)
+      console.error('Error enhancing prompt:', err)
     }
   }
 
@@ -276,15 +276,12 @@ export function ChatPanel({
     <div
       className={cn(
         'w-full group/form-container mx-auto max-w-2xl px-2 md:px-0',
-        messages.length > 0
-          ? 'sticky bottom-0 pb-4 sm:pb-2'
-          : 'px-2 sm:px-0'
+        messages.length > 0 ? 'sticky bottom-0 pb-4 sm:pb-2' : 'px-2 sm:px-0'
       )}
     >
       {messages.length === 0 && (
         <div className="flex flex-col items-center mb-1 md:mt-10">
-          <h1
-            className='text-2xl sm:text-3xl md:text-3xl pb-2 font-medium txt-grad'>
+          <h1 className="text-2xl sm:text-3xl md:text-3xl pb-2 font-medium txt-grad">
             How can i help you today?
           </h1>
         </div>
@@ -300,7 +297,7 @@ export function ChatPanel({
           ref={fileInputRef}
           multiple={false}
           accept=".pdf, .jpg, .jpeg, .png, .gif, .webp"
-          onChange={(e) => onFileUpload(e.target.files)}
+          onChange={e => onFileUpload(e.target.files)}
           className="hidden"
           disabled={isFileUploading}
         />
@@ -311,7 +308,7 @@ export function ChatPanel({
             type="button"
             variant="outline"
             size="icon"
-            className="absolute -top-12 border border-foreground/5 right-4 z-20 size-8 rounded-full bg-accent dark:bg-card boring-dark:bg-card backdrop-blur-sm shadow-sm hover:bg-accent/60 hover:dark:bg-card/70 transition-all"
+            className="absolute -top-12 border border-foreground/5 right-4 z-20 size-8 rounded-full bg-accent/20 dark:bg-card boring-dark:bg-card backdrop-blur-sm shadow-sm hover:bg-accent/60 hover:dark:bg-card/70 transition-all"
             onClick={handleScrollToBottom}
             title="Scroll to bottom"
           >
@@ -319,45 +316,57 @@ export function ChatPanel({
           </Button>
         )}
 
-        <div className='bg-background'>
-
-          {
-            !user && messages.length > 0 && (
-              <div className='bg-accent text-accent-foreground mx-4 py-2 text-sm rounded-t-2xl text-center px-4'>
-                You haven't logged in yet. Please <Link href="/auth/login" className='text-primary font-semibold'>login</Link> to increase your chat limits and save your chat history.
-              </div>
-            )
-          }
-
-          <div className={cn(
-            "relative flex flex-col w-full p-2.5 transition-all duration-300",
-            "bg-accent/20 dark:bg-card boring-dark:bg-accent backdrop-blur-xl",
-            "ring-1 ring-border/20 border border-border dark:border-sidebar-ring/10",
-            // "shadow-sm",
-            "rounded-[20px]",
-            isDragging && "ring-2 ring-primary bg-primary/5 border-primary/50",
-            state.isIncognito && "border border-dashed border-primary dark:border-primary/60"
+        <div className="bg-background">
+          {!user && messages.length > 0 && (
+            <div className="bg-accent text-accent-foreground mx-4 py-2 text-sm rounded-t-2xl text-center px-4">
+              You haven't logged in yet. Please{' '}
+              <Link href="/auth/login" className="text-primary font-semibold">
+                login
+              </Link>{' '}
+              to increase your chat limits and save your chat history.
+            </div>
           )}
+
+          <div
+            className={cn(
+              'relative flex flex-col w-full p-2.5 transition-all duration-300',
+              'bg-accent/20 dark:bg-card boring-dark:bg-accent backdrop-blur-xl',
+              'ring-1 ring-border/20 border border-border dark:border-sidebar-ring/10 dark:ring-sidebar-ring/5',
+              // "shadow-sm",
+              'rounded-[20px]',
+              isDragging &&
+              'ring-2 ring-primary bg-primary/5 border-primary/50',
+              state.isIncognito &&
+              'border border-dashed border-primary dark:border-primary/60'
+            )}
             onDragOver={handleDragOver}
             onDragLeave={handleDragLeave}
             onDrop={handleDrop}
           >
-
             {/* Display attached files within the container */}
             {(attachedFiles.length > 0 || isFileUploading) && (
               <div className="flex flex-wrap gap-2 px-2 pt-2">
-
                 {attachedFiles.map(file => (
-                  <div key={file.id} className="group relative flex items-center gap-2 bg-muted/40 hover:bg-muted/60 pl-2 pr-1 py-1.5 rounded-lg border border-border/40 transition-colors max-w-[200px]">
+                  <div
+                    key={file.id}
+                    className="group relative flex items-center gap-2 bg-muted/40 hover:bg-muted/60 pl-2 pr-1 py-1.5 rounded-lg border border-border/40 transition-colors max-w-[200px]"
+                  >
                     <div className="shrink-0 flex items-center justify-center size-8 rounded-md bg-background border border-border/50">
                       <FileText size={14} className="text-muted-foreground" />
                     </div>
                     <div className="flex flex-col min-w-0 flex-1">
                       <span className="text-xs font-medium text-foreground truncate pr-2">
-                        <Link href={file.url} target='_blank' className="hover:underline">{file.name}</Link>
+                        <Link
+                          href={file.url}
+                          target="_blank"
+                          className="hover:underline"
+                        >
+                          {file.name}
+                        </Link>
                       </span>
                       <span className="text-[10px] text-muted-foreground truncate uppercase">
-                        {file.type.split('/')[1] || 'FILE'} • {(file.size / 1024).toFixed(0)}KB
+                        {file.type.split('/')[1] || 'FILE'} •{' '}
+                        {(file.size / 1024).toFixed(0)}KB
                       </span>
                     </div>
                     <button
@@ -368,8 +377,8 @@ export function ChatPanel({
                         }
                       }}
                       className={cn(
-                        "absolute -top-1.5 -right-1.5 size-5 bg-background border border-border text-muted-foreground hover:text-foreground rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity shadow-sm z-10",
-                        isFileUploading && "hidden"
+                        'absolute -top-1.5 -right-1.5 size-5 bg-background border border-border text-muted-foreground hover:text-foreground rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity shadow-sm z-10',
+                        isFileUploading && 'hidden'
                       )}
                       title="Remove file"
                     >
@@ -386,8 +395,8 @@ export function ChatPanel({
                       {uploadingCount > 1
                         ? `Uploading ${uploadingCount} files...`
                         : uploadingCount === 1
-                          ? "Uploading file..."
-                          : "Uploading..."}
+                          ? 'Uploading file...'
+                          : 'Uploading...'}
                     </span>
                   </div>
                 )}
@@ -431,12 +440,21 @@ export function ChatPanel({
                 tabIndex={0}
                 onCompositionStart={handleCompositionStart}
                 onCompositionEnd={handleCompositionEnd}
-                placeholder={selectedApps.length > 0 ? "" : messages.length === 0 ? "Ask a question or type @ to mention" : "Ask follow up questions or type @ to mention"}
+                placeholder={
+                  selectedApps.length > 0
+                    ? ''
+                    : messages.length === 0
+                      ? 'Ask a question or type @ to mention'
+                      : 'Ask follow up questions or type @ to mention'
+                }
                 spellCheck={true}
                 autoFocus={true}
                 value={input}
                 disabled={isToolInvocationInProgress()}
-                style={{ textIndent: selectedApps.length > 0 ? `${chipsWidth}px` : '0px' }}
+                style={{
+                  textIndent:
+                    selectedApps.length > 0 ? `${chipsWidth}px` : '0px'
+                }}
                 className="w-full resize-none HiddenScrollbar bg-transparent text-foreground placeholder:text-foreground/60 outline-none text-[15px] leading-relaxed py-2 px-2 disabled:cursor-not-allowed disabled:opacity-50 min-h-[44px]"
                 onChange={e => {
                   const newValue = e.target.value
@@ -444,12 +462,22 @@ export function ChatPanel({
                   handleInputChange(e)
 
                   // Check for @ mention
-                  const lastAtIndex = newValue.lastIndexOf('@', selectionStart - 1)
+                  const lastAtIndex = newValue.lastIndexOf(
+                    '@',
+                    selectionStart - 1
+                  )
                   if (lastAtIndex !== -1) {
-                    const charBefore = lastAtIndex > 0 ? newValue[lastAtIndex - 1] : null
-                    const isCorrectContext = lastAtIndex === 0 || charBefore === ' ' || charBefore === '\n'
+                    const charBefore =
+                      lastAtIndex > 0 ? newValue[lastAtIndex - 1] : null
+                    const isCorrectContext =
+                      lastAtIndex === 0 ||
+                      charBefore === ' ' ||
+                      charBefore === '\n'
 
-                    const textAfterAt = newValue.slice(lastAtIndex + 1, selectionStart)
+                    const textAfterAt = newValue.slice(
+                      lastAtIndex + 1,
+                      selectionStart
+                    )
                     // Ensure it's not a multi-word or has spaces
                     if (isCorrectContext && !textAfterAt.includes(' ')) {
                       setMentionOpen(true)
@@ -481,18 +509,21 @@ export function ChatPanel({
                   }
 
                   // Handle Backspace to remove last selected app if input is empty
-                  if (e.key === 'Backspace' && input === '' && selectedApps.length > 0) {
+                  if (
+                    e.key === 'Backspace' &&
+                    input === '' &&
+                    selectedApps.length > 0
+                  ) {
                     onRemoveApp(selectedApps[selectedApps.length - 1])
                   }
 
                   // Only handle Enter key, ignore all other keys including spacebar
                   if (e.key === 'Enter') {
-                    if (
-                      !e.shiftKey &&
-                      !isComposing &&
-                      !enterDisabled
-                    ) {
-                      if (input.trim().length === 0 && attachedFiles.length === 0) {
+                    if (!e.shiftKey && !isComposing && !enterDisabled) {
+                      if (
+                        input.trim().length === 0 &&
+                        attachedFiles.length === 0
+                      ) {
                         e.preventDefault()
                         return
                       }
@@ -507,8 +538,7 @@ export function ChatPanel({
               />
 
               {/* Right Actions: Send & Enhance */}
-              <div className="flex flex-col gap-1.5 shrink-0 pt-0.5 pr-0.5">
-              </div>
+              <div className="flex flex-col gap-1.5 shrink-0 pt-0.5 pr-0.5"></div>
             </div>
 
             {/* Bottom Toolbar: Model Selector & Actions */}
@@ -522,35 +552,48 @@ export function ChatPanel({
                 <Tooltip>
                   <TooltipTrigger asChild>
                     <Button
-                      type='button'
+                      type="button"
                       size={'icon'}
                       variant={'ghost'}
                       className={cn(
                         'size-8 rounded-full bg-transparent hover:bg-muted/60 border-border text-foreground hover:text-foreground transition-all duration-200 border-0',
-                        (isEnhancePromptLoading || isFileUploading) && 'animate-pulse duration-1000 bg-transparent opacity-50 cursor-not-allowed'
+                        (isEnhancePromptLoading || isFileUploading) &&
+                        'animate-pulse duration-1000 bg-transparent opacity-50 cursor-not-allowed'
                       )}
                       onClick={handleEnhancePrompt}
-                      disabled={isEnhancePromptLoading || isFileUploading || input.length === 0}
-                      title={isFileUploading ? "Wait for file upload" : "Enhance prompt"}
-                    >
-                      {
-                        isEnhancePromptLoading ? <Loader2 size={16} className='animate-spin' /> : <WandSparkles size={16} />
+                      disabled={
+                        isEnhancePromptLoading ||
+                        isFileUploading ||
+                        input.length === 0
                       }
+                      title={
+                        isFileUploading
+                          ? 'Wait for file upload'
+                          : 'Enhance prompt'
+                      }
+                    >
+                      {isEnhancePromptLoading ? (
+                        <Loader2 size={16} className="animate-spin" />
+                      ) : (
+                        <WandSparkles size={16} />
+                      )}
                     </Button>
                   </TooltipTrigger>
-                  <TooltipContent side="top" className='text-xs'>Enhance prompt</TooltipContent>
+                  <TooltipContent side="top" className="text-xs">
+                    Enhance prompt
+                  </TooltipContent>
                 </Tooltip>
                 <Tooltip>
                   <TooltipTrigger asChild>
                     {messages.length > 0 && (
                       <Button
-                        type='button'
+                        type="button"
                         size={'icon'}
                         variant={'ghost'}
                         onClick={handleNewChat}
                         className={cn(
-                          " size-8 rounded-full bg-transparent hover:bg-muted/60 border-border text-foreground hover:text-foreground transition-opacity duration-200 ease-in-out border-0",
-                          open && !isMobile && "hidden"
+                          ' size-8 rounded-full bg-transparent hover:bg-muted/60 border-border text-foreground hover:text-foreground transition-opacity duration-200 ease-in-out border-0',
+                          open && !isMobile && 'hidden'
                         )}
                         disabled={isLoading || isToolInvocationInProgress()}
                       >
@@ -558,14 +601,14 @@ export function ChatPanel({
                       </Button>
                     )}
                   </TooltipTrigger>
-                  <TooltipContent className='text-xs'>
+                  <TooltipContent className="text-xs">
                     <p>New chat</p>
                   </TooltipContent>
                 </Tooltip>
                 <Tooltip>
                   <TooltipTrigger asChild>
                     <Button
-                      type='button'
+                      type="button"
                       size={'icon'}
                       variant={'ghost'}
                       className={cn(
@@ -574,12 +617,16 @@ export function ChatPanel({
                       )}
                       onClick={handleFileButtonClick}
                       disabled={isFileUploading}
-                      title={isFileUploading ? "Uploading file..." : "Attach files"}
+                      title={
+                        isFileUploading ? 'Uploading file...' : 'Attach files'
+                      }
                     >
                       <Paperclip size={16} />
                     </Button>
                   </TooltipTrigger>
-                  <TooltipContent side="top" className='text-xs'>Attach files</TooltipContent>
+                  <TooltipContent side="top" className="text-xs">
+                    Attach files
+                  </TooltipContent>
                 </Tooltip>
 
                 <Tooltip>
@@ -588,21 +635,25 @@ export function ChatPanel({
                       type={isLoading ? 'button' : 'submit'}
                       size={'icon'}
                       variant={'ghost'}
-                      disabled={!isLoading && (input.length === 0 || isFileUploading)}
+                      disabled={
+                        !isLoading && (input.length === 0 || isFileUploading)
+                      }
                       className={cn(
                         'size-8 transition-all duration-200 rounded-lg',
-                        'bg-primary text-primary-foreground hover:bg-primary/80 hover:text-primary-foreground',
+                        'bg-primary text-primary-foreground hover:bg-primary/80 hover:text-primary-foreground'
                       )}
                       onClick={isLoading ? stop : undefined}
                     >
                       {isLoading ? (
-                        <Square size={16} className='fill-current' />
+                        <Square size={16} className="fill-current" />
                       ) : (
                         <ArrowUp size={16} />
                       )}
                     </Button>
                   </TooltipTrigger>
-                  <TooltipContent side="top" className='text-xs'>{isLoading ? "Stop generating" : "Send message"}</TooltipContent>
+                  <TooltipContent side="top" className="text-xs">
+                    {isLoading ? 'Stop generating' : 'Send message'}
+                  </TooltipContent>
                 </Tooltip>
               </div>
             </div>
@@ -618,7 +669,12 @@ export function ChatPanel({
                 target: { value: message }
               } as React.ChangeEvent<HTMLTextAreaElement>)
             }}
-            className={cn(showEmptyScreen ? 'visible' : 'invisible', input.length !== 0 ? 'opacity-0 md:hidden transition-opacity duration-200' : 'opacity-100 md:hidden transition-opacity duration-200')}
+            className={cn(
+              showEmptyScreen ? 'visible' : 'invisible',
+              input.length !== 0
+                ? 'opacity-0 md:hidden transition-opacity duration-200'
+                : 'opacity-100 md:hidden transition-opacity duration-200'
+            )}
           />
         </div>
       )}
@@ -630,7 +686,7 @@ export function ChatPanel({
           searchQuery={mentionSearch}
           onSearchQueryChange={setMentionSearch}
           anchorRect={mentionRect}
-          onSelect={(item) => {
+          onSelect={item => {
             if (inputRef.current) {
               // Get the text before the @
               const before = input.slice(0, mentionStartIndex)

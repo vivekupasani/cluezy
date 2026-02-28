@@ -58,10 +58,9 @@ export function ChatMenuItem({ chat }: ChatMenuItemProps) {
       }
     }
 
-    document.addEventListener("keydown", handleKeyDown)
-    return () => document.removeEventListener("keydown", handleKeyDown)
+    document.addEventListener('keydown', handleKeyDown)
+    return () => document.removeEventListener('keydown', handleKeyDown)
   }, [])
-
 
   /* ---------------- DELETE ---------------- */
   const onDelete = () => {
@@ -72,9 +71,11 @@ export function ChatMenuItem({ chat }: ChatMenuItemProps) {
 
         toast.success('Chat deleted')
         if (isActive) router.push('/')
-        window.dispatchEvent(new CustomEvent('chat-history-updated', {
-          detail: { type: 'delete', chatId: chat.id }
-        }))
+        window.dispatchEvent(
+          new CustomEvent('chat-history-updated', {
+            detail: { type: 'delete', chatId: chat.id }
+          })
+        )
       } catch (err) {
         toast.error('Failed to delete chat')
       }
@@ -97,9 +98,11 @@ export function ChatMenuItem({ chat }: ChatMenuItemProps) {
 
         if (!res.ok) throw new Error('Failed to rename chat')
 
-        window.dispatchEvent(new CustomEvent('chat-history-updated', {
-          detail: { type: 'rename', chatId: chat.id, title: newTitle }
-        }))
+        window.dispatchEvent(
+          new CustomEvent('chat-history-updated', {
+            detail: { type: 'rename', chatId: chat.id, title: newTitle }
+          })
+        )
         setIsRenameClicked(false)
       } catch {
         toast.error('Failed to rename chat')
@@ -117,9 +120,9 @@ export function ChatMenuItem({ chat }: ChatMenuItemProps) {
           <input
             type="text"
             value={newTitle}
-            onChange={(e) => setNewTitle(e.target.value)}
+            onChange={e => setNewTitle(e.target.value)}
             autoFocus
-            onKeyDown={(e) => {
+            onKeyDown={e => {
               if (e.key === 'Enter') onRename()
               if (e.key === 'Escape') setIsRenameClicked(false)
             }}
@@ -138,7 +141,11 @@ export function ChatMenuItem({ chat }: ChatMenuItemProps) {
               disabled={isRenaming}
               className="p-1 hover:bg-primary/10 rounded-lg text-primary"
             >
-              {isRenaming ? <LoadingSpinner className="size-3" /> : <Check size={14} />}
+              {isRenaming ? (
+                <LoadingSpinner className="size-3" />
+              ) : (
+                <Check size={14} />
+              )}
             </button>
           </div>
         </div>
@@ -167,7 +174,11 @@ export function ChatMenuItem({ chat }: ChatMenuItemProps) {
               disabled={isDeleting}
               className="p-1 hover:bg-primary/10 rounded-lg text-primary"
             >
-              {isDeleting ? <LoadingSpinner className="size-3" /> : <Check size={14} />}
+              {isDeleting ? (
+                <LoadingSpinner className="size-3" />
+              ) : (
+                <Check size={14} />
+              )}
             </button>
           </div>
         </div>
@@ -180,26 +191,32 @@ export function ChatMenuItem({ chat }: ChatMenuItemProps) {
     <div className="group px-1.5 py-0.5">
       <div
         className={cn(
-          "flex items-center gap-2 px-3 py-2 rounded-xl border border-transparent select-none min-h-[44px]",
+          'flex items-center gap-2 px-3 py-2 rounded-xl border border-transparent select-none min-h-[44px]',
           isActive
-            ? "bg-accent/60 border-border/40 shadow-[0_2px_8px_-2px_rgba(0,0,0,0.05)]"
-            : "hover:bg-muted/50 hover:border-border/20"
+            ? 'bg-accent/60 border-border/40 shadow-[0_2px_8px_-2px_rgba(0,0,0,0.05)]'
+            : 'hover:bg-muted/50 hover:border-border/20'
         )}
       >
         <Link
           href={chat.path}
           onClick={() => {
             setHistoryDialogIsOpen(false)
-            toast.message(`Opening conversation "${chat.title.slice(0, 25)}..."`)
+            toast.message(
+              `Opening conversation "${chat.title.slice(0, 25)}..."`
+            )
           }}
           className="flex-1 min-w-0"
         >
           <div className="flex flex-col gap-0.5 overflow-hidden">
-            <span className={cn(
-              "text-sm font-medium truncate leading-tight",
-              isActive ? "text-foreground" : "text-foreground group-hover:text-foreground"
-            )}>
-              {chat.title || "Untitled conversation"}
+            <span
+              className={cn(
+                'text-sm font-medium truncate leading-tight',
+                isActive
+                  ? 'text-foreground'
+                  : 'text-foreground group-hover:text-foreground'
+              )}
+            >
+              {chat.title || 'Untitled conversation'}
             </span>
             <span className="text-[10px] text-muted-foreground font-medium tracking-tight">
               {formatDateWithTime(chat.createdAt)}
@@ -208,12 +225,14 @@ export function ChatMenuItem({ chat }: ChatMenuItemProps) {
         </Link>
 
         {/* Action buttons - Hover reveal */}
-        <div className={cn(
-          "flex items-center gap-1 opacity-100 md:opacity-100 group-hover:opacity-100 shrink-0",
-          (isRenameClicked || isDeleteClicked || isActive) && "opacity-100"
-        )}>
+        <div
+          className={cn(
+            'flex items-center gap-1 opacity-100 md:opacity-100 group-hover:opacity-100 shrink-0',
+            (isRenameClicked || isDeleteClicked || isActive) && 'opacity-100'
+          )}
+        >
           <button
-            onClick={(e) => {
+            onClick={e => {
               e.preventDefault()
               setIsRenameClicked(true)
             }}
@@ -223,7 +242,7 @@ export function ChatMenuItem({ chat }: ChatMenuItemProps) {
             <Edit size={14} />
           </button>
           <button
-            onClick={(e) => {
+            onClick={e => {
               e.preventDefault()
               setIsDeleteClicked(true)
             }}
@@ -237,4 +256,3 @@ export function ChatMenuItem({ chat }: ChatMenuItemProps) {
     </div>
   )
 }
-

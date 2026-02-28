@@ -4,7 +4,14 @@ import { useAuth } from '@/components/context/auth-context'
 import { Chat } from '@/lib/types'
 
 import { MessageCircle, Search } from 'lucide-react'
-import { useCallback, useEffect, useMemo, useRef, useState, useTransition } from 'react'
+import {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+  useTransition
+} from 'react'
 
 import { toast } from 'sonner'
 
@@ -77,7 +84,7 @@ function ChatHistoryList({
         </p>
         <p className="text-xs text-foreground max-w-[240px] leading-relaxed">
           {searchQuery
-            ? 'We couldn\'t find any conversations matching your search.'
+            ? "We couldn't find any conversations matching your search."
             : 'Your conversation history will appear here once you start chatting.'}
         </p>
       </div>
@@ -97,7 +104,7 @@ function ChatHistoryList({
           </div>
         )}
         <div className="space-y-0.5">
-          {chats.map((chat) => (
+          {chats.map(chat => (
             <ChatMenuItem key={chat.id} chat={chat} />
           ))}
         </div>
@@ -136,36 +143,39 @@ export function useChatHistory() {
   const loadMoreRef = useRef<HTMLDivElement>(null)
   const [isPending, startTransition] = useTransition()
 
-  const fetchInitialChats = useCallback(async (silent = false) => {
-    if (isAuthLoading) return
-    if (!user) {
-      if (!silent) setIsLoading(false)
-      return
-    }
-    if (!silent) setIsLoading(true)
-    try {
-      const response = await fetch(`/api/chats?offset=0&limit=20`)
-      if (!response.ok) {
-        throw new Error('Failed to fetch initial chat history')
+  const fetchInitialChats = useCallback(
+    async (silent = false) => {
+      if (isAuthLoading) return
+      if (!user) {
+        if (!silent) setIsLoading(false)
+        return
       }
+      if (!silent) setIsLoading(true)
+      try {
+        const response = await fetch(`/api/chats?offset=0&limit=20`)
+        if (!response.ok) {
+          throw new Error('Failed to fetch initial chat history')
+        }
 
-      const { chats: newChats, nextOffset: newNextOffset } =
-        (await response.json()) as ChatPageResponse
+        const { chats: newChats, nextOffset: newNextOffset } =
+          (await response.json()) as ChatPageResponse
 
-      // ✅ Update both state and cache
-      setChats(newChats)
-      setNextOffset(newNextOffset)
-      cachedChats = newChats
-      cachedNextOffset = newNextOffset
-      hasFetchedOnce = true
-    } catch (error) {
-      console.error('Failed to load initial chats:', error)
-      toast.error('Failed to load chat history.')
-      setNextOffset(null)
-    } finally {
-      if (!silent) setIsLoading(false)
-    }
-  }, [user, isAuthLoading])
+        // ✅ Update both state and cache
+        setChats(newChats)
+        setNextOffset(newNextOffset)
+        cachedChats = newChats
+        cachedNextOffset = newNextOffset
+        hasFetchedOnce = true
+      } catch (error) {
+        console.error('Failed to load initial chats:', error)
+        toast.error('Failed to load chat history.')
+        setNextOffset(null)
+      } finally {
+        if (!silent) setIsLoading(false)
+      }
+    },
+    [user, isAuthLoading]
+  )
 
   // 🧹 Clear state and cache on logout
   useEffect(() => {
@@ -197,7 +207,7 @@ export function useChatHistory() {
       } else if (detail && detail.type === 'rename') {
         const { chatId, title } = detail
         setChats(prev => {
-          const updated = prev.map(c => c.id === chatId ? { ...c, title } : c)
+          const updated = prev.map(c => (c.id === chatId ? { ...c, title } : c))
           cachedChats = updated
           return updated
         })
@@ -328,7 +338,7 @@ export function useChatHistory() {
       older: [] as Chat[]
     }
 
-    filteredChats.forEach((chat) => {
+    filteredChats.forEach(chat => {
       if (!chat.createdAt) return
 
       let chatDate: Date
@@ -354,8 +364,11 @@ export function useChatHistory() {
     return groups
   }, [filteredChats])
 
-  const hasChats = groups.thisWeek.length > 0 || groups.lastWeek.length > 0 ||
-    groups.thisMonth.length > 0 || groups.older.length > 0
+  const hasChats =
+    groups.thisWeek.length > 0 ||
+    groups.lastWeek.length > 0 ||
+    groups.thisMonth.length > 0 ||
+    groups.older.length > 0
 
   return {
     chats,
@@ -403,7 +416,10 @@ export function ChatHistoryClient() {
   }, [])
 
   return (
-    <Dialog open={isHistoryDialogOpen} onOpenChange={() => setHistoryDialogIsOpen(false)}>
+    <Dialog
+      open={isHistoryDialogOpen}
+      onOpenChange={() => setHistoryDialogIsOpen(false)}
+    >
       <DialogTitle></DialogTitle>
       <DialogContent className="w-[95%] md:w-full max-w-2xl h-[70vh] sm:h-[70vh] p-0 bg-popover backdrop-blur-sm text-popover-foreground border-none rounded-2xl overflow-hidden flex flex-col gap-0 cosmic-glass HiddenScrollbar">
         <div className="flex-shrink-0 py-2 px-4">
@@ -412,7 +428,7 @@ export function ChatHistoryClient() {
             <input
               placeholder="Search titles and messages..."
               value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
+              onChange={e => setSearchQuery(e.target.value)}
               autoFocus={false}
               className="border-none bg-transparent focus:outline-none text-sm h-8 flex-1 placeholder-txt-mut text-foreground"
             />
@@ -424,7 +440,7 @@ export function ChatHistoryClient() {
             </button> */}
           </div>
 
-          <div className='w-full h-[1px] bg-border' />
+          <div className="w-full h-[1px] bg-border" />
         </div>
 
         <div className="flex-1 overflow-y-auto py-2 px-2">
@@ -448,13 +464,14 @@ export function ChatHistoryClient() {
               </button>
             </div>
           )}
-
         </div>
 
         <div className="flex-none border-t border-border/50 bg-popover/50 px-4 md:px-6 py-3">
           <div className="flex items-center justify-between text-xs">
             <span className="text-foreground font-medium">
-              {hasChats ? `${groups.thisWeek.length + groups.lastWeek.length + groups.thisMonth.length + groups.older.length} conversations` : 'No conversations'}
+              {hasChats
+                ? `${groups.thisWeek.length + groups.lastWeek.length + groups.thisMonth.length + groups.older.length} conversations`
+                : 'No conversations'}
             </span>
             <kbd className="hidden md:inline-flex items-center gap-1 px-2 py-1 bg-muted/30 border border-border/40 rounded-md text-[10px] text-foreground font-mono">
               <span>⌘</span>

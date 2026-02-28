@@ -4,7 +4,6 @@ import React from 'react'
 
 import { Analytics } from '@vercel/analytics/next'
 
-
 import { cn } from '@/lib/utils'
 
 import { SidebarProvider } from '@/components/ui/sidebar'
@@ -13,7 +12,10 @@ import { Toaster } from '@/components/ui/sonner'
 import { AppSidebar } from '@/components/app-sidebar'
 import ArtifactRoot from '@/components/artifact/artifact-root'
 import { AuthProvider } from '@/components/context/auth-context'
-import { HistoryDialog, HistoryDialogProvider } from '@/components/history-dialog'
+import {
+  HistoryDialog,
+  HistoryDialogProvider
+} from '@/components/history-dialog'
 import { ThemeProvider } from '@/components/theme-provider'
 
 import { ConnectorsProvider } from '@/components/context/connectors-context'
@@ -24,12 +26,12 @@ const fontSans = Baumans({
   variable: '--font-baumans',
   preload: true,
   display: 'swap',
-  weight: ['400'],
+  weight: ['400']
 })
 
 const title = {
   default: 'Cluezy - Agentic Research Engine',
-  template: '%s - Cluezy',
+  template: '%s | Cluezy'
 }
 const description =
   'Cluezy is an Agentic Research Engine that searches, analyzes, and cites information from the live web to deliver clear, trustworthy answers.'
@@ -39,10 +41,10 @@ export const metadata: Metadata = {
   title,
   description,
   openGraph: {
-    url: "https://beta.cluezy.site",
-    siteName: "Cluezy",
+    url: 'https://beta.cluezy.site',
+    siteName: 'Cluezy',
     title,
-    description,
+    description
   },
   twitter: {
     title,
@@ -116,9 +118,9 @@ export const metadata: Metadata = {
     'agentic ai search alternative',
     'perplexity agent alternative',
     'ai research agent alternative',
-    'autonomous ai search engine',
+    'autonomous ai search engine'
   ],
-  manifest: "/manifest.json"
+  manifest: '/manifest.json'
 }
 
 export const viewport: Viewport = {
@@ -133,14 +135,10 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode
 }>) {
-
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={cn(
-          'font-sans antialiased',
-          fontSans.variable
-        )}
+        className={cn('font-sans antialiased', fontSans.variable)}
         suppressHydrationWarning
       >
         <AuthProvider>
@@ -151,7 +149,13 @@ export default async function RootLayout({
                 defaultTheme="system"
                 enableSystem
                 disableTransitionOnChange
-                themes={['light', 'dark', 'system', 'boring-light', 'boring-dark']}
+                themes={[
+                  'light',
+                  'dark',
+                  'system',
+                  'boring-light',
+                  'boring-dark'
+                ]}
               >
                 <SidebarProvider defaultOpen={true}>
                   <div className="relative flex flex-row flex-1">

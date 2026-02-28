@@ -70,8 +70,7 @@ export function QuestionConfirmation({
   const getDisplayedOptions = (): string[] =>
     resultData?.selectedOptions ?? selectedOptions
 
-  const getDisplayedInputText = (): string =>
-    resultData?.inputText ?? inputText
+  const getDisplayedInputText = (): string => resultData?.inputText ?? inputText
 
   const wasSkipped = (): boolean => resultData?.skipped ?? skipped
 
@@ -146,10 +145,7 @@ export function QuestionConfirmation({
 
           {allowsInput && (
             <div className="flex flex-col space-y-2">
-              <label
-                htmlFor="query"
-                className="text-sm txt-mut font-medium"
-              >
+              <label htmlFor="query" className="text-sm txt-mut font-medium">
                 {inputLabel}
               </label>
               <Input

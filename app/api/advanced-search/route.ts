@@ -131,8 +131,9 @@ export async function POST(request: Request) {
   const SEARXNG_DEFAULT_DEPTH = process.env.SEARXNG_DEFAULT_DEPTH || 'basic'
 
   try {
-    const cacheKey = `search:${query}:${maxResults}:${searchDepth}:${Array.isArray(includeDomains) ? includeDomains.join(',') : ''
-      }:${Array.isArray(excludeDomains) ? excludeDomains.join(',') : ''}`
+    const cacheKey = `search:${query}:${maxResults}:${searchDepth}:${
+      Array.isArray(includeDomains) ? includeDomains.join(',') : ''
+    }:${Array.isArray(excludeDomains) ? excludeDomains.join(',') : ''}`
 
     // Try to get cached results
     const cachedResults = await getCachedResults(cacheKey)
@@ -272,13 +273,11 @@ async function advancedSearchXNGSearch(
       .slice(0, maxResults)
 
     return {
-      results: generalResults.map(
-        (result: SearXNGResult): any => ({
-          title: result.title || '',
-          url: result.url || '',
-          content: result.content || '',
-        })
-      ),
+      results: generalResults.map((result: SearXNGResult): any => ({
+        title: result.title || '',
+        url: result.url || '',
+        content: result.content || ''
+      })),
       query: data.query || query,
       images: imageResults
         .map((result: SearXNGResult) => {
@@ -308,8 +307,8 @@ async function crawlPage(
 
     // virtual console to suppress JSDOM warnings
     const virtualConsole = new VirtualConsole()
-    virtualConsole.on('error', () => { })
-    virtualConsole.on('warn', () => { })
+    virtualConsole.on('error', () => {})
+    virtualConsole.on('warn', () => {})
 
     const dom = new JSDOM(html, {
       runScripts: 'outside-only',

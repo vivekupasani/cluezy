@@ -46,12 +46,12 @@ export function ModelSelector({ models }: ModelSelectorProps) {
   const [open, setOpen] = useState(false)
   const [value, setValue] = useState('')
   const DEFAULT_SELECTED_MODEL: Model = {
-    "id": "gpt-4o-mini",
-    "name": "GPT-4o mini",
-    "provider": "OpenAI",
-    "providerId": "openai",
-    "enabled": true,
-    "toolCallType": "native"
+    id: 'gpt-4o-mini',
+    name: 'GPT-4o mini',
+    provider: 'OpenAI',
+    providerId: 'openai',
+    enabled: true,
+    toolCallType: 'native'
   }
 
   useEffect(() => {
@@ -63,8 +63,7 @@ export function ModelSelector({ models }: ModelSelectorProps) {
       } catch (e) {
         console.error('Failed to parse saved model:', e)
       }
-    }
-    else {
+    } else {
       setCookie('selectedModel', JSON.stringify(DEFAULT_SELECTED_MODEL))
       setValue(createModelId(DEFAULT_SELECTED_MODEL))
     }
@@ -115,26 +114,36 @@ export function ModelSelector({ models }: ModelSelectorProps) {
         >
           {selectedModel ? (
             <div className="flex items-center gap-2">
-              <span className="text-xs font-medium">
-                {selectedModel.name}
-              </span>
+              <span className="text-xs font-medium">{selectedModel.name}</span>
             </div>
           ) : (
             <div className="flex items-center gap-2">
-              <Bot size={14} className='shrink-0' />
+              <Bot size={14} className="shrink-0" />
               <span className="text-xs font-medium">Select model</span>
             </div>
           )}
           <ChevronDown size={12} className="ml-1 opacity-50" />
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-[240px] p-0 mx-2 HiddenScrollbar border-border/50 rounded-lg bg-popover backdrop-blur-sm" align="start">
-        <Command className='bg-popover/10 rounded-lg'>
-          <CommandInput placeholder="Search models..." className="h-9 text-sm" />
+      <PopoverContent
+        className="w-[240px] p-0 mx-2 HiddenScrollbar border-border/50 rounded-lg bg-popover backdrop-blur-sm"
+        align="start"
+      >
+        <Command className="bg-popover/10 rounded-lg">
+          <CommandInput
+            placeholder="Search models..."
+            className="h-9 text-sm"
+          />
           <CommandList className="max-h-[250px] overflow-y-auto CustomScrollbar p-1">
-            <CommandEmpty className='txt-grad text-sm text-center py-4'>No model found.</CommandEmpty>
+            <CommandEmpty className="txt-grad text-sm text-center py-4">
+              No model found.
+            </CommandEmpty>
             {Object.entries(groupedModels).map(([provider, models]) => (
-              <CommandGroup key={provider} heading={provider} className="text-muted-foreground/70 font-medium">
+              <CommandGroup
+                key={provider}
+                heading={provider}
+                className="text-muted-foreground/70 font-medium"
+              >
                 {models.map(model => {
                   const modelId = createModelId(model)
                   const isSelected = value === modelId
@@ -155,7 +164,9 @@ export function ModelSelector({ models }: ModelSelectorProps) {
                             className="rounded-full"
                           />
                         </div>
-                        <span className={`text-[13px] font-medium truncate ${isSelected ? 'text-foreground' : 'text-muted-foreground group-hover:text-foreground'}`}>
+                        <span
+                          className={`text-[13px] font-medium truncate ${isSelected ? 'text-foreground' : 'text-muted-foreground group-hover:text-foreground'}`}
+                        >
                           {model.name}
                         </span>
                       </div>
@@ -167,8 +178,10 @@ export function ModelSelector({ models }: ModelSelectorProps) {
                 })}
               </CommandGroup>
             ))}
-            <div className='p-2 border-t border-border/40 mt-1'>
-              <p className='text-[10px] text-center text-muted-foreground/60'>More models coming soon</p>
+            <div className="p-2 border-t border-border/40 mt-1">
+              <p className="text-[10px] text-center text-muted-foreground/60">
+                More models coming soon
+              </p>
             </div>
           </CommandList>
         </Command>

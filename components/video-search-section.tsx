@@ -34,7 +34,9 @@ export function VideoSearchSection({
   const isToolLoading = tool.state === 'call'
   const videoResults: SerperSearchResults =
     tool.state === 'result' ? tool.result : undefined
-  const query = !useIsMobile ? (tool.args?.query as string | undefined) : (tool.args?.query as string | undefined)?.slice(0, 50) + '...'
+  const query = !useIsMobile
+    ? (tool.args?.query as string | undefined)
+    : (tool.args?.query as string | undefined)?.slice(0, 50) + '...'
 
   const { open } = useArtifact()
   const header = (

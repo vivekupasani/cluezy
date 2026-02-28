@@ -49,26 +49,30 @@ export function ForgotPasswordForm({
   return (
     <div className={cn('flex flex-col gap-3', className)} {...props}>
       {success ? (
-        <div className='w-full max-w-sm shadow-lg shadow-muted p-2'>
-          <Card className='bg-background'>
+        <div className="w-full max-w-sm shadow-lg shadow-muted p-2">
+          <Card className="bg-background">
             <CardHeader>
               <CardTitle className="text-2xl">Check Your Email</CardTitle>
-              <CardDescription>Password reset instructions sent</CardDescription>
+              <CardDescription>
+                Password reset instructions sent
+              </CardDescription>
             </CardHeader>
             <CardContent>
               <p className="text-sm text-muted-foreground">
-                If you registered using your email and password, you will receive
-                a password reset email.
+                If you registered using your email and password, you will
+                receive a password reset email.
               </p>
             </CardContent>
           </Card>
         </div>
       ) : (
-        <div className='w-full h-full max-w-[400px] rounded-2xl bg-muted dark:bg-secondary/70 dark:border-none border border-muted-foreground/10 backdrop-blur-xl p-2'>
-          <Card className='w-full h-full max-w-[400px] rounded-xl bg-background drop-shadow-xl'>
+        <div className="w-full h-full max-w-[400px] rounded-2xl bg-muted dark:bg-secondary/70 dark:border-none border border-muted-foreground/10 backdrop-blur-xl p-2">
+          <Card className="w-full h-full max-w-[400px] rounded-xl bg-background drop-shadow-xl">
             <CardHeader>
-              <CardTitle className="text-2xl txt-grad">Reset Your Password</CardTitle>
-              <CardDescription className='txt-mut'>
+              <CardTitle className="text-2xl txt-grad">
+                Reset Your Password
+              </CardTitle>
+              <CardDescription className="txt-mut">
                 Type in your email and we&apos;ll send you a link to reset your
                 password
               </CardDescription>
@@ -77,7 +81,9 @@ export function ForgotPasswordForm({
               <form onSubmit={handleForgotPassword}>
                 <div className="flex flex-col gap-6">
                   <div className="grid gap-2">
-                    <Label htmlFor="email" className='txt-grad'>Email</Label>
+                    <Label htmlFor="email" className="txt-grad">
+                      Email
+                    </Label>
                     <Input
                       id="email"
                       type="email"
@@ -85,7 +91,7 @@ export function ForgotPasswordForm({
                       required
                       value={email}
                       onChange={e => setEmail(e.target.value)}
-                      className='text-foreground/90'
+                      className="text-foreground/90"
                     />
                   </div>
                   {error && <p className="text-sm text-red-500">{error}</p>}

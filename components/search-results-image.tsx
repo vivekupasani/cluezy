@@ -136,8 +136,7 @@ export const SearchResultsImageSection: React.FC<
                       // Apply specific or default rounding
                       className={`h-full w-full object-cover transition-transform duration-500 group-hover:scale-105 ${cornerClasses}`}
                       onError={e =>
-                      (e.currentTarget.src =
-                        '/images/placeholder-image.png')
+                        (e.currentTarget.src = '/images/placeholder-image.png')
                       }
                     />
                   ) : (
@@ -199,15 +198,18 @@ export const SearchResultsImageSection: React.FC<
                   >
                     <CarouselContent className="h-full">
                       {convertedImages.map((img, idx) => (
-                        <CarouselItem key={idx} className="flex items-center justify-center h-[50vh] sm:h-[60vh]">
+                        <CarouselItem
+                          key={idx}
+                          className="flex items-center justify-center h-[50vh] sm:h-[60vh]"
+                        >
                           <div className="relative h-full w-full p-2 group">
                             <img
                               src={img.url}
                               alt={img.description || `Image ${idx + 1}`}
                               className="h-full w-full rounded-lg object-contain drop-shadow-2xl transition-all duration-500"
                               onError={e =>
-                              (e.currentTarget.src =
-                                '/images/placeholder-image.png')
+                                (e.currentTarget.src =
+                                  '/images/placeholder-image.png')
                               }
                             />
                             {img.description && (
@@ -236,11 +238,18 @@ export const SearchResultsImageSection: React.FC<
                       <button
                         key={idx}
                         onClick={() => api?.scrollTo(idx)}
-                        className={`h-1 rounded-full transition-all duration-300 ${current === idx + 1 ? "w-8 bg-primary" : "w-2 bg-muted-foreground/30 hover:bg-muted-foreground/50"
-                          }`}
+                        className={`h-1 rounded-full transition-all duration-300 ${
+                          current === idx + 1
+                            ? 'w-8 bg-primary'
+                            : 'w-2 bg-muted-foreground/30 hover:bg-muted-foreground/50'
+                        }`}
                       />
                     ))}
-                    {convertedImages.length > 10 && <span className="text-[10px] text-muted-foreground px-1">...</span>}
+                    {convertedImages.length > 10 && (
+                      <span className="text-[10px] text-muted-foreground px-1">
+                        ...
+                      </span>
+                    )}
                   </div>
                 </div>
               </div>

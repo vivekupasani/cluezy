@@ -148,7 +148,13 @@ const SidebarProvider = React.forwardRef<
 
     // We add a state so that we can do data-state="expanded" or "collapsed".
     // This makes it easier to style the sidebar with Tailwind classes.
-    const state = isMobile ? (openMobile ? 'expanded' : 'collapsed') : (open ? 'expanded' : 'collapsed')
+    const state = isMobile
+      ? openMobile
+        ? 'expanded'
+        : 'collapsed'
+      : open
+        ? 'expanded'
+        : 'collapsed'
 
     const contextValue = React.useMemo<SidebarContextProps>(
       () => ({
@@ -308,10 +314,9 @@ const SidebarTrigger = React.forwardRef<
   const { toggleSidebar, state } = useSidebar()
   const pathName = usePathname()
 
-  if (pathName.startsWith("/auth/") || pathName.startsWith("/settings")) {
-    return null;
+  if (pathName.startsWith('/auth/') || pathName.startsWith('/settings')) {
+    return null
   }
-
 
   return (
     <Button
@@ -332,9 +337,13 @@ const SidebarTrigger = React.forwardRef<
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          transition={{ duration: 0.2, ease: "easeInOut" }}
+          transition={{ duration: 0.2, ease: 'easeInOut' }}
         >
-          {state === 'collapsed' ? <PanelRightClose size={16} /> : <PanelLeftClose size={16} />}
+          {state === 'collapsed' ? (
+            <PanelRightClose size={16} />
+          ) : (
+            <PanelLeftClose size={16} />
+          )}
         </motion.div>
       </AnimatePresence>
       <span className="sr-only">Toggle Sidebar</span>
@@ -672,7 +681,7 @@ const SidebarMenuAction = React.forwardRef<
         'peer-data-[size=lg]/menu-button:top-2.5',
         'group-data-[collapsible=icon]:hidden',
         showOnHover &&
-        'group-focus-within/menu-item:opacity-100 group-hover/menu-item:opacity-100 data-[state=open]:opacity-100 peer-data-[active=true]/menu-button:text-sidebar-accent-foreground md:opacity-0',
+          'group-focus-within/menu-item:opacity-100 group-hover/menu-item:opacity-100 data-[state=open]:opacity-100 peer-data-[active=true]/menu-button:text-sidebar-accent-foreground md:opacity-0',
         className
       )}
       {...props}
@@ -817,4 +826,3 @@ export {
   SidebarTrigger,
   useSidebar
 }
-

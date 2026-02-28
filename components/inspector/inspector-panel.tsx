@@ -3,9 +3,7 @@
 import { LightbulbIcon, MessageSquare, Minimize2, Wrench } from 'lucide-react'
 
 import { Separator } from '@/components/ui/separator'
-import {
-  TooltipProvider
-} from '@/components/ui/tooltip'
+import { TooltipProvider } from '@/components/ui/tooltip'
 import { TooltipButton } from '@/components/ui/tooltip-button'
 
 import { ArtifactContent } from '@/components/artifact/artifact-content'
@@ -66,7 +64,10 @@ export function InspectorPanel() {
             </TooltipButton>
           </div>
           <Separator className="my-1 bg-border/50" />
-          <div data-vaul-no-drag className="flex-1 overflow-y-auto p-4 CustomScrollbar">
+          <div
+            data-vaul-no-drag
+            className="flex-1 overflow-y-auto p-4 CustomScrollbar"
+          >
             <ArtifactContent part={part} />
           </div>
         </div>

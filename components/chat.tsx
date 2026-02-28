@@ -19,7 +19,13 @@ import { ChatMessages } from './chat-messages'
 import { ChatPanel } from './chat-panel'
 import { useHistoryDialog } from './history-dialog'
 import { Button } from './ui'
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from './ui/dialog'
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle
+} from './ui/dialog'
 import { useSidebar } from './ui/sidebar'
 
 // Define section structure
@@ -43,13 +49,13 @@ interface FileAttachment {
 type MessagePart =
   | { type: 'text'; text: string }
   | {
-    type: 'file';
-    url: string;
-    name: string;
-    mimeType: string;
-    size: number;
-    data: string; // Add the required data property
-  }
+      type: 'file'
+      url: string
+      name: string
+      mimeType: string
+      size: number
+      data: string // Add the required data property
+    }
 
 export function Chat({
   id,
@@ -64,11 +70,12 @@ export function Chat({
 }) {
   const scrollContainerRef = useRef<HTMLDivElement>(null)
   const [isAtBottom, setIsAtBottom] = useState(true)
-  const { isHistoryDialogOpen } = useHistoryDialog();
+  const { isHistoryDialogOpen } = useHistoryDialog()
   const [user, setUser] = useState<User | null>(null)
   const [isRateLimitDialogOpen, setisRateLimitDialogOpen] = useState(false)
   const [rateLimitMessage, setRateLimitMessage] = useState('')
-  const [isRateLimitDialogControlVisible, setIsRateLimitDialogControlVisible] = useState(true)
+  const [isRateLimitDialogControlVisible, setIsRateLimitDialogControlVisible] =
+    useState(true)
   const [attachedFiles, setAttachedFiles] = useState<FileAttachment[]>([])
   const [isFileUploading, setIsFileUploading] = useState(false)
   const [uploadingCount, setUploadingCount] = useState(0)
@@ -80,12 +87,12 @@ export function Chat({
 
   useEffect(() => {
     // Initial load
-    const saved = localStorage.getItem("excluded-domains")
+    const saved = localStorage.getItem('excluded-domains')
     if (saved) {
       try {
         setExcludedDomains(JSON.parse(saved))
       } catch (e) {
-        console.error("Failed to parse excluded domains", e)
+        console.error('Failed to parse excluded domains', e)
       }
     }
 
@@ -94,9 +101,15 @@ export function Chat({
       setExcludedDomains(e.detail)
     }
 
-    window.addEventListener('excluded-domains-updated', handleUpdate as EventListener)
+    window.addEventListener(
+      'excluded-domains-updated',
+      handleUpdate as EventListener
+    )
     return () => {
-      window.removeEventListener('excluded-domains-updated', handleUpdate as EventListener)
+      window.removeEventListener(
+        'excluded-domains-updated',
+        handleUpdate as EventListener
+      )
     }
   }, [])
 
@@ -128,11 +141,14 @@ export function Chat({
       }
       window.dispatchEvent(new CustomEvent('chat-history-updated'))
     },
-    onError: async (error) => {
+    onError: async error => {
       console.log(error)
-      const message = error?.message || "Something went wrong."
-      if (message.includes("You've") && (message.includes("used") || message.includes("reached"))) {
-        if (message.includes("Sign in")) {
+      const message = error?.message || 'Something went wrong.'
+      if (
+        message.includes("You've") &&
+        (message.includes('used') || message.includes('reached'))
+      ) {
+        if (message.includes('Sign in')) {
           try {
             setRateLimitMessage(message)
             setisRateLimitDialogOpen(true)
@@ -142,8 +158,7 @@ export function Chat({
             setisRateLimitDialogOpen(true)
             return
           }
-        }
-        else {
+        } else {
           try {
             setRateLimitMessage(message)
             setisRateLimitDialogOpen(true)
@@ -197,11 +212,11 @@ export function Chat({
     if (!files || files.length === 0) return
 
     if (attachedFiles.length >= 1) {
-      toast.error("Only one file can be attached at a time");
-      return;
+      toast.error('Only one file can be attached at a time')
+      return
     }
 
-    console.log("Starting file upload...", files.length, "files")
+    console.log('Starting file upload...', files.length, 'files')
     setIsFileUploading(true)
     setUploadingCount(files.length)
 
@@ -221,7 +236,7 @@ export function Chat({
         'image/jpeg',
         'image/png',
         'image/gif',
-        'image/webp',
+        'image/webp'
       ]
 
       if (!allowedTypes.includes(file.type)) {
@@ -233,8 +248,8 @@ export function Chat({
 
       // Create upload promise for each file
       const uploadPromise = uploadFileToStorage(file)
-        .then((fileUrl) => {
-          console.log("File uploaded successfully:", file.name, fileUrl)
+        .then(fileUrl => {
+          console.log('File uploaded successfully:', file.name, fileUrl)
 
           const attachment: FileAttachment = {
             id: fileId,
@@ -247,7 +262,7 @@ export function Chat({
           newAttachments.push(attachment)
           toast.success(`File ${file.name} uploaded successfully`)
         })
-        .catch((error) => {
+        .catch(error => {
           console.error('Error uploading file:', file.name, error)
           toast.error(`Failed to upload file ${file.name}`)
         })
@@ -258,7 +273,7 @@ export function Chat({
     // Wait for all uploads to complete
     try {
       await Promise.all(uploadPromises)
-      console.log("All file uploads completed")
+      console.log('All file uploads completed')
 
       // Update attachments only after all files are processed
       if (newAttachments.length > 0) {
@@ -270,7 +285,7 @@ export function Chat({
       // Always set loading to false when done
       setIsFileUploading(false)
       setUploadingCount(0)
-      console.log("File upload loading state set to false")
+      console.log('File upload loading state set to false')
     }
   }
 
@@ -280,16 +295,20 @@ export function Chat({
       // console.log("Uploading file:", file.name, file.type, file.size)
 
       const formData = new FormData()
-      formData.append("file", file)
+      formData.append('file', file)
 
-      const res = await fetch("/api/upload", {
-        method: "POST",
+      const res = await fetch('/api/upload', {
+        method: 'POST',
         body: formData
       })
 
       if (!res.ok) {
-        const errorData = await res.json().catch(() => ({ error: 'Upload failed' }))
-        throw new Error(errorData.error || `Upload failed with status ${res.status}`)
+        const errorData = await res
+          .json()
+          .catch(() => ({ error: 'Upload failed' }))
+        throw new Error(
+          errorData.error || `Upload failed with status ${res.status}`
+        )
       }
 
       const data = await res.json()
@@ -302,7 +321,9 @@ export function Chat({
       return data.url
     } catch (error) {
       console.error('Upload file error:', error)
-      throw new Error(`File upload failed: ${error instanceof Error ? error.message : 'Unknown error'}`)
+      throw new Error(
+        `File upload failed: ${error instanceof Error ? error.message : 'Unknown error'}`
+      )
     }
   }
 
@@ -321,7 +342,7 @@ export function Chat({
 
     // Don't allow submission while files are uploading
     if (isFileUploading) {
-      toast.error("Please wait for file upload to complete")
+      toast.error('Please wait for file upload to complete')
       return
     }
 
@@ -352,12 +373,15 @@ export function Chat({
       role: 'user',
       content: input, // Keep the original content for compatibility
       parts: messageParts,
-      annotations: selectedApps.length > 0 ? [
-        {
-          type: 'selected-apps',
-          data: selectedApps
-        } as JSONValue
-      ] : undefined
+      annotations:
+        selectedApps.length > 0
+          ? [
+              {
+                type: 'selected-apps',
+                data: selectedApps
+              } as JSONValue
+            ]
+          : undefined
     })
 
     // Clear input and attached files
@@ -461,12 +485,15 @@ export function Chat({
         body: {
           chatId: id,
           regenerate: true,
-          annotations: selectedApps.length > 0 ? [
-            {
-              type: 'selected-apps',
-              data: selectedApps
-            }
-          ] : undefined
+          annotations:
+            selectedApps.length > 0
+              ? [
+                  {
+                    type: 'selected-apps',
+                    data: selectedApps
+                  }
+                ]
+              : undefined
         }
       })
     } catch (error) {
@@ -496,14 +523,16 @@ export function Chat({
   // console.log("messgaes", messages)
   const isMobile = useIsMobile()
   return (
-    <div className={cn(
-      'bg-sidebar flex h-full min-w-0 w-full flex-1 flex-col',
-    )}>
+    <div
+      className={cn('bg-sidebar flex h-full min-w-0 w-full flex-1 flex-col')}
+    >
       <div
         className={cn(
           'relative bg-background flex h-full min-w-0 w-full flex-1 flex-col',
           messages.length === 0 ? 'items-center justify-center' : '',
-          open && !isMobile ? "mt-3.5 rounded-tl-xl border-t border-l border-sidebar-ring/30 dark:border-sidebar-ring/10 transition-all duration-300 ease-in-out" : "mt-0 rounded-t-none transition-all duration-300 ease-in-out border-l border-sidebar-foreground/10"
+          open && !isMobile
+            ? 'mt-3.5 rounded-tl-xl border-t border-l border-sidebar-ring/30 dark:border-sidebar-ring/10 transition-all duration-300 ease-in-out'
+            : 'mt-0 rounded-t-none transition-all duration-300 ease-in-out border-l border-sidebar-foreground/10'
         )}
         data-testid="full-chat"
       >
@@ -540,35 +569,38 @@ export function Chat({
           onFileUpload={handleFileUpload}
           onRemoveFile={handleRemoveFile}
           selectedApps={selectedApps}
-          onSelectApp={(app) => {
+          onSelectApp={app => {
             if (!selectedApps.includes(app)) {
               setSelectedApps(prev => [...prev, app])
             }
           }}
-          onRemoveApp={(app) => {
+          onRemoveApp={app => {
             setSelectedApps(prev => prev.filter(a => a !== app))
           }}
         />
 
         {/* Rate Limit Dialog */}
-        <Dialog open={isRateLimitDialogOpen} onOpenChange={setisRateLimitDialogOpen}>
-          <DialogContent className='w-[95%] max-w-sm bg-popover rounded-3xl backdrop-blur-md border-2 border-border/50 shadow-2xl'>
-            <DialogHeader className='space-y-3'>
-              <DialogTitle className='text-2xl font-bold text-center bg-gradient-to-r from-primary via-primary/80 to-primary bg-clip-text text-transparent'>
-                {isRateLimitDialogControlVisible ? 'Daily Limit Reached' : 'Rate Limit Exceeded'}
+        <Dialog
+          open={isRateLimitDialogOpen}
+          onOpenChange={setisRateLimitDialogOpen}
+        >
+          <DialogContent className="w-[95%] max-w-sm bg-popover rounded-3xl backdrop-blur-md border-2 border-border/50 shadow-2xl">
+            <DialogHeader className="space-y-3">
+              <DialogTitle className="text-2xl font-bold text-center bg-gradient-to-r from-primary via-primary/80 to-primary bg-clip-text text-transparent">
+                {isRateLimitDialogControlVisible
+                  ? 'Daily Limit Reached'
+                  : 'Rate Limit Exceeded'}
               </DialogTitle>
-              <DialogDescription className='text-center text-muted-foreground text-sm leading-relaxed px-2'>
+              <DialogDescription className="text-center text-muted-foreground text-sm leading-relaxed px-2">
                 {isRateLimitDialogControlVisible ? (
                   <>
-                    {
-                      rateLimitMessage || "You've used all your free searches for today. Sign in to unlock unlimited access and premium features!"
-                    }
+                    {rateLimitMessage ||
+                      "You've used all your free searches for today. Sign in to unlock unlimited access and premium features!"}
                   </>
                 ) : (
                   <>
-                    {
-                      rateLimitMessage || "You've reached your usage limit for now. Take a short break and come back after some time to continue your research!"
-                    }
+                    {rateLimitMessage ||
+                      "You've reached your usage limit for now. Take a short break and come back after some time to continue your research!"}
                   </>
                 )}
               </DialogDescription>
@@ -579,10 +611,10 @@ export function Chat({
               <div className="flex flex-col gap-2.5 mt-6">
                 <Button
                   onClick={() => {
-                    (window.location.href = '/auth/login')
+                    window.location.href = '/auth/login'
                     setisRateLimitDialogOpen(false)
                   }}
-                  className='w-full font-semibold py-5 rounded-xl shadow-lg hover:bg-primary/80 hover:shadow-xl transition-all duration-200'
+                  className="w-full font-semibold py-5 rounded-xl shadow-lg hover:bg-primary/80 hover:shadow-xl transition-all duration-200"
                 >
                   Sign In to Continue
                 </Button>
@@ -603,7 +635,7 @@ export function Chat({
               </div> */}
                 <Button
                   variant="default"
-                  className='w-full py-5 rounded-xl font-semibold'
+                  className="w-full py-5 rounded-xl font-semibold"
                   onClick={() => setisRateLimitDialogOpen(false)}
                 >
                   Got It

@@ -1,7 +1,19 @@
 'use client'
 
 import { AnimatePresence, motion } from 'framer-motion'
-import { CreditCard, Crown, FileText, GlobeLock, Info, LayoutGrid, PanelLeftClose, PanelRightClose, Search, ShieldCheck, SquarePen } from 'lucide-react'
+import {
+  CreditCard,
+  Crown,
+  FileText,
+  GlobeLock,
+  Info,
+  LayoutGrid,
+  PanelLeftClose,
+  PanelRightClose,
+  Search,
+  ShieldCheck,
+  SquarePen
+} from 'lucide-react'
 import { usePathname, useRouter } from 'next/navigation'
 
 import { useAuth } from '@/components/context/auth-context'
@@ -20,6 +32,7 @@ import {
 import UserMenu from '@/components/user-menu'
 import { useIsMobile } from '@/hooks/use-mobile'
 import { CluezyLogo } from '@/lib/utils/cluezy-logo'
+import Link from 'next/link'
 import { useEffect } from 'react'
 import { BillingDialog } from './billing-dialog'
 import { ExcludedDomainsDialog } from './excluded-domains-dialog'
@@ -32,12 +45,7 @@ export function AppSidebar() {
   const { toggleSidebar, setOpenMobile, setOpen, state } = useSidebar()
   const pathName = usePathname()
   const isMobile = useIsMobile()
-  const pages = [
-    '/pricing',
-    '/playbook',
-    '/premium',
-    '/payment-successful'
-  ]
+  const pages = ['/pricing', '/playbook', '/premium', '/payment-successful']
 
   useEffect(() => {
     const handleKeyDown = (e: globalThis.KeyboardEvent) => {
@@ -56,23 +64,27 @@ export function AppSidebar() {
 
   // Don't render the header on the /auth/* pages
   if (pathName.startsWith('/auth/') || pages.includes(pathName)) {
-    return null;
+    return null
   }
 
   return (
-    <Sidebar collapsible="offcanvas" variant='sidebar' className='border-none'>
+    <Sidebar collapsible="offcanvas" variant="sidebar" className="border-none">
       <SidebarHeader className="flex flex-row items-center justify-between pt-4 pb-4 gap-0">
         <SidebarMenuButton onClick={toggleSidebar}>
-          <div className='flex justify-between w-full items-center'>
+          <div className="flex justify-between w-full items-center">
             <div className="flex h-8 w-7 items-center object-cover justify-center rounded-md overflow-hidden">
               <CluezyLogo />
             </div>
             <AnimatePresence mode="wait" initial={false}>
               <motion.div
                 key={state}
-                transition={{ duration: 0.2, ease: "easeInOut" }}
+                transition={{ duration: 0.2, ease: 'easeInOut' }}
               >
-                {state === 'collapsed' ? <PanelRightClose size={16} className='text-foreground' /> : <PanelLeftClose size={16} className='text-foreground' />}
+                {state === 'collapsed' ? (
+                  <PanelRightClose size={16} className="text-foreground" />
+                ) : (
+                  <PanelLeftClose size={16} className="text-foreground" />
+                )}
               </motion.div>
             </AnimatePresence>
           </div>
@@ -93,7 +105,7 @@ export function AppSidebar() {
               className="justify-start gap-2 data-[state=open]:px-2"
             >
               <SquarePen className="size-5 text-foreground font-normal" />
-              <span className='text-foreground font-normal'>New Chat</span>
+              <span className="text-foreground font-normal">New Chat</span>
             </SidebarMenuButton>
           </SidebarMenuItem>
 
@@ -108,17 +120,18 @@ export function AppSidebar() {
               className="justify-start gap-2 data-[state=open]:px-2"
             >
               <Search className="size-5 text-foreground font-normal" />
-              <span className='text-foreground font-normal'>Search chats</span>
+              <span className="text-foreground font-normal">Search chats</span>
             </SidebarMenuButton>
           </SidebarMenuItem>
 
           <SidebarMenuItem>
             <ExcludedDomainsDialog
               trigger={
-                <SidebarMenuButton
-                  className="justify-start gap-2 data-[state=open]:px-2">
+                <SidebarMenuButton className="justify-start gap-2 data-[state=open]:px-2">
                   <GlobeLock className="size-5 text-foreground font-normal" />
-                  <span className='text-foreground font-normal'>Exclude Sources</span>
+                  <span className="text-foreground font-normal">
+                    Exclude Sources
+                  </span>
                 </SidebarMenuButton>
               }
             />
@@ -126,124 +139,107 @@ export function AppSidebar() {
 
           <SidebarMenu>
             <SidebarMenuItem>
-              <SidebarMenuButton
+              <CustomLinkTag
+                href="/connectors"
                 onClick={() => {
-                  router.push('/connectors')
                   if (isMobile) {
                     setOpenMobile(false)
                   }
                 }}
-                className="justify-start gap-2 data-[state=open]:px-2"
               >
-                <LayoutGrid className="size-5 font-normal text-foreground" />
-                <span className='text-foreground font-normal'>Connectors</span>
-              </SidebarMenuButton>
+                <LayoutGrid className="size-4 font-normal text-foreground" />
+                <span className="text-foreground font-normal">Connectors</span>
+              </CustomLinkTag>
             </SidebarMenuItem>
           </SidebarMenu>
 
-          {
-            userPlanDetails?.planName != "Free" && user ? (
-              <SidebarMenuItem>
-                <BillingDialog
-                  trigger={
-                    <SidebarMenuButton
-                      className="justify-start gap-2 data-[state=open]:px-2"
-                    >
-                      <CreditCard className="size-5 text-foreground font-normal" />
-                      <span className='text-foreground font-normal'>Manage Billing</span>
-                    </SidebarMenuButton>
-                  }
-                />
-              </SidebarMenuItem>
-            ) : (
-              <SidebarMenuItem>
-                <PricingDialog
-                  trigger={
-                    <SidebarMenuButton
-                      className="justify-start gap-2 data-[state=open]:px-2"
-                    >
-                      <Crown className="size-5 text-foreground font-normal" />
-                      <span className='text-foreground font-normal'>Subscription</span>
-                    </SidebarMenuButton>
-                  }
-                />
-              </SidebarMenuItem>
-            )
-          }
-
+          {userPlanDetails?.planName != 'Free' && user ? (
+            <SidebarMenuItem>
+              <BillingDialog
+                trigger={
+                  <SidebarMenuButton className="justify-start gap-2 data-[state=open]:px-2">
+                    <CreditCard className="size-5 text-foreground font-normal" />
+                    <span className="text-foreground font-normal">
+                      Manage Billing
+                    </span>
+                  </SidebarMenuButton>
+                }
+              />
+            </SidebarMenuItem>
+          ) : (
+            <SidebarMenuItem>
+              <PricingDialog
+                trigger={
+                  <SidebarMenuButton className="justify-start gap-2 data-[state=open]:px-2">
+                    <Crown className="size-5 text-foreground font-normal" />
+                    <span className="text-foreground font-normal">
+                      Subscription
+                    </span>
+                  </SidebarMenuButton>
+                }
+              />
+            </SidebarMenuItem>
+          )}
         </SidebarMenu>
 
         {state !== 'collapsed' && (
-          <motion.div
-          // initial={{
-          //   opacity: 0,
-          //   x: 0
-          // }}
-          // animate={{
-          //   opacity: 1,
-          //   x: 1,
-          //   transition: {
-          //     duration: 0.2,
-          //     ease: 'easeInOut'
-          //   }
-          // }}
-          >
-            <SidebarHeader className='text-[10px] mt-2 uppercase text-foreground font-normal'>Company</SidebarHeader>
-            <SidebarMenu className='transition-opacity'>
+          <div>
+            <SidebarHeader className="text-[10px] mt-2 uppercase text-foreground font-normal">
+              Company
+            </SidebarHeader>
+            <SidebarMenu className="transition-opacity">
               <SidebarMenuItem>
-                <SidebarMenuButton
+                <CustomLinkTag
+                  href="/about"
                   onClick={() => {
-                    router.push('/about')
                     // Optional: Refresh or reset chat state if needed
                     if (isMobile) {
                       setOpenMobile(false)
                     }
                   }}
-                  className="justify-start gap-2 data-[state=open]:px-2"
                 >
-                  <Info className="size-5 text-foreground font-normal" />
-                  <span className='text-foreground font-normal'>About Us</span>
-                </SidebarMenuButton>
+                  <Info className="size-4 text-foreground font-normal" />
+                  <span className="text-foreground font-normal">About Us</span>
+                </CustomLinkTag>
               </SidebarMenuItem>
 
               <SidebarMenuItem>
-                <SidebarMenuButton
+                <CustomLinkTag
+                  href="/privacy"
                   onClick={() => {
-                    router.push('/privacy')
-                    // Optional: Refresh or reset chat state if needed
                     if (isMobile) {
                       setOpenMobile(false)
                     }
                   }}
-                  className="justify-start gap-2 data-[state=open]:px-2"
                 >
-                  <ShieldCheck className="size-5 text-foreground font-normal" />
-                  <span className='text-foreground font-normal'>Privacy Policy</span>
-                </SidebarMenuButton>
+                  <ShieldCheck className="size-4 font-normal text-foreground" />
+                  <span className="text-foreground font-normal">
+                    Privacy Policy
+                  </span>
+                </CustomLinkTag>
               </SidebarMenuItem>
 
               <SidebarMenuItem>
-                <SidebarMenuButton
+                <CustomLinkTag
+                  href="/terms"
                   onClick={() => {
-                    router.push('/terms')
-                    // Optional: Refresh or reset chat state if needed
                     if (isMobile) {
                       setOpenMobile(false)
                     }
                   }}
-                  className="justify-start gap-2 data-[state=open]:px-2"
                 >
-                  <FileText className="size-5 text-foreground font-normal" />
-                  <span className='text-foreground font-normal'>Terms & Service</span>
-                </SidebarMenuButton>
+                  <FileText className="size-4 font-normal text-foreground" />
+                  <span className="text-foreground font-normal">
+                    Terms & Service
+                  </span>
+                </CustomLinkTag>
               </SidebarMenuItem>
-
             </SidebarMenu>
-          </motion.div>
+          </div>
         )}
       </SidebarContent>
 
-      <SidebarFooter className='pl-2 pb-4 md:pb-2'>
+      <SidebarFooter className="pl-2 pb-4 md:pb-2">
         <SidebarMenuItem className="flex flex-col gap-2 items-start w-full">
           {user ? (
             <UserMenu user={user} state={state} />
@@ -252,6 +248,26 @@ export function AppSidebar() {
           )}
         </SidebarMenuItem>
       </SidebarFooter>
-    </Sidebar >
+    </Sidebar>
+  )
+}
+
+export const CustomLinkTag = ({
+  href,
+  children,
+  onClick
+}: {
+  href: string
+  children?: React.ReactNode
+  onClick?: () => void
+}) => {
+  return (
+    <Link
+      href={href}
+      onClick={onClick}
+      className="h-8 text-sm flex items-center justify-start gap-2 px-2 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground rounded-md"
+    >
+      {children}
+    </Link>
   )
 }

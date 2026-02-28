@@ -15,10 +15,11 @@ import { executeToolCall } from './tool-execution'
 import { BaseStreamConfig } from './types'
 
 export function createManualToolStreamResponse(config: BaseStreamConfig) {
-  console.log("Menual tool calling")
+  console.log('Menual tool calling')
   return createDataStreamResponse({
     execute: async (dataStream: DataStreamWriter) => {
-      const { messages, model, chatId, searchMode, userId, selectedApps } = config
+      const { messages, model, chatId, searchMode, userId, selectedApps } =
+        config
 
       // Write selected apps to data stream for live UI update
       if (selectedApps && selectedApps.length > 0) {

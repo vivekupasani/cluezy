@@ -1,5 +1,5 @@
-import { getModels } from '@/lib/config/models';
-import { NextResponse } from 'next/server';
+import { getModels } from '@/lib/config/models'
+import { NextResponse } from 'next/server'
 
 export async function GET() {
   try {
@@ -20,9 +20,9 @@ export async function GET() {
       error.digest === 'NEXT_PRERENDER_INTERRUPTED' ||
       error.message?.includes('bail out of prerendering') ||
       error.message?.includes('Dynamic server usage') ||
-      error.message?.includes('During prerendering');
+      error.message?.includes('During prerendering')
 
-    if (isBailout) throw error;
+    if (isBailout) throw error
 
     console.error('Failed to fetch models from /api/config/models:', error)
     return NextResponse.json(

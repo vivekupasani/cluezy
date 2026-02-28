@@ -29,11 +29,11 @@ export function transformToolMessages(messages: CoreMessage[]): CoreMessage[] {
   return messages.map(message =>
     message.role === 'tool'
       ? {
-        ...message,
-        role: 'assistant',
-        content: JSON.stringify(message.content),
-        type: 'tool'
-      }
+          ...message,
+          role: 'assistant',
+          content: JSON.stringify(message.content),
+          type: 'tool'
+        }
       : message
   ) as CoreMessage[]
 }
@@ -124,7 +124,9 @@ export function convertToUIMessages(
           if (content.type === 'reasoning') {
             if (typeof content.data === 'object' && content.data !== null) {
               pendingReasoning = (content.data as any).reasoning
-              pendingReasoningTime = (content.data as any).time as number | undefined
+              pendingReasoningTime = (content.data as any).time as
+                | number
+                | undefined
             } else {
               pendingReasoning = content.data as string
               pendingReasoningTime = 0
@@ -164,7 +166,10 @@ export function convertToUIMessages(
               }
 
               // Debug logging for specific tools
-              if (content.toolName === 'retrieval' || content.toolName === 'ask_question') {
+              if (
+                content.toolName === 'retrieval' ||
+                content.toolName === 'ask_question'
+              ) {
                 console.log(`Processing ${content.toolName} tool:`, {
                   toolCallId: content.toolCallId,
                   args: content.args,
@@ -204,7 +209,7 @@ export function convertToUIMessages(
                 name: content.name as string,
                 mimeType: content.mimeType as string,
                 size: typeof content.size === 'number' ? content.size : 0,
-                data: content.data as string || content.url as string
+                data: (content.data as string) || (content.url as string)
               }
               fileParts.push(fileContent)
             }
@@ -251,7 +256,7 @@ export function convertToUIMessages(
       }
 
       parts.push(...fileParts)
-        ; (newMessage as any).parts = parts
+      ;(newMessage as any).parts = parts
     }
 
     chatMessages.push(newMessage)
@@ -294,7 +299,7 @@ function convertMessagesWithFiles(messages: any[]): CoreMessage[] {
           }
         } else if (part.type === 'tool-invocation') {
           // Handle tool-invocation type specifically with safe access
-          const toolInvocation = part.toolInvocation;
+          const toolInvocation = part.toolInvocation
 
           if (!toolInvocation) {
             return {
@@ -308,8 +313,8 @@ function convertMessagesWithFiles(messages: any[]): CoreMessage[] {
           // console.log("=============================")
 
           // Safe access to args with fallback
-          const args = toolInvocation.args || {};
-          const result = toolInvocation.result || {};
+          const args = toolInvocation.args || {}
+          const result = toolInvocation.result || {}
 
           if (toolInvocation.state === 'result') {
             return {
@@ -342,7 +347,10 @@ function convertMessagesWithFiles(messages: any[]): CoreMessage[] {
       })
     }
     // Handle tool invocations from the message object
-    else if (message.toolInvocations && Array.isArray(message.toolInvocations)) {
+    else if (
+      message.toolInvocations &&
+      Array.isArray(message.toolInvocations)
+    ) {
       const contentParts: any[] = []
 
       // Add text content if it exists
@@ -380,10 +388,12 @@ function convertMessagesWithFiles(messages: any[]): CoreMessage[] {
     }
     // Handle legacy format: plain content string
     else if (typeof message.content === 'string') {
-      coreMessage.content = [{
-        type: 'text',
-        text: message.content
-      }]
+      coreMessage.content = [
+        {
+          type: 'text',
+          text: message.content
+        }
+      ]
     }
     // Handle already converted content array
     else if (Array.isArray(message.content)) {
@@ -430,12 +440,12 @@ export function convertToExtendedCoreMessages(
         typeof message.reasoning === 'string'
           ? { reasoning: message.reasoning, time: reasoningTime }
           : {
-            ...(message.reasoning as Record<string, unknown>),
-            time:
-              (message as any).reasoningTime ??
-              (message.reasoning as any).time ??
-              0
-          }
+              ...(message.reasoning as Record<string, unknown>),
+              time:
+                (message as any).reasoningTime ??
+                (message.reasoning as any).time ??
+                0
+            }
       result.push({
         role: 'data',
         content: {

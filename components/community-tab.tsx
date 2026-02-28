@@ -1,4 +1,4 @@
-"use client";
+'use client'
 export default function CommunityTab() {
-    return <div>Community Content</div>;
+  return <div>Community Content</div>
 }

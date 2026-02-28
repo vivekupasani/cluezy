@@ -90,7 +90,10 @@ export const RelatedQuestions: React.FC<RelatedQuestionsProps> = ({
                   key={index}
                   className="group flex items-start w-full py-2 ml-0.5 border-b border-border hover:text-foreground"
                 >
-                  <CornerDownRight size={16} className='mt-1 mr-2 text-accent-foreground/50 group-hover:text-foreground/70' />
+                  <CornerDownRight
+                    size={16}
+                    className="mt-1 mr-2 text-accent-foreground/50 group-hover:text-foreground/70"
+                  />
                   <Button
                     className="flex-1 justify-start  px-0 py-1 h-fit bg-transparent hover:bg-transparent font-semibold txt-mut group-hover:txt-grad whitespace-normal text-left"
                     type="submit"

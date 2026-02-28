@@ -75,21 +75,29 @@ export function SignUpForm({
       if (error) throw error
       clearChatHistoryCache()
     } catch (error: unknown) {
-      setError(error instanceof Error ? error.message : 'An OAuth error occurred')
+      setError(
+        error instanceof Error ? error.message : 'An OAuth error occurred'
+      )
     } finally {
       setIsLoading(false)
     }
   }
 
   return (
-    <div className={cn('flex flex-col items-center justify-center gap-3 md:mt-8', className)} {...props}>
+    <div
+      className={cn(
+        'flex flex-col items-center justify-center gap-3 md:mt-8',
+        className
+      )}
+      {...props}
+    >
       <div className="w-full h-full max-w-[400px] rounded-2xl bg-muted dark:bg-secondary/70 dark:border-none border border-muted-foreground/10 backdrop-blur-xl p-2">
         <Card className="w-full h-full max-w-[400px] rounded-xl bg-background drop-shadow-xl">
           <CardHeader className="text-center">
             <CardTitle className="text-2xl flex flex-col items-center justify-center gap-4 txt-grad">
               Create an account
             </CardTitle>
-            <CardDescription className='txt-mut'>
+            <CardDescription className="txt-mut">
               Enter your details to get started
             </CardDescription>
           </CardHeader>
@@ -98,7 +106,9 @@ export function SignUpForm({
             <div className="flex flex-col gap-4">
               <form onSubmit={handleSignUp} className="flex flex-col gap-4">
                 <div className="grid gap-2">
-                  <Label htmlFor="email" className='txt-grad'>Email Address</Label>
+                  <Label htmlFor="email" className="txt-grad">
+                    Email Address
+                  </Label>
                   <Input
                     id="email"
                     type="email"
@@ -111,7 +121,9 @@ export function SignUpForm({
                 </div>
 
                 <div className="grid gap-2">
-                  <Label htmlFor="password" className='txt-grad'>Password</Label>
+                  <Label htmlFor="password" className="txt-grad">
+                    Password
+                  </Label>
                   <PasswordInput
                     id="password"
                     placeholder="********"
@@ -122,7 +134,12 @@ export function SignUpForm({
                 </div>
 
                 <div className="grid gap-2">
-                  <Label htmlFor="repeatPassword" className='txt-grad pb-[0.2px]'>Repeat Password</Label>
+                  <Label
+                    htmlFor="repeatPassword"
+                    className="txt-grad pb-[0.2px]"
+                  >
+                    Repeat Password
+                  </Label>
                   <PasswordInput
                     id="repeatPassword"
                     placeholder="********"
@@ -197,14 +214,25 @@ export function SignUpForm({
 
         <div className="my-3 text-center text-sm">
           Already have an account?{' '}
-          <Link href="/auth/login" className="hover:underline underline-offset-4">
+          <Link
+            href="/auth/login"
+            className="hover:underline underline-offset-4"
+          >
             Sign In
           </Link>
         </div>
       </div>
 
-      <div className='text-xs mt-5 text-center txt-mut'>
-        By continuing, you agree to our <Link href="/terms" className="underline text-foreground/70">Terms of Service</Link> and <Link href="/privacy" className="underline text-foreground/70">Privacy Policy</Link>.
+      <div className="text-xs mt-5 text-center txt-mut">
+        By continuing, you agree to our{' '}
+        <Link href="/terms" className="underline text-foreground/70">
+          Terms of Service
+        </Link>{' '}
+        and{' '}
+        <Link href="/privacy" className="underline text-foreground/70">
+          Privacy Policy
+        </Link>
+        .
       </div>
     </div>
   )

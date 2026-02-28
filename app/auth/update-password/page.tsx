@@ -11,15 +11,10 @@ export default function Page() {
       <header className="h-14 flex items-center px-5 md:px-10">
         <Link
           href="/"
-          className="group flex items-center gap-2 text-sm"
+          className="group flex items-center justify-center gap-1 text-muted-foreground hover:text-foreground text-sm transition-colors duration-200"
         >
-          <ArrowLeft
-            size={18}
-            className="text-foreground/70 group-hover:text-foreground"
-          />
-          <span className="txt-grad group-hover:text-foreground">
-            Back
-          </span>
+          <ArrowLeft size={16} />
+          <span>Back to home</span>
         </Link>
       </header>
 

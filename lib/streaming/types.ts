@@ -10,7 +10,7 @@ export interface BaseStreamConfig {
   chatId: string
   searchMode: boolean
   userId: string
-  excludeDomains?: string[],
+  excludeDomains?: string[]
   selectedApps?: ConnectorProvider[]
   userPlanDetails?: UserPlanDetailsProps | null
   isIncognito?: boolean

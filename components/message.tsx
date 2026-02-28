@@ -20,47 +20,83 @@ export function BotMessage({
   message: string
   className?: string
 }) {
-  const containsLaTeX = /\\\[([\s\S]*?)\\\]|\\\(([\s\S]*?)\\\)/.test(message || '')
+  const containsLaTeX = /\\\[([\s\S]*?)\\\]|\\\(([\s\S]*?)\\\)/.test(
+    message || ''
+  )
   const processedData = preprocessLaTeX(message || '')
 
   const baseComponents = {
     p: (props: any) => (
-      <p className="text-base leading-6 text-foreground my-3 tracking-wide first:mt-0 last:mb-0" {...props} />
+      <p
+        className="text-base leading-6 text-foreground my-3 tracking-wide first:mt-0 last:mb-0"
+        {...props}
+      />
     ),
     h1: (props: any) => (
-      <h1 className="text-2xl font-bold txt-grad leading-tight tracking-wide mt-6 mb-2" {...props} />
+      <h1
+        className="text-2xl font-bold txt-grad leading-tight tracking-wide mt-6 mb-2"
+        {...props}
+      />
     ),
     h2: (props: any) => (
-      <h2 className="text-xl font-semibold txt-grad leading-tight tracking-wide mt-5 mb-2" {...props} />
+      <h2
+        className="text-xl font-semibold txt-grad leading-tight tracking-wide mt-5 mb-2"
+        {...props}
+      />
     ),
     h3: (props: any) => (
-      <h3 className="text-lg font-semibold txt-grad leading-tight tracking-wide mt-4 mb-1" {...props} />
+      <h3
+        className="text-lg font-semibold txt-grad leading-tight tracking-wide mt-4 mb-1"
+        {...props}
+      />
     ),
     ul: (props: any) => (
-      <ul className="list-disc pl-6 my-3 space-y-1 text-base leading-6 tracking-wide text-foreground" {...props} />
+      <ul
+        className="list-disc pl-6 my-3 space-y-1 text-base leading-6 tracking-wide text-foreground"
+        {...props}
+      />
     ),
     ol: (props: any) => (
-      <ol className="list-decimal pl-6 my-3 space-y-1 text-base leading-6 tracking-wide text-foreground" {...props} />
+      <ol
+        className="list-decimal pl-6 my-3 space-y-1 text-base leading-6 tracking-wide text-foreground"
+        {...props}
+      />
     ),
     li: ({ node, ordered, index, checked, ...props }: any) => (
       <li className="leading-6 tracking-wide" {...props} />
     ),
-    strong: (props: any) => <strong className="font-semibold text-foreground tracking-wide" {...props} />,
-    em: (props: any) => <em className="italic text-foreground tracking-wide" {...props} />,
+    strong: (props: any) => (
+      <strong
+        className="font-semibold text-foreground tracking-wide"
+        {...props}
+      />
+    ),
+    em: (props: any) => (
+      <em className="italic text-foreground tracking-wide" {...props} />
+    ),
     blockquote: (props: any) => (
-      <blockquote className="border-l-4 border-primary bg-muted/30 pl-4 py-2 pr-2 rounded-r-lg italic text-foreground my-6 tracking-wide" {...props} />
+      <blockquote
+        className="border-l-4 border-primary bg-muted/30 pl-4 py-2 pr-2 rounded-r-lg italic text-foreground my-6 tracking-wide"
+        {...props}
+      />
     ),
     a: Citing,
     hr: (props: any) => (
       <hr className="my-6 border-t border-border" {...props} />
     ),
     img: (props: any) => (
-      <img className="rounded-xl border border-border shadow-sm my-4 max-w-full h-auto" {...props} />
+      <img
+        className="rounded-xl border border-border shadow-sm my-4 max-w-full h-auto"
+        {...props}
+      />
     ),
     // Table components
     table: (props: any) => (
       <div className="w-[90vw] md:w-full overflow-x-scroll my-6 rounded-xl border border-border bg-card">
-        <table className="min-w-full divide-y divide-border text-sm tracking-wide rounded-lg" {...props} />
+        <table
+          className="min-w-full divide-y divide-border text-sm tracking-wide rounded-lg"
+          {...props}
+        />
       </div>
     ),
     thead: (props: any) => (
@@ -92,7 +128,10 @@ export function BotMessage({
       const match = /language-(\w+)/.exec(className || '')
       if (inline) {
         return (
-          <code className="bg-muted/80 px-1.5 py-0.5 rounded-md text-[0.85rem] font-mono text-foreground" {...props}>
+          <code
+            className="bg-muted/80 px-1.5 py-0.5 rounded-md text-[0.85rem] font-mono text-foreground"
+            {...props}
+          >
             {children}
           </code>
         )
@@ -128,7 +167,13 @@ export function BotMessage({
 
 // Preprocess LaTeX
 const preprocessLaTeX = (content: string) => {
-  const blockProcessedContent = content.replace(/\\\[([\s\S]*?)\\\]/g, (_, eq) => `$$${eq}$$`)
-  const inlineProcessedContent = blockProcessedContent.replace(/\\\(([\s\S]*?)\\\)/g, (_, eq) => `$${eq}$`)
+  const blockProcessedContent = content.replace(
+    /\\\[([\s\S]*?)\\\]/g,
+    (_, eq) => `$$${eq}$$`
+  )
+  const inlineProcessedContent = blockProcessedContent.replace(
+    /\\\(([\s\S]*?)\\\)/g,
+    (_, eq) => `$${eq}$`
+  )
   return inlineProcessedContent
 }

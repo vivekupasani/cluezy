@@ -15,7 +15,7 @@ interface HandleStreamFinishParams {
   userId: string
   skipRelatedQuestions?: boolean
   annotations?: ExtendedCoreMessage[]
-  selectedApps?: string[],
+  selectedApps?: string[]
   userPlanDetails?: UserPlanDetailsProps | null
   isIncognito?: boolean
 }
@@ -35,13 +35,16 @@ export async function handleStreamFinish({
 }: HandleStreamFinishParams) {
   try {
     // Inject selected apps annotation as a separate data message before the user message
-    const appsAnnotation: ExtendedCoreMessage | null = (selectedApps && selectedApps.length > 0) ? {
-      role: 'data',
-      content: {
-        type: 'selected-apps',
-        data: selectedApps
-      } as JSONValue
-    } : null
+    const appsAnnotation: ExtendedCoreMessage | null =
+      selectedApps && selectedApps.length > 0
+        ? {
+            role: 'data',
+            content: {
+              type: 'selected-apps',
+              data: selectedApps
+            } as JSONValue
+          }
+        : null
 
     const extendedCoreMessages = convertToExtendedCoreMessages(originalMessages)
 
@@ -98,36 +101,44 @@ export async function handleStreamFinish({
     // Helper to sanitize content by removing AI SDK protocol artifacts
     const sanitizeContent = (content: any): any => {
       // Regex to match AI SDK protocol markers like {"type":"step-start"}, {"type":"step-finish"}, etc.
-      const protocolPattern = /\{"type":"step-(?:start|finish)"\}/g;
+      const protocolPattern = /\{"type":"step-(?:start|finish)"\}/g
 
       if (typeof content === 'string') {
-        return content.replace(protocolPattern, '').trim();
+        return content.replace(protocolPattern, '').trim()
       }
 
       if (Array.isArray(content)) {
         return content.map(part => {
-          if (part && typeof part === 'object' && part.type === 'text' && typeof part.text === 'string') {
-            return { ...part, text: part.text.replace(protocolPattern, '').trim() };
+          if (
+            part &&
+            typeof part === 'object' &&
+            part.type === 'text' &&
+            typeof part.text === 'string'
+          ) {
+            return {
+              ...part,
+              text: part.text.replace(protocolPattern, '').trim()
+            }
           }
-          return part;
-        });
+          return part
+        })
       }
 
-      return content;
-    };
+      return content
+    }
 
     // Sanitize messages to remove protocol artifacts
     const sanitizedMessages = generatedMessages.map(msg => ({
       ...msg,
       content: sanitizeContent(msg.content)
-    }));
+    }))
 
     if (process.env.ENABLE_SAVE_CHAT_HISTORY !== 'true') {
       return
     }
 
     // Return from here if user is not authenticated or in incognito mode
-    if (userId == "anonymous" || isIncognito) {
+    if (userId == 'anonymous' || isIncognito) {
       return
     }
 

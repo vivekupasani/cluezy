@@ -225,7 +225,7 @@ export async function renameChat(
     const pipeline = redis.pipeline()
     pipeline.hmset(chatKey, {
       title: newTitle,
-      updatedAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString()
     })
     await pipeline.exec()
 
@@ -238,7 +238,11 @@ export async function renameChat(
   }
 }
 
-export async function saveChat(chat: Chat, userId: string = 'anonymous', userPlanDetails?: UserPlanDetailsProps | null) {
+export async function saveChat(
+  chat: Chat,
+  userId: string = 'anonymous',
+  userPlanDetails?: UserPlanDetailsProps | null
+) {
   try {
     const redis = await getRedis()
     const pipeline = redis.pipeline()
@@ -251,7 +255,7 @@ export async function saveChat(chat: Chat, userId: string = 'anonymous', userPla
     pipeline.hmset(`chat:${chat.id}`, chatToSave)
     pipeline.zadd(getUserChatKey(userId), Date.now(), `chat:${chat.id}`)
 
-    if (userPlanDetails?.planName === "Free") {
+    if (userPlanDetails?.planName === 'Free') {
       pipeline.expire(`chat:${chat.id}`, 30 * 24 * 60 * 60) // 30 days
     }
 

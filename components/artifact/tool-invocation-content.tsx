@@ -9,7 +9,6 @@ import { VideoSearchArtifactContent } from '@/components/artifact/video-search-a
 import { XSearchArtifactContent } from '@/components/artifact/x-search-artifact-content'
 import { DocumentSearchArtifactContent } from './document-search-artifact-content'
 
-
 export function ToolInvocationContent({
   toolInvocation
 }: {

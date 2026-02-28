@@ -2,7 +2,6 @@
 
 import Image from 'next/image'
 
-
 import { SerperSearchResultItem } from '@/lib/types'
 
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
@@ -82,8 +81,9 @@ export function VideoResultGrid({
                     <div className="flex items-center space-x-2">
                       <Avatar className="h-4 w-4 border border-border/50">
                         <AvatarImage
-                          src={`https://www.google.com/s2/favicons?domain=${new URL(video.link).hostname
-                            }`}
+                          src={`https://www.google.com/s2/favicons?domain=${
+                            new URL(video.link).hostname
+                          }`}
                           alt={video.channel || video.source}
                         />
                         <AvatarFallback className="text-[8px]">

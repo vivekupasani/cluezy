@@ -83,8 +83,8 @@ export const retrieveTool = tool({
   description: 'Retrieve content from the web',
   parameters: retrieveSchema,
   execute: async ({ url }) => {
-    console.log("I AM USING RETRIVE TOOL")
-    console.log("URL : ", url)
+    console.log('I AM USING RETRIVE TOOL')
+    console.log('URL : ', url)
     let results: SearchResultsType | null
 
     // Use Jina if the API key is set, otherwise use Tavily
@@ -97,7 +97,7 @@ export const retrieveTool = tool({
       // console.log('TAVILY RESULT : ', results)
     }
 
-    console.log("RESULTS : ", results)
+    console.log('RESULTS : ', results)
 
     if (!results) {
       return null

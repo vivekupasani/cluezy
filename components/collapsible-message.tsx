@@ -50,7 +50,8 @@ export function CollapsibleMessage({
         <div
           className={cn(
             'flex-1 rounded-2xl py-4 bg-muted/60 dark:bg-card/40 text-secondary-foreground dark:text-foreground/90 max-w-2xl',
-            showBorder && 'border border-accent-foreground/5 dark:border-border/50'
+            showBorder &&
+              'border border-accent-foreground/5 dark:border-border/50'
           )}
         >
           <Collapsible
@@ -71,10 +72,11 @@ export function CollapsibleMessage({
               </CollapsibleTrigger>
             </div>
             <CollapsibleContent className="data-[state=closed]:animate-collapse-up data-[state=open]:animate-collapse-down">
-              <Separator orientation='horizontal' className="my-4 border border-border/60 dark:border-border/40" />
-              <div className="px-4">
-                {content}
-              </div>
+              <Separator
+                orientation="horizontal"
+                className="my-4 border border-border/60 dark:border-border/40"
+              />
+              <div className="px-4">{content}</div>
             </CollapsibleContent>
           </Collapsible>
         </div>

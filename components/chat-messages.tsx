@@ -47,7 +47,6 @@ export function ChatMessages({
   const [openStates, setOpenStates] = useState<Record<string, boolean>>({})
   const manualToolCallId = 'manual-tool-call'
 
-
   useEffect(() => {
     // Open manual tool call when the last section is a user message
     if (sections.length > 0) {
@@ -137,7 +136,7 @@ export function ChatMessages({
             }
           >
             {/* User message */}
-            <div className="flex flex-col gap-4" >
+            <div className="flex flex-col gap-4">
               <RenderMessage
                 message={section.userMessage}
                 messageId={section.userMessage.id}
@@ -149,12 +148,17 @@ export function ChatMessages({
                 onUpdateMessage={onUpdateMessage}
                 reload={reload}
               />
-              {showLoading && sectionIndex === sections.length - 1 && <Spinner className='ml-2' />}
+              {showLoading && sectionIndex === sections.length - 1 && (
+                <Spinner className="ml-2" />
+              )}
             </div>
 
             {/* Assistant messages */}
             {section.assistantMessages.map(assistantMessage => (
-              <div key={assistantMessage.id} className="flex flex-col gap-4 -px-1">
+              <div
+                key={assistantMessage.id}
+                className="flex flex-col gap-4 -px-1"
+              >
                 <RenderMessage
                   message={assistantMessage}
                   messageId={assistantMessage.id}

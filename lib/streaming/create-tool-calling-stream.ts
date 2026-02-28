@@ -78,7 +78,10 @@ function convertMessagesWithFiles(messages: any[]): CoreMessage[] {
       })
     }
     // Handle tool invocations from the message object
-    else if (message.toolInvocations && Array.isArray(message.toolInvocations)) {
+    else if (
+      message.toolInvocations &&
+      Array.isArray(message.toolInvocations)
+    ) {
       const contentParts: any[] = []
 
       // Add text content if it exists
@@ -112,10 +115,12 @@ function convertMessagesWithFiles(messages: any[]): CoreMessage[] {
     }
     // Handle legacy format: plain content string
     else if (typeof message.content === 'string') {
-      coreMessage.content = [{
-        type: 'text',
-        text: message.content
-      }]
+      coreMessage.content = [
+        {
+          type: 'text',
+          text: message.content
+        }
+      ]
     }
     // Handle already converted content array
     else if (Array.isArray(message.content)) {
@@ -126,7 +131,10 @@ function convertMessagesWithFiles(messages: any[]): CoreMessage[] {
         // Convert unknown content to text
         return {
           type: 'text',
-          text: typeof content === 'object' ? JSON.stringify(content) : String(content)
+          text:
+            typeof content === 'object'
+              ? JSON.stringify(content)
+              : String(content)
         }
       })
     }
@@ -155,11 +163,19 @@ function containsAskQuestionTool(message: CoreMessage): boolean {
 }
 
 export function createToolCallingStreamResponse(config: BaseStreamConfig) {
-  console.log("🔧 Tool calling stream initiated")
+  console.log('🔧 Tool calling stream initiated')
 
   return createDataStreamResponse({
     execute: async (dataStream: DataStreamWriter) => {
-      const { messages, model, chatId, searchMode, userId, selectedApps, isIncognito } = config
+      const {
+        messages,
+        model,
+        chatId,
+        searchMode,
+        userId,
+        selectedApps,
+        isIncognito
+      } = config
       const modelId = `${model.providerId}:${model.id}`
 
       // Write selected apps to data stream for live UI update
@@ -181,7 +197,7 @@ export function createToolCallingStreamResponse(config: BaseStreamConfig) {
         )
 
         // Pass to researcher agent
-        console.log("🤖 Calling researcher with model:", modelId)
+        console.log('🤖 Calling researcher with model:', modelId)
         let researcherConfig = await researcher({
           messages: truncatedMessages,
           model: modelId,
@@ -197,8 +213,8 @@ export function createToolCallingStreamResponse(config: BaseStreamConfig) {
 
         const result = streamText({
           ...researcherConfig,
-          onFinish: async (result) => {
-            console.log("✅ Stream finished, checking tool calls...")
+          onFinish: async result => {
+            console.log('✅ Stream finished, checking tool calls...')
 
             const annotations: ExtendedCoreMessage[] = [
               {
@@ -214,13 +230,17 @@ export function createToolCallingStreamResponse(config: BaseStreamConfig) {
             ]
 
             // Check if the last message contains an ask_question tool invocation
-            const lastMessage = result.response.messages[result.response.messages.length - 1]
+            const lastMessage =
+              result.response.messages[result.response.messages.length - 1]
             const shouldSkipRelatedQuestions =
               isReasoningModel(modelId) ||
               (result.response.messages.length > 0 &&
                 containsAskQuestionTool(lastMessage as CoreMessage))
 
-            console.log("❓ Skip related questions:", shouldSkipRelatedQuestions)
+            console.log(
+              '❓ Skip related questions:',
+              shouldSkipRelatedQuestions
+            )
 
             await handleStreamFinish({
               responseMessages: result.response.messages,
@@ -261,13 +281,12 @@ export function createToolCallingStreamResponse(config: BaseStreamConfig) {
         result.mergeIntoDataStream(dataStream, {
           sendReasoning: true
         })
-
       } catch (error) {
         console.error('❌ Stream execution error:', error)
         throw error
       }
     },
-    onError: (error) => {
+    onError: error => {
       console.error('💥 Stream error:', error)
       return error instanceof Error ? error.message : String(error)
     }

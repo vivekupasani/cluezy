@@ -2,12 +2,7 @@
 
 import Link from 'next/link'
 
-import {
-  ExternalLink,
-  LogIn,
-  Palette,
-  Settings
-} from 'lucide-react'
+import { ExternalLink, LogIn, Palette, Settings } from 'lucide-react'
 
 import {
   DropdownMenu,
@@ -26,18 +21,19 @@ import { useAuth } from './context/auth-context'
 import { ThemeMenuItems } from './theme-menu-items'
 import { useSidebar } from './ui/sidebar'
 
-export default function GuestMenu({ state }: { state: "expanded" | "collapsed" }) {
+export default function GuestMenu({
+  state
+}: {
+  state: 'expanded' | 'collapsed'
+}) {
   const { user } = useAuth()
   const isMobile = useIsMobile()
   const { setOpenMobile } = useSidebar()
   const userName =
-    user?.user_metadata?.full_name ||
-    user?.user_metadata?.name ||
-    'User'
+    user?.user_metadata?.full_name || user?.user_metadata?.name || 'User'
 
   const avatarUrl =
-    user?.user_metadata?.avatar_url ||
-    user?.user_metadata?.picture
+    user?.user_metadata?.avatar_url || user?.user_metadata?.picture
 
   const getInitials = (name: string, email?: string) => {
     if (name && name !== 'User') {
@@ -74,7 +70,7 @@ export default function GuestMenu({ state }: { state: "expanded" | "collapsed" }
           className={`group flex items-center gap-2 w-full px-2 py-2 rounded-lg hover:bg-sidebar-accent transition`}
         >
           <div className="relative flex shrink-0 overflow-hidden">
-            <Settings size={16} className='text-foreground font-normal' />
+            <Settings size={16} className="text-foreground font-normal" />
           </div>
 
           <div className="flex flex-col text-foreground text-left truncate text-sm font-normal">
@@ -82,7 +78,11 @@ export default function GuestMenu({ state }: { state: "expanded" | "collapsed" }
           </div>
         </button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="w-56 dark:border-border/50 ml-6 rounded-lg" align="end" forceMount>
+      <DropdownMenuContent
+        className="w-56 dark:border-border/50 ml-6 rounded-lg"
+        align="end"
+        forceMount
+      >
         <DropdownMenuItem asChild>
           <Link
             onClick={() => {
@@ -90,16 +90,18 @@ export default function GuestMenu({ state }: { state: "expanded" | "collapsed" }
                 setOpenMobile(false)
               }
             }}
-            href="/auth/login" className='cursor-pointer'>
+            href="/auth/login"
+            className="cursor-pointer"
+          >
             <LogIn className="mr-2 h-4 w-4 text-foreground" />
-            <span className='text-foreground font-normal text-sm'>Sign In</span>
+            <span className="text-foreground font-normal text-sm">Sign In</span>
           </Link>
         </DropdownMenuItem>
         <DropdownMenuSeparator />
         <DropdownMenuSub>
-          <DropdownMenuSubTrigger className='cursor-pointer'>
+          <DropdownMenuSubTrigger className="cursor-pointer">
             <Palette className="mr-2 h-4 w-4 text-foreground" />
-            <span className='text-foreground font-normal'>Theme</span>
+            <span className="text-foreground font-normal">Theme</span>
           </DropdownMenuSubTrigger>
           <DropdownMenuSubContent>
             <ThemeMenuItems />
@@ -124,20 +126,22 @@ export default function GuestMenu({ state }: { state: "expanded" | "collapsed" }
           </DropdownMenuSubContent>
         </DropdownMenuSub> */}
 
-        {
-          externalLinks.map((link, idx) => (
-            <DropdownMenuItem
-              key={idx}
+        {externalLinks.map((link, idx) => (
+          <DropdownMenuItem key={idx}>
+            <Link
+              href={link.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center justify-between"
             >
-              <Link href={link.href} target="_blank" rel="noopener noreferrer" className='flex items-center justify-between'>
-                {link.icon}
-                <span className='text-foreground font-normal text-sm'>{link.name}</span>
-              </Link>
-              <ExternalLink className="ml-auto h-4 w-4 text-foreground" />
-            </DropdownMenuItem>
-          ))
-        }
-
+              {link.icon}
+              <span className="text-foreground font-normal text-sm">
+                {link.name}
+              </span>
+            </Link>
+            <ExternalLink className="ml-auto h-4 w-4 text-foreground" />
+          </DropdownMenuItem>
+        ))}
       </DropdownMenuContent>
     </DropdownMenu>
   )

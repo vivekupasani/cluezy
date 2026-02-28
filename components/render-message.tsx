@@ -132,7 +132,7 @@ export function RenderMessage({
           chatId={chatId}
         />
       ))}
-      <div className='flex flex-col gap-1'>
+      <div className="flex flex-col gap-1">
         {message.parts?.map((part, index) => {
           // Check if this is the last part in the array
           const isLastPart = index === (message.parts?.length ?? 0) - 1
@@ -168,7 +168,7 @@ export function RenderMessage({
             case 'text':
               // Only show actions if this is the last part and it's a text part
               return (
-                <div key={`${messageId}-text-${index}`} className='-mt-3'>
+                <div key={`${messageId}-text-${index}`}>
                   <AnswerSection
                     key={`${messageId}-text-${index}`}
                     content={part.text}

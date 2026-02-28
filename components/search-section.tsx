@@ -37,7 +37,9 @@ export function SearchSection({
   const isToolLoading = tool.state === 'call'
   const searchResults: TypeSearchResults =
     tool.state === 'result' ? tool.result : undefined
-  const query = !isMobile ? (tool.args?.query as string | undefined) : (tool.args?.query as string | undefined)?.slice(0, 40) + '...'
+  const query = !isMobile
+    ? (tool.args?.query as string | undefined)
+    : (tool.args?.query as string | undefined)?.slice(0, 40) + '...'
   const includeDomains = tool.args?.includeDomains as string[] | undefined
   const includeDomainsString = includeDomains
     ? ` [${includeDomains.join(', ')}]`
@@ -61,7 +63,7 @@ export function SearchSection({
   )
 
   return (
-    <div className='mt-4'>
+    <div className="mt-4">
       <CollapsibleMessage
         role="assistant"
         isCollapsible={true}

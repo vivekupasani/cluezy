@@ -1,5 +1,5 @@
-import { AppsConnectorClientPage } from "@/components/apps-connector";
+import { AppsConnectorClientPage } from '@/components/apps-connector'
 
 export default function AppSlugPage() {
-    return <AppsConnectorClientPage />
+  return <AppsConnectorClientPage />
 }

@@ -1,4 +1,4 @@
-"use client"
+'use client'
 import { useEffect, useState } from 'react'
 
 import { User } from '@supabase/supabase-js'
@@ -6,19 +6,19 @@ import { User } from '@supabase/supabase-js'
 import { createClient } from '@/lib/supabase/client'
 
 export const useCurrentUserData = () => {
-    const [user, setUser] = useState<User | null>(null)
+  const [user, setUser] = useState<User | null>(null)
 
-    useEffect(() => {
-        const fetchUserData = async () => {
-            const supabase = await createClient()
-            const {
-                data: { user: supabaseUser }
-            } = await supabase.auth.getUser()
+  useEffect(() => {
+    const fetchUserData = async () => {
+      const supabase = await createClient()
+      const {
+        data: { user: supabaseUser }
+      } = await supabase.auth.getUser()
 
-            setUser(supabaseUser ?? null)
-        }
-        fetchUserData()
-    }, [])
+      setUser(supabaseUser ?? null)
+    }
+    fetchUserData()
+  }, [])
 
-    return user
+  return user
 }

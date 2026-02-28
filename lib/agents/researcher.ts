@@ -29,7 +29,7 @@ export async function researcher({
   model: string
   searchMode: boolean
   userId?: string
-  excludeDomains?: string[],
+  excludeDomains?: string[]
   selectedApps?: ConnectorProvider[]
 }): Promise<ResearcherReturn> {
   try {
@@ -38,9 +38,9 @@ export async function researcher({
     // Create model-specific tools
     const searchTool = createSearchTool(model, excludeDomains)
     const videoSearchTool = createVideoSearchTool(model)
-    const pdfSearchTool = createFileSearchTool("pdf")
-    const docSearchTool = createFileSearchTool("doc")
-    const pptSearchTool = createFileSearchTool("ppt")
+    const pdfSearchTool = createFileSearchTool('pdf')
+    const docSearchTool = createFileSearchTool('doc')
+    const pptSearchTool = createFileSearchTool('ppt')
 
     const webSearchTool = createWebSearchTool(excludeDomains)
     const academicSearchTool = createAcademicSearchTool(excludeDomains)
@@ -62,7 +62,9 @@ export async function researcher({
     let systemPrompt = `Current date and time: ${currentDate}\n${RESEARCHER_SYSTEM_PROMPT}`
 
     if (selectedApps && selectedApps.length > 0) {
-      const appNames = selectedApps.map(id => CONNECTOR_CONFIGS[id as ConnectorProvider]?.name || id).join(', ')
+      const appNames = selectedApps
+        .map(id => CONNECTOR_CONFIGS[id as ConnectorProvider]?.name || id)
+        .join(', ')
       systemPrompt += `\n\nCONTEXT APPS: The user has specifically selected the following apps for this query: ${appNames}.
 - ALWAYS prioritize using tools from these apps to answer the query.
 - Directly use the appropriate tool (e.g., if Gmail is selected and user asks for drafts, use GMAIL_LSIT_DRAFTS).
@@ -92,9 +94,7 @@ export async function researcher({
       system: systemPrompt,
       messages,
       tools: tools,
-      experimental_activeTools: searchMode
-        ? Object.keys(tools)
-        : [],
+      experimental_activeTools: searchMode ? Object.keys(tools) : [],
       maxSteps: searchMode ? 5 : 1,
       experimental_transform: smoothStream(),
       temperature: isReasoning ? 1 : 0
