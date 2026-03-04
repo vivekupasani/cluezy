@@ -662,7 +662,8 @@ export function ChatPanel({
       </form>
 
       {messages.length === 0 && (
-        <div className="mb-8 md:mb-[80px]">
+        // 80px
+        <div className="mb-8 md:mb-[34px]">
           <EmptyScreen
             submitMessage={message => {
               handleInputChange({
@@ -672,8 +673,8 @@ export function ChatPanel({
             className={cn(
               showEmptyScreen ? 'visible' : 'invisible',
               input.length !== 0
-                ? 'opacity-0 md:hidden transition-opacity duration-200'
-                : 'opacity-100 md:hidden transition-opacity duration-200'
+                ? 'opacity-0 transition-opacity duration-200'
+                : 'opacity-100 transition-opacity duration-200'
             )}
           />
         </div>

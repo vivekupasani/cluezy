@@ -37,11 +37,11 @@ const description =
   'Cluezy is an Agentic Research Engine that searches, analyzes, and cites information from the live web to deliver clear, trustworthy answers.'
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://beta.cluezy.site'),
+  metadataBase: new URL('https://cluezy.site'),
   title,
   description,
   openGraph: {
-    url: 'https://beta.cluezy.site',
+    url: 'https://cluezy.site',
     siteName: 'Cluezy',
     title,
     description

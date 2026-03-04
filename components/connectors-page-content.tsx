@@ -46,7 +46,7 @@ export function ConnectorsClientPage() {
           'h-svh min-w-0 w-full bg-background mt-0',
           open && !isMobile
             ? 'rounded-tl-xl border-t border-l border-sidebar-ring/30 dark:border-sidebar-ring/10 transition-all duration-300 ease-in-out'
-            : 'mt-0 rounded-t-none transition-all duration-300 ease-in-out border-l border-sidebar-foreground/10'
+            : 'mt-0 rounded-t-none md:transition-all md:duration-300 md:ease-in-out border-l border-sidebar-foreground/10'
         )}
       >
         <div className="CustomScrollbar max-w-5xl mx-auto px-4 lg:px-8 py-0 h-full overflow-y-auto HiddenScrollbar">
@@ -92,7 +92,7 @@ export function ConnectorsPageContent() {
               onClick={() => router.push('/')}
               className="md:hidden flex items-center gap-1.5 text-muted-foreground hover:text-foreground text-sm transition-colors"
             >
-              <ArrowLeft size={14} /> Back
+              <ArrowLeft size={14} /> Back to home
             </button>
 
             <div>

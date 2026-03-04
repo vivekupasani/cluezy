@@ -148,7 +148,7 @@ export function MentionPopover({
               className={cn(
                 'text-muted-foreground/70 text-[10px] font-medium py-1',
                 MENTION_ITEMS.length !== 0 &&
-                  'border-t border-border/40 mt-1 pt-1'
+                'border-t border-border/40 mt-1 pt-1'
               )}
             >
               {UNCONNECTED_ITEMS.filter(

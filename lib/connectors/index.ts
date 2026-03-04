@@ -11,7 +11,7 @@ function getBaseUrl() {
   if (process.env.NODE_ENV === 'development') {
     return process.env.NGROK_URL || 'http://localhost:3000'
   }
-  return 'https://beta.cluezy.site'
+  return 'https://cluezy.site'
 }
 
 export async function createConnection(
