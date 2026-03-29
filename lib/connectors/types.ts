@@ -34,6 +34,16 @@ export const CONNECTOR_CONFIGS: Record<ConnectorProvider, ConnectorConfig> = {
     syncTag: 'gmail',
     features: [
       {
+        key: 'GMAIL_ADD_LABEL_TO_EMAIL',
+        feature: 'Add Label to Email',
+        description: 'Adds a specified label to an email message.'
+      },
+      {
+        key: 'GMAIL_BATCH_DELETE_MESSAGES',
+        feature: 'Batch Delete Messages',
+        description: 'Permanently deletes a batch of email messages.'
+      },
+      {
         key: 'GMAIL_BATCH_MODIFY_MESSAGES',
         feature: 'Bulk Modify Messages',
         description:
@@ -46,16 +56,41 @@ export const CONNECTOR_CONFIGS: Record<ConnectorProvider, ConnectorConfig> = {
           'Creates a Gmail email draft. All fields are optional per the Gmail API - drafts can be created with minimal content and edited later before sending.'
       },
       {
+        key: 'GMAIL_CREATE_FILTER',
+        feature: 'Create Filter',
+        description: 'Creates a new Gmail filter.'
+      },
+      {
+        key: 'GMAIL_CREATE_LABEL',
+        feature: 'Create Label',
+        description: 'Creates a new Gmail label.'
+      },
+      {
         key: 'GMAIL_DELETE_DRAFT',
         feature: 'Delete Draft',
         description:
           'Permanently deletes a specific Gmail draft using its ID; ensure the draft exists and the user has necessary permissions.'
       },
       {
+        key: 'GMAIL_DELETE_FILTER',
+        feature: 'Delete Filter',
+        description: 'Deletes a Gmail filter.'
+      },
+      {
+        key: 'GMAIL_DELETE_LABEL',
+        feature: 'Delete Label',
+        description: 'Deletes a Gmail label.'
+      },
+      {
         key: 'GMAIL_DELETE_MESSAGE',
         feature: 'Delete Message',
         description:
           'Permanently deletes a specific email message by its ID from a Gmail mailbox.'
+      },
+      {
+        key: 'GMAIL_DELETE_THREAD',
+        feature: 'Delete Thread',
+        description: 'Permanently deletes a conversation thread.'
       },
       {
         key: 'GMAIL_FETCH_EMAILS',
@@ -70,10 +105,30 @@ export const CONNECTOR_CONFIGS: Record<ConnectorProvider, ConnectorConfig> = {
           'Fetches a specific email message by its ID, provided the message_id exists and is accessible to the authenticated user.'
       },
       {
+        key: 'GMAIL_FETCH_MESSAGE_BY_THREAD_ID',
+        feature: 'Fetch Thread Messages',
+        description: 'Fetches all messages in a specific conversation thread.'
+      },
+      {
+        key: 'GMAIL_FORWARD_MESSAGE',
+        feature: 'Forward Message',
+        description: 'Forwards an email message.'
+      },
+      {
         key: 'GMAIL_GET_ATTACHMENT',
         feature: 'Get Attachment',
         description:
           "Retrieves a specific attachment by ID from a message in a user's Gmail mailbox, requiring valid message and attachment IDs."
+      },
+      {
+        key: 'GMAIL_GET_AUTO_FORWARDING',
+        feature: 'Get Auto-Forwarding Settings',
+        description: 'Retrieves the auto-forwarding settings for the user.'
+      },
+      {
+        key: 'GMAIL_GET_CONTACTS',
+        feature: 'Get Contacts',
+        description: 'Retrieves a list of Gmail contacts.'
       },
       {
         key: 'GMAIL_GET_DRAFT',
@@ -82,10 +137,110 @@ export const CONNECTOR_CONFIGS: Record<ConnectorProvider, ConnectorConfig> = {
           'Retrieves a single Gmail draft by its ID. Use this to fetch and inspect draft content before sending.'
       },
       {
+        key: 'GMAIL_GET_FILTER',
+        feature: 'Get Filter',
+        description: 'Retrieves details of a specific Gmail filter.'
+      },
+      {
+        key: 'GMAIL_GET_LABEL',
+        feature: 'Get Label',
+        description: 'Retrieves details of a specific Gmail label.'
+      },
+      {
+        key: 'GMAIL_GET_LANGUAGE_SETTINGS',
+        feature: 'Get Language Settings',
+        description: 'Retrieves the user\'s Gmail language settings.'
+      },
+      {
+        key: 'GMAIL_GET_PEOPLE',
+        feature: 'Get People',
+        description: 'Retrieves information about people in the user\'s contacts.'
+      },
+      {
+        key: 'GMAIL_GET_PROFILE',
+        feature: 'Get Profile',
+        description: 'Retrieves the user\'s Gmail profile.'
+      },
+      {
+        key: 'GMAIL_GET_VACATION_SETTINGS',
+        feature: 'Get Vacation Settings',
+        description: 'Retrieves the user\'s Gmail vacation responder settings.'
+      },
+      {
+        key: 'GMAIL_IMPORT_MESSAGE',
+        feature: 'Import Message',
+        description: 'Imports an email message into Gmail.'
+      },
+      {
+        key: 'GMAIL_INSERT_MESSAGE',
+        feature: 'Insert Message',
+        description: 'Inserts an email message into Gmail directly.'
+      },
+      {
+        key: 'GMAIL_LIST_CSE_IDENTITIES',
+        feature: 'List CSE Identities',
+        description: 'Lists client-side encryption identities.'
+      },
+      {
+        key: 'GMAIL_LIST_CSE_KEYPAIRS',
+        feature: 'List CSE Keypairs',
+        description: 'Lists client-side encryption key pairs.'
+      },
+      {
         key: 'GMAIL_LIST_DRAFTS',
         feature: 'List Drafts',
         description:
           "Retrieves a paginated list of email drafts from a user's Gmail account."
+      },
+      {
+        key: 'GMAIL_LIST_FILTERS',
+        feature: 'List Filters',
+        description: 'Lists all Gmail filters.'
+      },
+      {
+        key: 'GMAIL_LIST_FORWARDING_ADDRESSES',
+        feature: 'List Forwarding Addresses',
+        description: 'Lists all forwarding addresses.'
+      },
+      {
+        key: 'GMAIL_LIST_HISTORY',
+        feature: 'List History',
+        description: 'Lists the history of changes to the mailbox.'
+      },
+      {
+        key: 'GMAIL_LIST_LABELS',
+        feature: 'List Labels',
+        description: 'Lists all Gmail labels.'
+      },
+      {
+        key: 'GMAIL_LIST_MESSAGES',
+        feature: 'List Messages',
+        description: 'Lists email messages matching a query.'
+      },
+      {
+        key: 'GMAIL_LIST_SEND_AS',
+        feature: 'List Send-As Aliases',
+        description: 'Lists all send-as aliases.'
+      },
+      {
+        key: 'GMAIL_LIST_SMIME_INFO',
+        feature: 'List S/MIME Info',
+        description: 'Lists S/MIME info for an identity.'
+      },
+      {
+        key: 'GMAIL_LIST_THREADS',
+        feature: 'List Threads',
+        description: 'Lists conversation threads.'
+      },
+      {
+        key: 'GMAIL_MODIFY_THREAD_LABELS',
+        feature: 'Modify Thread Labels',
+        description: 'Modifies labels on a conversation thread.'
+      },
+      {
+        key: 'GMAIL_MOVE_THREAD_TO_TRASH',
+        feature: 'Move Thread to Trash',
+        description: 'Moves a conversation thread to the trash.'
       },
       {
         key: 'GMAIL_MOVE_TO_TRASH',
@@ -97,6 +252,11 @@ export const CONNECTOR_CONFIGS: Record<ConnectorProvider, ConnectorConfig> = {
         key: 'GMAIL_PATCH_LABEL',
         feature: 'Patch Label',
         description: 'Patches the specified label in Gmail.'
+      },
+      {
+        key: 'GMAIL_PATCH_SEND_AS',
+        feature: 'Patch Send-As Alias',
+        description: 'Updates a send-as alias.'
       },
       {
         key: 'GMAIL_REPLY_TO_THREAD',
@@ -123,10 +283,70 @@ export const CONNECTOR_CONFIGS: Record<ConnectorProvider, ConnectorConfig> = {
           "Sends an email via Gmail API using the authenticated user's Google profile display name."
       },
       {
+        key: 'GMAIL_SETTINGS_GET_IMAP',
+        feature: 'Get IMAP Settings',
+        description: 'Retrieves the user\'s IMAP settings.'
+      },
+      {
+        key: 'GMAIL_SETTINGS_GET_POP',
+        feature: 'Get POP Settings',
+        description: 'Retrieves the user\'s POP settings.'
+      },
+      {
+        key: 'GMAIL_SETTINGS_SEND_AS_GET',
+        feature: 'Get Send-As Alias',
+        description: 'Retrieves details of a specific send-as alias.'
+      },
+      {
+        key: 'GMAIL_STOP_WATCH',
+        feature: 'Stop Watch',
+        description: 'Stops watching for mailbox changes.'
+      },
+      {
+        key: 'GMAIL_UNTRASH_MESSAGE',
+        feature: 'Untrash Message',
+        description: 'Removes an email message from the trash.'
+      },
+      {
+        key: 'GMAIL_UNTRASH_THREAD',
+        feature: 'Untrash Thread',
+        description: 'Removes a conversation thread from the trash.'
+      },
+      {
         key: 'GMAIL_UPDATE_DRAFT',
         feature: 'Update Draft',
         description:
           "Updates (replaces) an existing Gmail draft's content in-place by draft ID."
+      },
+      {
+        key: 'GMAIL_UPDATE_IMAP_SETTINGS',
+        feature: 'Update IMAP Settings',
+        description: 'Updates the user\'s IMAP settings.'
+      },
+      {
+        key: 'GMAIL_UPDATE_LABEL',
+        feature: 'Update Label',
+        description: 'Updates a Gmail label.'
+      },
+      {
+        key: 'GMAIL_UPDATE_LANGUAGE_SETTINGS',
+        feature: 'Update Language Settings',
+        description: 'Updates the user\'s Gmail language settings.'
+      },
+      {
+        key: 'GMAIL_UPDATE_POP_SETTINGS',
+        feature: 'Update POP Settings',
+        description: 'Updates the user\'s POP settings.'
+      },
+      {
+        key: 'GMAIL_UPDATE_SEND_AS',
+        feature: 'Update Send-As Alias',
+        description: 'Updates a send-as alias.'
+      },
+      {
+        key: 'GMAIL_UPDATE_VACATION_SETTINGS',
+        feature: 'Update Vacation Settings',
+        description: 'Updates the user\'s Gmail vacation responder settings.'
       }
     ]
   },

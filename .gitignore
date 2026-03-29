@@ -41,6 +41,6 @@ next-env.d.ts
 # temporary files
 .tmp/
 
-.agent/
+.agents/
 .skills-lock.json
 .agent-lock.json

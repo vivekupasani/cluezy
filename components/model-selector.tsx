@@ -11,6 +11,8 @@ import { getCookie, setCookie } from '@/lib/utils/cookies'
 
 import { createModelId } from '../lib/utils'
 
+import { availableModels as models } from '@/lib/config/models'
+
 import { Button } from './ui/button'
 import {
   Command,
@@ -38,11 +40,7 @@ function groupModelsByProvider(models: Model[]) {
     )
 }
 
-interface ModelSelectorProps {
-  models: Model[]
-}
-
-export function ModelSelector({ models }: ModelSelectorProps) {
+export function ModelSelector() {
   const [open, setOpen] = useState(false)
   const [value, setValue] = useState('')
   const DEFAULT_SELECTED_MODEL: Model = {

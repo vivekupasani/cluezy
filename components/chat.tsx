@@ -60,13 +60,11 @@ type MessagePart =
 export function Chat({
   id,
   savedMessages = [],
-  query,
-  models
+  query
 }: {
   id: string
   savedMessages?: Message[]
   query?: string
-  models: Model[]
 }) {
   const scrollContainerRef = useRef<HTMLDivElement>(null)
   const [isAtBottom, setIsAtBottom] = useState(true)
@@ -560,7 +558,6 @@ export function Chat({
           stop={stop}
           query={query}
           append={append}
-          models={models}
           showScrollToBottomButton={!isAtBottom}
           scrollContainerRef={scrollContainerRef}
           attachedFiles={attachedFiles}

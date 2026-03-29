@@ -2,14 +2,15 @@ import { generateId } from 'ai'
 import { Suspense } from 'react'
 
 import { Chat } from '@/components/chat'
-import { getModels } from '@/lib/config/models'
+
+import { headers } from 'next/headers'
 
 export default async function Page() {
-  const models = await getModels()
+  await headers()
   const id = generateId()
   return (
     <Suspense fallback={null}>
-      <Chat key={id} id={id} models={models} />
+      <Chat key={id} id={id} />
     </Suspense>
   )
 }

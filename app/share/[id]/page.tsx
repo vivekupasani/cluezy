@@ -1,7 +1,6 @@
 import { notFound } from 'next/navigation'
 
 import { getSharedChat } from '@/lib/actions/chat'
-import { getModels } from '@/lib/config/models'
 import { convertToUIMessages } from '@/lib/utils'
 
 import { Chat } from '@/components/chat'
@@ -31,12 +30,10 @@ export default async function SharePage(props: {
     return notFound()
   }
 
-  const models = await getModels()
   return (
     <Chat
       id={chat.id}
       savedMessages={convertToUIMessages(chat.messages)}
-      models={models}
     />
   )
 }

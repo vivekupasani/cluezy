@@ -8,7 +8,9 @@ export async function getVercelTools(userId: string, toolkits: string[]) {
   for (const toolkit of toolkits) {
     try {
       const tools = await composio.tools.get(userId, {
-        toolkits: [toolkit]
+        toolkits: [toolkit],
+        limit: 100,
+        important: false,
       })
 
       const toolsCount = Object.keys(tools).length

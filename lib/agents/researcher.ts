@@ -53,6 +53,7 @@ export async function researcher({
       try {
         if (selectedApps && selectedApps.length > 0) {
           composioTools = await getVercelTools(userId, selectedApps)
+          console.log(Object.keys(composioTools).length)
         }
       } catch (error) {
         console.error('Error fetching Composio tools:', error)

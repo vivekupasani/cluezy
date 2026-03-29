@@ -55,7 +55,6 @@ interface ChatPanelProps {
   query?: string
   stop: () => void
   append: (message: any) => void
-  models?: Model[]
   showScrollToBottomButton: boolean
   scrollContainerRef: React.RefObject<HTMLDivElement | null>
   // Add file upload props
@@ -80,7 +79,6 @@ export function ChatPanel({
   query,
   stop,
   append,
-  models,
   showScrollToBottomButton,
   scrollContainerRef,
   // Add file upload props
@@ -544,7 +542,7 @@ export function ChatPanel({
             {/* Bottom Toolbar: Model Selector & Actions */}
             <div className="flex justify-between items-center pt-2 mt-0 pl-1 pr-1">
               <div className="flex items-center gap-2">
-                <ModelSelector models={models ?? []} />
+                <ModelSelector />
               </div>
 
               <div className="flex items-center gap-1.5">

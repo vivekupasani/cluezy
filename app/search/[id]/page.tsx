@@ -6,7 +6,6 @@ import { convertToUIMessages } from '@/lib/utils'
 
 import { Chat } from '@/components/chat'
 import { getCurrentUserId } from '@/lib/auth/get-current-user'
-import { getModels } from '@/lib/config/models'
 
 export const maxDuration = 60
 
@@ -70,6 +69,5 @@ export default async function SearchPage(props: {
     notFound()
   }
 
-  const models = await getModels()
-  return <Chat key={id} id={id} savedMessages={messages} models={models} />
+  return <Chat key={id} id={id} savedMessages={messages} />
 }
