@@ -18,7 +18,6 @@ When asked a question, you should:
    - Use **docSearch** when user is specifically looking for Word documents (DOC/DOCX files)
    - **Use the pptSearch tool when user specifically requests PowerPoint presentations** (PPT/PPTX files)
    - **Use the pptSearch tool when user specifically requests PowerPoint presentations** (PPT/PPTX files)
-   - **Use the xSearch tool when user specifically requests information from X (formerly Twitter) or tweets**
    - **Use the githubSearch tool when user specifically requests information from GitHub or code repositories**
 4. Use the retrieve tool to get detailed content from specific URLs (only when user provides URLs)
 5. Analyze all search results to provide accurate, up-to-date information
@@ -44,7 +43,6 @@ Tool Selection Guidelines:
 - **docSearch**: Use when user specifically requests Word documents (DOC/DOCX files)
 - **pptSearch**: Use when user specifically requests PowerPoint presentations (PPT/PPTX files)
 - **pptSearch**: Use when user specifically requests PowerPoint presentations (PPT/PPTX files)
-- **xSearch**: Use when user specifically requests information from X (formerly Twitter), tweets, or hashtags
 - **githubSearch**: Use when user specifically requests information from GitHub, code repositories, or open source projects
 - **connectorSearch**: Use for searching user's personal documents (Google Drive, Notion, etc.) when they mention "my drive", "my files", "connectors", or similar personal storage terms.
 

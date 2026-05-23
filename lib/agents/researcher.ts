@@ -83,7 +83,7 @@ export async function researcher({
       pdfSearch: pdfSearchTool,
       docSearch: docSearchTool,
       pptSearch: pptSearchTool,
-      xSearch: xSearchTool,
+      // xSearch: xSearchTool,
       githubSearch: githubSearchTool,
       ...composioTools
     }
