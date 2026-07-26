@@ -146,7 +146,7 @@ export default async function RootLayout({
             <ConnectorsProvider>
               <ThemeProvider
                 attribute="class"
-                defaultTheme="light"
+                defaultTheme="boring-light"
                 enableSystem
                 disableTransitionOnChange
                 themes={[

@@ -10,7 +10,6 @@ import { toast } from 'sonner'
 
 import { ConnectorProvider } from '@/lib/connectors/types'
 import { createClient } from '@/lib/supabase/client'
-import { Model } from '@/lib/types/models'
 import { cn } from '@/lib/utils'
 
 import { useIsMobile } from '@/hooks/use-mobile'
@@ -529,7 +528,7 @@ export function Chat({
           'relative bg-background flex h-full min-w-0 w-full flex-1 flex-col',
           messages.length === 0 ? 'items-center justify-center' : '',
           open && !isMobile
-            ? 'mt-3.5 rounded-tl-xl border-t border-l border-sidebar-ring/30 dark:border-sidebar-ring/10 transition-all duration-300 ease-in-out'
+            ? 'mt-3.5 rounded-xl border-t border-l border-sidebar-ring/30 dark:border-sidebar-ring/10 transition-all duration-300 ease-in-out'
             : 'mt-0 rounded-t-none md:transition-all md:duration-300 md:ease-in-out border-l border-sidebar-foreground/10'
         )}
         data-testid="full-chat"
