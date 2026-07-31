@@ -17,28 +17,48 @@ Agentic Search Engine.
 
 ## 🛠 Features
 
-### Core Features
+### Core Search & Routing
 
 - **AI-powered search with Generative UI** for instant, contextual answers
-- **Natural language question understanding** for conversational and search-grade queries
-- **Multiple search provider support** (Tavily, SearXNG, Exa, Firecrawl) for broader and reliable coverage
-- **AI model selection from the UI**, allowing users to switch between available models
-  - Support for **reasoning models with visible thought processes**
-
-- **Deep Search Mode**
+- **Intelligent Tool Routing**: Simply type your query, and Cluezy automatically understands which tools it needs to call
+- **Multi-Source Support**: Search across multiple sources including the Web, Academic Papers, Twitter, Reddit, and GitHub
+- **Multiple Search Provider Support** (Tavily, SearXNG, Exa, Firecrawl) for broad and reliable coverage
+- **Deep Search Mode**:
   - Runs multi-step searches across sources
   - Cross-verifies information
   - Produces structured, citation-backed search reports
+- **Live Data Retrieval**: Includes real-time weather and up-to-date information
 
-- **YouTube URL summarization**  
-  Paste any YouTube link to get concise, structured summaries
+### Content & Document Intelligence
 
-- **Document Intelligence**
-  - Upload **PDFs, Docs, and PPTs**
-  - **Chat with documents** or ask for instant summaries
-  - **Search across uploaded files** for specific answers
+- **Document Analysis & Chat**:
+  - Upload **PDFs, Docs, and PPTs** to chat, ask questions, or fact-check information
+  - **Syllabus Helper (for students)**: Upload an entire syllabus as a PDF to generate practice question papers covering the whole syllabus
+  - **Multi-file Search**: Search across uploaded files for specific answers
+- **Web & Video Summarization**:
+  - Paste any YouTube link to get captions and structured summaries of the video
+  - Paste any website URL to summarize or translate its content
 
-- **Live data retrieval**, including real-time weather and up-to-date information
+### App Connectors
+
+- **Integrations**: Connect external apps like Gmail, GitHub, Slack, Notion, and Google Drive
+- **Unified Actions**: Perform tasks and search data across connected apps from a single interface
+
+### Sharing & Export
+
+- **Multi-Format Exports**: Download AI-generated answers as **PDF, DOCX, or Markdown** files for easy sharing and documentation
+- **Conversation Sharing**: Share chats with other users via a secure, shareable link to view the entire conversation
+
+### User Experience (UX) Enhancements
+
+- **Source Filtering**: Exclude specific sources from searches
+- **Enhance Prompt Button**: Automatically refine and improve prompts before searching
+- **Keyboard Shortcuts**: Native hotkeys for fast navigation and ease of use
+- **Multiple Themes**: Custom styling and theme options to personalize the UI
+
+### Security & Rate Limiting
+
+- **IP-based Usage Limiting**: Prevent abuse and protect API resources using IP-based request limits
 
 ### Authentication
 
@@ -48,8 +68,7 @@ Agentic Search Engine.
 
 ### Chat & History
 
-- Chat history functionality (Optional)
-- Share search results (Optional)
+- Chat history functionality (Optional, powered by Redis)
 - Redis support (Local/Upstash)
 
 ### AI Providers
@@ -163,6 +182,8 @@ bun dev
 
 Ensure you have configured your environment variables in `.env.local` first (see the step above).
 
+##### Option A: Using Docker Compose (Recommended)
+
 1. Build and start the container:
    ```bash
    docker compose up -d --build
@@ -171,6 +192,20 @@ Ensure you have configured your environment variables in `.env.local` first (see
 2. Visit http://localhost:4000 in your browser.
 
 *(Note: The default host port mapped in `docker-compose.yaml` is `4000` to avoid conflicts with standard local Next.js dev server. You can change this in `docker-compose.yaml` if needed.)*
+
+##### Option B: Using Docker CLI (without Compose)
+
+1. Build the Docker image manually:
+   ```bash
+   docker build -t cluezy .
+   ```
+
+2. Run the container using the environment file and port mapping:
+   ```bash
+   docker run -d -p 4000:3000 --env-file .env.local --name cluezy-app cluezy
+   ```
+
+3. Visit http://localhost:4000 in your browser.
 
 ## 🌐 Deploy
 
