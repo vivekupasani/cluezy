@@ -161,11 +161,16 @@ bun dev
 
 #### Using Docker
 
-```bash
-docker compose up -d
-```
+Ensure you have configured your environment variables in `.env.local` first (see the step above).
 
-Visit http://localhost:3000 in your browser.
+1. Build and start the container:
+   ```bash
+   docker compose up -d --build
+   ```
+
+2. Visit http://localhost:4000 in your browser.
+
+*(Note: The default host port mapped in `docker-compose.yaml` is `4000` to avoid conflicts with standard local Next.js dev server. You can change this in `docker-compose.yaml` if needed.)*
 
 ## 🌐 Deploy
 

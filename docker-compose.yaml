@@ -1,0 +1,11 @@
+services:
+  cluezy.app:
+    build:
+      context: .
+      dockerfile: dockerfile
+    ports:
+      - "4000:3000"
+    env_file:
+      - .env.local
+    restart: unless-stopped
+

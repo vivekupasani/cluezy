@@ -1,6 +1,7 @@
 /** @type {import('next').NextConfig} */
 import withPWA from 'next-pwa'
 const nextConfig = {
+  output: 'standalone',
   reactStrictMode: true,
   turbopack: {},
   cacheComponents: true,
