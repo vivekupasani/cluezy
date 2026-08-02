@@ -2,38 +2,6 @@ import { Model } from '@/lib/types/models'
 
 export const availableModels: Model[] = [
   {
-    id: 'gpt-4o-mini',
-    name: 'GPT-4o mini',
-    provider: 'OpenAI',
-    providerId: 'openai',
-    enabled: true,
-    toolCallType: 'native'
-  },
-  {
-    id: 'gpt-4.1-nano',
-    name: 'GPT-4.1 nano',
-    provider: 'OpenAI',
-    providerId: 'openai',
-    enabled: true,
-    toolCallType: 'native'
-  },
-  {
-    id: 'gpt-5-mini',
-    name: 'GPT-5 mini',
-    provider: 'OpenAI',
-    providerId: 'openai',
-    enabled: true,
-    toolCallType: 'native'
-  },
-  {
-    id: 'gpt-4.1-mini',
-    name: 'GPT-4.1 mini',
-    provider: 'OpenAI',
-    providerId: 'openai',
-    enabled: true,
-    toolCallType: 'native'
-  },
-  {
     id: 'gemini-2.5-flash',
     name: 'Gemini 2.5 Flash',
     provider: 'Google Generative AI',

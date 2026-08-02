@@ -10,6 +10,7 @@ import {
   DialogTitle,
   DialogTrigger
 } from '@/components/ui/dialog'
+import { Badge } from '@/components/ui/badge'
 import { useIsMobile } from '@/hooks/use-mobile'
 import { cn } from '@/lib/utils'
 import { pricingPlans } from '@/lib/utils/pricing-plans'
@@ -49,9 +50,14 @@ export function PricingDialog({
       )}
       <DialogContent className="max-w-4xl w-[95%] max-h-[90vh] overflow-y-auto CustomScrollbar p-6 rounded-2xl">
         <DialogHeader>
-          <DialogTitle>Subscription & Plans</DialogTitle>
+          <div className="flex items-center gap-2">
+            <DialogTitle>Subscription & Plans</DialogTitle>
+            <Badge variant="secondary" className="bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/20 text-[10px] font-medium px-2 py-0.5 rounded-full">
+              Test Mode
+            </Badge>
+          </div>
           <DialogDescription>
-            Choose the plan that fits your needs. Upgrade or downgrade anytime.
+            Choose the plan that fits your needs. Upgrade or downgrade anytime. Currently in test mode.
           </DialogDescription>
         </DialogHeader>
 
@@ -99,7 +105,7 @@ export function PricingTile({
   const isFreePlan = plan.name === 'Free'
 
   // const isDisabled = isAnyPlanActive || isFreePlan || isCurrentPlan;
-  const isDisabled = true
+  const isDisabled = false
 
   return (
     <div
@@ -147,7 +153,7 @@ export function PricingTile({
       <div className="mt-auto pt-4">
         <Button
           asChild={!isDisabled}
-          disabled
+          // disabled
           className={cn(
             'w-full rounded-full text-xs h-9',
             isCurrentPlan

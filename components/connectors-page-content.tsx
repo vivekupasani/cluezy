@@ -138,10 +138,10 @@ export function ConnectorsPageContent() {
 
                   return (
                     <Link
+                      key={connection.id}
                       href={`/connectors/${connection.provider}`}
                     >
                       <AppCard
-                        key={connection.id}
                         icon={Icon ? <Icon /> : null}
                         name={connection.name || config?.name || connection.slug}
                         tags={[connection.email || 'Connected']}
