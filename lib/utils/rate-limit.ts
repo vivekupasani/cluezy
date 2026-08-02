@@ -4,7 +4,7 @@ import { Redis } from '@upstash/redis'
 //anonymous users
 export const unauthenticatedRateLimit = new Ratelimit({
   redis: Redis.fromEnv(),
-  limiter: Ratelimit.slidingWindow(3, '1 d'), // 3 requests per 1 day
+  limiter: Ratelimit.slidingWindow(1, '1 d'), // 1 requests per 1 day
   analytics: true,
   prefix: '@upstash/ratelimit:unauth'
 })
@@ -12,7 +12,7 @@ export const unauthenticatedRateLimit = new Ratelimit({
 //authenticated users - free plan
 export const authenticatedRateLimit = new Ratelimit({
   redis: Redis.fromEnv(),
-  limiter: Ratelimit.slidingWindow(10, '1 d'), // 10 requests per 1 day
+  limiter: Ratelimit.slidingWindow(5, '1 d'), // 5 requests per 1 day
   analytics: true,
   prefix: '@upstash/ratelimit:auth'
 })
