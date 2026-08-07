@@ -117,7 +117,7 @@ export function EmptyScreen({
               key={category.id}
               type="button"
               onClick={() => setActiveCategory(category.id)}
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium transition-colors duration-200 cursor-pointer border bg-transparent text-accent-foreground/70 border-border/60 dark:border-sidebar-ring/10 hover:bg-secondary/50 hover:text-secondary-foreground"
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium transition-colors duration-200 cursor-pointer border bg-transparent boring-light:bg-muted/30 text-accent-foreground/70 border-border/60 dark:border-sidebar-ring/10 hover:bg-secondary/50 hover:text-secondary-foreground"
             >
               <category.icon size={13} className="text-accent-foreground/60" />
               {category.label}

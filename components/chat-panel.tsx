@@ -19,7 +19,6 @@ import {
 } from 'lucide-react'
 
 import { CONNECTOR_CONFIGS, ConnectorProvider } from '@/lib/connectors/types'
-import { Model } from '@/lib/types/models'
 import { cn } from '@/lib/utils'
 
 import { useIsMobile } from '@/hooks/use-mobile'
@@ -278,7 +277,7 @@ export function ChatPanel({
       )}
     >
       {messages.length === 0 && (
-        <div className="flex flex-col items-center mb-1 md:mt-10">
+        <div className="flex flex-col items-center mb-1 md:mt-0">
           <h1 className="text-2xl sm:text-3xl md:text-3xl pb-2 font-medium txt-grad">
             How can i help you today?
           </h1>
@@ -328,7 +327,7 @@ export function ChatPanel({
           <div
             className={cn(
               'relative flex flex-col w-full p-2.5 transition-all duration-300',
-              'bg-accent/20 dark:bg-card boring-dark:bg-accent backdrop-blur-xl',
+              'bg-accent/20 dark:bg-card boring-light:bg-muted/60 boring-dark:bg-accent backdrop-blur-xl',
               'ring-1 ring-border/20 border border-border dark:border-sidebar-ring/10 dark:ring-sidebar-ring/5',
               // "shadow-sm",
               'rounded-[20px]',
