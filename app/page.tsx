@@ -1,16 +1,11 @@
-import { generateId } from 'ai'
 import { Suspense } from 'react'
 
-import { Chat } from '@/components/chat'
+import { ChatWrapper } from '@/components/chat-wrapper'
 
-import { headers } from 'next/headers'
-
-export default async function Page() {
-  await headers()
-  const id = generateId()
+export default function Page() {
   return (
     <Suspense fallback={null}>
-      <Chat key={id} id={id} />
+      <ChatWrapper />
     </Suspense>
   )
 }

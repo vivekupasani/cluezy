@@ -1,7 +1,11 @@
 'use client'
+import dynamic from 'next/dynamic'
 import { createContext, useContext, useState } from 'react'
 
-import { ChatHistoryClient } from './sidebar/chat-history-client'
+const ChatHistoryClient = dynamic(
+  () => import('./sidebar/chat-history-client').then(mod => mod.ChatHistoryClient),
+  { ssr: false }
+)
 
 export const HistoryDialogContext = createContext<{
   isHistoryDialogOpen: boolean

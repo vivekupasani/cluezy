@@ -44,10 +44,10 @@ export function ModelSelector() {
   const [open, setOpen] = useState(false)
   const [value, setValue] = useState('')
   const DEFAULT_SELECTED_MODEL: Model = {
-    id: 'gpt-4o-mini',
-    name: 'GPT-4o mini',
-    provider: 'OpenAI',
-    providerId: 'openai',
+    id: 'gemini-2.5-flash',
+    name: 'Gemini 2.5 Flash',
+    provider: 'Google Generative AI',
+    providerId: 'google',
     enabled: true,
     toolCallType: 'native'
   }
