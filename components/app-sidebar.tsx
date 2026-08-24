@@ -92,7 +92,7 @@ export function AppSidebar() {
       </SidebarHeader>
 
       <SidebarContent className="gap-0 mx-[7.6px]">
-        <SidebarMenu>
+        <SidebarMenu className="gap-0.5">
           <SidebarMenuItem>
             <SidebarMenuButton
               onClick={() => {
@@ -105,7 +105,7 @@ export function AppSidebar() {
               className="justify-start gap-2 data-[state=open]:px-2"
             >
               <SquarePen className="size-5 text-foreground font-medium" />
-              <span className="text-foreground text-[13px] font-medium">New Chat</span>
+              <span className="text-foreground text-[13.5px] font-medium">New Chat</span>
             </SidebarMenuButton>
           </SidebarMenuItem>
 
@@ -120,7 +120,7 @@ export function AppSidebar() {
               className="justify-start gap-2 data-[state=open]:px-2"
             >
               <Search className="size-5 text-foreground font-medium" />
-              <span className="text-foreground text-[13px] font-medium">Search chats</span>
+              <span className="text-foreground text-[13.5px] font-medium">Search chats</span>
             </SidebarMenuButton>
           </SidebarMenuItem>
 
@@ -129,7 +129,7 @@ export function AppSidebar() {
               trigger={
                 <SidebarMenuButton className="justify-start gap-2 data-[state=open]:px-2">
                   <GlobeLock className="size-5 text-foreground font-medium" />
-                  <span className="text-foreground text-[13px] font-medium">
+                  <span className="text-foreground text-[13.5px] font-medium">
                     Exclude Sources
                   </span>
                 </SidebarMenuButton>
@@ -137,7 +137,7 @@ export function AppSidebar() {
             />
           </SidebarMenuItem>
 
-          <SidebarMenu>
+          <SidebarMenu className="gap-0.5">
             <SidebarMenuItem>
               <CustomLinkTag
                 href="/connectors"
@@ -148,7 +148,7 @@ export function AppSidebar() {
                 }}
               >
                 <LayoutGrid className="size-4 font-medium text-foreground" />
-                <span className="text-foreground text-[13px] font-medium">Connectors</span>
+                <span className="text-foreground text-[13.5px] font-medium">Connectors</span>
               </CustomLinkTag>
             </SidebarMenuItem>
           </SidebarMenu>
@@ -159,7 +159,7 @@ export function AppSidebar() {
                 trigger={
                   <SidebarMenuButton className="justify-start gap-2 data-[state=open]:px-2">
                     <CreditCard className="size-5 text-foreground font-medium" />
-                    <span className="text-foreground text-[13px] font-medium">
+                    <span className="text-foreground text-[13.5px] font-medium">
                       Manage Billing
                     </span>
                   </SidebarMenuButton>
@@ -172,7 +172,7 @@ export function AppSidebar() {
                 trigger={
                   <SidebarMenuButton className="justify-start gap-2 data-[state=open]:px-2">
                     <Crown className="size-5 text-foreground font-medium" />
-                    <span className="text-foreground text-[13px] font-medium">
+                    <span className="text-foreground text-[13.5px] font-medium">
                       Subscription
                     </span>
                   </SidebarMenuButton>
@@ -187,7 +187,7 @@ export function AppSidebar() {
             <SidebarHeader className="text-[10px] mt-2 uppercase text-foreground font-medium">
               Company
             </SidebarHeader>
-            <SidebarMenu className="transition-opacity">
+            <SidebarMenu className="gap-0.5 transition-opacity">
               <SidebarMenuItem>
                 <CustomLinkTag
                   href="/about"
@@ -199,7 +199,7 @@ export function AppSidebar() {
                   }}
                 >
                   <Info className="size-4 text-foreground font-medium" />
-                  <span className="text-foreground text-[13px] font-medium">About Us</span>
+                  <span className="text-foreground text-[13.5px] font-medium">About Us</span>
                 </CustomLinkTag>
               </SidebarMenuItem>
 
@@ -213,7 +213,7 @@ export function AppSidebar() {
                   }}
                 >
                   <ShieldCheck className="size-4 font-medium text-foreground" />
-                  <span className="text-foreground text-[13px] font-medium">
+                  <span className="text-foreground text-[13.5px] font-medium">
                     Privacy Policy
                   </span>
                 </CustomLinkTag>
@@ -229,7 +229,7 @@ export function AppSidebar() {
                   }}
                 >
                   <FileText className="size-4 font-medium text-foreground" />
-                  <span className="text-foreground text-[13px] font-medium">
+                  <span className="text-foreground text-[13.5px] font-medium">
                     Terms & Service
                   </span>
                 </CustomLinkTag>
