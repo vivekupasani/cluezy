@@ -94,7 +94,7 @@ export function QuestionConfirmation({
     return (
       <Card className="p-4 border-border/50 shadow-sm bg-card/60 w-[90%] mx-auto max-w-[720px] md:ml-10 mt-2 backdrop-blur-sm rounded-xl">
         <div className="flex flex-col space-y-2">
-          <CardTitle className="text-base font-medium txt-grad">
+          <CardTitle className="text-[15px] font-medium txt-grad">
             {question}
           </CardTitle>
           <div className="flex items-center gap-2 text-sm text-muted-foreground">
@@ -114,7 +114,7 @@ export function QuestionConfirmation({
   return (
     <Card className="border-border/50 shadow-md bg-card/70 w-[90%] mx-auto max-w-[720px] mt-2 backdrop-blur-sm rounded-xl">
       <CardHeader className="pb-2">
-        <CardTitle className="text-base font-semibold txt-grad">
+        <CardTitle className="text-[15px] font-semibold txt-grad">
           {question}
         </CardTitle>
       </CardHeader>

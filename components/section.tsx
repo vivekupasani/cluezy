@@ -114,7 +114,7 @@ export const Section: React.FC<SectionProps> = ({
         )}
       >
         {title && type === 'text' && (
-          <h2 className="flex items-center leading-none py-2">
+          <h2 className="flex items-center text-[15px] font-medium leading-none py-2">
             {icon}
             {title}
           </h2>

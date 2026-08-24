@@ -28,37 +28,37 @@ export function BotMessage({
   const baseComponents = {
     p: (props: any) => (
       <p
-        className="text-base leading-6 text-foreground my-3 tracking-wide first:mt-0 last:mb-0"
+        className="text-[15px] leading-6 text-foreground my-3 tracking-wide first:mt-0 last:mb-0"
         {...props}
       />
     ),
     h1: (props: any) => (
       <h1
-        className="text-2xl font-bold txt-grad leading-tight tracking-wide mt-6 mb-2"
+        className="text-xl font-bold txt-grad leading-tight tracking-wide mt-6 mb-2"
         {...props}
       />
     ),
     h2: (props: any) => (
       <h2
-        className="text-xl font-semibold txt-grad leading-tight tracking-wide mt-5 mb-2"
+        className="text-lg font-semibold txt-grad leading-tight tracking-wide mt-5 mb-2"
         {...props}
       />
     ),
     h3: (props: any) => (
       <h3
-        className="text-lg font-semibold txt-grad leading-tight tracking-wide mt-4 mb-1"
+        className="text-base font-semibold txt-grad leading-tight tracking-wide mt-4 mb-1"
         {...props}
       />
     ),
     ul: (props: any) => (
       <ul
-        className="list-disc pl-6 my-3 space-y-1 text-base leading-6 tracking-wide text-foreground"
+        className="list-disc pl-6 my-3 space-y-1 text-[15px] leading-6 tracking-wide text-foreground"
         {...props}
       />
     ),
     ol: (props: any) => (
       <ol
-        className="list-decimal pl-6 my-3 space-y-1 text-base leading-6 tracking-wide text-foreground"
+        className="list-decimal pl-6 my-3 space-y-1 text-[15px] leading-6 tracking-wide text-foreground"
         {...props}
       />
     ),

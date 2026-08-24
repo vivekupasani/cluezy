@@ -327,7 +327,7 @@ export function ChatPanel({
           <div
             className={cn(
               'relative flex flex-col w-full p-2.5 transition-all duration-300',
-              'bg-accent/20 dark:bg-card boring-light:bg-muted/60 boring-dark:bg-accent backdrop-blur-xl',
+              'bg-accent/20 dark:bg-card boring-light:bg-accent boring-dark:bg-accent backdrop-blur-xl',
               'ring-1 ring-border/20 border border-border dark:border-sidebar-ring/10 dark:ring-sidebar-ring/5',
               // "shadow-sm",
               'rounded-[20px]',

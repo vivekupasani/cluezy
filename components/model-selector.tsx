@@ -112,12 +112,12 @@ export function ModelSelector() {
         >
           {selectedModel ? (
             <div className="flex items-center gap-2">
-              <span className="text-xs font-medium">{selectedModel.name}</span>
+              <span className="text-[13px] font-medium">{selectedModel.name}</span>
             </div>
           ) : (
             <div className="flex items-center gap-2">
               <Bot size={14} className="shrink-0" />
-              <span className="text-xs font-medium">Select model</span>
+              <span className="text-[13px] font-medium">Select model</span>
             </div>
           )}
           <ChevronDown size={12} className="ml-1 opacity-50" />
