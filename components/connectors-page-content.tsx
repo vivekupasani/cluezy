@@ -98,7 +98,7 @@ export function ConnectorsPageContent() {
             <div>
               <h1 className="text-lg font-semibold text-foreground leading-none">
                 Connectors
-                <span className="ml-2 text-xs font-normal text-muted-foreground/60 align-middle font-mono">
+                <span className="ml-2 text-xs font-medium text-muted-foreground/60 align-middle font-mono">
                   {activeProviders.length}
                 </span>
               </h1>

@@ -126,7 +126,7 @@ export default function UserMenu({ user, state }: UserMenuProps) {
           </div>
 
           <div className="flex flex-col text-left truncate">
-            <span className="text-sm font-normal truncate text-foreground">
+            <span className="text-sm font-medium truncate text-foreground">
               {userName}
             </span>
             <span className="text-xs text-foreground/80 truncate">
@@ -153,7 +153,7 @@ export default function UserMenu({ user, state }: UserMenuProps) {
         <DropdownMenuSub>
           <DropdownMenuSubTrigger>
             <Palette className="mr-2 h-4 w-4 text-foreground" />
-            <span className="text-foreground font-normal">Theme</span>
+            <span className="text-foreground font-medium">Theme</span>
           </DropdownMenuSubTrigger>
           <DropdownMenuSubContent>
             <ThemeMenuItems />
@@ -164,7 +164,7 @@ export default function UserMenu({ user, state }: UserMenuProps) {
         {/* <DropdownMenuSub>
           <DropdownMenuSubTrigger>
             <Link2 className="mr-2 h-4 w-4 text-foreground/70" />
-            <span className='text-foreground/70 font-normal'>Links</span>
+            <span className='text-foreground/70 font-medium'>Links</span>
           </DropdownMenuSubTrigger>
           <DropdownMenuSubContent>
             <ExternalLinkItems />
@@ -175,7 +175,7 @@ export default function UserMenu({ user, state }: UserMenuProps) {
         {/* <DropdownMenuSub>
           <DropdownMenuSubTrigger>
             <LucideBadgeAlert className="mr-2 h-4 w-4 text-foreground/70" />
-            <span className='text-foreground/70 font-normal'>Company Info</span>
+            <span className='text-foreground/70 font-medium'>Company Info</span>
           </DropdownMenuSubTrigger>
           <DropdownMenuSubContent>
             <CompanyInfoItems />
@@ -191,7 +191,7 @@ export default function UserMenu({ user, state }: UserMenuProps) {
               className="flex items-center justify-between"
             >
               {link.icon}
-              <span className="text-foreground font-normal text-sm">
+              <span className="text-foreground font-medium text-sm">
                 {link.name}
               </span>
             </Link>
@@ -204,7 +204,7 @@ export default function UserMenu({ user, state }: UserMenuProps) {
         {/* Logout */}
         <DropdownMenuItem
           onClick={handleLogout}
-          className="text-red-500 focus:text-red-500 cursor-pointer font-normal"
+          className="text-red-500 focus:text-red-500 cursor-pointer font-medium"
         >
           <LogOut className="mr-2 h-4 w-4" />
           Logout

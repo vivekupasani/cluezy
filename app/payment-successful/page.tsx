@@ -47,7 +47,7 @@ export default function PaymentSuccessfulPage() {
           {/* Heading */}
           <div className="space-y-3">
             <h1
-              className="font-serif text-4xl sm:text-5xl font-normal tracking-tight text-foreground"
+              className="font-serif text-4xl sm:text-5xl font-medium tracking-tight text-foreground"
               style={{ fontFamily: 'var(--font-serif)' }}
             >
               Thank You<span className="text-foreground/70">.</span>

@@ -70,10 +70,10 @@ export default function GuestMenu({
           className={`group flex items-center gap-2 w-full px-2 py-2 rounded-lg hover:bg-sidebar-accent transition`}
         >
           <div className="relative flex shrink-0 overflow-hidden">
-            <Settings size={16} className="text-foreground font-normal" />
+            <Settings size={16} className="text-foreground font-medium" />
           </div>
 
-          <div className="flex flex-col text-foreground text-left truncate text-sm font-normal">
+          <div className="flex flex-col text-foreground text-left truncate text-sm font-medium">
             Settings & Help center
           </div>
         </button>
@@ -94,14 +94,14 @@ export default function GuestMenu({
             className="cursor-pointer"
           >
             <LogIn className="mr-2 h-4 w-4 text-foreground" />
-            <span className="text-foreground font-normal text-sm">Sign In</span>
+            <span className="text-foreground font-medium text-sm">Sign In</span>
           </Link>
         </DropdownMenuItem>
         <DropdownMenuSeparator />
         <DropdownMenuSub>
           <DropdownMenuSubTrigger className="cursor-pointer">
             <Palette className="mr-2 h-4 w-4 text-foreground" />
-            <span className="text-foreground font-normal">Theme</span>
+            <span className="text-foreground font-medium">Theme</span>
           </DropdownMenuSubTrigger>
           <DropdownMenuSubContent>
             <ThemeMenuItems />
@@ -110,7 +110,7 @@ export default function GuestMenu({
         {/* <DropdownMenuSub>
           <DropdownMenuSubTrigger className='cursor-pointer'>
             <Link2 className="mr-2 h-4 w-4 text-foreground" />
-            <span className='text-foreground font-normal'>Links</span>
+            <span className='text-foreground font-medium'>Links</span>
           </DropdownMenuSubTrigger>
           <DropdownMenuSubContent>
             <ExternalLinkItems />
@@ -119,7 +119,7 @@ export default function GuestMenu({
         <DropdownMenuSub>
           <DropdownMenuSubTrigger className='cursor-pointer'>
             <LucideBadgeAlert className="mr-2 h-4 w-4 text-foreground" />
-            <span className='text-foreground font-normal'>Company Info</span>
+            <span className='text-foreground font-medium'>Company Info</span>
           </DropdownMenuSubTrigger>
           <DropdownMenuSubContent>
             <CompanyInfoItems />
@@ -135,7 +135,7 @@ export default function GuestMenu({
               className="flex items-center justify-between"
             >
               {link.icon}
-              <span className="text-foreground font-normal text-sm">
+              <span className="text-foreground font-medium text-sm">
                 {link.name}
               </span>
             </Link>
